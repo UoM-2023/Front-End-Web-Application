@@ -1,0 +1,139 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 20vh;
+    width: 400px;
+    background: #fff;
+    padding-bottom: 30px;
+    margin-left: 150px;
+    background-color: #ECE1D9;
+}
+.header{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 40px;
+}
+.text{
+    color: #000000;
+    font-size: 35px;
+    font-weight: 700;
+    margin-left: -70px;
+}
+.inputs{
+    margin-top:25px;
+    margin-left: -90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 100px;
+    border: none;
+}
+
+.input{
+    display: flex;
+    margin: auto;
+    width: 300px;
+    height: 45px;
+    margin: 10px;
+    padding: 2px;
+    border-style: solid;
+    border-radius: 50px;
+    border-width: 0;
+    padding-bottom: 15px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.15); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.15);
+    background-color: #fff;
+}
+
+.inputPic{
+    padding-top: 8px;
+}
+
+.userName::placeholder{
+    font-size: 19px;
+}
+
+.userName:focus{
+    outline: none;
+}
+
+.password:focus{
+    outline: none;
+}
+
+.loginFormBottom{
+    margin-left: -100px;
+    margin-top: -25px;
+}
+
+.input img{
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin-left: 12px;
+    padding-right: 12px;
+}
+.call img{
+    width: 25px;
+    height: 25px;
+    padding-top:3px;
+    margin-left: -10px;
+    padding-left: 0px;
+    padding-right:10px;
+}
+.input input{
+    height: 60px;
+    width: 350px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+}
+.login-contact{
+    display: flex;
+    gap: 30px;
+    margin-top: 70px;
+    width: 350px;
+}
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 45px;
+    color: #ffffff;
+    background: #000000;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31);
+}
+.contactUs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 45px;
+    color: #fff;
+    background: #f1875d;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31);
+}
+.resetPassword{
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+    color: #4f4d4d;
+    font-weight: 600;
+    font-size: 16px;
+    margin-left: -140px;
+    cursor: pointer;
+}

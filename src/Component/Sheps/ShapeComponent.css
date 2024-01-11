@@ -1,0 +1,78 @@
+.Container{
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position:relative;
+    background-color: #ECE1D9;
+}
+
+.circle {
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    left: 27vh;
+    top: 0vh;
+    overflow: hidden;
+    background-color: #E65F2B;
+    background: radial-gradient(circle at left , #f8c1ab, #E65F2B);
+    border-radius:50%;
+    transform: translate(-515px, -55px);
+    flex: 5;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.35); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.35);
+
+}
+
+.homeLogoIcon{
+    align-items: start;
+    width: 27vh;
+    height: 120vh;
+    z-index: 1;
+}
+
+.loginPageImage{
+    margin-top: -117vh;
+    background-color: #ECE1D9;
+}
+
+.homeIcon{
+    margin-top: 5vh;
+    margin-left: 5vh;
+}
+
+.circleBox{
+    display: flex;
+}
+
+.loginimg{
+    width: 26vw;
+    height: 55wh;
+    position: relative;
+    left: 28vw;
+    top: 18vh;
+}
+
+.textItems{
+    width: 100vh;
+    color: aliceblue;
+    line-height: normal;
+    margin-top: 25vh;
+    margin-left: 8vh;
+}
+.apartTopic{
+    font-size: 45px;
+    font-weight: 800;
+    line-height: normal;
+}
+.apartTextTop{
+    font-size: 26px;
+    font-weight: 500;
+    line-height: normal;
+}
+.apartTextBottom{
+    font-size: 26px;
+    font-weight: 500;
+}
+.textBottom{
+    margin-top: 2vh;
+}
