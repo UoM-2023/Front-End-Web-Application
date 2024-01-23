@@ -112,7 +112,7 @@
     -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31); 
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.31);
 }
-.contactUs{
+.cancel{
     display: flex;
     justify-content: center;
     align-items: center;

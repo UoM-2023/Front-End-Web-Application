@@ -2,7 +2,6 @@ import React from "react";
 import "./loginForm.css";
 import username from "../Assets/User_light.svg";
 import password from "../Assets/finger-print-outline.svg";
-import Dashboard from "../../Pages/DashboardPage/Dashboard";
 
 export default function LoginForm() {
   return (
