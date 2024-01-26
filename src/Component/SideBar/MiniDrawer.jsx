@@ -16,18 +16,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import BuildIcon from '@mui/icons-material/Build';
-import EventIcon from '@mui/icons-material/Event';
-import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
-import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import CampaignIcon from '@mui/icons-material/Campaign';
-import GroupsIcon from '@mui/icons-material/Groups';
-import EngineeringIcon from '@mui/icons-material/Engineering';
-import SettingsIcon from '@mui/icons-material/Settings';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import BuildIcon from "@mui/icons-material/Build";
+import EventIcon from "@mui/icons-material/Event";
+import TransferWithinAStationIcon from "@mui/icons-material/TransferWithinAStation";
+import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import GroupsIcon from "@mui/icons-material/Groups";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import SettingsIcon from "@mui/icons-material/Settings";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { red } from "@mui/material/colors";
 //import HomeIcon from '..Assets/HomeIcon.svg';
 
@@ -91,15 +91,15 @@ const Drawer = styled(MuiDrawer, {
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": {
-       ...openedMixin(theme),
-        backgroundColor: "#060606",
+      ...openedMixin(theme),
+      backgroundColor: "#060606",
     },
   }),
   ...(!open && {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": {
       ...closedMixin(theme),
-      backgroundColor: "#060606"
+      backgroundColor: "#060606",
     },
   }),
 }));
@@ -120,13 +120,13 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-    
-      <Drawer variant="permanent" open={open} >
-        <DrawerHeader >
+
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
           <Box
             width={"100%"}
             display={"flex"}
-            justifyContent={open ? "space-between" :"end"}
+            justifyContent={open ? "space-between" : "end"}
             alignItems={"center"}
           >
             {open && (
@@ -134,42 +134,57 @@ export default function MiniDrawer() {
                 <img
                   src="./Assest/HomeIcon.svg" // Replace with the correct path to your image
                   alt="ApartFlow Icon"
-                  style={{ marginRight: "20px",
-                          marginLeft: "10px",
-                          width:"2rem",
-                          height:"2rem"
-
-                          }} // Add margin if needed
+                  style={{
+                    marginRight: "20px",
+                    marginLeft: "10px",
+                    width: "2rem",
+                    height: "2rem",
+                  }} // Add margin if needed
                 />
                 <Typography
-                sx={{
-                  color: '#F9FAF9', // Add this line to set the text color
-                }}
-                >ApartFlow</Typography>
+                  sx={{
+                    color: "#F9FAF9", // Add this line to set the text color
+                  }}
+                >
+                  ApartFlow
+                </Typography>
               </Box>
             )}
-                <IconButton
-                      aria-label="open drawer"
-                      onClick={handleDrawer}
-                      edge="start"
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        color:"#E76736"
-                      }}
-                >
+            <IconButton
+              aria-label="open drawer"
+              onClick={handleDrawer}
+              edge="start"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                color: "#E76736",
+              }}
+            >
               <MenuIcon />
             </IconButton>
           </Box>
         </DrawerHeader>
-        <Divider/>
+        <Divider />
 
         <List>
-          {["Dashboard", "Finance", "Maintenance", "Reservations","Guests", "Residential Units", "Complaints","News & Notices","Residents' Information","Staff Details","Settings","info"].map((text, index) => (
-            <ListItem 
-              key={text} 
-              disablePadding 
-              sx={{ display: "block", cursor:"pointer" }}
+          {[
+            "Dashboard",
+            "Finance",
+            "Maintenance",
+            "Reservations",
+            "Guests",
+            "Residential Units",
+            "Complaints",
+            "News & Notices",
+            "Residents' Information",
+            "Staff Details",
+            "Settings",
+            "info",
+          ].map((text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{ display: "block", cursor: "pointer" }}
             >
               <ListItemButton
                 selected={selectedIndex === index}
@@ -191,19 +206,31 @@ export default function MiniDrawer() {
                     color: selectedIndex === index ? "#E76736" : "#F9FAF9",
                   }}
                 >
-                  { index === 0 ? <DashboardIcon /> :
-                    index === 1 ? <AccountBalanceIcon /> :
-                    index === 2 ? <BuildIcon /> : // Add more icons as needed
-                    index === 3 ? <EventIcon /> :
-                    index === 4 ? <TransferWithinAStationIcon /> :
-                    index === 5 ? <MapsHomeWorkIcon /> :
-                    index === 6 ? <DriveFileRenameOutlineIcon /> :
-                    index === 7 ? <CampaignIcon /> :
-                    index === 8 ? <GroupsIcon /> :
-                    index === 9 ? <EngineeringIcon /> :
-                    index === 10 ? <SettingsIcon /> :
-                    index === 11 ? <InfoOutlinedIcon /> : null
-                    }
+                  {index === 0 ? (
+                    <DashboardIcon />
+                  ) : index === 1 ? (
+                    <AccountBalanceIcon />
+                  ) : index === 2 ? (
+                    <BuildIcon /> // Add more icons as needed
+                  ) : index === 3 ? (
+                    <EventIcon />
+                  ) : index === 4 ? (
+                    <TransferWithinAStationIcon />
+                  ) : index === 5 ? (
+                    <MapsHomeWorkIcon />
+                  ) : index === 6 ? (
+                    <DriveFileRenameOutlineIcon />
+                  ) : index === 7 ? (
+                    <CampaignIcon />
+                  ) : index === 8 ? (
+                    <GroupsIcon />
+                  ) : index === 9 ? (
+                    <EngineeringIcon />
+                  ) : index === 10 ? (
+                    <SettingsIcon />
+                  ) : index === 11 ? (
+                    <InfoOutlinedIcon />
+                  ) : null}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -212,13 +239,16 @@ export default function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-         
-        <Toolbar>
+        <Toolbar 
+        sx={{ 
+          backgroundColor: "#cb885c4e", 
+          marginTop:"-1.48rem",
+          marginLeft:"-1.5rem"}}>
           <Typography variant="h6" noWrap component="div">
             Finance
           </Typography>
         </Toolbar>
-     
+
         <DrawerHeader />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

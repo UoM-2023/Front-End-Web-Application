@@ -7,13 +7,17 @@ function CancelButton() {
     <div className='ButtonContainer'>
       <Stack spacing={2} direction="row">
         <Button 
-          variant="contained" 
+          variant="outlined"
           style={{ 
-            backgroundColor: '#f1875d', 
-            color: '#fff',
-            borderRadius: '5rem',
-            fontFamily: "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
-            fontSize: '1rem'
+              borderColor: '#f1875d',
+              backgroundColor:'#ffff',
+              borderWidth:'0.1rem',
+              color: '#f1875d',
+              borderRadius: '5rem',
+              fontFamily: "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
+              fontSize: '0.85rem',
+              paddingLeft:'1.2rem',
+              paddingRight:'1rem'
           }}
         >
           Cancel
