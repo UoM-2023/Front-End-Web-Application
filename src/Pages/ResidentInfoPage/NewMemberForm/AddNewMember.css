@@ -1,0 +1,30 @@
+.formContainer{
+    margin: 0;
+    padding-left: 5rem;
+}
+
+.inputItems{
+    margin-top: 1.5rem;
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+
+.inputBox{
+    width: 25vw;
+    height: 3vh;
+    border-radius: 2px;
+}
+.selectItems{
+    width: 25vw;
+    height: 4vh;
+    border-radius: 2px;
+    border-color: rgb(78, 82, 82);
+    font-size: 14px;
+}
+.optionContainer{
+    font-size: 14px;
+}
+.submit{
+    margin-bottom: 5rem;
+}

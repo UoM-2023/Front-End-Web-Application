@@ -1,0 +1,16 @@
+/* body{
+  background-color: #ECE1D9;
+} */
+
+.LoginPageContainer{
+    display: flex;
+  }
+  
+  .ShepsComponent{
+    flex: 6;
+  }
+  
+  .loginFormComponent{
+    flex: 4;
+    background-color: #ECE1D9;
+  }

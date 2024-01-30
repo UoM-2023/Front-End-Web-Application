@@ -1,16 +1,4 @@
-.appContainer{
-  display: flex;
-}
-
-.ShepsComponent{
-  flex: 6;
-}
-
-.loginFormComponent{
-  flex: 4;
-}
 body {
   font-family: 'Alegreya Sans', sans-serif; /* Apply Alegreya Sans to the entire document */
-  background-color: #ECE1D9;
 }
 
