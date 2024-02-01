@@ -17,9 +17,10 @@ function AddNewMember() {
     memberType: "",
     email: "",
     mobileNo: "",
-    address:"",
+    address: "",
     username: "",
     password: "",
+    img: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -79,12 +80,12 @@ function AddNewMember() {
     }
     if (!values.dob && values.dob) {
       errors.dob = "Please Enter Date of birth *";
-    }else if (!dob_regex.test(values.dob)) {
+    } else if (!dob_regex.test(values.dob)) {
       errors.dob = "Enter a valid Date of Birth";
     }
     if (!values.nic) {
       errors.nic = "NIC is required *";
-    }else if (!nic_regex.test(values.nic)) {
+    } else if (!nic_regex.test(values.nic)) {
       errors.nic = "Enter a valid NIC";
     }
     if (!values.memberType) {
@@ -97,7 +98,7 @@ function AddNewMember() {
     }
     if (!values.mobileNo) {
       errors.mobileNo = "Mobile Number is required *";
-    }else if (!mobileno_regex.test(values.mobileNo)) {
+    } else if (!mobileno_regex.test(values.mobileNo)) {
       errors.mobileNo = "Enter a valid Mobile Number";
     }
     if (!values.address) {
@@ -108,15 +109,18 @@ function AddNewMember() {
     }
     if (!values.password) {
       errors.password = "Password is required *";
-    }else if(values.password.length < 8 ){
+    } else if (values.password.length < 8) {
       errors.password = "Password must be more than 8 characters";
+    }
+    if (!values.img) {
+      errors.img = "Please Upload Resident's Image file *";
     }
     return errors;
   };
 
   return (
     <div className="formContainer">
-      <form className="MainForm" onSubmit={onSubmitHandler}>
+      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItems">
           <label htmlFor="Building" className="namesTag">
             Building :{" "}
@@ -428,16 +432,25 @@ function AddNewMember() {
             id="img"
             name="img"
             className="inputBox"
+            onChange={onChangeHandler}
+            value={formData.img}
             accept="image/*"
           />
           <input type="submit" value="Upload Image" />
         </div>
+        <p>{formErrors.img}</p>
+
         <div className="inputItems">
           <button className="submit" type="submit">
             Add New Member
           </button>
         </div>
       </form>
+      {Object.keys(formErrors).length === 0 && isSubmit ? (
+        <h3 className="success message">Successfully Added New Member </h3>
+      ) : (
+        <pre> </pre>
+      )}
     </div>
   );
 }

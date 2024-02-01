@@ -5,7 +5,6 @@ import AddStaff from "./AddNewStaffMember/AddStaff";
 function StaffDetails() {
   return (
     <div className="StaffDetailsContainer">
-      StaffDetails
       <AddStaff />
     </div>
   );
