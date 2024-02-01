@@ -3,6 +3,7 @@ import "./App.css"
 import LoginPage from './Pages/LoginPage/LoginPage';
 import Dashboard from './Pages/DashboardPage/Dashboard';
 import ResidentInforPage from './Pages/ResidentInfoPage/ResidentInforPage';
+import StaffDetails from './Pages/StaffDetails/StaffDetails';
 
 function App() {
   
@@ -11,7 +12,8 @@ function App() {
       <div className="appContainer">
         {/* <LoginPage/> */}
         {/* <Dashboard/> */}
-        <ResidentInforPage/>
+        {/* <ResidentInforPage/> */}
+        <StaffDetails/>
 
       </div>
     </>
