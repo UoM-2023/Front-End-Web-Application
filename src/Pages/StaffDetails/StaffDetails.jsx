@@ -363,8 +363,6 @@ function StaffDetails() {
           </InputLabel>
           <Select
             name="staffCategory"
-            value={formData.staffCategory}
-            onChange={onChangeHandler}
           >
             <Option value="Management Staff">Management Staff</Option>
             <Option value="Admin User">Admin User</Option>

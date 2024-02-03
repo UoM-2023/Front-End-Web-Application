@@ -13,7 +13,7 @@ function EditButton() {
             color: '#fff',
             borderRadius: '5rem',
             fontFamily: "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
-            fontSize: '0.8rem',
+            fontSize: '0.85rem',
             paddingLeft:'1.8rem',
             paddingRight:'1.8rem'
           }}
