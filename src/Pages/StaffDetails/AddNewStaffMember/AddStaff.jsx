@@ -18,7 +18,7 @@ function AddStaff() {
     city: "",
     username: "",
     password: "",
-    img:"",
+    img: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -156,25 +156,27 @@ function AddStaff() {
         <p>{formErrors.lName}</p>
 
         <div className="inputItems">
-          <label htmlFor="" className="namesTag">
-            Gender :{" "}
-          </label>
-          <input
-            type="radio"
-            name="gender"
-            className="gender"
-            value="Male"
-            onChange={onChangeHandler}
-          />
-          <label for="male">Male</label>
-          <input
-            type="radio"
-            name="gender"
-            className="gender"
-            value="Female"
-            onChange={onChangeHandler}
-          />
-          <label for="female">Female</label>
+          <div className="genderItems">
+            <label htmlFor="" className="namesTag">
+              Gender :{" "}
+            </label>
+            <input
+              type="radio"
+              name="gender"
+              className="gender"
+              value="Male"
+              onChange={onChangeHandler}
+            />
+            <label for="male">Male</label>
+            <input
+              type="radio"
+              name="gender"
+              className="gender"
+              value="Female"
+              onChange={onChangeHandler}
+            />
+            <label for="female">Female</label>
+          </div>
         </div>
         <p>{formErrors.gender}</p>
 
@@ -256,7 +258,7 @@ function AddStaff() {
           <input
             type="text"
             className="inputBox"
-            name="qualification"
+            name="qualifications"
             onChange={onChangeHandler}
             value={formData.qualifications}
           />
@@ -352,18 +354,16 @@ function AddStaff() {
           </label>
           <input
             type="file"
-            id="img"
             name="img"
             className="inputBox"
             onChange={onChangeHandler}
             value={formData.img}
-            accept="image/*"
+        
           />
-          <input type="submit" value="Upload Image" />
         </div>
         <p>{formErrors.img}</p>
 
-        <div className="inputItems">
+        <div className="submitBtn">
           <button className="submit" type="submit">
             Add New Staff Member
           </button>

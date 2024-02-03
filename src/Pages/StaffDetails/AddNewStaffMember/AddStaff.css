@@ -6,28 +6,49 @@
 .inputItems{
     margin-top: 1.5rem;
     font-size: 18px;
-    font-weight: bold;
-    
+    font-weight: 5;
+    display: flex;
+    flex-direction: column;   
+}
+
+.genderItems{
+    display: inline;
 }
 
 .inputBox{
-    width: 25vw;
-    height: 3vh;
-    border-radius: 2px;
+    width: 28vw;
+    height: 5vh;
+    border-radius: 6px;
+    border-color: rgb(155, 172, 175);
+    border-width: 2px;
+    font-size: 16px;
+    padding-left: 1rem;
+    box-shadow: none;
 }
 .selectItems{
-    width: 25vw;
-    height: 4vh;
-    border-radius: 2px;
-    border-color: rgb(78, 82, 82);
-    font-size: 14px;
+    width: 29.4vw;
+    height: 6vh;
+    border-radius: 6px;
+    border-color: rgb(64, 176, 198);
+    font-size: 16px;
+    border-width: 2px;
+    padding-left: 1rem;
 }
 .optionContainer{
     font-size: 14px;
 }
 .submit{
     margin-bottom: 5rem;
+    background-color: rgb(64, 176, 198);
+    font-size: 1.05rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px;
+    border-color:rgb(64, 176, 198) ;
+    cursor: pointer;
 }
 p{
     color: red;
+}
+.gender{
+    margin-left: 2rem;
 }
