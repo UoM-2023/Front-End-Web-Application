@@ -28,7 +28,7 @@ function TopBar() {
   return (
     <div className="topBarContainer">
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ backgroundColor: "#fffffff7" }}>
+        <AppBar position="static"  sx={{ backgroundColor: "#fffffff7" }}>
           <Toolbar>
             {/* <IconButton
               size="large"

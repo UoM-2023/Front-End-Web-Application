@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./UnitList.css";
+import "./StaffList.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,6 +16,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#f9f4f0",
     color: "#605D5D",
+    fontSize: "16px",
+    fontWeight: "bold",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -41,12 +43,10 @@ const rows = [
     1,
     "A-214100",
     "A.W.G.Silva",
-    "Owner",
+    "Finance Manager",
     "0767927004",
     "awg25silva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
@@ -56,12 +56,10 @@ const rows = [
     2,
     "A-214101",
     "A.W.G.Gamage",
-    "Owner",
+    "Front Office Manager",
     "0711927004",
     "awgsilva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
@@ -71,12 +69,10 @@ const rows = [
     3,
     "B-214102",
     "A.W.G.Samaraweera",
-    "Owner",
+    "Security Officer",
     "0767925504",
     "awgsilva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
@@ -86,12 +82,10 @@ const rows = [
     4,
     "B-214103",
     "A.W.Jerry Fernando",
-    "Owner",
+    "Admin",
     "0117927004",
     "awgsilva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
@@ -101,12 +95,10 @@ const rows = [
     5,
     "A-214104",
     "A.W.Saman Abeykoon",
-    "Owner",
+    "Maintenance Manager",
     "0787027004",
     "awgsilva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
@@ -114,25 +106,26 @@ const rows = [
   ),
 ];
 
-function UnitList() {
+function StaffList() {
   return (
     <div className="unitListContainer">
       <TableContainer component={Paper}>
         <Table
           sx={{
             maxWidth: "95vw",
-            marginTop: 10,
-            marginLeft: 5,
-            marginRight: 3,
+            marginTop: 5,
+            marginLeft: 9,
+            marginRight: 0,
+            paddingTop: "100px",
           }}
           aria-label="customized table"
         >
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Unit</StyledTableCell>
+              <StyledTableCell align="left">Staff ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
+              <StyledTableCell align="left">Staff Role</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
@@ -157,4 +150,4 @@ function UnitList() {
   );
 }
 
-export default UnitList;
+export default StaffList;

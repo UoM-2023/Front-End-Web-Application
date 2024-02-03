@@ -3,15 +3,12 @@ import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -28,8 +25,6 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { red } from "@mui/material/colors";
-//import HomeIcon from '..Assets/HomeIcon.svg';
 
 const drawerWidth = 240;
 
@@ -238,19 +233,6 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar 
-        sx={{ 
-          backgroundColor: "#cb885c4e", 
-          marginTop:"-1.48rem",
-          marginLeft:"-1.5rem"}}>
-          <Typography variant="h6" noWrap component="div">
-            Finance
-          </Typography>
-        </Toolbar>
-
-        <DrawerHeader />
-      </Box> */}
     </Box>
   );
 }
