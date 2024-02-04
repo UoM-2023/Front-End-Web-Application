@@ -5,18 +5,13 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
-function TopBar() {
+const TopBar = (props) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,25 +20,13 @@ function TopBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  console.log(props);
   return (
     <div className="topBarContainer">
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static"  sx={{ backgroundColor: "#fffffff7" }}>
+        <AppBar position="static" sx={{ backgroundColor: "#fffffff7" }}>
           <Toolbar>
-            {/* <IconButton
-              size="large"
-              edge="start"
-              aria-label="menu"
-              sx={{
-                mr: 2,
-                backgroundColor: "#e7683635",
-                color: "#E76736",
-              }}
-            >
-              <MenuIcon />
-            </IconButton> */}
             <Typography
-              variant="h6"
               component="div"
               sx={{
                 flexGrow: 1,
@@ -53,7 +36,7 @@ function TopBar() {
                 marginLeft: "5rem",
               }}
             >
-              Finance
+              {props.title}
             </Typography>
             {auth && (
               <div>
@@ -101,6 +84,6 @@ function TopBar() {
       </Box>
     </div>
   );
-}
+};
 
 export default TopBar;
