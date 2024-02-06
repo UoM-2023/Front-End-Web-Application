@@ -9,7 +9,7 @@ import UnitList from "./Pages/ResidentInfoPage/UnitTableView/UnitList";
 import TopBar from "./Component/TopBar/TopBar";
 import StaffList from "./Pages/StaffDetails/StaffTableView/StaffList";
 import SearchBar from "./Component/SearchBar/SearchBar";
-
+import AddNewButton from "./Component/Buttons/AddNewButton";
 
 function App() {
   return (
@@ -18,14 +18,14 @@ function App() {
         {/* <LoginPage/> */}
         {/* <Dashboard />
         <TopBar title="Staff Details" /> */}
-        {/* <ResidentInforPage/> */}
-        {/* <StaffDetails/> */}
+        {/* <ResidentInforPage />
+        <StaffDetails /> */}
         {/* <AddStaff/> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
-        
-        <SearchBar/>
+        <AddNewButton/>
 
+        {/* <SearchBar/> */}
       </div>
     </>
   );

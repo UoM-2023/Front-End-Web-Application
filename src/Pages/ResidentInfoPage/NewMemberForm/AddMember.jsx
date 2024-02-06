@@ -1,4 +1,4 @@
-import "./StaffDetails.css";
+import "./AddMember.css";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { alpha, styled } from "@mui/material/styles";
@@ -27,7 +27,7 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-function StaffDetails() {
+function AddMember() {
   const CssTextField = styled(TextField)({
     "& label.Mui-focused": {
       color: "#A0AAB4",
@@ -127,19 +127,20 @@ function StaffDetails() {
   });
 
   const [formData, setFormData] = useState({
+    building: "",
+    block: "",
+    unitCategory: "",
+    unit: "",
     fName: "",
     mName: "",
     lName: "",
     gender: "",
-    dob: "",
+    dob: Date,
     nic: "",
-    staffCategory: "",
-    qualifications: "",
-    staffID: "",
+    memberType: "",
     email: "",
     mobileNo: "",
     address: "",
-    city: "",
     username: "",
     password: "",
     img: "",
@@ -152,7 +153,7 @@ function StaffDetails() {
     console.log(event);
     setFormData(() => ({
       ...formData,
-      [event.target.name]: event.target.value,
+      [event?.target?.name]: event?.target?.value,
     }));
   };
   const onSubmitHandler = (event) => {
@@ -176,6 +177,18 @@ function StaffDetails() {
     const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
     const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
+    if (!values.building) {
+      errors.building = "Please select Building * ";
+    }
+    if (!values.block) {
+      errors.block = "Please select Block Number * ";
+    }
+    if (!values.unitCategory) {
+      errors.unitCategory = "Please select Unit Category *";
+    }
+    if (!values.unit) {
+      errors.unit = "Please select Unit Number *";
+    }
     if (!values.fName) {
       errors.fName = "Please Enter First Name *";
     }
@@ -198,11 +211,8 @@ function StaffDetails() {
     } else if (!nic_regex.test(values.nic)) {
       errors.nic = "Enter a valid NIC";
     }
-    if (!values.staffCategory) {
-      errors.staffCategory = "Please select Staff Category *";
-    }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
+    if (!values.memberType) {
+      errors.memberType = "Please select Member Type *";
     }
     if (!values.email) {
       errors.email = "Email is required *";
@@ -217,9 +227,6 @@ function StaffDetails() {
     if (!values.address) {
       errors.address = "Address is required *";
     }
-    if (!values.city) {
-      errors.city = "City is required *";
-    }
     if (!values.username) {
       errors.username = "UserName is required *";
     }
@@ -229,14 +236,96 @@ function StaffDetails() {
       errors.password = "Password must be more than 8 characters";
     }
     if (!values.img) {
-      errors.img = "Please Upload Staff Member's Image file *";
+      errors.img = "Please Upload Resident's Image file *";
     }
     return errors;
   };
 
   return (
-    <div className="StaffDetailsContainer">
+    <div className="AddMemberFormContainer">
       <Box component="form" noValidate>
+        <div className="input-item">
+          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+            Building :
+          </InputLabel>
+          <Select
+            name="building"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
+          >
+            <Option value="Wing1">Wing 01</Option>
+            <Option value="wing2">Wing 02</Option>
+            <Option value="wing3">Wing 03</Option>
+            <Option value="wing4">Wing 04</Option>
+          </Select>
+        </div>
+        <p>{formErrors.building}</p>
+
+        <div className="input-item">
+          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+            Block :
+          </InputLabel>
+          <Select
+            name="block"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
+          >
+            <Option value="block1">Block 01</Option>
+            <Option value="block2">Block 02</Option>
+            <Option value="block3">Block 03</Option>
+            <Option value="block4">Block 04</Option>
+          </Select>
+        </div>
+        <p>{formErrors.block}</p>
+
+        <div className="input-item">
+          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+            Unit Category :
+          </InputLabel>
+          <Select
+            name="unitCategory"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
+          >
+            <Option value="br1">Bed Room 01</Option>
+            <Option value="br2">Bed Room 02</Option>
+            <Option value="br3">Bed Room 03</Option>
+            <Option value="br4">Bed Room 04</Option>
+          </Select>
+        </div>
+        <p>{formErrors.unitCategory}</p>
+
+        <div className="input-item">
+          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+            Unit :
+          </InputLabel>
+          <Select
+            name="unit"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
+            onChange={onChangeHandler}
+            value={formData.unit}
+          >
+            <Option value="unit1">Unit 01</Option>
+            <Option value="unit2">Unit 02</Option>
+            <Option value="unit3">Unit 03</Option>
+            <Option value="unit4">Unit 04</Option>
+          </Select>
+        </div>
+        <p>{formErrors.unit}</p>
+
         <div className="input-item">
           <FormControl variant="standard">
             <InputLabel shrink htmlFor="fName" sx={{ fontSize: "20px" }}>
@@ -345,47 +434,24 @@ function StaffDetails() {
 
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Staff Member Type :
+            Member Type :
           </InputLabel>
           <Select
-            name="staffCategory"
+            name="memberType"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
           >
-            <Option value="Management Staff">Management Staff</Option>
-            <Option value="Admin User">Admin User</Option>
-            <Option value="Security Officer">Security Officer</Option>
+            <Option value="owner">Owner</Option>
+            <Option value="member01">Member 01</Option>
+            <Option value="member02">Member 02</Option>
+            <Option value="member03">Member 03</Option>
           </Select>
         </div>
-        <p>{formErrors.staffCategory}</p>
+        <p>{formErrors.memberType}</p>
 
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Qualification :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="qualification"
-              onChange={onChangeHandler}
-              value={formData.qualifications}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.qualifications}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Staff ID :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="staffID"
-              onChange={onChangeHandler}
-              value={formData.staffID}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.staffID}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -431,21 +497,6 @@ function StaffDetails() {
           </FormControl>
         </div>
         <p>{formErrors.address}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              City :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="city"
-              onChange={onChangeHandler}
-              value={formData.city}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.city}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -657,4 +708,4 @@ const Popup = styled("div")`
   z-index: 1;
 `;
 
-export default StaffDetails;
+export default AddMember;
