@@ -1,0 +1,32 @@
+.formItems{
+    margin-bottom: 25px;
+  margin-left:25%;
+  font-style: bold;
+  margin-top: 25px;
+
+}
+
+.title{
+  font-size: 25px;
+  width: 100%;
+  margin-left: 2rem;
+}
+.formTitles {
+  font-weight: bold;
+}
+.custom-hr {
+  width: 100vw; 
+}
+.buttons{
+    margin-top: 25px;
+display: flex;
+}
+.backButton{
+  margin-left:1rem;
+}
+.saveButton{
+  margin-left:46rem;
+}
+.dropdown{
+    margin-left: 25%;
+}

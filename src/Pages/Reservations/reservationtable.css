@@ -1,0 +1,13 @@
+
+.actionBtn{
+    display: flex;
+    cursor: pointer;
+}
+.title{
+    font-size: 25px;
+    width: 100%;
+    margin-left: 2rem;
+  }
+  .custom-hr {
+    width: 100vw; 
+  }
