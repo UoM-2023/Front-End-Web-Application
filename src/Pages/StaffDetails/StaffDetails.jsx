@@ -349,6 +349,11 @@ function StaffDetails() {
           </InputLabel>
           <Select
             name="staffCategory"
+            sx={{
+              width: "33.6vw",
+              height: "6.4vh",
+              backgroundColor: "#e8eaf6",
+            }}
           >
             <Option value="Management Staff">Management Staff</Option>
             <Option value="Admin User">Admin User</Option>

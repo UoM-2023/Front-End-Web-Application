@@ -10,22 +10,24 @@ import TopBar from "./Component/TopBar/TopBar";
 import StaffList from "./Pages/StaffDetails/StaffTableView/StaffList";
 import SearchBar from "./Component/SearchBar/SearchBar";
 import AddNewButton from "./Component/Buttons/AddNewButton";
+import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 
 function App() {
   return (
     <>
       <div className="appContainer">
         {/* <LoginPage/> */}
-        {/* <Dashboard />
-        <TopBar title="Staff Details" /> */}
-        {/* <ResidentInforPage />
-        <StaffDetails /> */}
+        {/* <Dashboard /> */}
+        {/* <TopBar title="Staff Details" /> */}
+        <ResidentInforPage />
+        {/* <StaffDetails /> */}
         {/* <AddStaff/> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
-        <AddNewButton/>
+        {/* <AddNewButton/> */}
 
         {/* <SearchBar/> */}
+        {/* <MemberList/> */}
       </div>
     </>
   );

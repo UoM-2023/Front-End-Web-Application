@@ -11,7 +11,7 @@ function AddNewButton() {
           style={{
             backgroundColor: "#E87042",
             color: "#fff",
-            borderRadius: "5rem",
+            borderRadius: "0.5rem",
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.9rem",
