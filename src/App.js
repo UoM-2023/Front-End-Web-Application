@@ -17,17 +17,17 @@ function App() {
     <>
       <div className="appContainer">
         {/* <LoginPage/> */}
-        {/* <Dashboard /> */}
-        {/* <TopBar title="Staff Details" /> */}
-        <ResidentInforPage />
+        <Dashboard />
+        <TopBar title="Resident's Information" />
+        {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
         {/* <AddStaff/> */}
+        <MemberList />
         {/* <UnitList /> */}
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
 
         {/* <SearchBar/> */}
-        {/* <MemberList/> */}
       </div>
     </>
   );
