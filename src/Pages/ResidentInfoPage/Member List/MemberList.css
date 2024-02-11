@@ -1,3 +1,6 @@
+.pageContainer{
+  position: static;
+}
 .cardMedia {
     display: flex;
     align-items: center; /* Vertically center items */
@@ -20,7 +23,6 @@
   .memberListContainer{
     display: flex;
     margin-top: 2rem;
-
     justify-content: center;
   }
   .card2{
@@ -44,8 +46,10 @@
     padding-bottom: 0;
   }
 .backBtn{
-  align-items: end;
-  justify-content: end;
-  margin-left: 75rem;
+  display: flex;
   margin-top: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  
 }

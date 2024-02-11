@@ -9,16 +9,17 @@ function BackButton() {
         <Button
           variant="outlined"
           style={{
-            borderColor: "#4681f4",
+            borderColor: "#E76736",
             backgroundColor: "#ffff",
             borderWidth: "0.1rem",
-            color: "#4681f4",
-            borderRadius: "5rem",
+            color: "#E76736",
+            borderRadius: "0.5rem",
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.85rem",
             paddingLeft: "1.8rem",
             paddingRight: "1.8rem",
+            fontWeight: "bold",
           }}
         >
           Back

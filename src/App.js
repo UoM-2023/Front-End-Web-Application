@@ -11,6 +11,7 @@ import StaffList from "./Pages/StaffDetails/StaffTableView/StaffList";
 import SearchBar from "./Component/SearchBar/SearchBar";
 import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
+import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
 
 function App() {
   return (
@@ -18,16 +19,16 @@ function App() {
       <div className="appContainer">
         {/* <LoginPage/> */}
         <Dashboard />
-        <TopBar title="Resident's Information" />
+        <TopBar title="Finance" />
+        {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
         {/* <AddStaff/> */}
-        <MemberList />
+        {/* <MemberList /> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
-
-        {/* <SearchBar/> */}
+        <ResidentsPayments/>
       </div>
     </>
   );

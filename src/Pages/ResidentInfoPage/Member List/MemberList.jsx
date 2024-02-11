@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import TableHead from "@mui/material/TableHead";
 import { tableCellClasses } from "@mui/material/TableCell";
 import BackButton from "../../../Component/Buttons/BackButton";
+import SearchBar from "../../../Component/SearchBar/SearchBar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -281,10 +282,10 @@ function MemberList() {
                 </TableContainer>
               </CardActionArea>
             </div>
-            <div className="backBtn">
-              <BackButton />
-            </div>
           </CardContent>
+          <div className="backBtn">
+            <BackButton />
+          </div>
         </Card>
       </div>
     </div>
