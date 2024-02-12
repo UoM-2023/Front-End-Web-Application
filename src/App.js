@@ -13,6 +13,8 @@ import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
 import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
+import ResidentPaymentsAddNewForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentPaymentsAddNewForm";
+import AddNewExpenseForm from "./Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm";
 
 function App() {
   return (
@@ -30,7 +32,9 @@ function App() {
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
-        <UtilityCharges/>
+        {/* <UtilityCharges/> */}
+        {/* <ResidentPaymentsAddNewForm/> */}
+        <AddNewExpenseForm/>
       </div>
     </>
   );

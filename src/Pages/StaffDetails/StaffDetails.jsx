@@ -361,7 +361,7 @@ function StaffDetails() {
           </Select>
         </div>
         <p>{formErrors.staffCategory}</p>
-
+        
         <div className="input-item">
           <FormControl variant="standard">
             <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
