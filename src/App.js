@@ -15,6 +15,9 @@ import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPa
 import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
 import ResidentPaymentsAddNewForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentPaymentsAddNewForm";
 import AddNewExpenseForm from "./Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm";
+import Expenses from "./Pages/FinancePage/ResidentsPayments/Expenses";
+import Revenue from "./Pages/FinancePage/ResidentsPayments/Revenue";
+
 
 function App() {
   return (
@@ -34,7 +37,11 @@ function App() {
         {/* <ResidentsPayments/> */}
         {/* <UtilityCharges/> */}
         {/* <ResidentPaymentsAddNewForm/> */}
-        <AddNewExpenseForm/>
+        {/* <AddNewExpenseForm/> */}
+        <Expenses />
+        {/* <Revenue />
+        <UtilityCharges/> */}
+
       </div>
     </>
   );
