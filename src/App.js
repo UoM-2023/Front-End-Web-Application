@@ -12,6 +12,7 @@ import SearchBar from "./Component/SearchBar/SearchBar";
 import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
+import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
         {/* <UnitList /> */}
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
-        <ResidentsPayments/>
+        {/* <ResidentsPayments/> */}
+        <UtilityCharges/>
       </div>
     </>
   );
