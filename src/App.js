@@ -12,8 +12,12 @@ import SearchBar from "./Component/SearchBar/SearchBar";
 import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
-import Expenses from "./Pages/FinancePage/ResidentsPayments/Expenses";
-import Revenue from "./Pages/FinancePage/ResidentsPayments/Revenue";
+// <<<<<<< Praneeth
+// import Expenses from "./Pages/FinancePage/ResidentsPayments/Expenses";
+// import Revenue from "./Pages/FinancePage/ResidentsPayments/Revenue";
+// =======
+// import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
+// >>>>>>> main
 
 function App() {
   return (
@@ -31,8 +35,12 @@ function App() {
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
-        {/* <Expenses /> */}
-        <Revenue />
+// <<<<<<< Praneeth
+//         {/* <Expenses /> */}
+//         <Revenue />
+// =======
+//         <UtilityCharges/>
+// >>>>>>> main
       </div>
     </>
   );
