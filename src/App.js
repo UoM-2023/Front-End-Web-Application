@@ -13,6 +13,7 @@ import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
 import Expenses from "./Pages/FinancePage/ResidentsPayments/Expenses";
+import Revenue from "./Pages/FinancePage/ResidentsPayments/Revenue";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
-        <Expenses />
+        {/* <Expenses /> */}
+        <Revenue />
       </div>
     </>
   );
