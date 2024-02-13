@@ -1,5 +1,5 @@
 import React from "react";
-import "./ResidentsPayments.css";
+import "./Revenue.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -37,23 +37,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function createData(
     no,
-    referenceNo,
+    revenueId,
+    paidBy,
     amount,
-    expenseType,
+    type,
     paymentMethod,
     staffID,
-    approvedID,
     Date,
     action
 ) {
   return {
     no,
-    referenceNo,
+    revenueId,
+    paidBy,
     amount,
-    expenseType,
+    type,
     paymentMethod,
     staffID,
-    approvedID,
     Date,
     action
   };
@@ -62,12 +62,12 @@ function createData(
 const rows = [
   createData(
     1,
-    "E76536778",
-    "2400",
-    "Maintenance",
+    "R76536778",
+    "Kamal Perera",
+    "2500",
+    "Pool",
     "Cash",
-    "M76346",
-    "A2256",
+    "M2256",
     "16/12/2023",
     <div className="actionBtn">
       <EditButton />
@@ -77,12 +77,12 @@ const rows = [
   ),
   createData(
     1,
-    "E76536778",
-    "2400",
-    "Maintenance",
+    "R76536778",
+    "Kamal Perera",
+    "2500",
+    "Pool",
     "Cash",
-    "M76346",
-    "A2256",
+    "M2256",
     "16/12/2023",
     <div className="actionBtn">
       <EditButton />
@@ -92,12 +92,12 @@ const rows = [
   ),
   createData(
     1,
-    "E76536778",
-    "2400",
-    "Maintenance",
+    "R76536778",
+    "Kamal Perera",
+    "2500",
+    "Pool",
     "Cash",
-    "M76346",
-    "A2256",
+    "M2256",
     "16/12/2023",
     <div className="actionBtn">
       <EditButton />
@@ -107,12 +107,12 @@ const rows = [
   ),
   createData(
     1,
-    "E76536778",
-    "2400",
-    "Maintenance",
+    "R76536778",
+    "Amal Kamal",
+    "2500",
+    "Gym",
     "Cash",
-    "M76346",
-    "A2256",
+    "M2256",
     "16/12/2023",
     <div className="actionBtn">
       <EditButton />
@@ -122,12 +122,12 @@ const rows = [
   ),
   createData(
     1,
-    "E76536778",
-    "2400",
-    "Maintenance",
+    "R76536778",
+    "Amal Perera",
+    "250000000",
+    "Residental Unit A-108",
     "Cash",
-    "M76346",
-    "A2256",
+    "M2256",
     "16/12/2023",
     <div className="actionBtn">
       <EditButton />
@@ -137,9 +137,9 @@ const rows = [
   ),
 ];
 
-function Expenses() {
+function Revenue() {
   return (
-    <div className="expensesContainer">
+    <div className="revenueContainer">
         <div className="pageTop">
             <SearchBar/>
             <AddNewButton/>
@@ -158,12 +158,12 @@ function Expenses() {
           <TableHead>
             <TableRow>
                 <StyledTableCell align="left">#No</StyledTableCell>
-                <StyledTableCell align="left">Reference No</StyledTableCell>
+                <StyledTableCell align="left">Revenue ID</StyledTableCell>
+                <StyledTableCell align="left">Paid By</StyledTableCell>
                 <StyledTableCell align="left">Amount</StyledTableCell>
-                <StyledTableCell align="left">Expense Type</StyledTableCell>
+                <StyledTableCell align="left">Type</StyledTableCell>
                 <StyledTableCell align="left">Payment Method</StyledTableCell>
                 <StyledTableCell align="left">Staff ID</StyledTableCell>
-                <StyledTableCell align="left">Approved By</StyledTableCell>
                 <StyledTableCell align="left">Date</StyledTableCell>
                 <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
@@ -172,16 +172,12 @@ function Expenses() {
             {rows.map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.referenceNo}</StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.expenseType}
-                </StyledTableCell>
+                <StyledTableCell align="left">{row.revenueId}</StyledTableCell>
+                <StyledTableCell align="left">{row.paidBy}</StyledTableCell>
+                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                <StyledTableCell align="left">{row.type}</StyledTableCell>
                 <StyledTableCell align="left">{row.paymentMethod}</StyledTableCell>
                 <StyledTableCell align="left">{row.staffID}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.approvedID}
-                </StyledTableCell>
                 <StyledTableCell align="left">{row.Date}</StyledTableCell>
                 <StyledTableCell align="right">{row.action}</StyledTableCell>
               </StyledTableRow>
@@ -193,4 +189,4 @@ function Expenses() {
   );
 }
 
-export default Expenses;
+export default Revenue;

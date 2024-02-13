@@ -164,16 +164,16 @@ function ResidentPaymentsAddNewForm() {
     // const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
     if (!values.chargeType) {
-      errors.chargeType = "Please select Building * ";
+      errors.chargeType = "Please Select Charge Type * ";
     }
     if (!values.unitNumber) {
-      errors.unitNumber = "Please Enter First Name *";
+      errors.unitNumber = "Please Enter Unit Number *";
     }
     if (!values.residentName) {
-      errors.residentName = "Please Enter Middle Name *";
+      errors.residentName = "Please Enter Resident Name *";
     }
     if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Enter Last Name *";
+      errors.paymentMethod = "Please Select Payment Method *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";

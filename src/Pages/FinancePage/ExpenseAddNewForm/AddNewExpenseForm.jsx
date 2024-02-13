@@ -125,9 +125,9 @@ function AddNewExpenseForm() {
   //   });
 
   const [formData, setFormData] = useState({
-    chargeType: "",
-    unitNumber: "",
-    residentName: "",
+    expenseType: "",
+    staffID: "",
+    approvedBy: "",
     paymentMethod: "",
     amount: "",
   });
@@ -163,17 +163,17 @@ function AddNewExpenseForm() {
     // const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
     // const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-    if (!values.chargeType) {
-      errors.chargeType = "Please select Building * ";
+    if (!values.expenseType) {
+      errors.expenseType = "Please select Expense Type * ";
     }
-    if (!values.unitNumber) {
-      errors.unitNumber = "Please Enter First Name *";
+    if (!values.staffID) {
+      errors.staffID = "Please Enter Staff ID *";
     }
-    if (!values.residentName) {
-      errors.residentName = "Please Enter Middle Name *";
+    if (!values.approvedBy) {
+      errors.approvedBy = "Please Enter Approved ID *";
     }
     if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Enter Last Name *";
+      errors.paymentMethod = "Please Select Payment Method *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
@@ -189,9 +189,9 @@ function AddNewExpenseForm() {
             Expense Type :
           </InputLabel>
           <Select
-            name="chargeType"
+            name="expenseType"
             onChange={onChangeHandler}
-            value={formData.chargeType}
+            value={formData.expenseType}
             sx={{
               width: "33.6vw",
               height: "6.4vh",
@@ -199,42 +199,42 @@ function AddNewExpenseForm() {
             }}
           >
             <Option value="gas">Maintenance</Option>
-            <Option value="water">Water</Option>
-            <Option value="electricity">Electricity</Option>
+            <Option value="water">Cleaning</Option>
+            <Option value="electricity">Other</Option>
           </Select>
         </div>
-        <p>{formErrors.chargeType}</p>
+        <p>{formErrors.expenseType}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
-            <InputLabel shrink htmlFor="unitNumber" sx={{ fontSize: "20px" }}>
-              Unit Number :
+            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
+              Staff ID :
             </InputLabel>
             <BootstrapInput
               id="inputBox"
-              name="unitNumber"
+              name="staffID"
               type="text"
               onChange={onChangeHandler}
-              value={formData.unitNumber}
+              value={formData.staffID}
             />
           </FormControl>
-          <p>{formErrors.unitNumber}</p>
+          <p>{formErrors.staffID}</p>
         </div>
 
         <div className="input-item">
           <FormControl variant="standard">
             <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Resident Name :
+              Approved By :
             </InputLabel>
             <BootstrapInput
               id="inputBox"
-              name="residentName"
+              name="approvedBy"
               onChange={onChangeHandler}
-              value={formData.residentName}
+              value={formData.approvedBy}
             />
           </FormControl>
         </div>
-        <p>{formErrors.residentName}</p>
+        <p>{formErrors.approvedBy}</p>
 
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
@@ -442,5 +442,4 @@ const Option = styled(BaseOption)(
 const Popup = styled("div")`
   z-index: 2;
 `;
-
 export default AddNewExpenseForm;
