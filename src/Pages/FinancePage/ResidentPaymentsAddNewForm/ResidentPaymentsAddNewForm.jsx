@@ -130,6 +130,7 @@ function ResidentPaymentsAddNewForm() {
     residentName: "",
     paymentMethod: "",
     amount: "",
+    remark: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -183,7 +184,7 @@ function ResidentPaymentsAddNewForm() {
 
   return (
     <div className="addNewFormContainer">
-      <Box component="form" noValidate>
+      <Box component="form" noValidate onSubmit={onSubmitHandler}>
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
             Charge Type :
@@ -273,12 +274,26 @@ function ResidentPaymentsAddNewForm() {
         <p>{formErrors.amount}</p>
 
         <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Remark :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="remark"
+              onChange={onChangeHandler}
+              value={formData.remark}
+            />
+          </FormControl>
+        </div>
+
+        <div className="input-item">
           <div className="inputButtons">
             {/* <button className="submit" type="submit" onClick={onSubmitHandler}>
               Add New Payment
             </button> */}
             <BackButton /> &nbsp; &nbsp;
-            <SaveButton onClick={onSubmitHandler} />
+            <SaveButton />
           </div>
         </div>
       </Box>

@@ -1,5 +1,5 @@
 import React from "react";
-import "./AddNewExpenseForm.css";
+import "./UtilityChargesAddNewForm.css";
 import { useState, useEffect } from "react";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -25,26 +25,26 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-function AddNewExpenseForm() {
-//   const CssTextField = styled(TextField)({
-//     "& label.Mui-focused": {
-//       color: "#A0AAB4",
-//     },
-//     "& .MuiInput-underline:after": {
-//       borderBottomColor: "#B2BAC2",
-//     },
-//     "& .MuiOutlinedInput-root": {
-//       "& fieldset": {
-//         borderColor: "#E0E3E7",
-//       },
-//       "&:hover fieldset": {
-//         borderColor: "#B2BAC2",
-//       },
-//       "&.Mui-focused fieldset": {
-//         borderColor: "#6F7E8C",
-//       },
-//     },
-//   });
+function UtilityChargesAddNewForm() {
+  // const CssTextField = styled(TextField)({
+  //   "& label.Mui-focused": {
+  //     color: "#A0AAB4",
+  //   },
+  //   "& .MuiInput-underline:after": {
+  //     borderBottomColor: "#B2BAC2",
+  //   },
+  //   "& .MuiOutlinedInput-root": {
+  //     "& fieldset": {
+  //       borderColor: "#E0E3E7",
+  //     },
+  //     "&:hover fieldset": {
+  //       borderColor: "#B2BAC2",
+  //     },
+  //     "&.Mui-focused fieldset": {
+  //       borderColor: "#6F7E8C",
+  //     },
+  //   },
+  // });
 
   const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -85,10 +85,12 @@ function AddNewExpenseForm() {
   }));
 
   const [formData, setFormData] = useState({
-    expenseType: "",
+    utilityType: "",
+    unitID: "",
+    residentName: "",
     staffID: "",
-    approvedBy: "",
     paymentMethod: "",
+    noOfUnits: "",
     amount: "",
     remark: "",
   });
@@ -103,9 +105,10 @@ function AddNewExpenseForm() {
       [event?.target?.name]: event?.target?.value,
     }));
   };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.table(formData, validate(formData));
+    console.table(formData, validate(formData), "kjjj");
     setFormErrors(validate(formData));
     setIsSubmit(true);
   };
@@ -113,28 +116,30 @@ function AddNewExpenseForm() {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formData);
+      console.table(formData);
     }
   }, [formErrors]);
 
   const validate = (values) => {
     const errors = {};
-    // const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    // const nic_regex = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/m;
-    // const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
-    // const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-    if (!values.expenseType) {
-      errors.expenseType = "Please select Expense Type * ";
+    if (!values.utilityType) {
+      errors.utilityType = "Please select Utility Type * ";
+    }
+    if (!values.unitID) {
+      errors.unitID = "Please Enter Unit ID *";
+    }
+    if (!values.residentName) {
+      errors.residentName = "Please Enter Resident Name *";
     }
     if (!values.staffID) {
       errors.staffID = "Please Enter Staff ID *";
     }
-    if (!values.approvedBy) {
-      errors.approvedBy = "Please Enter Approved ID *";
-    }
     if (!values.paymentMethod) {
       errors.paymentMethod = "Please Select Payment Method *";
+    }
+    if (!values.noOfUnits) {
+      errors.noOfUnits = "Please Enter No Of Units *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
@@ -143,28 +148,60 @@ function AddNewExpenseForm() {
   };
 
   return (
-    <div className="addNewExpenseFormContainer">
+    <div className="utilityChargesAddNewFormContainer">
       <Box component="form" noValidate onSubmit={onSubmitHandler}>
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Expense Type :
+            Utility Type :
           </InputLabel>
           <Select
-            name="expenseType"
+            name="utilityType"
             onChange={onChangeHandler}
-            value={formData.expenseType}
+            value={formData.utilityType}
             sx={{
               width: "33.6vw",
               height: "6.4vh",
               backgroundColor: "#e8eaf6",
             }}
           >
-            <Option value="maintenance">Maintenance</Option>
-            <Option value="cleaning">Cleaning</Option>
+            <Option value="gas">Gas</Option>
+            <Option value="water">Water</Option>
+            <Option value="Electricity">Electricity</Option>
             <Option value="other">Other</Option>
           </Select>
         </div>
-        <p>{formErrors.expenseType}</p>
+        <p>{formErrors.utilityType}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
+              Unit ID :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="unitID"
+              type="text"
+              onChange={onChangeHandler}
+              value={formData.unitID}
+            />
+          </FormControl>
+          <p>{formErrors.unitID}</p>
+        </div>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Resident Name :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="residentName"
+              onChange={onChangeHandler}
+              value={formData.residentName}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.residentName}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -181,21 +218,6 @@ function AddNewExpenseForm() {
           </FormControl>
           <p>{formErrors.staffID}</p>
         </div>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Approved By :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="approvedBy"
-              onChange={onChangeHandler}
-              value={formData.approvedBy}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.approvedBy}</p>
 
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
@@ -217,6 +239,21 @@ function AddNewExpenseForm() {
           </Select>
         </div>
         <p>{formErrors.paymentMethod}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              No Of Units :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="noOfUnits"
+              onChange={onChangeHandler}
+              value={formData.noOfUnits}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.noOfUnits}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -253,10 +290,16 @@ function AddNewExpenseForm() {
               Add New Payment
             </button> */}
             <BackButton /> &nbsp; &nbsp;
-            <SaveButton/>
+            <SaveButton />
           </div>
         </div>
       </Box>
+
+      {Object.keys(formErrors).length === 0 && isSubmit ? (
+        <h3 className="success message">Successfully Added </h3>
+      ) : (
+        <pre> </pre>
+      )}
     </div>
   );
 }
@@ -417,4 +460,4 @@ const Option = styled(BaseOption)(
 const Popup = styled("div")`
   z-index: 2;
 `;
-export default AddNewExpenseForm;
+export default UtilityChargesAddNewForm;

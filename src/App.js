@@ -17,14 +17,18 @@ import ResidentPaymentsAddNewForm from "./Pages/FinancePage/ResidentPaymentsAddN
 import AddNewExpenseForm from "./Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm";
 import Expenses from "./Pages/FinancePage/Expenses/Expenses";
 import Revenue from "./Pages/FinancePage/Revenue/Revenue";
+import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddNewForm";
+import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
+import ResidentialUnits from "./ResidentialUnits";
+import TestForm from "./Component/TestForm";
 
 function App() {
   return (
     <>
       <div className="appContainer">
         {/* <LoginPage/> */}
-        <Dashboard />
-        <TopBar title="Finance" />
+        {/* <Dashboard /> */}
+        {/* <TopBar title="Finance" /> */}
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -35,11 +39,15 @@ function App() {
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
         {/* <UtilityCharges/> */}
-        {/* <ResidentPaymentsAddNewForm/> */}
-        {/* <AddNewExpenseForm /> */}
-        <Expenses />
-        <Revenue />
+        <ResidentPaymentsAddNewForm/>
+        <AddNewExpenseForm />
+        {/* <Expenses />
+        <Revenue /> */}
         {/* <UtilityCharges/> */}
+        <RevenueAddNewForm/>
+        <UtilityChargesAddNewForm />
+        {/* <ResidentialUnits /> */}
+        {/* q */}
       </div>
     </>
   );

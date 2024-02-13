@@ -1,5 +1,5 @@
 import React from "react";
-import "./AddNewExpenseForm.css";
+import "./RevenueAddNewForm.css";
 import { useState, useEffect } from "react";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -25,26 +25,26 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-function AddNewExpenseForm() {
-//   const CssTextField = styled(TextField)({
-//     "& label.Mui-focused": {
-//       color: "#A0AAB4",
-//     },
-//     "& .MuiInput-underline:after": {
-//       borderBottomColor: "#B2BAC2",
-//     },
-//     "& .MuiOutlinedInput-root": {
-//       "& fieldset": {
-//         borderColor: "#E0E3E7",
-//       },
-//       "&:hover fieldset": {
-//         borderColor: "#B2BAC2",
-//       },
-//       "&.Mui-focused fieldset": {
-//         borderColor: "#6F7E8C",
-//       },
-//     },
-//   });
+function RevenueAddNewForm() {
+  // const CssTextField = styled(TextField)({
+  //   "& label.Mui-focused": {
+  //     color: "#A0AAB4",
+  //   },
+  //   "& .MuiInput-underline:after": {
+  //     borderBottomColor: "#B2BAC2",
+  //   },
+  //   "& .MuiOutlinedInput-root": {
+  //     "& fieldset": {
+  //       borderColor: "#E0E3E7",
+  //     },
+  //     "&:hover fieldset": {
+  //       borderColor: "#B2BAC2",
+  //     },
+  //     "&.Mui-focused fieldset": {
+  //       borderColor: "#6F7E8C",
+  //     },
+  //   },
+  // });
 
   const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -85,9 +85,10 @@ function AddNewExpenseForm() {
   }));
 
   const [formData, setFormData] = useState({
-    expenseType: "",
+    revenueType: "",
+    unitID: "",
+    residentName: "",
     staffID: "",
-    approvedBy: "",
     paymentMethod: "",
     amount: "",
     remark: "",
@@ -103,6 +104,7 @@ function AddNewExpenseForm() {
       [event?.target?.name]: event?.target?.value,
     }));
   };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
     console.table(formData, validate(formData));
@@ -113,7 +115,7 @@ function AddNewExpenseForm() {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formData);
+      console.table(formData);
     }
   }, [formErrors]);
 
@@ -124,14 +126,17 @@ function AddNewExpenseForm() {
     // const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
     // const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-    if (!values.expenseType) {
-      errors.expenseType = "Please select Expense Type * ";
+    if (!values.revenueType) {
+      errors.revenueType = "Please select Revenue Type * ";
+    }
+    if (!values.unitID) {
+      errors.unitID = "Please Enter Unit ID *";
+    }
+    if (!values.residentName) {
+      errors.approvedBy = "Please Enter Resident Name *";
     }
     if (!values.staffID) {
       errors.staffID = "Please Enter Staff ID *";
-    }
-    if (!values.approvedBy) {
-      errors.approvedBy = "Please Enter Approved ID *";
     }
     if (!values.paymentMethod) {
       errors.paymentMethod = "Please Select Payment Method *";
@@ -143,28 +148,60 @@ function AddNewExpenseForm() {
   };
 
   return (
-    <div className="addNewExpenseFormContainer">
+    <div className="revenueAddNewFormContainer">
       <Box component="form" noValidate onSubmit={onSubmitHandler}>
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Expense Type :
+            Revenue Type :
           </InputLabel>
           <Select
-            name="expenseType"
+            name="revenueType"
             onChange={onChangeHandler}
-            value={formData.expenseType}
+            value={formData.revenueType}
             sx={{
               width: "33.6vw",
               height: "6.4vh",
               backgroundColor: "#e8eaf6",
             }}
           >
-            <Option value="maintenance">Maintenance</Option>
-            <Option value="cleaning">Cleaning</Option>
-            <Option value="other">Other</Option>
+            <Option value="pool">Pool</Option>
+            <Option value="gym">Gym</Option>
+            <Option value="eventHall01">Event Hall 01</Option>
+            <Option value="apartmentUnit">Apartment Unit</Option>
           </Select>
         </div>
-        <p>{formErrors.expenseType}</p>
+        <p>{formErrors.revenueType}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
+              Unit ID :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="unitID"
+              type="text"
+              onChange={onChangeHandler}
+              value={formData.unitID}
+            />
+          </FormControl>
+          <p>{formErrors.unitID}</p>
+        </div>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Resident Name :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="residentName"
+              onChange={onChangeHandler}
+              value={formData.residentName}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.residentName}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -181,21 +218,6 @@ function AddNewExpenseForm() {
           </FormControl>
           <p>{formErrors.staffID}</p>
         </div>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Approved By :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="approvedBy"
-              onChange={onChangeHandler}
-              value={formData.approvedBy}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.approvedBy}</p>
 
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
@@ -417,4 +439,4 @@ const Option = styled(BaseOption)(
 const Popup = styled("div")`
   z-index: 2;
 `;
-export default AddNewExpenseForm;
+export default RevenueAddNewForm;

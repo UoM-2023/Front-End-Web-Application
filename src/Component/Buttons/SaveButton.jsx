@@ -7,6 +7,8 @@ function SaveButton() {
     <div>
       <Stack spacing={2} direction="row">
         <Button
+          className="submit"
+          type="submit"
           variant="contained"
           style={{
             backgroundColor: "#e87142c5",
@@ -15,12 +17,10 @@ function SaveButton() {
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.85rem",
-            fontWeight:"bold",
+            fontWeight: "bold",
             paddingLeft: "1.8rem",
             paddingRight: "1.8rem",
           }}
-          className="submit"
-          type="submit"
         >
           Save
         </Button>
