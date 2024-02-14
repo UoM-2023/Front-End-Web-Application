@@ -12,16 +12,23 @@ import SearchBar from "./Component/SearchBar/SearchBar";
 import AddNewButton from "./Component/Buttons/AddNewButton";
 import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
 import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
-import Expenses from "./Pages/FinancePage/ResidentsPayments/Expenses";
-import Revenue from "./Pages/FinancePage/ResidentsPayments/Revenue";
+import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
+import ResidentPaymentsAddNewForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentPaymentsAddNewForm";
+import AddNewExpenseForm from "./Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm";
+import Expenses from "./Pages/FinancePage/Expenses/Expenses";
+import Revenue from "./Pages/FinancePage/Revenue/Revenue";
+import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddNewForm";
+import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
+import ResidentialUnits from "./ResidentialUnits";
+import TestForm from "./Component/TestForm";
 
 function App() {
   return (
     <>
       <div className="appContainer">
         {/* <LoginPage/> */}
-        <Dashboard />
-        <TopBar title="Finance" />
+        {/* <Dashboard /> */}
+        {/* <TopBar title="Finance" /> */}
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -31,8 +38,16 @@ function App() {
         {/* <StaffList/> */}
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
-        {/* <Expenses /> */}
-        <Revenue />
+        {/* <UtilityCharges/> */}
+        <ResidentPaymentsAddNewForm/>
+        <AddNewExpenseForm />
+        {/* <Expenses />
+        <Revenue /> */}
+        {/* <UtilityCharges/> */}
+        <RevenueAddNewForm/>
+        <UtilityChargesAddNewForm />
+        {/* <ResidentialUnits /> */}
+        {/* q */}
       </div>
     </>
   );

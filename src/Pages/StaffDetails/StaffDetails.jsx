@@ -28,25 +28,25 @@ const Select = React.forwardRef(function Select(props, ref) {
 });
 
 function StaffDetails() {
-  const CssTextField = styled(TextField)({
-    "& label.Mui-focused": {
-      color: "#A0AAB4",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#B2BAC2",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#E0E3E7",
-      },
-      "&:hover fieldset": {
-        borderColor: "#B2BAC2",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#6F7E8C",
-      },
-    },
-  });
+  // const CssTextField = styled(TextField)({
+  //   "& label.Mui-focused": {
+  //     color: "#A0AAB4",
+  //   },
+  //   "& .MuiInput-underline:after": {
+  //     borderBottomColor: "#B2BAC2",
+  //   },
+  //   "& .MuiOutlinedInput-root": {
+  //     "& fieldset": {
+  //       borderColor: "#E0E3E7",
+  //     },
+  //     "&:hover fieldset": {
+  //       borderColor: "#B2BAC2",
+  //     },
+  //     "&.Mui-focused fieldset": {
+  //       borderColor: "#6F7E8C",
+  //     },
+  //   },
+  // });
 
   const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -86,45 +86,45 @@ function StaffDetails() {
     },
   }));
 
-  const RedditTextField = styled((props) => (
-    <TextField InputProps={{ disableUnderline: true }} {...props} />
-  ))(({ theme }) => ({
-    "& .MuiFilledInput-root": {
-      overflow: "hidden",
-      borderRadius: 4,
-      backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
-      border: "1px solid",
-      borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
-      transition: theme.transitions.create([
-        "border-color",
-        "background-color",
-        "box-shadow",
-      ]),
-      "&:hover": {
-        backgroundColor: "transparent",
-      },
-      "&.Mui-focused": {
-        backgroundColor: "transparent",
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
+  // const RedditTextField = styled((props) => (
+  //   <TextField InputProps={{ disableUnderline: true }} {...props} />
+  // ))(({ theme }) => ({
+  //   "& .MuiFilledInput-root": {
+  //     overflow: "hidden",
+  //     borderRadius: 4,
+  //     backgroundColor: theme.palette.mode === "light" ? "#F3F6F9" : "#1A2027",
+  //     border: "1px solid",
+  //     borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
+  //     transition: theme.transitions.create([
+  //       "border-color",
+  //       "background-color",
+  //       "box-shadow",
+  //     ]),
+  //     "&:hover": {
+  //       backgroundColor: "transparent",
+  //     },
+  //     "&.Mui-focused": {
+  //       backgroundColor: "transparent",
+  //       boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
+  //       borderColor: theme.palette.primary.main,
+  //     },
+  //   },
+  // }));
 
-  const ValidationTextField = styled(TextField)({
-    "& input:valid + fieldset": {
-      borderColor: "#E0E3E7",
-      borderWidth: 1,
-    },
-    "& input:invalid + fieldset": {
-      borderColor: "red",
-      borderWidth: 1,
-    },
-    "& input:valid:focus + fieldset": {
-      borderLeftWidth: 4,
-      padding: "4px !important", // override inline-style
-    },
-  });
+  // const ValidationTextField = styled(TextField)({
+  //   "& input:valid + fieldset": {
+  //     borderColor: "#E0E3E7",
+  //     borderWidth: 1,
+  //   },
+  //   "& input:invalid + fieldset": {
+  //     borderColor: "red",
+  //     borderWidth: 1,
+  //   },
+  //   "& input:valid:focus + fieldset": {
+  //     borderLeftWidth: 4,
+  //     padding: "4px !important", // override inline-style
+  //   },
+  // });
 
   const [formData, setFormData] = useState({
     fName: "",
@@ -148,13 +148,22 @@ function StaffDetails() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  // const onChangeHandler = (event) => {
+  //   console.log(event);
+  //   setFormData(() => ({
+  //     ...formData,
+  //     [event.target.name]: event.target.value,
+  //   }));
+  // };
   const onChangeHandler = (event) => {
-    console.log(event);
-    setFormData(() => ({
-      ...formData,
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
     }));
   };
+  
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
     console.table(formData, validate(formData), "kjjj");
@@ -165,7 +174,7 @@ function StaffDetails() {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formData);
+      console.table(formData);
     }
   }, [formErrors]);
 
@@ -505,6 +514,7 @@ function StaffDetails() {
           </button>
         </div>
       </Box>
+
       {Object.keys(formErrors).length === 0 && isSubmit ? (
         <h3 className="success message">Successfully Added Staff Member </h3>
       ) : (

@@ -704,7 +704,7 @@ const Option = styled(BaseOption)(
 );
 
 const Popup = styled("div")`
-  z-index: 1;
+  z-index: 3;
 `;
 
 export default AddMember;

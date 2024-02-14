@@ -1,5 +1,5 @@
 import React from "react";
-import "./ResidentsPayments.css";
+import "./Revenue.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
