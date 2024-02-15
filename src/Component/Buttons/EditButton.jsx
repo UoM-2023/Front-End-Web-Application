@@ -18,8 +18,8 @@ function EditButton() {
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.85rem",
-            paddingLeft: "1.8rem",
-            paddingRight: "1.8rem",
+            paddingLeft: "1.58rem",
+            paddingRight: "1.58rem",
           }}
         >
           Edit

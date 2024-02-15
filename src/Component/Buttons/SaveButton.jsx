@@ -18,8 +18,8 @@ function SaveButton() {
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.85rem",
             fontWeight: "bold",
-            paddingLeft: "1.8rem",
-            paddingRight: "1.8rem",
+            paddingLeft: "1.7rem",
+            paddingRight: "1.7rem",
           }}
         >
           Save

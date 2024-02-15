@@ -1,5 +1,5 @@
 import React from "react";
-import "./UtilityChargesAddNewForm.css";
+import "./RequestsAddNewForm.css";
 import { useState, useEffect } from "react";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -25,7 +25,7 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-function UtilityChargesAddNewForm() {
+function RequestsAddNewForm() {
   // const CssTextField = styled(TextField)({
   //   "& label.Mui-focused": {
   //     color: "#A0AAB4",
@@ -85,14 +85,9 @@ function UtilityChargesAddNewForm() {
   }));
 
   const [formData, setFormData] = useState({
-    utilityType: "",
+    maintenanceType: "",
     unitID: "",
     residentName: "",
-    staffID: "",
-    paymentMethod: "",
-    noOfUnits: "",
-    amount: "",
-    remark: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -123,8 +118,8 @@ function UtilityChargesAddNewForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
+    if (!values.maintenanceType) {
+      errors.maintenanceType = "Please select Utility Type * ";
     }
     if (!values.unitID) {
       errors.unitID = "Please Enter Unit ID *";
@@ -132,45 +127,33 @@ function UtilityChargesAddNewForm() {
     if (!values.residentName) {
       errors.residentName = "Please Enter Resident Name *";
     }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
-    }
-    if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Select Payment Method *";
-    }
-    if (!values.noOfUnits) {
-      errors.noOfUnits = "Please Enter No Of Units *";
-    }
-    if (!values.amount) {
-      errors.amount = "Please Enter Amount *";
-    }
     return errors;
   };
 
   return (
-    <div className="utilityChargesAddNewFormContainer">
+    <div className="requestsAddNewFormContainer">
       <Box component="form" noValidate onSubmit={onSubmitHandler}>
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Utility Type :
+            Maintenance Type :
           </InputLabel>
           <Select
-            name="utilityType"
+            name="maintenanceType"
             onChange={onChangeHandler}
-            value={formData.utilityType}
+            value={formData.maintenanceType}
             sx={{
               width: "33.6vw",
               height: "6.4vh",
               backgroundColor: "#e8eaf6",
             }}
           >
-            <Option value="gas">Gas</Option>
-            <Option value="water">Water</Option>
-            <Option value="Electricity">Electricity</Option>
+            <Option value="waterSupply">Water Supply</Option>
+            <Option value="gasSupply">Gas Supply</Option>
+            <Option value="electricityService">Electricity Service</Option>
             <Option value="other">Other</Option>
           </Select>
         </div>
-        <p>{formErrors.utilityType}</p>
+        <p>{formErrors.maintenanceType}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
@@ -202,87 +185,6 @@ function UtilityChargesAddNewForm() {
           </FormControl>
         </div>
         <p>{formErrors.residentName}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
-              Staff ID :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="staffID"
-              type="text"
-              onChange={onChangeHandler}
-              value={formData.staffID}
-            />
-          </FormControl>
-          <p>{formErrors.staffID}</p>
-        </div>
-
-        <div className="input-item">
-          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Payment Method :
-          </InputLabel>
-          <Select
-            name="paymentMethod"
-            // onChange={onChangeHandler}
-            // value={formData.paymentMethod}
-            sx={{
-              width: "33.6vw",
-              height: "6.4vh",
-              backgroundColor: "#e8eaf6",
-            }}
-          >
-            <Option value="cash">Cash</Option>
-            <Option value="card">Card</Option>
-            <Option value="cheque">Cheque</Option>
-          </Select>
-        </div>
-        <p>{formErrors.paymentMethod}</p>
-        
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              No Of Units :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="noOfUnits"
-              onChange={onChangeHandler}
-              value={formData.noOfUnits}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.noOfUnits}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Amount (Rs.):
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="amount"
-              onChange={onChangeHandler}
-              value={formData.amount}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.amount}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Remark :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="remark"
-              onChange={onChangeHandler}
-              value={formData.remark}
-            />
-          </FormControl>
-        </div>
 
         <div className="input-item">
           <div className="inputButtons">
@@ -460,4 +362,4 @@ const Option = styled(BaseOption)(
 const Popup = styled("div")`
   z-index: 2;
 `;
-export default UtilityChargesAddNewForm;
+export default RequestsAddNewForm;

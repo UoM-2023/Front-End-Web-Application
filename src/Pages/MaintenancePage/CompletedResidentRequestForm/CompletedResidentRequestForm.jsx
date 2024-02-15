@@ -1,5 +1,5 @@
 import React from "react";
-import "./UtilityChargesAddNewForm.css";
+import "./CompletedResidentRequestForm.css";
 import { useState, useEffect } from "react";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -25,7 +25,7 @@ const Select = React.forwardRef(function Select(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={slots} />;
 });
 
-function UtilityChargesAddNewForm() {
+function CompletedResidentRequestForm() {
   // const CssTextField = styled(TextField)({
   //   "& label.Mui-focused": {
   //     color: "#A0AAB4",
@@ -85,14 +85,12 @@ function UtilityChargesAddNewForm() {
   }));
 
   const [formData, setFormData] = useState({
-    utilityType: "",
-    unitID: "",
-    residentName: "",
-    staffID: "",
-    paymentMethod: "",
-    noOfUnits: "",
-    amount: "",
-    remark: "",
+    referenceNo: "",
+    serviceProvider: "",
+    mobileNo: "",
+    completedDate: "",
+    paymentStatus: "",
+    paymentID: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -122,167 +120,137 @@ function UtilityChargesAddNewForm() {
 
   const validate = (values) => {
     const errors = {};
+    const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
+    if (!values.referenceNo) {
+      errors.referenceNo = "Please Enter Reference No * ";
     }
-    if (!values.unitID) {
-      errors.unitID = "Please Enter Unit ID *";
+    if (!values.serviceProvider) {
+      errors.serviceProvider = "Please Enter Service Provider *";
     }
-    if (!values.residentName) {
-      errors.residentName = "Please Enter Resident Name *";
+    if (!values.mobileNo) {
+      errors.mobileNo = "Mobile Number is required *";
+    } else if (!mobileno_regex.test(values.mobileNo)) {
+      errors.mobileNo = "Enter a valid Mobile Number";
     }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
+    if (!values.completedDate) {
+      errors.completedDate = "Please Enter Completed Date *";
     }
-    if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Select Payment Method *";
+    if (!values.paymentStatus) {
+      errors.paymentStatus = "Please select Payment Status *";
     }
-    if (!values.noOfUnits) {
-      errors.noOfUnits = "Please Enter No Of Units *";
-    }
-    if (!values.amount) {
-      errors.amount = "Please Enter Amount *";
+    if (!values.paymentID) {
+      errors.paymentID = "Please Enter Payment ID *";
     }
     return errors;
   };
 
   return (
-    <div className="utilityChargesAddNewFormContainer">
+    <div className="completedResidentRequestFormContainer">
       <Box component="form" noValidate onSubmit={onSubmitHandler}>
+
+      <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Reference No :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="referenceNo"
+              onChange={onChangeHandler}
+              value={formData.referenceNo}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.referenceNo}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Service Provider :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="serviceProvider"
+              onChange={onChangeHandler}
+              value={formData.serviceProvider}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.serviceProvider}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Mobile No :
+            </InputLabel>
+            <BootstrapInput
+              id="inputBox"
+              name="mobileNo"
+              onChange={onChangeHandler}
+              value={formData.mobileNo}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.mobileNo}</p>
+
+        <div className="input-item">
+          <FormControl variant="standard">
+            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
+              Completed Date :
+            </InputLabel>
+            <BootstrapInput
+              type="date"
+              id="inputBox"
+              name="completedDate"
+              onChange={onChangeHandler}
+              value={formData.completedDate}
+            />
+          </FormControl>
+        </div>
+        <p>{formErrors.completedDate}</p>
+
         <div className="input-item">
           <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Utility Type :
+            Payment Status :
           </InputLabel>
           <Select
-            name="utilityType"
+            name="paymentStatus"
             onChange={onChangeHandler}
-            value={formData.utilityType}
+            value={formData.paymentStatus}
             sx={{
               width: "33.6vw",
               height: "6.4vh",
               backgroundColor: "#e8eaf6",
             }}
           >
-            <Option value="gas">Gas</Option>
-            <Option value="water">Water</Option>
-            <Option value="Electricity">Electricity</Option>
-            <Option value="other">Other</Option>
+            <Option name="paid" value="paid">
+              Paid
+            </Option>
+            <Option name="halfPayment" value="halfPayment">
+              Half Payment
+            </Option>
+            <Option name="pending" value="pending">
+              Pending
+            </Option>
           </Select>
         </div>
-        <p>{formErrors.utilityType}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
-              Unit ID :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="unitID"
-              type="text"
-              onChange={onChangeHandler}
-              value={formData.unitID}
-            />
-          </FormControl>
-          <p>{formErrors.unitID}</p>
-        </div>
+        <p>{formErrors.paymentStatus}</p>
 
         <div className="input-item">
           <FormControl variant="standard">
             <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Resident Name :
+              Payment ID :
             </InputLabel>
             <BootstrapInput
               id="inputBox"
-              name="residentName"
+              name="paymentID"
               onChange={onChangeHandler}
-              value={formData.residentName}
+              value={formData.paymentID}
             />
           </FormControl>
         </div>
-        <p>{formErrors.residentName}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="staffID" sx={{ fontSize: "20px" }}>
-              Staff ID :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="staffID"
-              type="text"
-              onChange={onChangeHandler}
-              value={formData.staffID}
-            />
-          </FormControl>
-          <p>{formErrors.staffID}</p>
-        </div>
-
-        <div className="input-item">
-          <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-            Payment Method :
-          </InputLabel>
-          <Select
-            name="paymentMethod"
-            // onChange={onChangeHandler}
-            // value={formData.paymentMethod}
-            sx={{
-              width: "33.6vw",
-              height: "6.4vh",
-              backgroundColor: "#e8eaf6",
-            }}
-          >
-            <Option value="cash">Cash</Option>
-            <Option value="card">Card</Option>
-            <Option value="cheque">Cheque</Option>
-          </Select>
-        </div>
-        <p>{formErrors.paymentMethod}</p>
-        
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              No Of Units :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="noOfUnits"
-              onChange={onChangeHandler}
-              value={formData.noOfUnits}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.noOfUnits}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Amount (Rs.):
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="amount"
-              onChange={onChangeHandler}
-              value={formData.amount}
-            />
-          </FormControl>
-        </div>
-        <p>{formErrors.amount}</p>
-
-        <div className="input-item">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
-              Remark :
-            </InputLabel>
-            <BootstrapInput
-              id="inputBox"
-              name="remark"
-              onChange={onChangeHandler}
-              value={formData.remark}
-            />
-          </FormControl>
-        </div>
+        <p>{formErrors.paymentID}</p>
 
         <div className="input-item">
           <div className="inputButtons">
@@ -460,4 +428,4 @@ const Option = styled(BaseOption)(
 const Popup = styled("div")`
   z-index: 2;
 `;
-export default UtilityChargesAddNewForm;
+export default CompletedResidentRequestForm;

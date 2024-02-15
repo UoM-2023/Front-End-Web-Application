@@ -1,0 +1,16 @@
+.input-item{
+    margin-top: 1rem;
+}
+.completedResidentRequestFormContainer{
+    margin-left: 10rem;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+    z-index: 2;
+}
+.inputButtons{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 5rem;
+}

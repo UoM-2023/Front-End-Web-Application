@@ -9,11 +9,12 @@ function DeleteButton() {
         <Button 
           variant="contained" 
           style={{ 
-            backgroundColor: '#ED0800', 
+            backgroundColor: '#BB5008', 
             color: '#fff',
-            borderRadius: '5rem',
+            borderRadius: '0.5rem',
             fontFamily: "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: '0.85rem',
+            fontWeight: "bold",
             paddingLeft:'1.2rem',
             paddingRight:'1.2rem'
           }}

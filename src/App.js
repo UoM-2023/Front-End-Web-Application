@@ -21,14 +21,27 @@ import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddN
 import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
 import ResidentialUnits from "./ResidentialUnits";
 import TestForm from "./Component/TestForm";
+import DeleteButton from "./Component/Buttons/DeleteButton";
+import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
+import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
+import RequestsAddNewForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsAddNewForm";
+import InternalMaintenanceAddNewForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceAddNewForm";
+import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
+import CompletedResidentRequestForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompletedResidentRequestForm";
+import BackButton from "./Component/Buttons/BackButton";
+import CancelButton from "./Component/Buttons/CancelButton";
+import EditButton from "./Component/Buttons/EditButton";
+import SaveButton from "./Component/Buttons/SaveButton";
+import ViewButton from "./Component/Buttons/ViewButton";
+import SubmitButton from "./Component/Buttons/SubmitButton";
 
 function App() {
   return (
     <>
       <div className="appContainer">
         {/* <LoginPage/> */}
-        {/* <Dashboard /> */}
-        {/* <TopBar title="Finance" /> */}
+        <Dashboard />
+        <TopBar title="Finance" />
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -39,15 +52,20 @@ function App() {
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
         {/* <UtilityCharges/> */}
-        <ResidentPaymentsAddNewForm/>
+        {/* <ResidentPaymentsAddNewForm/>
         <AddNewExpenseForm />
-        {/* <Expenses />
-        <Revenue /> */}
+        <Expenses /> */}
+        {/* <Revenue /> */}
         {/* <UtilityCharges/> */}
-        <RevenueAddNewForm/>
+        {/* <RevenueAddNewForm/> */}
         <UtilityChargesAddNewForm />
         {/* <ResidentialUnits /> */}
-        {/* q */}
+        {/* <RequestsTable /> */}
+        <InternalMaintenanceTable />
+        {/* <RequestsAddNewForm/> */}
+        {/* <InternalMaintenanceAddNewForm/> */}
+        {/* <CompletedResidentRequestTable /> */}
+        {/* <CompletedResidentRequestForm /> */}
       </div>
     </>
   );
