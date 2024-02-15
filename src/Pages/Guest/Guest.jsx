@@ -9,6 +9,14 @@ import './guest.css';
 
 import SaveButton from '../../Component/Buttons/SaveButton';
 import BackButton from '../../Component/Buttons/BackButton';
+import MiniDrawer from '../../Component/SideBar/MiniDrawer';
+import TopBar from '../../Component/TopBar/TopBar';
+import { useState } from 'react';
+
+
+
+
+
 
 
 
@@ -109,9 +117,40 @@ const ValidationTextField = styled(TextField)({
     padding: '4px !important', // override inline-style
   },
 });
-<h1>Guest</h1>
 
+        
 export default function Guest() {
+
+
+  const [unit, setUnit] = useState('');
+  const [unitError, setUnitError] = useState('');
+
+  const handleUnitChange = (event) => {
+    setUnit(event.target.value);
+  };
+
+  const validateUnit = () => {
+    if (unit.trim() === '') {
+      setUnitError('Unit field cannot be empty');
+      return false;
+    }
+    setUnitError('');
+    return true;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (validateUnit()) {
+      // Proceed with form submission or further validation
+      console.log('Form submitted');
+    } else {
+      console.log('Form validation failed');
+    }
+  };
+
+
+
+
   return (
 
     <Box
@@ -125,24 +164,58 @@ export default function Guest() {
     >
 
 
+
+
+
+
+
+
+
+
       <FormControl variant="standard">
 
         <InputLabel shrink htmlFor="bootstrap-input">
         </InputLabel>
-        <div className="title">
-          <h1>Guests</h1>
-   
-          </div>
-          <hr class="custom-hr"></hr>
+
+
           <div className="allformItems"><div className='formItems'> 
     <div className="formTitles ">Unit</div> 
     <div className='wrap'>
-    <BootstrapInput className='ABC' defaultValue="Type here" id="bootstrap-input" />
+    <BootstrapInput className='ABC' defaultValue="Type here" id="bootstrap-input"  />
         <InputLabel    className='ABC' shrink htmlFor="bootstrap-input">
         </InputLabel>
 
     </div>
         </div>
+ {/* <form onSubmit={handleSubmit}>
+      <div className="allformItems">
+        <div className='formItems'> 
+          <div className="formTitles">Unit</div> 
+          <div className='wrap'>
+            <FormControl fullWidth>
+              <TextField
+                className='ABC'
+                defaultValue={unit}
+                id="bootstrap-input"
+                onChange={handleUnitChange}
+                error={Boolean(unitError)}
+                helperText={unitError}
+              />
+            </FormControl>
+          </div>
+        </div>
+        </div>
+        </form> */}
+
+
+
+
+
+
+
+
+
+        
 
 <div className='formItems'>
 <div className="formTitles "> Resident Name</div>
@@ -180,18 +253,19 @@ export default function Guest() {
     </div>
     
 </div>
-<div className="buttons">
-    <span className="saveButton">
+
+<div className="button">
+  <span className="SaveButton">
     <SaveButton/>
-    </span>
-    <span className="backButton">
-        <BackButton/>
-    </span>
+  </span>
+  <span className="BackButton">
+    <BackButton/>
+  </span>
 </div>
-{/* for buttons */}
+</div>
 
-    </div>
 
+ {/* div */}
 
 
 
@@ -204,3 +278,4 @@ export default function Guest() {
 
   );
 }
+

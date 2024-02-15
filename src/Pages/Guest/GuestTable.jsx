@@ -11,6 +11,7 @@
     import ViewButton from "../../Component/Buttons/ViewButton";
     import EditButton from "../../Component/Buttons/EditButton";
     import DeleteButton from "../../Component/Buttons/DeleteButton";
+import AddNewButton from "../../Component/Buttons/AddNewButton";
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
       [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#f9f4f0",
@@ -98,10 +99,14 @@
       return (
         
         <div className="GuestTableContainer">
-    <div className="title">
-          <h1>Guests</h1>
-    </div>
-      <hr class="custom-hr"></hr>
+
+
+
+      <div className="AddNewButton1">
+      <span className="AddNewButton">
+    <AddNewButton/>
+    </span>
+      </div>
           <TableContainer component={Paper}>
             <Table
               sx={{

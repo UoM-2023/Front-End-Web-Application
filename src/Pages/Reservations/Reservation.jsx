@@ -153,11 +153,8 @@ export default function Reservation() {
 
         <InputLabel shrink htmlFor="bootstrap-input">
         </InputLabel>
-        <div className="title">
-          <h1>Reservation</h1>
-   
-          </div>
-          <hr class="custom-hr"></hr>
+
+
           <div className="allformItems"><div className='formItems'> 
     <div className="formTitles ">Unit</div> 
     <div className='wrap'>
@@ -177,7 +174,7 @@ export default function Reservation() {
 </div>
     </div>
 
- <div className="dropdown">
+ <div className="DropDown">
  <div className="formTitles "> Charge Per</div>
  <Select defaultValue={Select}>
       <Option value={10}>Monthly</Option>
@@ -187,20 +184,15 @@ export default function Reservation() {
     </div>   
         
 
-        
-
-
-        
-
-<div className="buttons">
-    <span className="saveButton">
+    <div className="button">
+  <span className="SaveButton">
     <SaveButton/>
-    </span>
-    <span className="backButton">
-        <BackButton/>
-    </span>
+  </span>
+  <span className="BackButton">
+    <BackButton/>
+  </span>
 </div>
-{/* for buttons */}
+
 
     </div>
 

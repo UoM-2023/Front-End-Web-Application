@@ -153,11 +153,7 @@ export default function Reservation() {
 
         <InputLabel shrink htmlFor="bootstrap-input">
         </InputLabel>
-        <div className="title">
-          <h1>Reservation</h1>
-   
-          </div>
-          <hr class="custom-hr"></hr>
+
           <div className="allformItems"><div className='formItems'> 
 
 

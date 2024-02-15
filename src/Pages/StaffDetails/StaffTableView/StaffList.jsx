@@ -8,7 +8,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import ViewButton from "../../../Component/Buttons/ViewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 
@@ -34,8 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(no, unit, name, status, mobileNo, email, action) {
-  return { no, unit, name, status, mobileNo, email, action };
+function createData(no, staffID, name, staffRole, mobileNo, email, createdDate, action) {
+  return { no, staffID, name, staffRole, mobileNo, email, createdDate, action };
 }
 
 const rows = [
@@ -46,6 +45,7 @@ const rows = [
     "Finance Manager",
     "0767927004",
     "awg25silva1999@gmail.com",
+    "05/29/2019",
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -59,6 +59,7 @@ const rows = [
     "Front Office Manager",
     "0711927004",
     "awgsilva1999@gmail.com",
+    "10/03/2021",
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -67,11 +68,12 @@ const rows = [
   ),
   createData(
     3,
-    "B-214102",
+    "S-214102",
     "A.W.G.Samaraweera",
     "Security Officer",
     "0767925504",
     "awgsilva1999@gmail.com",
+    "03/30/2020",
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -80,11 +82,12 @@ const rows = [
   ),
   createData(
     4,
-    "B-214103",
+    "S-214103",
     "A.W.Jerry Fernando",
     "Admin",
     "0117927004",
     "awgsilva1999@gmail.com",
+    "01/19/2023",
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -93,11 +96,12 @@ const rows = [
   ),
   createData(
     5,
-    "A-214104",
+    "S-214104",
     "A.W.Saman Abeykoon",
     "Maintenance Manager",
     "0787027004",
     "awgsilva1999@gmail.com",
+    "07/23/2020",
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -128,6 +132,7 @@ function StaffList() {
               <StyledTableCell align="left">Staff Role</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
+              <StyledTableCell align="left">Created Date</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -135,11 +140,12 @@ function StaffList() {
             {rows.map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.unit}</StyledTableCell>
+                <StyledTableCell align="left">{row.staffID}</StyledTableCell>
                 <StyledTableCell align="left">{row.name}</StyledTableCell>
-                <StyledTableCell align="left">{row.status}</StyledTableCell>
+                <StyledTableCell align="left">{row.staffRole}</StyledTableCell>
                 <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
                 <StyledTableCell align="left">{row.email}</StyledTableCell>
+                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}

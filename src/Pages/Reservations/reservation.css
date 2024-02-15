@@ -14,19 +14,18 @@
 .formTitles {
   font-weight: bold;
 }
-.custom-hr {
-  width: 100vw; 
+
+.button{
+  display: flex;
+  margin-top: 2rem;
 }
-.buttons{
-    margin-top: 25px;
-display: flex;
+.SaveButton{
+  margin-left: 44.4rem;
 }
-.backButton{
-  margin-left:1rem;
+.BackButton{
+  margin-left: 1rem;
 }
-.saveButton{
-  margin-left:46rem;
-}
-.dropdown{
-    margin-left: 25%;
+
+.DropDown{
+  margin-left: 14.7rem;
 }

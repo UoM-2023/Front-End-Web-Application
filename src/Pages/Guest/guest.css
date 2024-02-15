@@ -2,7 +2,7 @@
     margin-bottom: 25px;
   margin-left:25%;
   font-style: bold;
-  margin-top: 25px;
+  margin-top: px;
 
 }
 
@@ -14,16 +14,12 @@
 .formTitles {
   font-weight: bold;
 }
-.custom-hr {
-  width: 100vw; 
+.button{
+  display: flex;
 }
-.buttons{
-
-display: flex;
+.SaveButton{
+  margin-left: 44.4rem;
 }
-.backButton{
-  margin-left:1rem;
-}
-.saveButton{
-  margin-left:46rem;
+.BackButton{
+  margin-left: 1rem;
 }

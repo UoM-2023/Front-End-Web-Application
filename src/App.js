@@ -13,6 +13,13 @@ import Reservation from "./Pages/Reservations/Reservation";
 import ReservationTwo from "./Pages/Reservations/ReservationTwo";
 import GuestTable from "./Pages/Guest/GuestTable";
 import ReservationTable from "./Pages/Reservations/ReservationTable";
+import ReservationTableTwo from "./Pages/Reservations/ReservationTableTwo";
+import SearchBar from "./Component/SearchBar/SearchBar";
+import AddNewButton from "./Component/Buttons/AddNewButton";
+import MiniDrawer from "./Component/SideBar/MiniDrawer";
+import DashBoard from "./Pages/DashBoard/DashBoard";
+import TextArea from "./Pages/DashBoard/TextArea";
+
 
 function App() {
   return (
@@ -26,11 +33,18 @@ function App() {
         {/* <AddStaff/> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
-        {/* <Guest/> */}
+        {/* <MiniDrawer/> */}
+         {/* <TopBar title = "Dashboard"/>  */}
+        {/* <Guest/>  */}
        {/* <Reservation/> */}
        {/* <ReservationTwo/> */}
         {/* <GuestTable/> */}
         <ReservationTable/>
+        {/* <ReservationTableTwo/> */}
+        {/* <DashBoard/> */}
+       {/* <TextArea/> */}
+       
+    
       </div>
     </>
   );

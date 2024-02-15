@@ -149,6 +149,7 @@ function AddNewMember() {
           </select>
         </div>
         <p>{formErrors.building}</p>
+
         <div className="inputItems">
           <label htmlFor="Block" className="namesTag">
             Block :{" "}
@@ -177,6 +178,7 @@ function AddNewMember() {
           </select>
         </div>
         <p>{formErrors.block}</p>
+
         <div className="inputItems">
           <label htmlFor="unitCategory" className="namesTag">
             Unit Category :{" "}

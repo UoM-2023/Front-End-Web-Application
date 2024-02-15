@@ -12,6 +12,86 @@
     import Paper from "@mui/material/Paper";
     import EditButton from "../../Component/Buttons/EditButton";
     import DeleteButton from "../../Component/Buttons/DeleteButton";
+    import SearchBar from "../../Component/SearchBar/SearchBar";
+    import AddNewButton from "../../Component/Buttons/AddNewButton";
+
+    import PropTypes from 'prop-types';
+    import Box from '@mui/material/Box';
+    import Tabs from '@mui/material/Tabs';
+    import Tab from '@mui/material/Tab';
+    import Typography from '@mui/material/Typography';
+    import {
+        MemoryRouter,
+        Route,
+        Routes,
+        Link,
+        matchPath,
+        useLocation,
+          } from 'react-router-dom';
+        import { StaticRouter } from 'react-router-dom/server';
+
+//routing
+
+function Router(props) {
+  const { children } = props;
+  if (typeof window === 'undefined') {
+    return <StaticRouter location="/drafts">{children}</StaticRouter>;
+  }
+
+  return (
+    <MemoryRouter initialEntries={['/drafts']} initialIndex={0}>
+      {children}
+    </MemoryRouter>
+  );
+}
+
+Router.propTypes = {
+  children: PropTypes.node,
+};
+
+function useRouteMatch(patterns) {
+  const { pathname } = useLocation();
+
+  for (let i = 0; i < patterns.length; i += 1) {
+    const pattern = patterns[i];
+    const possibleMatch = matchPath(pattern, pathname);
+    if (possibleMatch !== null) {
+      return possibleMatch;
+    }
+  }
+
+  return null;
+}
+
+function MyTabs() {
+  // You need to provide the routes in descendant order.
+  // This means that if you have nested routes like:
+  // users, users/new, users/edit.
+  // Then the order should be ['users/add', 'users/edit', 'users'].
+  const routeMatch = useRouteMatch(['/inbox/:id', '/drafts']);
+  const currentTab = routeMatch?.pattern?.path;
+
+  return (
+    <Tabs value={currentTab}>
+      <Tab label="Facilities" value="/inbox/:id" to="/inbox/1" component={Link} />
+      <Tab label="Reservations" value="/drafts" to="/drafts" component={Link} />
+    </Tabs>
+  );
+}
+
+function CurrentRoute() {
+  const location = useLocation();
+
+  return (
+    <Typography variant="body2" sx={{ pb: 2 }} color="text.secondary">
+      Current route: {ReservationTable.currentRoute}
+    </Typography>
+  );
+}////////////////////////////////////////////////////////////////
+
+
+
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
       [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#f9f4f0",
@@ -99,10 +179,30 @@
       return (
         
         <div className="GuestTableContainer">
-    <div className="title">
-          <h1>Reservation</h1>
-    </div>
-      <hr class="custom-hr"></hr>
+
+
+<div className="RoutingButtons">
+<Router>
+      <Box sx={{ width: '100%' }}>
+        <Routes>
+          <Route path="*" element={<CurrentRoute />} />
+        </Routes>
+        <MyTabs />
+      </Box>
+    </Router>
+</div>
+
+<div className="SearchBarAndADDnewButton">
+    <span className="SearchBar">
+    <SearchBar/>
+    </span>
+
+    <span className="addNewButton">
+    <AddNewButton/>
+    </span>
+</div>
+
+
           <TableContainer component={Paper}>
             <Table
               sx={{
@@ -144,6 +244,8 @@
               </TableBody>
             </Table>
           </TableContainer>
+
+          
         </div>
       );
     }

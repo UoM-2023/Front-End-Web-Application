@@ -30,9 +30,6 @@
     display: flex;
     margin-bottom: 25px;
   }
-.addNewButton{
-  margin-left: 83rem;
-}
-  .GuestTableContainer{
-    margin-left: 1.2rem;
+  .AddNewButton{
+    margin-left: 82rem;
   }
