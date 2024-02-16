@@ -21,6 +21,11 @@ import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddN
 import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
 import ResidentialUnits from "./ResidentialUnits";
 import TestForm from "./Component/TestForm";
+import Warnings from "./Pages/FinancePage/Warnings/Warnings";
+import MiniDrawer from "./Component/SideBar/MiniDrawer";
+import { BrowserRouter, Router, Routes } from "react-router-dom";
+import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
+import Routers from "./Routes/Routes";
 
 function App() {
   return (
@@ -28,7 +33,7 @@ function App() {
       <div className="appContainer">
         {/* <LoginPage/> */}
         {/* <Dashboard /> */}
-        {/* <TopBar title="Finance" /> */}
+        <TopBar title="Finance" />
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -39,15 +44,18 @@ function App() {
         {/* <AddNewButton/> */}
         {/* <ResidentsPayments/> */}
         {/* <UtilityCharges/> */}
-        <ResidentPaymentsAddNewForm/>
-        <AddNewExpenseForm />
+        {/* <ResidentPaymentsAddNewForm/> */}
+        {/* <AddNewExpenseForm /> */}
         {/* <Expenses />
         <Revenue /> */}
         {/* <UtilityCharges/> */}
-        <RevenueAddNewForm/>
-        <UtilityChargesAddNewForm />
+        {/* <RevenueAddNewForm/> */}
+        {/* <UtilityChargesAddNewForm /> */}
         {/* <ResidentialUnits /> */}
+        <MiniDrawer />
+        {/* <Warnings /> */}
         {/* q */}
+        
       </div>
     </>
   );
