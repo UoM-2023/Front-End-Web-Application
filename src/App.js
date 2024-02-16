@@ -34,6 +34,7 @@ import EditButton from "./Component/Buttons/EditButton";
 import SaveButton from "./Component/Buttons/SaveButton";
 import ViewButton from "./Component/Buttons/ViewButton";
 import SubmitButton from "./Component/Buttons/SubmitButton";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
@@ -58,14 +59,15 @@ function App() {
         {/* <Revenue /> */}
         {/* <UtilityCharges/> */}
         {/* <RevenueAddNewForm/> */}
-        <UtilityChargesAddNewForm />
+        {/* <UtilityChargesAddNewForm /> */}
         {/* <ResidentialUnits /> */}
         {/* <RequestsTable /> */}
-        <InternalMaintenanceTable />
+        {/* <InternalMaintenanceTable /> */}
         {/* <RequestsAddNewForm/> */}
         {/* <InternalMaintenanceAddNewForm/> */}
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
+       
       </div>
     </>
   );
