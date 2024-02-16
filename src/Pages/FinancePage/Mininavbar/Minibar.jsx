@@ -35,6 +35,7 @@ const Minibar = () => {
         <Tab value="two" label="Utility Charges" component={Link} to="/finance/utilitycharges" />
         <Tab value="three" label="Expenses" component={Link} to="/finance/expenses" />
         <Tab value="four" label="Warnings" component={Link} to="/finance/warnings" />
+        <Tab value="five" label="Edit Funds" component={Link} to="/finance/fundtypes" />
       </Tabs>
     </ThemeProvider>
   )
