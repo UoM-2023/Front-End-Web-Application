@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
@@ -34,14 +34,17 @@ import EditButton from "./Component/Buttons/EditButton";
 import SaveButton from "./Component/Buttons/SaveButton";
 import ViewButton from "./Component/Buttons/ViewButton";
 import SubmitButton from "./Component/Buttons/SubmitButton";
+import InputField from "./Component/InputField/InputField";
+import SelectField from "./Component/SelectField/SelectField";
+import UtilityForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityForm";
 
 function App() {
   return (
     <>
       <div className="appContainer">
-        {/* <LoginPage/> */}
+        {/* <LoginPage/>
         <Dashboard />
-        <TopBar title="Finance" />
+        <TopBar title="Finance" /> */}
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -58,14 +61,16 @@ function App() {
         {/* <Revenue /> */}
         {/* <UtilityCharges/> */}
         {/* <RevenueAddNewForm/> */}
-        <UtilityChargesAddNewForm />
+        {/* <UtilityChargesAddNewForm /> */}
         {/* <ResidentialUnits /> */}
         {/* <RequestsTable /> */}
-        <InternalMaintenanceTable />
+        {/* <InternalMaintenanceTable /> */}
         {/* <RequestsAddNewForm/> */}
         {/* <InternalMaintenanceAddNewForm/> */}
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
+        {/* <InputField/> */}
+        {/* <UtilityForm/> */}
       </div>
     </>
   );

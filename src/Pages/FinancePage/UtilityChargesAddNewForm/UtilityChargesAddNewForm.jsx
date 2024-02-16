@@ -5,7 +5,7 @@ import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
-import TextField from "@mui/material/TextField";
+//import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import PropTypes from "prop-types";
 import { Select as BaseSelect, selectClasses } from "@mui/base/Select";
@@ -13,6 +13,8 @@ import { Option as BaseOption, optionClasses } from "@mui/base/Option";
 import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import BackButton from "../../../Component/Buttons/BackButton";
 import SaveButton from "../../../Component/Buttons/SaveButton";
+import { TextField } from "@mui/material";
+import SelectField from "../../../Component/SelectField/SelectField";
 
 const Select = React.forwardRef(function Select(props, ref) {
   const slots = {
@@ -26,25 +28,12 @@ const Select = React.forwardRef(function Select(props, ref) {
 });
 
 function UtilityChargesAddNewForm() {
-  // const CssTextField = styled(TextField)({
-  //   "& label.Mui-focused": {
-  //     color: "#A0AAB4",
-  //   },
-  //   "& .MuiInput-underline:after": {
-  //     borderBottomColor: "#B2BAC2",
-  //   },
-  //   "& .MuiOutlinedInput-root": {
-  //     "& fieldset": {
-  //       borderColor: "#E0E3E7",
-  //     },
-  //     "&:hover fieldset": {
-  //       borderColor: "#B2BAC2",
-  //     },
-  //     "&.Mui-focused fieldset": {
-  //       borderColor: "#6F7E8C",
-  //     },
-  //   },
-  // });
+  const [selectedBuilding, setSelectedBuilding] = useState("");
+
+  const handleBuildingChange = (value) => {
+    setSelectedBuilding(value);
+    // Any other logic you want to perform when the value changes
+  };
 
   const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -189,7 +178,7 @@ function UtilityChargesAddNewForm() {
         </div>
 
         <div className="input-item">
-          <FormControl variant="standard">
+          {/* <FormControl variant="standard">
             <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
               Resident Name :
             </InputLabel>
@@ -199,7 +188,15 @@ function UtilityChargesAddNewForm() {
               onChange={onChangeHandler}
               value={formData.residentName}
             />
-          </FormControl>
+          </FormControl> */}
+          <TextField
+            id="outlined-basic"
+            label="First Name"
+            name="residentName"
+            variant="outlined"
+            onChange={onChangeHandler}
+            value={formData.residentName}
+          />
         </div>
         <p>{formErrors.residentName}</p>
 
@@ -239,7 +236,7 @@ function UtilityChargesAddNewForm() {
           </Select>
         </div>
         <p>{formErrors.paymentMethod}</p>
-        
+
         <div className="input-item">
           <FormControl variant="standard">
             <InputLabel shrink htmlFor="inputBox" sx={{ fontSize: "20px" }}>
