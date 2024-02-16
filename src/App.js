@@ -34,7 +34,11 @@ import EditButton from "./Component/Buttons/EditButton";
 import SaveButton from "./Component/Buttons/SaveButton";
 import ViewButton from "./Component/Buttons/ViewButton";
 import SubmitButton from "./Component/Buttons/SubmitButton";
-import { BrowserRouter } from "react-router-dom";
+import Warnings from "./Pages/FinancePage/Warnings/Warnings";
+import MiniDrawer from "./Component/SideBar/MiniDrawer";
+import { BrowserRouter, Router, Routes } from "react-router-dom";
+import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
+import Routers from "./Routes/Routes";
 
 function App() {
   return (
@@ -42,6 +46,7 @@ function App() {
       <div className="appContainer">
         {/* <LoginPage/> */}
         <Dashboard />
+        {/* <Dashboard /> */}
         <TopBar title="Finance" />
         {/* <SearchBar/> */}
         {/* <ResidentInforPage /> */}
@@ -58,16 +63,22 @@ function App() {
         <Expenses /> */}
         {/* <Revenue /> */}
         {/* <UtilityCharges/> */}
-        {/* <RevenueAddNewForm/> */}
-        {/* <UtilityChargesAddNewForm /> */}
+        {/* {/* <RevenueAddNewForm/> */} 
+        {/* {/* <UtilityChargesAddNewForm /> */} 
         {/* <ResidentialUnits /> */}
+        <MiniDrawer />
+        {/* <Warnings /> */}
         {/* <RequestsTable /> */}
         {/* <InternalMaintenanceTable /> */}
         {/* <RequestsAddNewForm/> */}
         {/* <InternalMaintenanceAddNewForm/> */}
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
-       
+        <BrowserRouter>
+          <Minibar />
+          <Routers />
+        </BrowserRouter>
+        
       </div>
     </>
   );
