@@ -3,21 +3,18 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-import "./FormDesigns.css"; 
+//import "./FormDesigns.css";
+// import "../../Component/Forms/FormDesigns.css";
 
-
-function UtilityForm() {
+function ResidentsPaymentsForm() {
   const [formData, setFormData] = useState({
-    utilityType: "",
-    unitID: "",
+    chargeType: "",
+    unitNumber: "",
     residentName: "",
-    staffID: "",
     paymentMethod: "",
-    noOfUnits: "",
     amount: "",
     remark: "",
   });
-
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -44,23 +41,17 @@ function UtilityForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
+    if (!values.chargeType) {
+      errors.chargeType = "Please Select Charge Type * ";
     }
-    if (!values.unitID) {
-      errors.unitID = "Please Enter Unit ID *";
+    if (!values.unitNumber) {
+      errors.unitNumber = "Please Enter Unit Number *";
     }
     if (!values.residentName) {
       errors.residentName = "Please Enter Resident Name *";
     }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
-    }
     if (!values.paymentMethod) {
       errors.paymentMethod = "Please Select Payment Method *";
-    }
-    if (!values.noOfUnits) {
-      errors.noOfUnits = "Please Enter No Of Units *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
@@ -72,12 +63,12 @@ function UtilityForm() {
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel className="namesTag">Utility Type :</InputLabel>
+          <InputLabel className="namesTag">Charge Type :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="utilityType"
+            name="chargeType"
             onChange={onChangeHandler}
-            value={formData.utilityType}
+            value={formData.chargeType}
           >
             <MenuItem value="" className="optionContainer">
               Select Utility Type
@@ -95,29 +86,26 @@ function UtilityForm() {
             >
               Electricity
             </MenuItem>
-            <MenuItem value="other" name="other" className="optionContainer">
-              Other
-            </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.utilityType}</p>
+        <p>{formErrors.chargeType}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Unit ID:
+          <InputLabel htmlFor="unitNumber" className="namesTag">
+            Unit Number :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="unitID"
+            name="unitNumber"
             onChange={onChangeHandler}
-            value={formData.unitID}
+            value={formData.unitNumber}
           />
         </div>
-        <p>{formErrors.unitID}</p>
+        <p>{formErrors.unitNumber}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
+          <InputLabel htmlFor="residentName" className="namesTag">
             Resident Name :
           </InputLabel>
           <TextField
@@ -129,20 +117,6 @@ function UtilityForm() {
           />
         </div>
         <p>{formErrors.residentName}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Staff ID :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="staffID"
-            onChange={onChangeHandler}
-            value={formData.staffID}
-          />
-        </div>
-        <p>{formErrors.staffID}</p>
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Method :</InputLabel>
@@ -167,22 +141,6 @@ function UtilityForm() {
           </Select>
         </div>
         <p>{formErrors.paymentMethod}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            No Of Units :
-          </InputLabel>
-          <TextField
-            type="number"
-            min="0.00"
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="noOfUnits"
-            onChange={onChangeHandler}
-            value={formData.noOfUnits}
-          />
-        </div>
-        <p>{formErrors.noOfUnits}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="amount" className="namesTag">
@@ -237,4 +195,4 @@ function UtilityForm() {
   );
 }
 
-export default UtilityForm;
+export default ResidentsPaymentsForm;

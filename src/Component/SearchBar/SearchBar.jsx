@@ -48,7 +48,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     height: "1.3rem",
     marginLeft: "0",
     marginTop: "2px",
-  },
+  }, 
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({

@@ -17,7 +17,7 @@ function AddNewButton() {
             fontSize: "0.9rem",
             fontWeight: "bold",
             paddingLeft: "1.2rem",
-            paddingRight: "1.2rem",
+            paddingRight: "1.2rem", 
           }}
         >
           + Add New

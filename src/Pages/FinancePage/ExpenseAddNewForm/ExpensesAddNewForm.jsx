@@ -3,17 +3,15 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-import "./FormDesigns.css"; 
+//import "./FormDesigns.css";
+// import "../../Component/Forms/FormDesigns.css";
 
-
-function UtilityForm() {
+function ExpensesAddNewForm() {
   const [formData, setFormData] = useState({
-    utilityType: "",
-    unitID: "",
-    residentName: "",
+    expenseType: "",
     staffID: "",
+    approvedBy: "",
     paymentMethod: "",
-    noOfUnits: "",
     amount: "",
     remark: "",
   });
@@ -44,23 +42,17 @@ function UtilityForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
-    }
-    if (!values.unitID) {
-      errors.unitID = "Please Enter Unit ID *";
-    }
-    if (!values.residentName) {
-      errors.residentName = "Please Enter Resident Name *";
+    if (!values.expenseType) {
+      errors.expenseType = "Please select Expense Type * ";
     }
     if (!values.staffID) {
       errors.staffID = "Please Enter Staff ID *";
     }
+    if (!values.approvedBy) {
+      errors.approvedBy = "Please Enter Approved ID *";
+    }
     if (!values.paymentMethod) {
       errors.paymentMethod = "Please Select Payment Method *";
-    }
-    if (!values.noOfUnits) {
-      errors.noOfUnits = "Please Enter No Of Units *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
@@ -72,66 +64,39 @@ function UtilityForm() {
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel className="namesTag">Utility Type :</InputLabel>
+          <InputLabel className="namesTag">Expense Type :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="utilityType"
+            name="expenseType"
             onChange={onChangeHandler}
-            value={formData.utilityType}
+            value={formData.expenseType}
           >
             <MenuItem value="" className="optionContainer">
-              Select Utility Type
-            </MenuItem>
-            <MenuItem value="gas" name="gas" className="optionContainer">
-              Gas
-            </MenuItem>
-            <MenuItem value="water" name="water" className="optionContainer">
-              Water
+              Select Expenses Type
             </MenuItem>
             <MenuItem
-              value="electricity"
-              name="electricity"
+              value="maintenance"
+              name="maintenance"
               className="optionContainer"
             >
-              Electricity
+              Maintenance
+            </MenuItem>
+            <MenuItem
+              value="cleaning"
+              name="cleaning"
+              className="optionContainer"
+            >
+              Cleaning
             </MenuItem>
             <MenuItem value="other" name="other" className="optionContainer">
               Other
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.utilityType}</p>
+        <p>{formErrors.expenseType}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Unit ID:
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="unitID"
-            onChange={onChangeHandler}
-            value={formData.unitID}
-          />
-        </div>
-        <p>{formErrors.unitID}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="residentName"
-            onChange={onChangeHandler}
-            value={formData.residentName}
-          />
-        </div>
-        <p>{formErrors.residentName}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
+          <InputLabel htmlFor="staffID" className="namesTag">
             Staff ID :
           </InputLabel>
           <TextField
@@ -143,6 +108,20 @@ function UtilityForm() {
           />
         </div>
         <p>{formErrors.staffID}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="approvedBy" className="namesTag">
+            Approved By :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="approvedBy"
+            onChange={onChangeHandler}
+            value={formData.approvedBy}
+          />
+        </div>
+        <p>{formErrors.approvedBy}</p>
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Method :</InputLabel>
@@ -167,22 +146,6 @@ function UtilityForm() {
           </Select>
         </div>
         <p>{formErrors.paymentMethod}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            No Of Units :
-          </InputLabel>
-          <TextField
-            type="number"
-            min="0.00"
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="noOfUnits"
-            onChange={onChangeHandler}
-            value={formData.noOfUnits}
-          />
-        </div>
-        <p>{formErrors.noOfUnits}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="amount" className="namesTag">
@@ -237,4 +200,4 @@ function UtilityForm() {
   );
 }
 
-export default UtilityForm;
+export default ExpensesAddNewForm;

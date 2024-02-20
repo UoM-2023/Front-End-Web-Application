@@ -18,7 +18,7 @@ const Select = React.forwardRef(function Select(props, ref) {
   const slots = {
     root: CustomButton,
     listbox: Listbox,
-    popup: Popup,
+    popup: Popup, 
     ...props.slots,
   };
 

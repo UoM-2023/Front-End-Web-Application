@@ -10,7 +10,7 @@ function ResidentialUnits() {
     block: "",
     unitCategory: "",
     unit: "",
-    status: "",
+    status: "", 
   });
 
   const [formErrors, setFormErrors] = useState({});

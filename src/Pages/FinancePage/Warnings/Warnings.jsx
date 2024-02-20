@@ -1,5 +1,5 @@
 import React from "react";
-import "./UtilityCharges.css";
+import "./Warning.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -23,7 +23,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
-}));
+})); 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(even)": {
@@ -37,107 +37,104 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function createData(
   no,
-  utilityChargesID,
   unitID,
   ownerName,
-  utilityType,
-  date,
-  noOfUnits,
-  amount,
+  chargeType,
+  dueDate,
+  delayedTime,
+  warning1,
+  warning2,
+  warning3,
   action
 ) {
   return {
     no,
-    utilityChargesID,
     unitID,
     ownerName,
-    utilityType,
-    date,
-    noOfUnits,
-    amount,
-    action,
+    chargeType,
+    dueDate,
+    delayedTime,
+    warning1,
+    warning2,
+    warning3,
+    action
   };
 }
 
 const rows = [
   createData(
     1,
-    "U-256580",
-    "A-214100",
-    "A.W.G.Silva",
-    "Gas",
+    "A-102",
+    "Miller Donald",
+    "Charge Type",
     "15 JAN 2024",
-    "15",
-    "1456.85",
+    "7 Days",
+    "sent",
+    " ",
+    " ",
     <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
   createData(
-    2,
-    "U-256581",
-    "A-214101",
-    "A.W.G.Gamage",
-    "Water",
+    1,
+    "A-102",
+    "Miller Donald",
+    "Charge Type",
     "15 JAN 2024",
-    "27",
-    "2,458.75",
+    "7 Days",
+    "sent",
+    " ",
+    " ",
     <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
   createData(
-    3,
-    "U-256582",
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Gas",
+    1,
+    "A-102",
+    "Miller Donald",
+    "Charge Type",
     "15 JAN 2024",
-    "38",
-    "5,500.70",
+    "7 Days",
+    "sent",
+    " ",
+    " ",
     <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
   createData(
-    4,
-    "U-256583",
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Electricity",
+    1,
+    "A-102",
+    "Miller Donald",
+    "Charge Type",
     "15 JAN 2024",
-    "51",
-    "12,500.00",
+    "7 Days",
+    "sent",
+    " ",
+    " ",
     <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
   createData(
-    5,
-    "U-256584",
-    "A-214104",
-    "A.W.Saman Abeykoon",
-    "Water",
+    1,
+    "A-102",
+    "Miller Donald",
+    "Charge Type",
     "15 JAN 2024",
-    "29",
-    "2,450.75",
+    "7 Days",
+    "sent",
+    " ",
+    " ",
     <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
 ];
 
-function UtilityCharges() {
+function Warnings() {
   return (
     <div className="utilityChargesContainer">
       <div className="pageTop">
@@ -153,18 +150,19 @@ function UtilityCharges() {
             marginRight: 0,
             paddingTop: "1rem",
           }}
-          aria-label="customized table" 
+          aria-label="customized table"
         >
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Utility Charges ID</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
               <StyledTableCell align="left">Owner Name</StyledTableCell>
-              <StyledTableCell align="left">Utility Type</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">No Of Units</StyledTableCell>
-              <StyledTableCell align="right">Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="left">Charge Type</StyledTableCell>
+              <StyledTableCell align="left">Due Date</StyledTableCell>
+              <StyledTableCell align="left">Delayed Time</StyledTableCell>
+              <StyledTableCell align="left">Warning 01</StyledTableCell>
+              <StyledTableCell align="left">Warning 02</StyledTableCell>
+              <StyledTableCell align="left">Warning 03</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -173,19 +171,20 @@ function UtilityCharges() {
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.no}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.utilityChargesID}
+                  {row.unitID}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
                 <StyledTableCell align="left">{row.ownerName}</StyledTableCell>
+                <StyledTableCell align="left">{row.chargeType}</StyledTableCell>
+                <StyledTableCell align="left">{row.dueDate}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.utilityType}
+                  {row.delayedTime}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                <StyledTableCell align="center" sx={{color:"red"}}>{row.warning1}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.noOfUnits}
+                  {row.warning2}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="center" >{row.warning3}</StyledTableCell>
+                <StyledTableCell align="center">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
@@ -195,4 +194,4 @@ function UtilityCharges() {
   );
 }
 
-export default UtilityCharges;
+export default Warnings;

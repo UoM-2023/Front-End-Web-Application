@@ -20,7 +20,6 @@ import Revenue from "./Pages/FinancePage/Revenue/Revenue";
 import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddNewForm";
 import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
 import ResidentialUnits from "./ResidentialUnits";
-import TestForm from "./Component/TestForm";
 import DeleteButton from "./Component/Buttons/DeleteButton";
 import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
 import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
@@ -34,18 +33,34 @@ import EditButton from "./Component/Buttons/EditButton";
 import SaveButton from "./Component/Buttons/SaveButton";
 import ViewButton from "./Component/Buttons/ViewButton";
 import SubmitButton from "./Component/Buttons/SubmitButton";
-import InputField from "./Component/InputField/InputField";
-import SelectField from "./Component/SelectField/SelectField";
+import InputField from "./Component/Forms/InputField/InputField";
+import SelectField from "./Component/Forms/SelectField/SelectField";
 import UtilityForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityForm";
+import Warnings from "./Pages/FinancePage/Warnings/Warnings";
+import MiniDrawer from "./Component/SideBar/MiniDrawer";
+import { BrowserRouter, Router, Routes } from "react-router-dom";
+import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
+import Routers from "./Routes/Routes";
+import AddMember from "./Pages/ResidentInfoPage/NewMemberForm/AddMember";
+import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
+import StaffDetailsAddNewForm from "./Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
+import ExpensesAddNewForm from "./Pages/FinancePage/ExpenseAddNewForm/ExpensesAddNewForm";
+import ResidentsPaymentsForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentsPaymentsForm";
+import RevenueForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueForm";
+import RequestsForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsForm";
+import InternalMaintenanceForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
+import CompleteResidentReqForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
 
 function App() {
   return (
     <>
       <div className="appContainer">
-        {/* <LoginPage/>
-        <Dashboard />
-        <TopBar title="Finance" /> */}
-        {/* <SearchBar/> */}
+        {/* <LoginPage /> */}
+        {/* <Dashboard />
+        <TopBar title="Residents Information" /> */}
+        {/* <AddMember/> */}
+        {/* <MiniDrawer /> */}
+        {/* <SearchBar /> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
         {/* <AddStaff/> */}
@@ -63,14 +78,26 @@ function App() {
         {/* <RevenueAddNewForm/> */}
         {/* <UtilityChargesAddNewForm /> */}
         {/* <ResidentialUnits /> */}
+        {/* <Warnings /> */}
         {/* <RequestsTable /> */}
         {/* <InternalMaintenanceTable /> */}
         {/* <RequestsAddNewForm/> */}
         {/* <InternalMaintenanceAddNewForm/> */}
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
-        {/* <InputField/> */}
-        {/* <UtilityForm/> */}
+        {/* <BrowserRouter>
+          <Minibar />
+          <Routers />
+        </BrowserRouter> */}
+        {/* <UtilityForm /> */}
+        {/* <ResidentInfoAddNew/> */}
+        {/* <StaffDetailsAddNewForm/> */}
+        {/* <ExpensesAddNewForm/> */}
+        {/* <ResidentsPaymentsForm/> */}
+        {/* <RevenueForm/> */}
+        {/* <RequestsForm/> */}
+        {/* <InternalMaintenanceForm/> */}
+        <CompleteResidentReqForm/>
       </div>
     </>
   );

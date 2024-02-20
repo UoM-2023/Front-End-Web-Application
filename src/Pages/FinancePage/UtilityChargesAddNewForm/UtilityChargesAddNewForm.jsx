@@ -14,7 +14,7 @@ import UnfoldMoreRoundedIcon from "@mui/icons-material/UnfoldMoreRounded";
 import BackButton from "../../../Component/Buttons/BackButton";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import { TextField } from "@mui/material";
-import SelectField from "../../../Component/SelectField/SelectField";
+import SelectField from "../../../Component/Forms/SelectField/SelectField";
 
 const Select = React.forwardRef(function Select(props, ref) {
   const slots = {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./AddStaff.css";
 
 function AddStaff() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({ 
     fName: "",
     mName: "",
     lName: "",

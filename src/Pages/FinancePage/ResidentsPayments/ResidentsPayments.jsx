@@ -159,7 +159,7 @@ function ResidentsPayments() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> 
     </div>
   );
 }

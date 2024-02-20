@@ -125,6 +125,7 @@ export default function MiniDrawer() {
             top: "0",
             left: "0",
             background: "#00000050",
+            zIndex: "1",
           }}
         ></div>
       )}
@@ -147,7 +148,7 @@ export default function MiniDrawer() {
                     marginLeft: "10px",
                     width: "2rem",
                     height: "2rem",
-                  }} // Add margin if needed
+                  }} // Add margin if needed 
                 />
                 <Typography
                   sx={{
