@@ -12,6 +12,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import { Link, Outlet } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -142,7 +143,9 @@ function Revenue() {
     <div className="revenueContainer">
         <div className="pageTop">
             <SearchBar/>
-            <AddNewButton/>
+            <Link to='/finance/revenue/addRevenue'>
+              <AddNewButton/>
+            </Link>
         </div>
       <TableContainer component={Paper}>
         <Table
@@ -185,6 +188,8 @@ function Revenue() {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* For the nested routing */}
+      <Outlet />
     </div>
   );
 }

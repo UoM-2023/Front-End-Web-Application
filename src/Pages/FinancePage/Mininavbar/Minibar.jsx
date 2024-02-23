@@ -1,6 +1,6 @@
 import { Tab, Tabs, ThemeProvider, createTheme } from '@mui/material'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 const theme = createTheme({
   palette: {
@@ -19,6 +19,7 @@ const Minibar = () => {
 
 
   return (
+    <>
     <ThemeProvider theme={theme}>
       <Tabs 
         value={value}
@@ -34,10 +35,12 @@ const Minibar = () => {
         <Tab value="one" label="Resident Payments" component={Link} to="/finance" />
         <Tab value="two" label="Utility Charges" component={Link} to="/finance/utilitycharges" />
         <Tab value="three" label="Expenses" component={Link} to="/finance/expenses" />
-        <Tab value="four" label="Warnings" component={Link} to="/finance/warnings" />
-        <Tab value="five" label="Edit Funds" component={Link} to="/finance/fundtypes" />
+        <Tab value="four" label="Revenue" component={Link} to="/finance/revenue" />
+        <Tab value="five" label="Warnings" component={Link} to="/finance/warnings" />
+        <Tab value="six" label="Edit Funds" component={Link} to="/finance/fundtypes" />
       </Tabs>
     </ThemeProvider>
+    </>
   )
 }
 

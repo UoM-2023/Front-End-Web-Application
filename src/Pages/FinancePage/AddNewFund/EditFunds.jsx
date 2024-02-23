@@ -132,11 +132,11 @@ function EditFunds() {
                 </StyledTableCell>
                 <StyledTableCell align="left">{row.fundNameName}</StyledTableCell>
                 <StyledTableCell align="left">{row.chargedBy}</StyledTableCell>
-                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                <StyledTableCell align="right">{row.amount}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.timePeriod}
                 </StyledTableCell>
-                <StyledTableCell align="center" sx={{color:"red"}}>{row.modifiedDate}</StyledTableCell>
+                <StyledTableCell align="center">{row.modifiedDate}</StyledTableCell>
                 <StyledTableCell align="center">
                   {row.modifiedBy}
                 </StyledTableCell>
