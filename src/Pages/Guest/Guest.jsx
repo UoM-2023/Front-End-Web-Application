@@ -16,10 +16,6 @@ import { useState } from 'react';
 
 
 
-
-
-
-
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
     color: '#A0AAB4',
@@ -118,7 +114,7 @@ const ValidationTextField = styled(TextField)({
   },
 });
 
-        
+
 export default function Guest() {
 
 
@@ -164,108 +160,75 @@ export default function Guest() {
     >
 
 
-
-
-
-
-
-
-
-
       <FormControl variant="standard">
 
         <InputLabel shrink htmlFor="bootstrap-input">
         </InputLabel>
 
 
-          <div className="allformItems"><div className='formItems'> 
-    <div className="formTitles ">Unit</div> 
-    <div className='wrap'>
-    <BootstrapInput className='ABC' defaultValue="Type here" id="bootstrap-input"  />
-        <InputLabel    className='ABC' shrink htmlFor="bootstrap-input">
-        </InputLabel>
-
-    </div>
-        </div>
- {/* <form onSubmit={handleSubmit}>
-      <div className="allformItems">
-        <div className='formItems'> 
-          <div className="formTitles">Unit</div> 
+        <div className="allformItems"><div className='formItems'>
+          <div className="formTitles ">Unit</div>
           <div className='wrap'>
-            <FormControl fullWidth>
-              <TextField
-                className='ABC'
-                defaultValue={unit}
-                id="bootstrap-input"
-                onChange={handleUnitChange}
-                error={Boolean(unitError)}
-                helperText={unitError}
-              />
-            </FormControl>
+            <BootstrapInput className='ABC' defaultValue="Type here" id="bootstrap-input" />
+            <InputLabel className='ABC' shrink htmlFor="bootstrap-input">
+            </InputLabel>
+
           </div>
         </div>
+
+
+
+
+
+          <div className='formItems'>
+            <div className="formTitles "> Resident Name</div>
+            <div>
+              <BootstrapInput defaultValue="Type here" id="bootstrap-input" />
+              <InputLabel shrink htmlFor="bootstrap-input">
+              </InputLabel>
+            </div>
+          </div>
+
+          <div className='formItems'>
+            <div className="formTitles ">Guest Name </div>
+            <div><BootstrapInput defaultValue="Type here" id="bootstrap-input" />
+              <InputLabel shrink htmlFor="bootstrap-input">
+              </InputLabel></div>
+          </div>
+
+
+          <div className='formItems'>
+            <div className="formTitles "> Vehicle No  </div>
+            <div>
+              <BootstrapInput defaultValue="Type here" id="bootstrap-input" />
+              <InputLabel shrink htmlFor="bootstrap-input">
+              </InputLabel>
+            </div>
+          </div>
+
+          <div className='formItems'>
+            <div className="formTitles "> Date  </div>
+            <div>
+              <BootstrapInput defaultValue="Type here" id="bootstrap-input" />
+              <InputLabel shrink htmlFor="bootstrap-input">
+              </InputLabel>
+
+            </div>
+
+          </div>
+
+          <div className="button">
+            <span className="SaveButton">
+              <SaveButton />
+            </span>
+            <span className="BackButton">
+              <BackButton />
+            </span>
+          </div>
         </div>
-        </form> */}
 
 
-
-
-
-
-
-
-
-        
-
-<div className='formItems'>
-<div className="formTitles "> Resident Name</div>
-<div>
-<BootstrapInput defaultValue="Type here" id="bootstrap-input" />
-        <InputLabel shrink htmlFor="bootstrap-input">
-        </InputLabel>
-</div>
-    </div>
-        
-<div className='formItems'>
-<div className="formTitles ">Guest Name </div>
-<div><BootstrapInput defaultValue="Type here" id="bootstrap-input" />
-        <InputLabel shrink htmlFor="bootstrap-input">
-        </InputLabel></div>
-</div>
-        
-
-<div className='formItems'>
-<div className="formTitles "> Vehicle No  </div>
-    <div>
-    <BootstrapInput defaultValue="Type here" id="bootstrap-input" />
-        <InputLabel shrink htmlFor="bootstrap-input">
-        </InputLabel>
-    </div>
-    </div>
-        
-<div className='formItems'>
-<div className="formTitles "> Date  </div>
-    <div>
-    <BootstrapInput  defaultValue="Type here" id="bootstrap-input" />
-        <InputLabel  shrink htmlFor="bootstrap-input">
-        </InputLabel>
-
-    </div>
-    
-</div>
-
-<div className="button">
-  <span className="SaveButton">
-    <SaveButton/>
-  </span>
-  <span className="BackButton">
-    <BackButton/>
-  </span>
-</div>
-</div>
-
-
- {/* div */}
+        {/* div */}
 
 
 

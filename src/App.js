@@ -32,7 +32,11 @@ import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddN
 import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
 import ResidentialUnits from "./ResidentialUnits";
 import TestForm from "./Component/TestForm";
-import Calender from "./Pages/DashBoard/cALENDER.JSX";
+
+import TextAreaTwo from "./Pages/DashBoard/TextAreaTwo";
+import PaymentIcon from "./Pages/DashBoard/PaymentIcon";
+import Calender from "./Pages/DashBoard/Calender";
+
 
 function App() {
   return (
@@ -51,17 +55,23 @@ function App() {
         {/* <MemberList /> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
-        {/* <MiniDrawer/> */}
-         {/* <TopBar title = "Dashboard"/>  */}
+        <MiniDrawer/>
+         <TopBar title = "DashBoard"/> 
         {/* <Guest/>  */}
        {/* <Reservation/> */}
        {/* <ReservationTwo/> */}
         {/* <GuestTable/> */}
         {/* <ReservationTable/> */}
-        {/* <ReservationTableTwo/> */}
-        {/* <DashBoard/> */}
+          {/* <ReservationTableTwo/> */}
+          <DashBoard/>
+      
+      
+      
        {/* <TextArea/> */}
-       <Calender/>
+      
+       {/* <TextAreaTwo/> */}
+     {/* <PaymentIcon/> */}
+       
        
     
         {/* <AddNewButton/> */}

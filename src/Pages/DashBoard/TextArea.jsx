@@ -6,7 +6,7 @@ import "./textarea.css"
 export default function TextArea() {
   return (
     <div>
-        <div className="TextField">
+      <div className="TextField">
         <TextField
           id="outlined-multiline-static"
           label=""
@@ -15,10 +15,10 @@ export default function TextArea() {
           sx={{
             backgroundColor: "#FFFFFF",
             width: "100%",
-        }}
+          }}
           defaultValue="Type here..."
         />
-        </div>
+      </div>
     </div>
 
   );

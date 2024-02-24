@@ -33,11 +33,12 @@
     margin-top: 4rem;
     margin-left: 1rem;
     justify-content: space-between;
+   
 }
 .cardOne{
     margin-left: 4rem;
     width: 22rem; 
-    height: 25rem;
+
 }
 .cardTwo{
     margin-left: 8rem;
@@ -51,4 +52,21 @@
     margin-left: 8rem;
     width: 22rem;  
     margin-right: 4rem;
+}
+.PaymentAndIcon{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+.Icon{
+    margin-top: 3rem;
+    
+}
+
+.Calendar{
+    margin-top: 3rem;
+    margin-left: 5rem;
+    position: absolute;
+    
+    
 }
