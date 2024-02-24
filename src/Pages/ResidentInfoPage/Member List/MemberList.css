@@ -1,0 +1,55 @@
+.pageContainer{
+  position: static;
+}
+.cardMedia {
+    display: flex;
+    align-items: center; /* Vertically center items */
+
+  }
+  
+  .cardMedia img {
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    margin-right: 5rem; /* Add some spacing between image and text */
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0rem;
+  }
+  
+  .lableTag {
+    margin-bottom: 0; /* Remove default margin-bottom */
+  }
+  .memberListContainer{
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+  }
+  .card2{
+    margin-left: 5rem;
+  }
+  .reditentImg{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+  }
+  .card3{
+    margin-top: 0.8rem;
+    margin-left: 7rem;
+  }
+  .tableCaption{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+.backBtn{
+  display: flex;
+  margin-top: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  
+}

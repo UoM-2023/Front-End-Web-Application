@@ -1,0 +1,10 @@
+/* .residentsPaymentsContainer{
+    background-color: red;
+} */
+.pageTop{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 5rem;
+}

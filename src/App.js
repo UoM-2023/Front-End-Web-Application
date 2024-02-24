@@ -21,6 +21,19 @@ import DashBoard from "./Pages/DashBoard/DashBoard";
 import TextArea from "./Pages/DashBoard/TextArea";
 
 
+import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
+import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
+import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
+import ResidentPaymentsAddNewForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentPaymentsAddNewForm";
+import AddNewExpenseForm from "./Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm";
+import Expenses from "./Pages/FinancePage/Expenses/Expenses";
+import Revenue from "./Pages/FinancePage/Revenue/Revenue";
+import RevenueAddNewForm from "./Pages/FinancePage/RevenueAddNewForm/RevenueAddNewForm";
+import UtilityChargesAddNewForm from "./Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm";
+import ResidentialUnits from "./ResidentialUnits";
+import TestForm from "./Component/TestForm";
+import Calender from "./Pages/DashBoard/cALENDER.JSX";
+
 function App() {
   return (
     <>
@@ -30,7 +43,12 @@ function App() {
         {/* <TopBar /> */}
         {/* <ResidentInforPage/> */}
         {/* <StaffDetails/> */}
+        {/* <TopBar title="Finance" /> */}
+        {/* <SearchBar/> */}
+        {/* <ResidentInforPage /> */}
+        {/* <StaffDetails /> */}
         {/* <AddStaff/> */}
+        {/* <MemberList /> */}
         {/* <UnitList /> */}
         {/* <StaffList/> */}
         {/* <MiniDrawer/> */}
@@ -39,12 +57,25 @@ function App() {
        {/* <Reservation/> */}
        {/* <ReservationTwo/> */}
         {/* <GuestTable/> */}
-        <ReservationTable/>
+        {/* <ReservationTable/> */}
         {/* <ReservationTableTwo/> */}
         {/* <DashBoard/> */}
        {/* <TextArea/> */}
+       <Calender/>
        
     
+        {/* <AddNewButton/> */}
+        {/* <ResidentsPayments/> */}
+        {/* <UtilityCharges/> */}
+        {/* <ResidentPaymentsAddNewForm/> */}
+        {/* <AddNewExpenseForm /> */}
+        {/* <Expenses />
+        <Revenue /> */}
+        {/* <UtilityCharges/> */}
+        {/* <RevenueAddNewForm/> */}
+        {/* <UtilityChargesAddNewForm /> */}
+        {/* <ResidentialUnits /> */}
+        {/* q */}
       </div>
     </>
   );
