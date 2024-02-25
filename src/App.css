@@ -1,3 +1,6 @@
 body {
   font-family: 'Alegreya Sans', sans-serif; /* Apply Alegreya Sans to the entire document */
 }
+p{
+  color: red;
+}
