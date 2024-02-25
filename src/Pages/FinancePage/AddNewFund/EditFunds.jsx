@@ -130,7 +130,7 @@ function EditFunds() {
                 <StyledTableCell align="left">
                   {row.fundID}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.fundNameName}</StyledTableCell>
+                <StyledTableCell align="left">{row.fundName}</StyledTableCell>
                 <StyledTableCell align="left">{row.chargedBy}</StyledTableCell>
                 <StyledTableCell align="right">{row.amount}</StyledTableCell>
                 <StyledTableCell align="left">

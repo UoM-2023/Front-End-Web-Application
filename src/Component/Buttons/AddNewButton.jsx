@@ -1,8 +1,16 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-function AddNewButton() {
+const AddNewButton = ({route}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate(route);
+  };
   return (
     <div className="ButtonContainer">
       <Stack spacing={2} direction="row">
@@ -19,6 +27,7 @@ function AddNewButton() {
             paddingLeft: "1.2rem",
             paddingRight: "1.2rem",
           }}
+          onClick = {handleClick}
         >
           + Add New
         </Button>
@@ -26,5 +35,9 @@ function AddNewButton() {
     </div>
   );
 }
+
+// AddNewButton.propTypes = {
+//   route: propTypes.string.isRequired,
+// };
 
 export default AddNewButton;

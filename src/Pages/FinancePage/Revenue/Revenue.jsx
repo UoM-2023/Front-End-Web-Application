@@ -143,9 +143,7 @@ function Revenue() {
     <div className="revenueContainer">
         <div className="pageTop">
             <SearchBar/>
-            <Link to='/finance/revenue/addRevenue'>
-              <AddNewButton/>
-            </Link>
+            <AddNewButton route="/finance/revenue/addRevenue" />
         </div>
       <TableContainer component={Paper}>
         <Table
@@ -188,8 +186,6 @@ function Revenue() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* For the nested routing */}
-      <Outlet />
     </div>
   );
 }

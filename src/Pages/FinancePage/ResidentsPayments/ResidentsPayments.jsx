@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ResidentsPayments.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import { Outlet, useOutlet } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -109,11 +110,12 @@ const rows = [
 ];
 
 function ResidentsPayments() {
+
   return (
     <div className="residentsPaymentsContainer">
         <div className="pageTop">
             <SearchBar/>
-            <AddNewButton/>
+            <AddNewButton route="/finance/addNew"/>
         </div>
       <TableContainer component={Paper}>
         <Table

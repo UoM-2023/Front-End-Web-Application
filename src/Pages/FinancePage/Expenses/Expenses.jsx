@@ -142,7 +142,7 @@ function Expenses() {
     <div className="expensesContainer">
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton />
+        <AddNewButton route="/finance/expenses/addExpense"/>
       </div>
       <TableContainer component={Paper}>
         <Table

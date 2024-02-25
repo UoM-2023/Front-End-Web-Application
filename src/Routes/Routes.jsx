@@ -8,16 +8,38 @@ import Warnings from '../Pages/FinancePage/Warnings/Warnings'
 import EditFunds from '../Pages/FinancePage/AddNewFund/EditFunds'
 import UtilityChargesAddNewForm from '../Pages/FinancePage/UtilityChargesAddNewForm/UtilityChargesAddNewForm'
 import RevenueAddNewForm from '../Pages/FinancePage/RevenueAddNewForm/RevenueAddNewForm'
+import ResidentPaymentsAddNewForm from '../Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentPaymentsAddNewForm'
+import AddNewExpenseForm from '../Pages/FinancePage/ExpenseAddNewForm/AddNewExpenseForm'
 
 const Routers = () => {
   return (
     <>
             <Routes>
-                <Route path='/finance' element={<ResidentsPayments/>}>
+                <Route path='/finance' element={<Outlet />}>
+                {/* <Route path='/finance' element={<ResidentsPayments />}> */}
                   {/* Routes of mininavbar in finance section */}
-                    <Route path='utilitycharges' element={<UtilityCharges />} />
-                    <Route path='expenses' element={<Expenses />}/>
-                    <Route path='revenue' element={<Revenue />} />
+                    <Route index element={<ResidentsPayments />} />
+                    <Route path='addNew' element={<ResidentPaymentsAddNewForm />}/>
+
+                    {/* Utility payment section */}
+                    <Route path='utilitycharges' element={<Outlet />} >
+                      <Route index element={<UtilityCharges />} />
+                      <Route path='addUtility' element={<UtilityChargesAddNewForm />}/>
+                    </Route>
+
+                    {/* Expenses routes */}
+                    <Route path='expenses' element={<Outlet />}>
+                      <Route index element={<Expenses />} />
+                      <Route path='addExpense' element={<AddNewExpenseForm />} />
+                    </Route>
+
+                    {/* Revenue routes */}
+                    <Route path='revenue' element={<Outlet />}>
+                      <Route index element={<Revenue />} />
+                      <Route path='addRevenue' element={<RevenueAddNewForm />} />
+                    </Route>
+
+                    {/* Warnings Route */}
                     <Route path='warnings' element={<Warnings />} />
                     <Route path='fundtypes' element={<EditFunds />}/>
                   {/* Routes of forms in finance sectionn */}

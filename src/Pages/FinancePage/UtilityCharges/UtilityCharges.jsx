@@ -144,12 +144,7 @@ function UtilityCharges() {
     <div className="utilityChargesContainer">
       <div className="pageTop">
         <SearchBar/>
-
-        {/* Add new button will link to the New utility charges form */}
-        
-        <AddNewButton onClick = {()=>navigate('addUtility')}/>
-        
-
+        <AddNewButton route="/finance/utilitycharges/addUtility"/>
       </div>
       <TableContainer component={Paper}>
         <Table
