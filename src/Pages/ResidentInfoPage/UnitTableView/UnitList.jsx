@@ -122,9 +122,9 @@ function UnitList() {
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "95vw",
+            maxWidth: "93.2vw",
             marginTop: 5,
-            marginLeft: 9,
+            marginLeft: 10,
             marginRight: 0,
             paddingTop: "100px",
           }}

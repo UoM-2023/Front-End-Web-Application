@@ -31,7 +31,7 @@ const Search = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(0),
     width: "16rem",
-    height: "2.35rem",
+    height: "2rem",
   },
 }));
 
@@ -48,7 +48,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     height: "1.3rem",
     marginLeft: "0",
     marginTop: "2px",
-  },
+  }, 
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -91,7 +91,7 @@ function SearchBar() {
             renderValue={(selected) => selected.join(", ")}
             sx={{
               width: "5rem",
-              height: "2.5rem",
+              height: "2rem",
               borderWidth: "1px",
               borderColor: "#48484840",
               borderStyle: "none",

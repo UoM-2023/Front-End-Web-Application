@@ -76,7 +76,7 @@ const rows = [
     </div>
   ),
   createData(
-    1,
+    2,
     "R76536778",
     "Kamal Perera",
     "2500",
@@ -91,7 +91,7 @@ const rows = [
     </div>
   ),
   createData(
-    1,
+    3,
     "R76536778",
     "Kamal Perera",
     "2500",
@@ -106,7 +106,7 @@ const rows = [
     </div>
   ),
   createData(
-    1,
+    4,
     "R76536778",
     "Amal Kamal",
     "2500",
@@ -121,7 +121,7 @@ const rows = [
     </div>
   ),
   createData(
-    1,
+    5,
     "R76536778",
     "Amal Perera",
     "250000000",
@@ -153,7 +153,7 @@ function Revenue() {
             marginRight: 0,
             paddingTop: "1rem",
           }}
-          aria-label="customized table"
+          aria-label="customized table" 
         >
           <TableHead>
             <TableRow>

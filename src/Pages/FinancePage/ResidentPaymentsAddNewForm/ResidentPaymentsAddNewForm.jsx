@@ -130,7 +130,7 @@ function ResidentPaymentsAddNewForm() {
     residentName: "",
     paymentMethod: "",
     amount: "",
-    remark: "",
+    remark: "", 
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -159,10 +159,6 @@ function ResidentPaymentsAddNewForm() {
 
   const validate = (values) => {
     const errors = {};
-    // const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    // const nic_regex = /^([0-9]{9}[x|X|v|V]|[0-9]{12})$/m;
-    // const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
-    // const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
     if (!values.chargeType) {
       errors.chargeType = "Please Select Charge Type * ";
@@ -180,7 +176,7 @@ function ResidentPaymentsAddNewForm() {
       errors.amount = "Please Enter Amount *";
     }
     return errors;
-  };
+  }; 
 
   return (
     <div className="addNewFormContainer">

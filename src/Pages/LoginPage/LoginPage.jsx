@@ -9,7 +9,7 @@ function LoginPage() {
       <div className="ShepsComponent">
         <ShapeComponent />
       </div>
-      <div className="loginFormComponent">
+      <div className="loginFormComponent"> 
         <LoginForm />
       </div>
     </div>

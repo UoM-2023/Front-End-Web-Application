@@ -4,6 +4,8 @@ import ResidentsPayments from '../Pages/FinancePage/ResidentsPayments/ResidentsP
 import UtilityCharges from '../Pages/FinancePage/UtilityCharges/UtilityCharges'
 import Expenses from '../Pages/FinancePage/Expenses/Expenses'
 import Revenue from '../Pages/FinancePage/Revenue/Revenue'
+import Warnings from '../Pages/FinancePage/Warnings/Warnings'
+import EditFunds from '../Pages/FinancePage/AddNewFund/EditFunds'
 
 const Routers = () => {
   return (
@@ -14,8 +16,9 @@ const Routers = () => {
                     <Route path='utilitycharges' element={<UtilityCharges />}/>
                     <Route path='expenses' element={<Expenses />}/>
                     <Route path='revenue' element={<Revenue />}/>
-                    {/* <Route path='warnings' element={< />}/>
-                    <Route path='charges' element={<UtilityCharges />}/> */}
+                    <Route path='warnings' element={<Warnings />} />
+                    <Route path='revenue' element={<Revenue/>}/>
+                    <Route path='fundtypes' element={<EditFunds />}/>
                 </Route>
 
             </Routes>

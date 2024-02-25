@@ -546,7 +546,7 @@ function AddMember() {
 
         <div className="input-item">
           <button className="submit" type="submit" onClick={onSubmitHandler}>
-            Add New Staff Member
+            Add New Member
           </button>
         </div>
       </Box>
@@ -704,7 +704,7 @@ const Option = styled(BaseOption)(
 );
 
 const Popup = styled("div")`
-  z-index: 1;
+  z-index: 2;
 `;
 
 export default AddMember;

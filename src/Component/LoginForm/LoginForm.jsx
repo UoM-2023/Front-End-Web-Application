@@ -23,7 +23,7 @@ export default function LoginForm() {
               placeholder="Password"
               className="userName"
             />
-          </div>
+          </div> 
         </div>
         <div className="loginFormBottom">
           <div className="login-contact">

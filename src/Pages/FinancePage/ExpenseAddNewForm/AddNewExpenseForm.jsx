@@ -245,7 +245,7 @@ function AddNewExpenseForm() {
               value={formData.remark}
             />
           </FormControl>
-        </div>
+        </div> 
 
         <div className="input-item">
           <div className="inputButtons">
