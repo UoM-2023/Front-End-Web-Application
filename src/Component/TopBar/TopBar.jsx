@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 const TopBar = (props) => {
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(true); 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {

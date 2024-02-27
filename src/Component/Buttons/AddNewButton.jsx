@@ -25,7 +25,7 @@ const AddNewButton = ({route}) => {
             fontSize: "0.9rem",
             fontWeight: "bold",
             paddingLeft: "1.2rem",
-            paddingRight: "1.2rem",
+            paddingRight: "1.2rem", 
           }}
           onClick = {handleClick}
         >

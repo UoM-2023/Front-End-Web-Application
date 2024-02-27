@@ -103,7 +103,7 @@ const rows = [
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
-    </div>
+    </div> 
   ),
   createData(
     1,

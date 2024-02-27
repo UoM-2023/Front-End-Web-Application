@@ -16,7 +16,7 @@ const Minibar = () => {
   const handleChange = (event,newValue)=>{
     setValue(newValue);
   };
-
+ 
 
   return (
     <>
@@ -37,7 +37,7 @@ const Minibar = () => {
         <Tab value="three" label="Expenses" component={Link} to="/finance/expenses" />
         <Tab value="four" label="Revenue" component={Link} to="/finance/revenue" />
         <Tab value="five" label="Warnings" component={Link} to="/finance/warnings" />
-        <Tab value="six" label="Edit Funds" component={Link} to="/finance/fundtypes" />
+        <Tab value="six" label="Edit Funds" component={Link} to="/finance/editFunds" />
       </Tabs>
     </ThemeProvider>
     </>

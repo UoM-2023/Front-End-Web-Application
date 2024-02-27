@@ -155,7 +155,7 @@ function UtilityCharges() {
             marginRight: 0,
             paddingTop: "1rem",
           }}
-          aria-label="customized table"
+          aria-label="customized table" 
         >
           <TableHead>
             <TableRow>

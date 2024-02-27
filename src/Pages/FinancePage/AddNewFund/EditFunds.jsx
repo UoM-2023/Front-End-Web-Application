@@ -97,7 +97,7 @@ function EditFunds() {
     <div className="editFundsContainer">
       <div className="pageTop">
         <SearchBar/>
-        <AddNewButton/>
+        <AddNewButton route="/finance/editFunds/newFund"/>
       </div>
       <TableContainer component={Paper}>
         <Table

@@ -15,7 +15,7 @@ function ShapeComponent() {
                 <span className="apartTextBottom">One Click Away"</span>
               </div>
             </div>
-        </div>
+        </div> 
         <Container>
             <Row>
                 <Col>

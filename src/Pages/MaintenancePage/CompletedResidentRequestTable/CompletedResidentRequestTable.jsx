@@ -147,7 +147,7 @@ function CompletedResidentRequestTable() {
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "92.5vw",
+            maxWidth: "93.5vw",
             marginTop: 5,
             marginLeft: 10,
             marginRight: 0,

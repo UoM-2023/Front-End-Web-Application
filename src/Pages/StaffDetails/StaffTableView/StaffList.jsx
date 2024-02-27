@@ -33,7 +33,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(no, staffID, name, staffRole, mobileNo, email, createdDate, action) {
+function createData(
+  no,
+  staffID,
+  name,
+  staffRole,
+  mobileNo,
+  email,
+  createdDate,
+  action
+) {
   return { no, staffID, name, staffRole, mobileNo, email, createdDate, action };
 }
 
@@ -116,8 +125,8 @@ function StaffList() {
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "95vw",
-            marginTop: 5,
+            maxWidth: "94.5vw",
+            marginTop: 10,
             marginLeft: 9,
             marginRight: 0,
             paddingTop: "100px",
@@ -145,7 +154,9 @@ function StaffList() {
                 <StyledTableCell align="left">{row.staffRole}</StyledTableCell>
                 <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
                 <StyledTableCell align="left">{row.email}</StyledTableCell>
-                <StyledTableCell align="left">{row.createdDate}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {row.createdDate}
+                </StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}
