@@ -11,6 +11,7 @@ import Paper from "@mui/material/Paper";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import { Outlet, useOutlet } from "react-router-dom";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -113,6 +114,7 @@ function ResidentsPayments() {
 
   return (
     <div className="residentsPaymentsContainer">
+      <Minibar />
         <div className="pageTop">
             <SearchBar/>
             <AddNewButton route="/finance/addNew"/>

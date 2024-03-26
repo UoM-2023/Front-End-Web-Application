@@ -25,6 +25,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Link, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -103,13 +104,16 @@ export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const navigate = useNavigate();
+
 
   const handleDrawer = () => {
     setOpen((open) => !open);
   };
 
-  const handleListItemClick = (index) => {
+  const handleListItemClick = (index,route) => {
     setSelectedIndex(index);
+    navigate(route)
   };
 
   return (
@@ -185,7 +189,7 @@ export default function MiniDrawer() {
             "Residential Units",
             "Complaints",
             "News & Notices",
-            "Residents' Information",
+            "Residents Information",
             "Staff Details",
             "Settings",
             "info",
@@ -195,10 +199,11 @@ export default function MiniDrawer() {
               disablePadding
               sx={{ display: "block", cursor: "pointer" }}
             >
+
               <ListItemButton
                 selected={selectedIndex === index}
                 onClick={() => {
-                  handleListItemClick(index);
+                  handleListItemClick(index, `/${text.toLowerCase()}`);
                 }}
                 sx={{
                   minHeight: 48,

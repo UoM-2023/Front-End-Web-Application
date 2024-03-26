@@ -41,7 +41,7 @@ function App() {
         {/* <Dashboard /> */}
         <TopBar title="Residents Information" />
 
-        <MiniDrawer />
+        
         {/* <ResidentInforPage />
         <StaffDetails />
         <MemberList />
@@ -50,8 +50,6 @@ function App() {
         <AddNewButton />
         <ResidentsPayments />
         <UtilityCharges />
-        <ResidentPaymentsAddNewForm />
-        <AddNewExpenseForm />
         <Expenses />
         <Revenue />
         <UtilityCharges />
@@ -62,10 +60,13 @@ function App() {
         <RequestsTable />
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
-        <BrowserRouter>
-          <Minibar />
+         <BrowserRouter>
+          <MiniDrawer />
           <Routers />
-        </BrowserRouter>
+         </BrowserRouter>
+          {/* <Minibar /> *}
+           
+        {/* <InternalMaintenanceTable /> */}
        {/*<UtilityForm />
         <ResidentInfoAddNew />
         <StaffDetailsAddNewForm />
@@ -76,6 +77,11 @@ function App() {
   <InternalMaintenanceForm /> */}
         {/* <CompleteResidentReqForm />  */}
         {/* <EditFundsAddNew /> */}
+        {/* <ResidentInfoAddNew /> */}
+        {/* <BrowserRouter>
+          {/* <InternalMaintenanceTable /> */}
+          {/* <Routers />
+        </BrowserRouter> */} 
       </div>
     </>
   );

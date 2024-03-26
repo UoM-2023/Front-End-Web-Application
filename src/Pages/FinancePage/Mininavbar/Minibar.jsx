@@ -1,6 +1,6 @@
 import { Tab, Tabs, ThemeProvider, createTheme } from '@mui/material'
-import React, { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 const theme = createTheme({
   palette: {
@@ -12,7 +12,34 @@ const theme = createTheme({
 
 
 const Minibar = () => {
+  const location = useLocation();
   const [value, setValue] = useState('one');
+
+  useEffect(()=>{
+    switch(location.pathname){
+      case '/finance':
+        setValue('one');
+        break;
+      case '/finance/utilitycharges':
+          setValue('two');
+          break;
+      case '/finance/expenses':
+          setValue('three');
+          break;
+      case '/finance/revenue':
+          setValue('four');
+          break;
+      case '/finance/warnings':
+          setValue('five');
+          break;
+      case '/finance/editFunds':
+          setValue('six');
+          break;
+      default:
+          setValue(false);
+    }
+  },[location.pathname]);
+
   const handleChange = (event,newValue)=>{
     setValue(newValue);
   };

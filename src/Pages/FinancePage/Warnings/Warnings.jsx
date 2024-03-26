@@ -12,6 +12,7 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -137,6 +138,7 @@ const rows = [
 function Warnings() {
   return (
     <div className="utilityChargesContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar/>
         <AddNewButton/>
