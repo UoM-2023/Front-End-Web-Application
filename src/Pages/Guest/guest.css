@@ -1,0 +1,25 @@
+.formItems{
+    margin-bottom: 25px;
+  margin-left:25%;
+  font-style: bold;
+  margin-top: px;
+
+}
+
+.title{
+  font-size: 25px;
+  width: 100%;
+  margin-left: 2rem;
+}
+.formTitles {
+  font-weight: bold;
+}
+.button{
+  display: flex;
+}
+.SaveButton{
+  margin-left: 44.4rem;
+}
+.BackButton{
+  margin-left: 1rem;
+}

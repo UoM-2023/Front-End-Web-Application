@@ -32,6 +32,12 @@ import RequestsForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsFor
 import InternalMaintenanceForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import CompleteResidentReqForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
 import EditFundsAddNew from "./Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew";
+import Guest from "./Pages/Guest/Guest";
+import GuestFormNew from "./Pages/GuestNew/GuestForm";
+import GuestTable from "./Pages/Guest/GuestTable";
+import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
+import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
+import DashBoard from "./Pages/DashBoard/DashBoard";
 
 function App() {
   return (

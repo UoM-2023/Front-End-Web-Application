@@ -1,0 +1,41 @@
+
+.actionBtn{
+    display: flex;
+    cursor: pointer;
+}
+.title{
+    font-size: 25px;
+    width: 100%;
+    margin-left: 2rem;
+  }
+  .custom-hr {
+    width: 100vw; 
+  }
+  .FaciAndReser{
+    display: flex;
+  }
+  .Faci{
+    margin-left: 3rem;
+  }
+  .Reser{
+    margin-left: 2rem;
+  }
+
+/* .SearchBar{
+    margin-left: 2rem;
+  } */
+  .SearchBarAndADDnewButton{
+    margin-left: 4.5rem;
+    margin-top: 15px;
+    display: flex;
+    margin-bottom: 25px;
+  }
+.addNewButton{
+  margin-left: 83rem;
+}
+  .GuestTableContainer{
+    margin-left: 1.2rem;
+  }
+  .Currnet{
+    margin-left: 3.8rem;
+  }

@@ -1,0 +1,72 @@
+.One{
+    display: flex;
+}
+.Welcomeback{
+    margin-top: 5rem;
+    margin-left: 5rem;
+    width: 30rem;
+   
+}
+.Emergency{
+    margin-top: 5rem;
+    margin-left: 5rem;
+    width: 75rem;
+    background-color: aquamarine;
+   
+    
+}.TypeAreaAndButton{
+    display: flex;
+}
+.TextArea{
+    margin-left: 2rem;
+}
+.Button{
+    margin-left: 4rem;
+    margin-top: 3rem;
+}
+.title{
+    margin-left: 25rem;
+   
+}
+.MiddleCards{
+    display: flex;
+    margin-top: 4rem;
+    margin-left: 1rem;
+    justify-content: space-between;
+   
+}
+.cardOne{
+    margin-left: 4rem;
+    width: 22rem; 
+
+}
+.cardTwo{
+    margin-left: 8rem;
+    width: 22rem;  
+}
+.cardThree{
+    margin-left: 8rem;
+    width: 22rem;  
+}
+.cardFour{
+    margin-left: 8rem;
+    width: 22rem;  
+    margin-right: 4rem;
+}
+.PaymentAndIcon{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+.Icon{
+    margin-top: 3rem;
+    
+}
+
+.Calendar{
+    margin-top: 3rem;
+    margin-left: 5rem;
+    position: absolute;
+    
+    
+}
