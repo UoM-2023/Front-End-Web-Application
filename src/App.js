@@ -55,6 +55,7 @@ import GuestFormNew from "./Pages/GuestNew/GuestForm";
 import GuestTable from "./Pages/Guest/GuestTable";
 import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
 import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
+import DashBoard from "./Pages/DashBoard/DashBoard";
 
 function App() {
   return (
@@ -90,10 +91,10 @@ function App() {
         {/* <InternalMaintenanceAddNewForm/> */}
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
-        {/* <BrowserRouter>
+        {/* <BrowserRouter> */}
           <Minibar />
-          <Routers />
-        </BrowserRouter> */}
+          {/* <Routers /> */}
+        {/* </BrowserRouter> */}
         {/* <UtilityForm /> */}
         {/* <ResidentInfoAddNew/> */}
         {/* <StaffDetailsAddNewForm/> */}
@@ -109,7 +110,9 @@ function App() {
           {/* <GuestFormNew/> */}
           {/* <GuestTable/> */}
           {/* <ReservationNewOne/> */}
-          <ReservationNewTwo/>
+          {/* <ReservationNewTwo/> */}
+          <DashBoard/>
+          
 
 
 

@@ -190,14 +190,146 @@ export default function DashBoard() {
             </CardActionArea>
           </Card>
 
-          </span>
+        </span>
 
       </div>
 
 
-      <div className="Calendar">
-            <Calender/>
+
+
+
+      <div className="MiddleCards">
+        <span className="cardOne">
+          <Card sx={{
+            maxWidth: 1000,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <CardMedia>
+
+              </CardMedia>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <h1>  Today </h1>
+                    <h1>  Reservations </h1>
+                    <Typography variant="body2" color="text.secondary">
+                      No Events For Today
+                    </Typography>
+                  </CardContent>
+                </span>
+                <span className="Icon">
+                  <PaymentIcon />
+                </span>
+              </div>
+
+
+            </CardActionArea>
+          </Card>
+        </span>
+
+        <span className="cardTwo">
+          <Card sx={{
+            maxWidth: 1000,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <h1>Guest</h1>
+                    <h1>Details</h1>
+                    <Typography variant="body2" color="text.secondary">
+                      No Visitors For Today
+                    </Typography>
+
+                  </CardContent>
+                </span>
+                <span className="Icon">
+                  <VIsitorIcon />
+                </span>
+
+
+              </div>
+            </CardActionArea>
+          </Card>
+        </span>
+
+
+        <span className="cardThree">
+          <Card sx={{
+            maxWidth: 1000,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+
+                  <CardContent>
+                    <h1>Complains</h1>
+                    <h1>Requests</h1>
+                    <Typography variant="body2" color="text.secondary">
+                      New
+                    </Typography>
+
+                  </CardContent>
+                </span>
+                <span className="Icon">
+                  <MaintenanceIcon />
+                </span>
+              </div>
+
+            </CardActionArea>
+          </Card>
+        </span>
+
+
+
+
+        <span className="cardFour">
+          <Card sx={{
+            maxWidth: 1000,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <h1>Today</h1>
+                    <h1>Events</h1>
+                    <Typography variant="body2" color="text.secondary">
+                      No Events For Today
+                    </Typography>
+
+                  </CardContent>
+                </span>
+                <span className="Icon">
+                  <EventsIcon />
+                </span>
+              </div>
+
+            </CardActionArea>
+          </Card>
+
+        </span>
+
       </div>
+
+
+
+
+      //////////////
+
+
+
 
 
 
