@@ -56,16 +56,22 @@ import GuestTable from "./Pages/Guest/GuestTable";
 import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
 import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
 import DashBoard from "./Pages/DashBoard/DashBoard";
+import ChartOne from "./Pages/DashBoard/ChartOne";
+import ChartTwo from "./Pages/DashBoard/chartTwo";
+import Welcome from "./Pages/DashBoard/Welcome";
+import NotificationBar from "./Pages/DashBoard/NotificationBar";
+
+
 
 function App() {
   return (
     <>
       <div className="appContainer">
         {/* <LoginPage /> */}
-        {/* <Dashboard />
-        <TopBar title="Residents Information" /> */}
+        {/* <Dashboard /> */}
+        <TopBar title="DashBoard" />
         {/* <AddMember/> */}
-        {/* <MiniDrawer /> */}
+       
         {/* <SearchBar /> */}
         {/* <ResidentInforPage /> */}
         {/* <StaffDetails /> */}
@@ -92,7 +98,11 @@ function App() {
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
         {/* <BrowserRouter> */}
-          <Minibar />
+        <BrowserRouter>
+        <MiniDrawer />
+        {/* <Routers/> */}
+        </BrowserRouter>
+        {/* <Minibar /> */}
           {/* <Routers /> */}
         {/* </BrowserRouter> */}
         {/* <UtilityForm /> */}
@@ -107,11 +117,16 @@ function App() {
         {/* <Guest/> */}
 
         {/* new from yasindu */}
-          {/* <GuestFormNew/> */}
-          {/* <GuestTable/> */}
+          <GuestFormNew/>
+          <GuestTable/>
           {/* <ReservationNewOne/> */}
           {/* <ReservationNewTwo/> */}
-          <DashBoard/>
+          {/* <DashBoard/> */}
+          {/* <ChartOne/> */}
+          {/* <ChartTwo/> */}
+          {/* <Welcome/> */}
+          {/* <NotificationBar/> */}
+        
           
 
 
