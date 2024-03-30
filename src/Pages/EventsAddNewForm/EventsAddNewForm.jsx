@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import SaveButton from "../../../../Component/Buttons/SaveButton";
-import BackButton from "../../../../Component/Buttons/BackButton";
+import SaveButton from "../../Component/Buttons/SaveButton";
+import BackButton from "../../Component/Buttons/BackButton";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 
-function EditFundsAddNew() {
+function EventsAddNewForm() {
   const [formData, setFormData] = useState({
-    fundID: "",
-    fundName: "",
-    chargedBy: "",
-    amount: "",
-    timePeriod: "",
-    modifiedDate: "",
-    modifiedBy: "",
+    event: "",
+    place: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+    startTime: "",
+    endTime: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -43,26 +43,26 @@ function EditFundsAddNew() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.amount) {
-      errors.amount = "Please Enter Amount *";
+    if (!values.event) {
+      errors.event = "Please Enter Event Name *";
     }
-    if (!values.fundID) {
-      errors.fundID = "Please Enter Fund ID *";
+    if (!values.place) {
+      errors.place = "Please Enter Event Place *";
     }
-    if (!values.fundName) {
-      errors.fundName = "Fund Name is required *";
+    if (!values.startDate) {
+      errors.startDate = "Please Enter Start Date *";
     }
-    if (!values.timePeriod) {
-      errors.timePeriod = "Time Period is required *";
+    if (!values.endDate) {
+      errors.endDate = "Please Enter End Date *";
     }
-    if (!values.modifiedDate) {
-      errors.modifiedDate = "Please Enter Completed Date *";
+    if (!values.description) {
+      errors.description = "Please Enter Description *";
     }
-    if (!values.chargedBy) {
-      errors.chargedBy = "Please select Select Charging Units *";
+    if (!values.startTime) {
+      errors.startTime = "Please Enter Start Time *";
     }
-    if (!values.modifiedBy) {
-      errors.modifiedBy = "Please Enter Modified Staff ID *";
+    if (!values.endTime) {
+      errors.endTime = "Please Enter End Time *";
     }
     return errors;
   };
@@ -71,120 +71,107 @@ function EditFundsAddNew() {
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel htmlFor="fundID" className="namesTag">
-            Fund ID :
+          <InputLabel htmlFor="event" className="namesTag">
+            Event :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="fundID"
+            name="event"
             onChange={onChangeHandler}
-            value={formData.fundID}
+            value={formData.event}
           />
         </div>
-        <p>{formErrors.fundID}</p>
+        <p>{formErrors.event}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="fundName" className="namesTag">
-            Fund Name :
+          <InputLabel htmlFor="place" className="namesTag">
+            Place :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="fundName"
+            name="place"
             onChange={onChangeHandler}
-            value={formData.fundName}
+            value={formData.place}
           />
         </div>
-        <p>{formErrors.fundName}</p>
+        <p>{formErrors.place}</p>
 
         <div className="inputItem">
-          <InputLabel className="namesTag">Charged By :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="chargedBy"
-            onChange={onChangeHandler}
-            value={formData.chargedBy}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Charging Units
-            </MenuItem>
-            <MenuItem
-              value="allUnits"
-              name="allUnits"
-              className="optionContainer"
-            >
-              All Units
-            </MenuItem>
-            <MenuItem value="unit01" name="unit01" className="optionContainer">
-              Unit 01
-            </MenuItem>
-            <MenuItem value="unit02" name="unit02" className="optionContainer">
-              Unit 02
-            </MenuItem>
-          </Select>
-        </div>
-        <p>{formErrors.chargedBy}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="amount" className="namesTag">
-            Amount (Rs.) :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="amount"
-            type="number"
-            min="0.00"
-            placeholder="0.00"
-            onChange={onChangeHandler}
-            value={formData.amount}
-          />
-        </div>
-        <p>{formErrors.amount}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="timePeriod" className="namesTag">
-            Time Period :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="timePeriod"
-            onChange={onChangeHandler}
-            value={formData.timePeriod}
-          />
-        </div>
-        <p>{formErrors.timePeriod}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="modifiedDate" className="namesTag">
-            Modified Date :
+          <InputLabel htmlFor="startDate" className="namesTag">
+            Start Date :
           </InputLabel>
           <TextField
             id="outlined-basic"
             type="date"
             className="textFieldComponent"
-            name="modifiedDate"
+            name="startDate"
             onChange={onChangeHandler}
-            value={formData.modifiedDate}
+            value={formData.startDate}
           />
         </div>
-        <p>{formErrors.modifiedDate}</p>
+        <p>{formErrors.startDate}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="modifiedBy" className="namesTag">
-            Modified By :
+          <InputLabel htmlFor="endDate" className="namesTag">
+            End Date :
           </InputLabel>
           <TextField
             id="outlined-basic"
+            type="date"
             className="textFieldComponent"
-            name="modifiedBy"
+            name="endDate"
             onChange={onChangeHandler}
-            value={formData.modifiedBy}
+            value={formData.endDate}
           />
         </div>
-        <p>{formErrors.modifiedBy}</p>
+        <p>{formErrors.endDate}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="startTime" className="namesTag">
+            Start Time :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            type="time"
+            className="textFieldComponent"
+            name="startTime"
+            onChange={onChangeHandler}
+            value={formData.startTime}
+          />
+        </div>
+        <p>{formErrors.startTime}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="endTime" className="namesTag">
+            End Time :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            type="time"
+            className="textFieldComponent"
+            name="endTime"
+            onChange={onChangeHandler}
+            value={formData.endTime}
+          />
+        </div>
+        <p>{formErrors.endTime}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="description" className="namesTag">
+            Description :
+          </InputLabel>
+          <TextField
+            type="textarea"
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="description"
+            onChange={onChangeHandler}
+            value={formData.description}
+          />
+        </div>
+        <p>{formErrors.description}</p>
 
         <div className="buttonSection">
           <Grid container spacing={2}>
@@ -207,4 +194,5 @@ function EditFundsAddNew() {
     </div>
   );
 }
-export default EditFundsAddNew;
+
+export default EventsAddNewForm;

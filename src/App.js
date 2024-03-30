@@ -20,7 +20,7 @@ import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanc
 import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
 import Warnings from "./Pages/FinancePage/Warnings/Warnings";
 import MiniDrawer from "./Component/SideBar/MiniDrawer";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
 import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
@@ -38,6 +38,10 @@ import GuestTable from "./Pages/Guest/GuestTable";
 import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
 import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
 import DashBoard from "./Pages/DashBoard/DashBoard";
+import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
+import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
+import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
+import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
 
 function App() {
   return (
@@ -47,7 +51,6 @@ function App() {
         {/* <Dashboard /> */}
         <TopBar title="Residents Information" />
 
-        
         {/* <ResidentInforPage />
         <StaffDetails />
         <MemberList />
@@ -66,28 +69,32 @@ function App() {
         <RequestsTable />
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
-         <BrowserRouter>
+
+        <BrowserRouter>
           <MiniDrawer />
           <Routers />
-         </BrowserRouter>
-          {/* <Minibar /> *}
+        </BrowserRouter>
+
+        {/* <Minibar /> *}
            
         {/* <InternalMaintenanceTable /> */}
-       {/*<UtilityForm />
+        {/*<UtilityForm />
         <ResidentInfoAddNew />
-        <StaffDetailsAddNewForm />
+        
         <ExpensesAddNewForm />
         <ResidentsPaymentsForm />
         <RevenueForm />
         <RequestsForm />
-  <InternalMaintenanceForm /> */}
+        <InternalMaintenanceForm /> */}
         {/* <CompleteResidentReqForm />  */}
         {/* <EditFundsAddNew /> */}
-        {/* <ResidentInfoAddNew /> */}
-        {/* <BrowserRouter>
-          {/* <InternalMaintenanceTable /> */}
-          {/* <Routers />
-        </BrowserRouter> */} 
+        {/* <ResidentialUnitsAddNewForm /> */}
+        {/* <ComplaintAddForm/> */}
+        {/* <NoticeAddNewForm/> */}
+        {/* <EventsAddNewForm/> */}
+        {/* <StaffDetailsAddNewForm /> */}
+        {/* <MemberList /> */}
+        {/* <UnitList /> */}
       </div>
     </>
   );

@@ -24,13 +24,14 @@ import UnitList from '../Pages/ResidentInfoPage/UnitTableView/UnitList'
 import ResidentInfoAddNew from '../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew'
 import MemberList from '../Pages/ResidentInfoPage/Member List/MemberList'
 import TopBar from '../Component/TopBar/TopBar'
+import DashBoard from '../Pages/DashBoard/DashBoard'
 
 const Routers = () => {
   return (
     <>
       <Routes>
         {/* Dashboard */}
-          <Route path='/dashboard' element = {<Dashboard/> }/>
+          <Route path='/dashboard' element = {<DashBoard/> }/>
         {/* Finance Page Routs and its sub routes */}
           <Route path='/finance' element={<Outlet />}>
             <Route index element={<ResidentsPayments />} />

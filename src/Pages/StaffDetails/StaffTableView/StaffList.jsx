@@ -10,6 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import SearchBar from "../../../Component/SearchBar/SearchBar";
+import AddNewButton from "../../../Component/Buttons/AddNewButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -122,11 +124,15 @@ const rows = [
 function StaffList() {
   return (
     <div className="unitListContainer">
+      <div className="pageTop">
+        <SearchBar />
+        <AddNewButton route="/staff details/addNewStaff" />
+      </div>
       <TableContainer component={Paper}>
         <Table
           sx={{
             maxWidth: "94.5vw",
-            marginTop: 10,
+            marginTop: 5,
             marginLeft: 9,
             marginRight: 0,
             paddingTop: "100px",
