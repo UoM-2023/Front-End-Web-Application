@@ -12,6 +12,8 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import { Link, Outlet } from "react-router-dom";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -140,9 +142,10 @@ const rows = [
 function Revenue() {
   return (
     <div className="revenueContainer">
+      <Minibar />
         <div className="pageTop">
             <SearchBar/>
-            <AddNewButton/>
+            <AddNewButton route="/finance/revenue/addRevenue" />
         </div>
       <TableContainer component={Paper}>
         <Table

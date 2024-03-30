@@ -12,6 +12,8 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import { Link, useNavigate } from "react-router-dom";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -138,11 +140,13 @@ const rows = [
 ];
 
 function UtilityCharges() {
+  const navigate = useNavigate();
   return (
     <div className="utilityChargesContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar/>
-        <AddNewButton/>
+        <AddNewButton route="/finance/utilitycharges/addUtility"/>
       </div>
       <TableContainer component={Paper}>
         <Table

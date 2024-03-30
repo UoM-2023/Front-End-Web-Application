@@ -12,6 +12,7 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import Minibar from "../mininavbar/minibar.maintenance";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -140,9 +141,10 @@ const rows = [
 function CompletedResidentRequestTable() {
   return (
     <div className="completedResidentRequestTableContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton />
+        <AddNewButton route="/maintenance/completed/addNewCompleted"/>
       </div>
       <TableContainer component={Paper}>
         <Table

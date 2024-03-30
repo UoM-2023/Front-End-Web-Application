@@ -12,6 +12,7 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import Minibar from "../mininavbar/minibar.maintenance";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -86,56 +87,15 @@ const rows = [
       <DeleteButton />
     </div>
   ),
-  createData(
-    3,
-    "M-120048",
-    "A-214250",
-    "P.K.Shawendra Silva",
-    "Electricity Service",
-    "04 FEB 2024",
-    "Pending",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "M-120049",
-    "A-214099",
-    "K.K.V.Saman Kumara",
-    "Gas Supply",
-    "29 JAN 2024",
-    "Done",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "M-120050",
-    "A-214100",
-    "A.W.S.Jhone Perera",
-    "Water Supply",
-    "25 JAN 2024",
-    "Done",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
 ];
 
 function RequestsTable() {
   return (
     <div className="requestsTableContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton />
+        <AddNewButton route="/maintenance/newRequest"/>
       </div>
       <TableContainer component={Paper}>
         <Table
