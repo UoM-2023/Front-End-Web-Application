@@ -20,7 +20,7 @@ import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanc
 import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
 import Warnings from "./Pages/FinancePage/Warnings/Warnings";
 import MiniDrawer from "./Component/SideBar/MiniDrawer";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
 import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
@@ -45,7 +45,6 @@ function App() {
         {/* <Dashboard /> */}
         <TopBar title="Residents Information" />
 
-        
         {/* <ResidentInforPage />
         <StaffDetails />
         <MemberList />
@@ -64,14 +63,16 @@ function App() {
         <RequestsTable />
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
-         <BrowserRouter>
+
+        <BrowserRouter>
           <MiniDrawer />
           <Routers />
-         </BrowserRouter>
-          {/* <Minibar /> *}
+        </BrowserRouter>
+
+        {/* <Minibar /> *}
            
         {/* <InternalMaintenanceTable /> */}
-       {/*<UtilityForm />
+        {/*<UtilityForm />
         <ResidentInfoAddNew />
         
         <ExpensesAddNewForm />
@@ -85,7 +86,9 @@ function App() {
         {/* <ComplaintAddForm/> */}
         {/* <NoticeAddNewForm/> */}
         {/* <EventsAddNewForm/> */}
-        <StaffDetailsAddNewForm />
+        {/* <StaffDetailsAddNewForm /> */}
+        {/* <MemberList /> */}
+        {/* <UnitList /> */}
       </div>
     </>
   );

@@ -11,6 +11,8 @@ import Paper from "@mui/material/Paper";
 import ViewButton from "../../../Component/Buttons/ViewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import SearchBar from "../../../Component/SearchBar/SearchBar";
+import AddNewButton from "../../../Component/Buttons/AddNewButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,7 +49,7 @@ const rows = [
     "0767927004",
     "awg25silva1999@gmail.com",
     <div className="actionBtn">
-      <ViewButton />
+      <ViewButton route="/residents information/memberlist" />
       &nbsp; &nbsp;
       <EditButton />
       &nbsp; &nbsp;
@@ -119,6 +121,10 @@ const rows = [
 function UnitList() {
   return (
     <div className="unitListContainer">
+      <div className="pageTop">
+        <SearchBar />
+        <AddNewButton route="/residents information/addNewResident" />
+      </div>
       <TableContainer component={Paper}>
         <Table
           sx={{
