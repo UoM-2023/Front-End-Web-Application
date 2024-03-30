@@ -37,6 +37,10 @@ import RequestsForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsFor
 import InternalMaintenanceForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import CompleteResidentReqForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
 import EditFundsAddNew from "./Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew";
+import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
+import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
+import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
+import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
 
 function App() {
   return (
@@ -73,14 +77,19 @@ function App() {
         </BrowserRouter>
         <UtilityForm />
         <ResidentInfoAddNew />
-        <StaffDetailsAddNewForm />
+        
         <ExpensesAddNewForm />
         <ResidentsPaymentsForm />
         <RevenueForm />
         <RequestsForm />
-  <InternalMaintenanceForm /> */}
+        <InternalMaintenanceForm /> */}
         {/* <CompleteResidentReqForm />  */}
-        <EditFundsAddNew />
+        {/* <EditFundsAddNew /> */}
+        {/* <ResidentialUnitsAddNewForm /> */}
+        {/* <ComplaintAddForm/> */}
+        {/* <NoticeAddNewForm/> */}
+        {/* <EventsAddNewForm/> */}
+        <StaffDetailsAddNewForm />
       </div>
     </>
   );
