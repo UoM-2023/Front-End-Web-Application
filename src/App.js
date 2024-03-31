@@ -14,7 +14,7 @@ import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPa
 import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
 import Expenses from "./Pages/FinancePage/Expenses/Expenses";
 import Revenue from "./Pages/FinancePage/Revenue/Revenue";
-import ResidentialUnits from "./ResidentialUnits";
+// import ResidentialUnits from "./ResidentialUnits";
 import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
 import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
 import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
@@ -32,6 +32,13 @@ import RequestsForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsFor
 import InternalMaintenanceForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import CompleteResidentReqForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
 import EditFundsAddNew from "./Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew";
+import ResidentialUnitsForm from "./Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm";
+import ResidentialUnitsTable from "./Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable";
+import ComplaintsTable from "./Pages/ComplaintsPage/Table/ComplaintsTable";
+import NoticesTable from "./Pages/News&NoticesPage/Notices/Table/NoticesTable";
+import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
+import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
+import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
 
 function App() {
   return (
