@@ -29,6 +29,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom/server';
+import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
 
 //routing
 
@@ -176,8 +177,16 @@ function ReservationTable() {
 
     <div className="GuestTableContainer">
 
+<div className="miniBar"><Minibar/></div>
 
-      <div className="Currnet">
+
+
+<div className="pageTop">
+        <SearchBar />
+        <AddNewButton route="/reservations/addNew"/>
+      </div>
+
+      {/* <div className="Currnet">
         <Router>
           <Box sx={{ width: '100%' }}>
             <Routes>
@@ -186,9 +195,9 @@ function ReservationTable() {
             <MyTabs />
           </Box>
         </Router>
-      </div>
+      </div> */}
 
-      <div className="SearchBarAndADDnewButton">
+      {/* <div className="SearchBarAndADDnewButton">
         <span className="SearchBar">
           <SearchBar />
         </span>
@@ -196,7 +205,7 @@ function ReservationTable() {
         <span className="addNewButton">
           <AddNewButton />
         </span>
-      </div>
+      </div> */}
 
 
       <TableContainer component={Paper}>

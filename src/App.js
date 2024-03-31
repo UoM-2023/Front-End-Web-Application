@@ -42,6 +42,7 @@ import ChartOne from "./Pages/DashBoard/ChartOne";
 import ChartTwo from "./Pages/DashBoard/chartTwo";
 import Welcome from "./Pages/DashBoard/Welcome";
 import NotificationBar from "./Pages/DashBoard/NotificationBar";
+import ReservationTable from "./Pages/Reservations/ReservationTable";
 
 
 
@@ -80,10 +81,21 @@ function App() {
         {/* <CompletedResidentRequestTable /> */}
         {/* <CompletedResidentRequestForm /> */}
         {/* <BrowserRouter> */}
-        {/* <BrowserRouter>
-        <MiniDrawer /> */}
-        {/* <Routers/> */}
-        {/* </BrowserRouter> */}
+
+
+
+        <TopBar title="Reservations" />
+
+
+        <BrowserRouter>
+        <MiniDrawer />
+        
+        <Routers/>
+          {/* <ReservationTable/> */}
+       
+        </BrowserRouter>
+       
+
         {/* <Minibar /> */}
           {/* <Routers /> */}
         {/* </BrowserRouter> */}
@@ -99,11 +111,13 @@ function App() {
         {/* <Guest/> */}
 
         {/* new from yasindu */}
-          {/* <GuestFormNew/>
-          <GuestTable/> */}
+         {/* <GuestTable/> */}
+          {/* <GuestFormNew/> */}
+         
           {/* <ReservationNewOne/> */}
+         
           {/* <ReservationNewTwo/> */}
-          <DashBoard/>
+         
           {/* <ChartOne/> */}
           {/* <ChartTwo/> */}
           {/* <Welcome/> */}
@@ -115,9 +129,8 @@ function App() {
 
 
 
-        <TopBar title="Residents Information" />
 
-        
+        {/* <DashBoard/> */}
         {/* <ResidentInforPage />
         <StaffDetails />
         <MemberList />
@@ -136,10 +149,16 @@ function App() {
         <RequestsTable />
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
-         <BrowserRouter>
+
+
+
+         {/* <BrowserRouter>
           <MiniDrawer />
-          {/* <Routers /> */}
-         </BrowserRouter>
+          <Routers />
+         </BrowserRouter> */}
+
+
+
           {/* <Minibar /> *}
            
         {/* <InternalMaintenanceTable /> */}

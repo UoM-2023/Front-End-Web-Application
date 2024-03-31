@@ -11,7 +11,7 @@ export default function Welcome() {
     const theme = useTheme();
 
     return (
-        <Card sx={{ display: 'flex', backgroundColor: '#000000', width: 1520 }}> {/* Change background color to black */}
+        <Card sx={{ display: 'flex', backgroundColor: '#000000', width: 680, height: 150 }}> {/* Change background color to black */}
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h4" color="white"> {/* Change text color to white */}
@@ -27,7 +27,7 @@ export default function Welcome() {
             </Box>
             <CardMedia
                 component="img"
-                sx={{ width: 120, marginLeft: '70rem' }}
+                sx={{ width: 120, marginLeft: '18rem' }}
                 image="https://www.freevector.com/uploads/vector/preview/259/FreeVector-Flats-Vector.jpg"
                 alt=" Welcome Back to ApartFlow Dashboard"
             />

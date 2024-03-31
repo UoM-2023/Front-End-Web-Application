@@ -5,13 +5,14 @@ import { styled } from '@mui/system';
 
 const BlackTextarea = styled(TextareaAutosize)({
   color: 'black',
-  border: '1px solid black',
-  padding: '8px',
-  borderRadius: '4px',
+  border: '3px solid black',
+  padding: '50px',
+  borderRadius: '12px',
   width: '100%',
+  height: '100%',
   resize: 'none',
   '&:focus': {
-    // outline: 'black',
+    outline: 'black',
     borderColor: 'black', // You can change this to customize the focus color
   },
 });
@@ -20,12 +21,14 @@ export default function NotificationBar() {
   return (
     <Box
       sx={{
-        py: 2,
+        py: 4,
+        px: 4,
         display: 'grid',
         gap: 4,
         alignItems: 'center',
         flexWrap: 'wrap',
-        width: '90rem',
+        width: '91rem',
+
       }}
     >
       <BlackTextarea placeholder="Type the Notification" />

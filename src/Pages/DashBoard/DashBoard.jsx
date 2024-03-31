@@ -15,6 +15,9 @@ import VIsitorIcon from './VIsitorIcon';
 import MaintenanceIcon from './MaintenanceIcon';
 import EventIcon from './EventsIcon';
 import EventsIcon from './EventsIcon';
+import EventSeatIcon from '@mui/icons-material/EventSeat';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Calender from './Calender';
 import chhartTwo from './chartTwo';
 import ChartOne from './ChartOne';
@@ -23,15 +26,84 @@ import ChartThree from './ChartThree';
 import Welcome from './Welcome';
 import SubmitButton from '../../Component/Buttons/SubmitButton';
 import NotificationBar from './NotificationBar';
+import ReservationIcon from './reservationIcon';
 
 export default function DashBoard() {
   return (
     <div>
+      <div className="CardsRowTwo">
 
-      <div className="welcome">
-        <Welcome />
+        <span className="welcome"><Welcome /></span>
+
+
+        <span className="cardFive">
+          <Card sx={{
+            width: 300,                  // Set the width to 300px
+            height: 150,                 // Set the height to 200px
+            backgroundColor: '#fff',
+            borderRadius: 6,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <CardMedia>
+
+              </CardMedia>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <p>Support</p>
+
+                    <Typography variant="body2" color="text.secondary">
+                      <h3>No Requests For Today</h3>
+                    </Typography>
+                  </CardContent>
+                </span>
+                <span className="Icon">
+
+                  <ThumbUpIcon sx={{ width: 65, height: 65 }} />
+                </span>
+              </div>
+            </CardActionArea>
+          </Card>
+        </span>
+
+
+
+        <span className="cardSix">
+          <Card sx={{
+            width: 300,                  // Set the width to 300px
+            height: 150,                 // Set the height to 200px
+            backgroundColor: '#fff',
+            borderRadius: 6,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <CardMedia>
+
+              </CardMedia>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <p>Today Reservations</p>
+
+                    <Typography variant="body2" color="text.secondary">
+                      <h3>01 Reservations For Today</h3>
+                    </Typography>
+                  </CardContent>
+                </span>
+                <span className="Icon">
+
+                  <AutoStoriesIcon sx={{ width: 65, height: 65 }} />
+                </span>
+              </div>
+            </CardActionArea>
+          </Card>
+        </span>
+
+
+
+
       </div>
-
 
       <div className="CardsRowOne">
         <span className="cardOne">
@@ -162,74 +234,16 @@ export default function DashBoard() {
       </div>
 
 
-      <div className="CardsRowTwo">
-        <span className="cardFive">
-          <Card sx={{
-            width: 300,                  // Set the width to 300px
-            height: 150,                 // Set the height to 200px
-            backgroundColor: '#fff',
-            borderRadius: 6,
-            border: "#383737 solid",
-          }}>
-            <CardActionArea>
-              <CardMedia>
 
-              </CardMedia>
-              <div className="PaymentAndIcon">
-                <span className="NewPayments">
-                  <CardContent>
-                    <p>New Payments</p>
 
-                    <Typography variant="body2" color="text.secondary">
-                      <h3>08 Payments For Today</h3>
-                    </Typography>
-                  </CardContent>
-                </span>
-                <span className="Icon">
 
-                  <PaymentIcon />
-                </span>
-              </div>
-            </CardActionArea>
-          </Card>
-        </span>
 
-        <span className="cardSix">
-          <Card sx={{
-            width: 300,                  // Set the width to 300px
-            height: 150,                 // Set the height to 200px
-            backgroundColor: '#fff',
-            borderRadius: 6,
-            border: "#383737 solid",
-          }}>
-            <CardActionArea>
-              <CardMedia>
 
-              </CardMedia>
-              <div className="PaymentAndIcon">
-                <span className="NewPayments">
-                  <CardContent>
-                    <p>New Payments</p>
-
-                    <Typography variant="body2" color="text.secondary">
-                      <h3>08 Payments For Today</h3>
-                    </Typography>
-                  </CardContent>
-                </span>
-                <span className="Icon">
-
-                  <PaymentIcon />
-                </span>
-              </div>
-            </CardActionArea>
-          </Card>
-        </span>
-
-        <div className="charts">
-          <span className="charttwo"><ChartTwo /></span>
-        </div>
-
+      <div className="charts">
+        <ChartTwo />
       </div>
+
+
       <div className="notificationBar">
         <span className="notificationBar"><NotificationBar /></span>
         <span className="submitButton"><SubmitButton /></span>

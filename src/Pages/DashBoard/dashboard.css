@@ -31,7 +31,7 @@
   margin-right: 4rem;
 }
 .cardFive {
-  margin-left: 8rem;
+  margin-left: 5.5rem;
   width: 22rem;
 }
 .cardSix {
@@ -54,17 +54,19 @@
 }
 
 .welcome {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   margin-left: 8rem;
 }
 .notificationBar {
   display: flex;
-  margin-left: 4rem;
+  margin-left: 3rem;
+ 
 }
 .submitButton {
-  margin-left: 2rem;
-  margin-top: 0.8rem;
+  /* margin-left: rem; */
+  margin-top: 4.5rem;
 }
 .charts {
-  margin-left: 4.5rem;
+  margin-left:6rem;
+  margin-top: 5rem;
 }

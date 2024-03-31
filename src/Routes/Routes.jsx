@@ -24,13 +24,20 @@ import UnitList from '../Pages/ResidentInfoPage/UnitTableView/UnitList'
 import ResidentInfoAddNew from '../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew'
 import MemberList from '../Pages/ResidentInfoPage/Member List/MemberList'
 import TopBar from '../Component/TopBar/TopBar'
+import DashBoard from '../Pages/DashBoard/DashBoard'
+import GuestFormNew from '../Pages/GuestNew/GuestForm'
+import GuestTable from '../Pages/Guest/GuestTable'
+import ReservationTable from '../Pages/Reservations/ReservationTable'
+import ReservationNewOne from '../Pages/ReservationNew/ReservationNewOne'
+import ReservationTableTwo from '../Pages/Reservations/ReservationTableTwo'
+import ReservationNewTwo from '../Pages/ReservationNew/ReservationNewTwo'
 
 const Routers = () => {
   return (
     <>
       <Routes>
         {/* Dashboard */}
-          <Route path='/dashboard' element = {<Dashboard/> }/>
+          <Route path='/dashboard' element = {<DashBoard/> }/>
         {/* Finance Page Routs and its sub routes */}
           <Route path='/finance' element={<Outlet />}>
             <Route index element={<ResidentsPayments />} />
@@ -97,7 +104,54 @@ const Routers = () => {
             <Route path = 'memberlist' element = {<MemberList />} />
           </Route>
 
+
+
+        {/* guest Section Routes */}
+        <Route path = '/guests' element = {<Outlet />}>
+              <Route index element = {<GuestTable />} />
+              <Route path='addNew' element={<GuestFormNew />} />
+            
+          </Route>
+          {/* </Route> */}
+
+
+        {/* Reservation Section Routes */}
+        <Route path = '/reservations' element = {<Outlet />}>
+              <Route index element = {<ReservationTable />} />
+              <Route path='addNew' element={<ReservationNewOne />} />
+            
+            {/* Completed Requests */}
+            <Route path='reservation' element = {<Outlet />}>
+              <Route index element = {<ReservationTableTwo />} />
+              <Route path='addNew' element={<ReservationNewTwo />} />
+            </Route>
+
+
+          
+          </Route>
+
+
+
+
+
+
+
+
+
       </Routes>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </>
   )
 }
