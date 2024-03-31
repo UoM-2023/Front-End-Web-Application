@@ -37,26 +37,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(nature, title, by, date, time, description, status, action) {
-  return {nature, title, by, date, time, description, status, action};
+function createData(refno, nature, title, by, date, time, description, status, action) {
+  return {refno, nature, title, by, date, time, description, status, action};
 }
 
 const rows = [
-  createData('Complaint', 'water issue', 'Tom Donald', '23/10/2022', '00:34', 'water issue', 'Closed',
+  createData('C-240024', 'Complaint', 'water issue', 'Tom Donald', '23/10/2022', '00:34', 'water issue', 'Closed',
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
-  createData('Suggestions', 'parking', 'David Johns', '03/02/2023', '09:00', 'N/A', 'Open',
+  createData('C-240025', 'Suggestions', 'parking', 'David Johns', '03/02/2023', '09:00', 'N/A', 'Open',
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
     </div>
   ),
-  createData('Request', 'clean garden', 'Bill Will', '25/06/2024', '14:30', 'N/A', 'Open',
+  createData('C-240026', 'Request', 'clean garden', 'Bill Will', '25/06/2024', '14:30', 'N/A', 'Open',
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
@@ -87,9 +87,10 @@ function ComplaintsTable() {
         >
           <TableHead>
             <TableRow>
+            <StyledTableCell align="left">Reference No</StyledTableCell>
               <StyledTableCell align="left">Complaint Nature</StyledTableCell>
               <StyledTableCell align="left">Complaint Title</StyledTableCell>
-              <StyledTableCell align="left">Complaint By</StyledTableCell>
+              <StyledTableCell align="left">Complained By</StyledTableCell>
               <StyledTableCell align="left">Date</StyledTableCell>
               <StyledTableCell align="left">Time</StyledTableCell>
               <StyledTableCell align="left">Description</StyledTableCell>
@@ -100,6 +101,7 @@ function ComplaintsTable() {
           <TableBody>
             {rows.map((row) => (
               <StyledTableRow key={row.u}>
+                <StyledTableCell align="left">{row.refno}</StyledTableCell>
                 <StyledTableCell align="left">{row.nature}</StyledTableCell>
                 <StyledTableCell align="left">{row.title}</StyledTableCell>
                 <StyledTableCell align="left">{row.by}</StyledTableCell>

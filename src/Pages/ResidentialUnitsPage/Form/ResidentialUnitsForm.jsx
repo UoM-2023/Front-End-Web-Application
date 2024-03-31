@@ -63,10 +63,12 @@ function ResidentialUnitsForm() {
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel className="namesTag">Building :</InputLabel>
+          <InputLabel className="namesTag">
+            Building :
+            </InputLabel>
           <Select
             className="SelectformComponent"
-            name="utilityType"
+            name="building"
             onChange={onChangeHandler}
             value={formData.building}
           >

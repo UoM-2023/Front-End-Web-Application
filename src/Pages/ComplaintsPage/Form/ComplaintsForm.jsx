@@ -3,18 +3,16 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
+import "./ComplaintsForm.css";
 // import "../../Component/Forms/FormDesigns.css";
 
 function ComplaintsForm() {
   const [formData, setFormData] = useState({
-    fundID: "",
-    fundName: "",
-    chargedBy: "",
-    amount: "",
-    timePeriod: "",
-    modifiedDate: "",
-    modifiedBy: "",
+    nature: "",
+    title: "",
+    by: "",
+    description: "",
+    status: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -55,6 +53,9 @@ function ComplaintsForm() {
       if (!values.description) {
         errors.description = "Please enter Description *";
       }
+      if (!values.status) {
+        errors.status = "Please select Status * ";
+      }
     return errors;
   };
 
@@ -66,7 +67,7 @@ function ComplaintsForm() {
           <InputLabel className="namesTag">Complaints Nature :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="chargedBy"
+            name="nature"
             onChange={onChangeHandler}
             value={formData.nature}
             >
@@ -93,7 +94,7 @@ function ComplaintsForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="fundName"
+            name="title"
             onChange={onChangeHandler}
             value={formData.title}
           />
@@ -107,7 +108,7 @@ function ComplaintsForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="fundName"
+            name="by"
             onChange={onChangeHandler}
             value={formData.by}
           />
@@ -121,12 +122,33 @@ function ComplaintsForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="fundName"
+            name="description"
             onChange={onChangeHandler}
             value={formData.description}
           />
         </div>
         <p>{formErrors.description}</p>
+
+        <div className="inputItem">
+          <InputLabel className="namesTag">Status :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="status"
+            onChange={onChangeHandler}
+            value={formData.status}
+            >
+            <MenuItem value="" className="optionContainer">
+              Select Status 
+            </MenuItem>
+            <MenuItem value="open" name="open" className="optionContainer">
+              Open
+            </MenuItem>
+            <MenuItem value="closed" name="closed" className="optionContainer">
+              Closed
+            </MenuItem>
+          </Select>
+        </div>
+        <p>{formErrors.status}</p>
 
         <div className="buttonSection">
           <Grid container spacing={2}>
