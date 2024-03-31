@@ -12,6 +12,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -75,74 +76,15 @@ const rows = [
       <DeleteButton />
     </div>
   ),
-  createData(
-    1,
-    "E76536778",
-    "2400",
-    "Maintenance",
-    "Cash",
-    "M76346",
-    "A2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    1,
-    "E76536778",
-    "2400",
-    "Maintenance",
-    "Cash",
-    "M76346",
-    "A2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div> 
-  ),
-  createData(
-    1,
-    "E76536778",
-    "2400",
-    "Maintenance",
-    "Cash",
-    "M76346",
-    "A2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    1,
-    "E76536778",
-    "2400",
-    "Maintenance",
-    "Cash",
-    "M76346",
-    "A2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
 ];
 
 function Expenses() {
   return (
     <div className="expensesContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton />
+        <AddNewButton route="/finance/expenses/addExpense"/>
       </div>
       <TableContainer component={Paper}>
         <Table

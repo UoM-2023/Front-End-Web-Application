@@ -12,6 +12,7 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import Minibar from "../Mininavbar/Minibar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -95,9 +96,10 @@ const rows = [
 function EditFunds() {
   return (
     <div className="editFundsContainer">
+      <Minibar />
       <div className="pageTop">
         <SearchBar/>
-        <AddNewButton/>
+        <AddNewButton route="/finance/editFunds/newFund"/>
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -132,7 +134,7 @@ function EditFunds() {
                 </StyledTableCell>
                 <StyledTableCell align="left">{row.fundName}</StyledTableCell>
                 <StyledTableCell align="left">{row.chargedBy}</StyledTableCell>
-                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                <StyledTableCell align="right">{row.amount}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.timePeriod}
                 </StyledTableCell>

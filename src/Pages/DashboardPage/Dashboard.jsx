@@ -26,7 +26,7 @@ function Dashboard() {
     <hr></hr>
     <ViewButton/>
     <hr></hr> */}
-    
+    <h1>Dashboard</h1>
   
   </div>
   );
