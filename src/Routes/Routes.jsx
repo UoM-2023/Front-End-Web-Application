@@ -132,9 +132,7 @@ const Routers = () => {
               <Route index element={<EventsTable/>} />
               <Route path='eventsForm' element={<EventsForm/>}/>
             </Route>
-            
-
-
+          
       </Routes>
     </>
   )

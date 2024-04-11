@@ -3,22 +3,23 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
 
 function EditFundsAddNew() {
   const [formData, setFormData] = useState({
-    fundID: "",
     fundName: "",
     chargedBy: "",
     amount: "",
     timePeriod: "",
-    modifiedDate: "",
     modifiedBy: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -30,7 +31,13 @@ function EditFundsAddNew() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
+
+    axios.post('http://localhost:3001/finance/editFunds',formData)
+    .then(res => console.log('RES::::::::',res.data))
+    .catch(err => console.log(err))
+
     setIsSubmit(true);
+    navigate("/finance/editFunds");
   };
 
   useEffect(() => {
@@ -46,17 +53,11 @@ function EditFundsAddNew() {
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
     }
-    if (!values.fundID) {
-      errors.fundID = "Please Enter Fund ID *";
-    }
     if (!values.fundName) {
       errors.fundName = "Fund Name is required *";
     }
     if (!values.timePeriod) {
       errors.timePeriod = "Time Period is required *";
-    }
-    if (!values.modifiedDate) {
-      errors.modifiedDate = "Please Enter Completed Date *";
     }
     if (!values.chargedBy) {
       errors.chargedBy = "Please select Select Charging Units *";
@@ -70,19 +71,6 @@ function EditFundsAddNew() {
   return (
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        <div className="inputItem">
-          <InputLabel htmlFor="fundID" className="namesTag">
-            Fund ID :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="fundID"
-            onChange={onChangeHandler}
-            value={formData.fundID}
-          />
-        </div>
-        <p>{formErrors.fundID}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="fundName" className="namesTag">
@@ -156,21 +144,6 @@ function EditFundsAddNew() {
           />
         </div>
         <p>{formErrors.timePeriod}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="modifiedDate" className="namesTag">
-            Modified Date :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            type="date"
-            className="textFieldComponent"
-            name="modifiedDate"
-            onChange={onChangeHandler}
-            value={formData.modifiedDate}
-          />
-        </div>
-        <p>{formErrors.modifiedDate}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="modifiedBy" className="namesTag">

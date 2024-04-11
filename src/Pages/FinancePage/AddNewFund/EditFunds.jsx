@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EditFunds.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -13,6 +13,7 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../Mininavbar/Minibar";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -60,40 +61,27 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    1,
-    "C-001",
-    "Management Fund",
-    "All Units",
-    "2400.00",
-    "1 Month",
-    "12/1/2024",
-    "M-102",
-    <div className="actionBtn">
-        <EditButton />
-        &nbsp; &nbsp;
-        <DeleteButton />
-    </div>
-  ),
-  createData(
-    1,
-    "C-001",
-    "Management Fund",
-    "All Units",
-    "2400.00",
-    "1 Month",
-    "12/1/2024",
-    "M-102",
-    <div className="actionBtn">
-        <EditButton />
-        &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function EditFunds() {
+  let no = 1;
+  const [fundTypes,setFundTypes] = useState([])
+  useEffect(() => {
+    console.log("frontend use effect");
+    getFundTypes()
+  }, [])
+
+
+// Get the data from the backend to front end
+  const getFundTypes = () => {
+    axios.get("http://localhost:3001/finance/editFunds").then( (response) => {
+      console.log("Called");
+      console.log(response);
+      setFundTypes(response.data.result[0])
+      // console.log(response.data.result[0].fund_id)
+
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
   return (
     <div className="editFundsContainer">
       <Minibar />
@@ -112,38 +100,41 @@ function EditFunds() {
           }}
           aria-label="customized table"
         >
+          {/* Table Headings */}
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Fund ID</StyledTableCell>
-              <StyledTableCell align="left">Fund Name</StyledTableCell>
-              <StyledTableCell align="left">Charged By</StyledTableCell>
-              <StyledTableCell align="left">Amount</StyledTableCell>
-              <StyledTableCell align="left">Time Period</StyledTableCell>
-              <StyledTableCell align="left">Modified Date</StyledTableCell>
-              <StyledTableCell align="left">Modified By</StyledTableCell>
+              <StyledTableCell align="center">#No</StyledTableCell>
+              <StyledTableCell align="center">Fund ID</StyledTableCell>
+              <StyledTableCell align="center">Fund Name</StyledTableCell>
+              <StyledTableCell align="center">Charged By</StyledTableCell>
+              <StyledTableCell align="center">Amount</StyledTableCell>
+              <StyledTableCell align="center">Time Period</StyledTableCell>
+              <StyledTableCell align="center">Modified Date</StyledTableCell>
+              <StyledTableCell align="center">Modified By</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.fundID}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.fundName}</StyledTableCell>
-                <StyledTableCell align="left">{row.chargedBy}</StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.timePeriod}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.modifiedDate}</StyledTableCell>
+            { fundTypes.map((fundType) => (
+              <StyledTableRow key={fundType.fund_id}>
+                {/* For the counting in first column */}
+                <StyledTableCell align="center">{fundType.fund_id}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.modifiedBy}
+                  {fundType.fund_id}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.action}</StyledTableCell>
+                <StyledTableCell align="center">{fundType.fundName}</StyledTableCell>
+                <StyledTableCell align="center">{fundType.chargedBy}</StyledTableCell>
+                <StyledTableCell align="center">{fundType.amount}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.timePeriod}
+                </StyledTableCell>
+                <StyledTableCell align="center">{fundType.modified_date.slice(0,10)}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.modified_by}
+                </StyledTableCell>
+                <StyledTableCell align="center">{fundType.action}</StyledTableCell>
               </StyledTableRow>
+              
             ))}
           </TableBody>
         </Table>

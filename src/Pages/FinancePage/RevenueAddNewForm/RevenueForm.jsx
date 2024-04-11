@@ -3,22 +3,22 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 function RevenueForm() {
   const [formData, setFormData] = useState({
-    revenueType: "",
-    unitID: "",
-    residentName: "",
-    staffID: "",
-    paymentMethod: "",
+    paid_by: "",
     amount: "",
-    remark: "",
+    rType: "",
+    payment_method: "",
+    staffID: ""
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -30,7 +30,12 @@ function RevenueForm() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
+
+    axios.post('http://localhost:3001/finance/revenue',formData)
+    .then(res => console.log('RES::::::::',res.data))
+    .catch(err => console.log(err))
     setIsSubmit(true);
+    navigate("/finance/revenue")
   };
 
   useEffect(() => {
@@ -43,23 +48,20 @@ function RevenueForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.revenueType) {
-      errors.revenueType = "Please select Revenue Type * ";
-    }
-    if (!values.unitID) {
-      errors.unitID = "Please Enter Unit ID *";
-    }
-    if (!values.residentName) {
-      errors.approvedBy = "Please Enter Resident Name *";
-    }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
-    }
-    if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Select Payment Method *";
+    if (!values.paid_by) {
+      errors.paid_by = "Please Enter a Name * ";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
+    }
+    if (!values.rType) {
+      errors.rType = "Please Select a Revenue *";
+    }
+    if (!values.payment_method) {
+      errors.payment_method = "Please Select Payment Method *";
+    }
+    if (!values.staff_id) {
+      errors.staff_id = "Please Enter Staff ID *";
     }
     return errors;
   };
@@ -70,9 +72,9 @@ function RevenueForm() {
           <InputLabel className="namesTag">Revenue Type :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="revenueType"
+            name="rType"
             onChange={onChangeHandler}
-            value={formData.revenueType}
+            value={formData.rType}
           >
             <MenuItem value="" className="optionContainer">
               Select Revenue Type
@@ -92,9 +94,9 @@ function RevenueForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.revenueType}</p>
+        <p>{formErrors.rType}</p>
 
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="unitID" className="namesTag">
             Unit ID :
           </InputLabel>
@@ -106,21 +108,21 @@ function RevenueForm() {
             value={formData.unitID}
           />
         </div>
-        <p>{formErrors.unitID}</p>
+        <p>{formErrors.unitID}</p> */}
 
         <div className="inputItem">
-          <InputLabel htmlFor="residentName" className="namesTag">
-            Resident Name :
+          <InputLabel htmlFor="Paid By" className="namesTag">
+            Paid By :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="residentName"
+            name="paid_by"
             onChange={onChangeHandler}
-            value={formData.residentName}
+            value={formData.paid_by}
           />
         </div>
-        <p>{formErrors.residentName}</p>
+        <p>{formErrors.paid_by}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
@@ -129,20 +131,20 @@ function RevenueForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="staffID"
+            name="staff_id"
             onChange={onChangeHandler}
-            value={formData.staffID}
+            value={formData.staff_id}
           />
         </div>
-        <p>{formErrors.staffID}</p>
+        <p>{formErrors.staff_id}</p>
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Method :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="paymentMethod"
+            name="payment_method"
             onChange={onChangeHandler}
-            value={formData.paymentMethod}
+            value={formData.payment_method}
           >
             <MenuItem value="" className="optionContainer">
               Select Payment Method
@@ -158,7 +160,7 @@ function RevenueForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.paymentMethod}</p>
+        <p>{formErrors.payment_method}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="amount" className="namesTag">
@@ -178,7 +180,7 @@ function RevenueForm() {
         </div>
         <p>{formErrors.amount}</p>
 
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
             Remark :
           </InputLabel>
@@ -189,7 +191,7 @@ function RevenueForm() {
             onChange={onChangeHandler}
             value={formData.remark}
           />
-        </div>
+        </div> */}
 
         <div className="buttonSection">
           <Grid container spacing={2}>
