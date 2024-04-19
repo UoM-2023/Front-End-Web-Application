@@ -96,19 +96,6 @@ function RevenueForm() {
         </div>
         <p>{formErrors.rType}</p>
 
-        {/* <div className="inputItem">
-          <InputLabel htmlFor="unitID" className="namesTag">
-            Unit ID :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="unitID"
-            onChange={onChangeHandler}
-            value={formData.unitID}
-          />
-        </div>
-        <p>{formErrors.unitID}</p> */}
 
         <div className="inputItem">
           <InputLabel htmlFor="Paid By" className="namesTag">
@@ -179,19 +166,6 @@ function RevenueForm() {
           />
         </div>
         <p>{formErrors.amount}</p>
-
-        {/* <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Remark :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="remark"
-            onChange={onChangeHandler}
-            value={formData.remark}
-          />
-        </div> */}
 
         <div className="buttonSection">
           <Grid container spacing={2}>

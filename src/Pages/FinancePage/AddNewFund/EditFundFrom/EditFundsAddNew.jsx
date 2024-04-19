@@ -4,10 +4,11 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function EditFundsAddNew() {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     fundName: "",
     chargedBy: "",
@@ -20,6 +21,17 @@ function EditFundsAddNew() {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const navigate = useNavigate();
+
+  // // Fetch existing data when the component mounts or the id changes
+  useEffect(() => {
+    if (id) {  // Check if there is an ID, which means we are in "edit" mode
+      axios.get(`http://localhost:3001/finance/editFunds/${id}`)
+      .then(response => {
+        setFormData(response.data);  // Assumes response.data has the data structure as our state
+      })
+      .catch(err => console.error("Failed to fetch data", err));
+    }
+  }, [id]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -69,6 +81,7 @@ function EditFundsAddNew() {
   };
 
   return (
+    
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
 

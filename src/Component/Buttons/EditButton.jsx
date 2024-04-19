@@ -1,13 +1,22 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-function EditButton() {
+function EditButton({route}) {
+  
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate(route);
+  };
   return (
     <div className="ButtonContainer">
       <Stack spacing={2} direction="row">
         <Button
           variant="outlined"
+          onClick={handleClick}
           style={{
             backgroundColor: "#ffffff",
             borderColor: "#e87142c5",

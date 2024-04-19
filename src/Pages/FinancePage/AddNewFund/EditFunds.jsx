@@ -14,6 +14,8 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
+import EditFundsAddNew from "./EditFundFrom/EditFundsAddNew";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,7 +65,10 @@ function createData(
 
 function EditFunds() {
   let no = 1;
+  const navigate = useNavigate();
   const [fundTypes,setFundTypes] = useState([])
+  const [formData, setFormData] = useState([]);
+
   useEffect(() => {
     console.log("frontend use effect");
     getFundTypes()
@@ -78,6 +83,18 @@ function EditFunds() {
       setFundTypes(response.data.result[0])
       // console.log(response.data.result[0].fund_id)
 
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
+
+  // Handling the edit button
+  const handleEdit = (editID) => {
+    axios.get(`http://localhost:3001/finance/editFunds/${editID}`).then( (response) => {
+      console.log("Called");
+      console.log(response);
+      navigate(`/finance/editFunds/newFund`)
+      // setFormData(response.data.result[0])
     }).catch( (error) => {
       console.log(error);
     })
@@ -132,13 +149,17 @@ function EditFunds() {
                 <StyledTableCell align="center">
                   {fundType.modified_by}
                 </StyledTableCell>
-                <StyledTableCell align="center">{fundType.action}</StyledTableCell>
+                <StyledTableCell align="center" sx={{ display: 'flex', justifyContent: 'center', gap:'1rem' }}>
+                    <EditButton/>
+                    <DeleteButton /> 
+                </StyledTableCell>
               </StyledTableRow>
               
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {/* <EditFundsAddNew formData={formData} /> */}
     </div>
   );
 }

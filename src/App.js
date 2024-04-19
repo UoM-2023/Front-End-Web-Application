@@ -49,6 +49,7 @@ import NoticesTable from "./Pages/News&NoticesPage/Notices/Table/NoticesTable";
 import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
 import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
+import CollapsibleTable from "./Pages/FinancePage/UtilityCharges/UtilityDetails";
 
 function App() {
   return (
@@ -80,6 +81,7 @@ function App() {
         <BrowserRouter>
           <MiniDrawer />
           <Routers />
+          <CollapsibleTable />
         </BrowserRouter>
 
         {/* <Minibar /> *}
@@ -102,6 +104,7 @@ function App() {
         {/* <StaffDetailsAddNewForm /> */}
         {/* <MemberList /> */}
         {/* <UnitList /> */}
+        
       </div>
     </>
   );
