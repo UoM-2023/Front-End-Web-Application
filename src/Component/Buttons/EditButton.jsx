@@ -3,11 +3,14 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
-function EditButton({route}) {
+function EditButton({route, onClick}) {
   
   const navigate = useNavigate();
 
   const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
     // Navigate to the desired route when the button is clicked
     navigate(route);
   };

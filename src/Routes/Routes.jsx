@@ -71,7 +71,7 @@ const Routers = () => {
             <Route path='editFunds' element={<Outlet />}>
               <Route index element={<EditFunds />} />
               <Route path='newFund' element={<EditFundsAddNew />} />
-              {/* <Route path='newFund/:id' element={<EditFundsAddNew />} />  */}
+              <Route path='updateFund/:id' element={<EditFundsAddNew />} /> 
             </Route>
           </Route>
         

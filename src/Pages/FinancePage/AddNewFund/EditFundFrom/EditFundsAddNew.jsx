@@ -22,16 +22,33 @@ function EditFundsAddNew() {
 
   const navigate = useNavigate();
 
-  // // Fetch existing data when the component mounts or the id changes
   useEffect(() => {
+    console.log("Current ID:", id);
     if (id) {  // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect cal");
       axios.get(`http://localhost:3001/finance/editFunds/${id}`)
       .then(response => {
-        setFormData(response.data);  // Assumes response.data has the data structure as our state
+        console.log("Response:",response);
+        const { data } = response;
+        console.log("Log has called",data);
+  
+        // Assuming your response data structure is correct
+        if (data && data.result && data.result.length > 0) {
+          const fundData = data.result[0][0]; // Assuming you want the first item from the first array
+          const chargedByValue = fundData.chargedBy === "All Units" ? "All Units" : fundData.chargedBy;
+          setFormData({
+            fundName: fundData.fundName,
+            chargedBy: chargedByValue,
+            amount: fundData.amount,
+            timePeriod: fundData.timePeriod,
+            modifiedBy: fundData.modified_by,
+          });
+        }
       })
       .catch(err => console.error("Failed to fetch data", err));
     }
   }, [id]);
+  
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -44,12 +61,33 @@ function EditFundsAddNew() {
     event.preventDefault();
     setFormErrors(validate(formData));
 
-    axios.post('http://localhost:3001/finance/editFunds',formData)
-    .then(res => console.log('RES::::::::',res.data))
-    .catch(err => console.log(err))
+    // axios.post('http://localhost:3001/finance/editFunds',formData)
+    // .then(res => console.log('RES::::::::',res.data))
+    // .catch(err => console.log(err))
 
-    setIsSubmit(true);
-    navigate("/finance/editFunds");
+    // setIsSubmit(true);
+    // navigate("/finance/editFunds");
+    if (id) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios.put(`http://localhost:3001/finance/editFunds/${id}`, formData)
+        .then(res => {
+          console.log('Update successful:', res.data);
+          setIsSubmit(true);
+          navigate("/finance/editFunds");
+        })
+        .catch(err => console.error('Failed to update data:', err));
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios.post('http://localhost:3001/finance/editFunds', formData)
+        .then(res => {
+          console.log('Create successful:', res.data);
+          setIsSubmit(true);
+          navigate("/finance/editFunds");
+        })
+        .catch(err => console.error('Failed to create data:', err));
+    }
+  
+    
   };
 
   useEffect(() => {
@@ -105,23 +143,23 @@ function EditFundsAddNew() {
             className="SelectformComponent"
             name="chargedBy"
             onChange={onChangeHandler}
-            value={formData.chargedBy}
+            value={formData.chargedBy || ''}
           >
             <MenuItem value="" className="optionContainer">
               Select Charging Units
             </MenuItem>
             <MenuItem
-              value="allUnits"
+              value="All Units"
               name="allUnits"
               className="optionContainer"
             >
               All Units
             </MenuItem>
-            <MenuItem value="unit01" name="unit01" className="optionContainer">
-              Unit 01
+            <MenuItem value="Type A" name="unitAType" className="optionContainer">
+              Type A
             </MenuItem>
-            <MenuItem value="unit02" name="unit02" className="optionContainer">
-              Unit 02
+            <MenuItem value="Type B" name="unitBType" className="optionContainer">
+              Type B
             </MenuItem>
           </Select>
         </div>

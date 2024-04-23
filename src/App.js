@@ -51,6 +51,7 @@ import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
 import CollapsibleTable from "./Pages/FinancePage/UtilityCharges/UtilityDetails";
 
+
 function App() {
   return (
     <>
@@ -81,7 +82,7 @@ function App() {
         <BrowserRouter>
           <MiniDrawer />
           <Routers />
-          <CollapsibleTable />
+          {/* <CollapsibleTable /> */}
         </BrowserRouter>
 
         {/* <Minibar /> *}

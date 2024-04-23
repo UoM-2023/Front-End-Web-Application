@@ -74,6 +74,11 @@ function EditFunds() {
     getFundTypes()
   }, [])
 
+  const addData = () => {
+    const newData = [...fundTypes];
+    newData.push({ id: newData.length + 1, /* other data properties */ });
+    setFundTypes(newData);
+  };
 
 // Get the data from the backend to front end
   const getFundTypes = () => {
@@ -89,11 +94,12 @@ function EditFunds() {
   }
 
   // Handling the edit button
-  const handleEdit = (editID) => {
-    axios.get(`http://localhost:3001/finance/editFunds/${editID}`).then( (response) => {
-      console.log("Called");
-      console.log(response);
-      navigate(`/finance/editFunds/newFund`)
+  const handleEdit = (id) => {
+    console.log("Hanlde edit before axios");
+    axios.get(`http://localhost:3001/finance/editFunds/${id}`).then( (response) => {
+      console.log("Hanlde edit Called");
+      // console.log(response);
+      // navigate(`/finance/editFunds/newFund`)
       // setFormData(response.data.result[0])
     }).catch( (error) => {
       console.log(error);
@@ -121,24 +127,24 @@ function EditFunds() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="center">#No</StyledTableCell>
-              <StyledTableCell align="center">Fund ID</StyledTableCell>
+              {/* <StyledTableCell align="center">Fund ID</StyledTableCell> */}
               <StyledTableCell align="center">Fund Name</StyledTableCell>
               <StyledTableCell align="center">Charged By</StyledTableCell>
               <StyledTableCell align="center">Amount</StyledTableCell>
-              <StyledTableCell align="center">Time Period</StyledTableCell>
+              <StyledTableCell align="center">Time Period <br />(In Months)</StyledTableCell>
               <StyledTableCell align="center">Modified Date</StyledTableCell>
               <StyledTableCell align="center">Modified By</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { fundTypes.map((fundType) => (
+            { fundTypes.map((fundType, index) => (
               <StyledTableRow key={fundType.fund_id}>
                 {/* For the counting in first column */}
-                <StyledTableCell align="center">{fundType.fund_id}</StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell align="center">{index + 1}</StyledTableCell>
+                {/* <StyledTableCell align="center">
                   {fundType.fund_id}
-                </StyledTableCell>
+                </StyledTableCell> */}
                 <StyledTableCell align="center">{fundType.fundName}</StyledTableCell>
                 <StyledTableCell align="center">{fundType.chargedBy}</StyledTableCell>
                 <StyledTableCell align="center">{fundType.amount}</StyledTableCell>
@@ -150,7 +156,7 @@ function EditFunds() {
                   {fundType.modified_by}
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ display: 'flex', justifyContent: 'center', gap:'1rem' }}>
-                    <EditButton/>
+                    <EditButton route={`/finance/editFunds/updateFund/${fundType.fund_id}`} onClick={()=> handleEdit(fundType.fund_id)}/>
                     <DeleteButton /> 
                 </StyledTableCell>
               </StyledTableRow>
