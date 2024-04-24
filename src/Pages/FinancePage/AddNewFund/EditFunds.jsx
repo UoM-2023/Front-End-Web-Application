@@ -67,7 +67,7 @@ function EditFunds() {
   let no = 1;
   const navigate = useNavigate();
   const [fundTypes,setFundTypes] = useState([])
-  const [formData, setFormData] = useState([]);
+  
 
   useEffect(() => {
     console.log("frontend use effect");
@@ -98,13 +98,24 @@ function EditFunds() {
     console.log("Hanlde edit before axios");
     axios.get(`http://localhost:3001/finance/editFunds/${id}`).then( (response) => {
       console.log("Hanlde edit Called");
-      // console.log(response);
-      // navigate(`/finance/editFunds/newFund`)
-      // setFormData(response.data.result[0])
     }).catch( (error) => {
       console.log(error);
     })
   }
+
+  const handleDelete = (id) => {
+    console.log("Delete handler");
+
+    axios.delete(`http://localhost:3001/finance/editFunds/${id}`).then((response) =>{
+
+      console.log("Delete handler called");
+      getFundTypes();
+
+    }).catch((error)=>{
+      console.log("Delete handle error",error);
+    })
+  }
+
   return (
     <div className="editFundsContainer">
       <Minibar />
@@ -157,7 +168,7 @@ function EditFunds() {
                 </StyledTableCell>
                 <StyledTableCell align="center" sx={{ display: 'flex', justifyContent: 'center', gap:'1rem' }}>
                     <EditButton route={`/finance/editFunds/updateFund/${fundType.fund_id}`} onClick={()=> handleEdit(fundType.fund_id)}/>
-                    <DeleteButton /> 
+                    <DeleteButton onClick = {()=> handleDelete(fundType.fund_id)}  /> 
                 </StyledTableCell>
               </StyledTableRow>
               
