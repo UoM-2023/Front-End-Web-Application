@@ -7,12 +7,13 @@ import EditButton from "../../Component/Buttons/EditButton";
 import SaveButton from "../../Component/Buttons/SaveButton";
 import SubmitButton from "../../Component/Buttons/SubmitButton";
 import ViewButton from "../../Component/Buttons/ViewButton";
+import TopBar from "../../Component/TopBar/TopBar";
 
 function Dashboard() {
   return (
-  <div>
-    <MiniDrawer/>
-    {/* <CancelButton/>
+    <div>
+      <MiniDrawer />
+      {/* <CancelButton/>
     <hr></hr>
     <BackButton/>
     <hr></hr>
@@ -26,9 +27,9 @@ function Dashboard() {
     <hr></hr>
     <ViewButton/>
     <hr></hr> */}
-    <h1>Dashboard</h1>
-  
-  </div>
+      <TopBar title="Dashboard" />
+      <h1>Dashboard</h1>
+    </div>
   );
 }
 

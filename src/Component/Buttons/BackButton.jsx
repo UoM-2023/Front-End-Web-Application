@@ -1,8 +1,10 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 function BackButton() {
+  const navigate = useNavigate();
   return (
     <div className="ButtonContainer">
       <Stack spacing={2} direction="row">
@@ -21,6 +23,7 @@ function BackButton() {
             paddingRight: "1.56rem",
             fontWeight: "bold",
           }}
+          onClick={() => navigate(-1)}
         >
           Back
         </Button>

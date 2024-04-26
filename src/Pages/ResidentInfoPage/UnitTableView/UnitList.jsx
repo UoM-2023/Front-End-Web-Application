@@ -13,6 +13,8 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import TopBar from "../../../Component/TopBar/TopBar";
+import { useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,86 +43,87 @@ function createData(no, unit, name, status, mobileNo, email, action) {
 }
 
 const rows = [
-  createData(
-    1,
-    "A-214100",
-    "A.W.G.Silva",
-    "Owner",
-    "0767927004",
-    "awg25silva1999@gmail.com",
-    <div className="actionBtn">
-      <ViewButton route="/residents information/memberlist" />
-      &nbsp; &nbsp;
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "A-214101",
-    "A.W.G.Gamage",
-    "Owner",
-    "0711927004",
-    "awgsilva1999@gmail.com",
-    <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "B-214102",
-    "A.W.G.Samaraweera",
-    "Owner",
-    "0767925504",
-    "awgsilva1999@gmail.com",
-    <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "B-214103",
-    "A.W.Jerry Fernando",
-    "Owner",
-    "0117927004",
-    "awgsilva1999@gmail.com",
-    <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "A-214104",
-    "A.W.Saman Abeykoon",
-    "Owner",
-    "0787027004",
-    "awgsilva1999@gmail.com",
-    <div className="actionBtn">
-      <ViewButton />
-      &nbsp; &nbsp;
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
+  // createData(
+  //   1,
+  //   "A-214100",
+  //   "A.W.G.Silva",
+  //   "Owner",
+  //   "0767927004",
+  //   "awg25silva1999@gmail.com",
+  //   <div className="actionBtn">
+  //     <ViewButton route="/residents information/memberlist" />
+  //     &nbsp; &nbsp;
+  //     <EditButton />
+  //     &nbsp; &nbsp;
+  //     <DeleteButton />
+  //   </div>
+  // ),
+  // createData(
+  //   2,
+  //   "A-214101",
+  //   "A.W.G.Gamage",
+  //   "Owner",
+  //   "0711927004",
+  //   "awgsilva1999@gmail.com",
+  //   <div className="actionBtn">
+  //     <ViewButton />
+  //     &nbsp; &nbsp;
+  //     <EditButton />
+  //     &nbsp; &nbsp;
+  //     <DeleteButton />
+  //   </div>
+  // ),
+  // createData(
+  //   3,
+  //   "B-214102",
+  //   "A.W.G.Samaraweera",
+  //   "Owner",
+  //   "0767925504",
+  //   "awgsilva1999@gmail.com",
+  //   <div className="actionBtn">
+  //     <ViewButton />
+  //     &nbsp; &nbsp;
+  //     <EditButton />
+  //     &nbsp; &nbsp;
+  //     <DeleteButton />
+  //   </div>
+  // ),
+  // createData(
+  //   4,
+  //   "B-214103",
+  //   "A.W.Jerry Fernando",
+  //   "Owner",
+  //   "0117927004",
+  //   "awgsilva1999@gmail.com",
+  //   <div className="actionBtn">
+  //     <ViewButton />
+  //     &nbsp; &nbsp;
+  //     <EditButton />
+  //     &nbsp; &nbsp;
+  //     <DeleteButton />
+  //   </div>
+  // ),
+  // createData(
+  //   5,
+  //   "A-214104",
+  //   "A.W.Saman Abeykoon",
+  //   "Owner",
+  //   "0787027004",
+  //   "awgsilva1999@gmail.com",
+  //   <div className="actionBtn">
+  //     <ViewButton />
+  //     &nbsp; &nbsp;
+  //     <EditButton />
+  //     &nbsp; &nbsp;
+  //     <DeleteButton />
+  //   </div>
+  // ),
 ];
 
 function UnitList() {
   return (
     <div className="unitListContainer">
+      <TopBar title="Residents Information" />
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/residents information/addNewResident" />

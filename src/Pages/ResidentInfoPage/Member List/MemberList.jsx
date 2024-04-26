@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import { tableCellClasses } from "@mui/material/TableCell";
 import BackButton from "../../../Component/Buttons/BackButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
+import TopBar from "../../../Component/TopBar/TopBar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -119,6 +120,7 @@ const rows3 = [
 function MemberList() {
   return (
     <div className="pageContainer">
+      <TopBar title="Residents Information" />
       <div className="memberListContainer">
         <div className="card1">
           <Card sx={{ maxWidth: 550, width: "30rem" }}>

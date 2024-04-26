@@ -12,6 +12,10 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import TopBar from "../../../Component/TopBar/TopBar";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,95 +39,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  staffID,
-  name,
-  staffRole,
-  mobileNo,
-  email,
-  createdDate,
-  action
-) {
-  return { no, staffID, name, staffRole, mobileNo, email, createdDate, action };
-}
-
-const rows = [
-  createData(
-    1,
-    "A-214100",
-    "A.W.G.Silva",
-    "Finance Manager",
-    "0767927004",
-    "awg25silva1999@gmail.com",
-    "05/29/2019",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "A-214101",
-    "A.W.G.Gamage",
-    "Front Office Manager",
-    "0711927004",
-    "awgsilva1999@gmail.com",
-    "10/03/2021",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Security Officer",
-    "0767925504",
-    "awgsilva1999@gmail.com",
-    "03/30/2020",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Admin",
-    "0117927004",
-    "awgsilva1999@gmail.com",
-    "01/19/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "S-214104",
-    "A.W.Saman Abeykoon",
-    "Maintenance Manager",
-    "0787027004",
-    "awgsilva1999@gmail.com",
-    "07/23/2020",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function StaffList() {
+  const [stafflist, setStafflist] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/staffDetails/addNewStaff")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setStafflist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  //console.log(stafflist);
+
   return (
     <div className="unitListContainer">
+      <TopBar title="Staff Details" />
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/staff details/addNewStaff" />
@@ -131,9 +65,9 @@ function StaffList() {
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "94.5vw",
+            maxWidth: "93.5vw",
             marginTop: 5,
-            marginLeft: 9,
+            marginLeft: 9.5,
             marginRight: 0,
             paddingTop: "100px",
           }}
@@ -141,31 +75,47 @@ function StaffList() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Staff ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="left">Staff Role</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
-              <StyledTableCell align="left">Created Date</StyledTableCell>
+              {/* <StyledTableCell align="left">Created Date</StyledTableCell> */}
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.staffID}</StyledTableCell>
-                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                <StyledTableCell align="left">{row.staffRole}</StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">{row.email}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.createdDate}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {stafflist &&
+              stafflist.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.staffID}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.name_with_initials}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.staff_category}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.mobile_no}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                      }}
+                    >
+                      <EditButton />
+                      &nbsp; &nbsp;
+                      <DeleteButton />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
