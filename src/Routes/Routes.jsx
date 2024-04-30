@@ -25,6 +25,14 @@ import ResidentInfoAddNew from '../Pages/ResidentInfoPage/NewMemberForm/Resident
 import MemberList from '../Pages/ResidentInfoPage/Member List/MemberList'
 import TopBar from '../Component/TopBar/TopBar'
 import DashBoard from '../Pages/DashBoard/DashBoard'
+import ResidentialUnitsTable from '../Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable'
+import ResidentialUnitsForm from '../Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm'
+import ComplaintsTable from '../Pages/ComplaintsPage/Table/ComplaintsTable'
+import ComplaintsForm from '../Pages/ComplaintsPage/Form/ComplaintsForm'
+import NoticesTable from '../Pages/News&NoticesPage/Notices/Table/NoticesTable'
+import NoticesForm from '../Pages/News&NoticesPage/Notices/Form/NoticesForm'
+import EventsTable from '../Pages/News&NoticesPage/Events/Table/EventsTable'
+import EventsForm from '../Pages/News&NoticesPage/Events/Form/EventsForm'
 
 const Routers = () => {
   return (
@@ -63,6 +71,7 @@ const Routers = () => {
             <Route path='editFunds' element={<Outlet />}>
               <Route index element={<EditFunds />} />
               <Route path='newFund' element={<EditFundsAddNew />} />
+              <Route path='updateFund/:id' element={<EditFundsAddNew />} /> 
             </Route>
           </Route>
         
@@ -98,6 +107,33 @@ const Routers = () => {
             <Route path = 'memberlist' element = {<MemberList />} />
           </Route>
 
+          {/* Residential Units Route */}
+          <Route path = '/residential units' element = {<Outlet />} >
+            <Route index element = {<ResidentialUnitsTable/>} />
+            <Route path = 'residentialUnitsForm' element = {<ResidentialUnitsForm/>} />
+            <Route/>
+            
+          </Route>
+
+          {/* Complaints route */}
+          <Route path='complaints' element={<Outlet />} >
+              <Route index element={<ComplaintsTable/>} />
+              <Route path='complaintsForm' element={<ComplaintsForm/>}/>
+            </Route>
+
+            {/* News & Notices section */}
+            <Route path='news & notices' element={<Outlet/>}>
+              {/* Notices Route */}
+              <Route index element={<NoticesTable/>} />
+              <Route path='noticesForm' element={<NoticesForm/>}/>
+            </Route>
+
+            {/* Events Route */}
+          <Route path='eventsTable' element={<Outlet />} >
+              <Route index element={<EventsTable/>} />
+              <Route path='eventsForm' element={<EventsForm/>}/>
+            </Route>
+          
       </Routes>
     </>
   )
