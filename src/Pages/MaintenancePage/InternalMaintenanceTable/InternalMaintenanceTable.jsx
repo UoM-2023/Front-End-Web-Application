@@ -45,7 +45,7 @@ function createData(
   requestedDate,
   completedDate,
   paymentStatus,
-  paymemntID,
+  paymentID,
   action,
 ) {
   return {
@@ -57,7 +57,7 @@ function createData(
     requestedDate,
     completedDate,
     paymentStatus,
-    paymemntID,
+    paymentID,
     action,
   };
 }
@@ -65,8 +65,8 @@ function createData(
 const rows = [
   createData(
     1,
-    "M-220046",
-    "Lift repaire",
+    "IM-220046",
+    "Lift repair",
     "Oxford Elevators",
     "0112364445",
     "04 JAN 2024",
@@ -79,70 +79,7 @@ const rows = [
       <DeleteButton />
     </div>
   ),
-  createData(
-    2,
-    "M-220047",
-    "Cleaning",
-    "Amarapala Cleaning",
-    "0112555222",
-    "31 JAN 2024",
-    "15 FEB 2024",
-    "Pending",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "M-220050",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "M-220049",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "M-220050",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
+
 ];
 
 function InternalMaintenanceTable() {
@@ -197,7 +134,7 @@ function InternalMaintenanceTable() {
                 </StyledTableCell>
                 <StyledTableCell align="left">{row.completedDate}</StyledTableCell>
                 <StyledTableCell align="left">{row.paymentStatus}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymemntID}</StyledTableCell>
+                <StyledTableCell align="left">{row.paymentID}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}

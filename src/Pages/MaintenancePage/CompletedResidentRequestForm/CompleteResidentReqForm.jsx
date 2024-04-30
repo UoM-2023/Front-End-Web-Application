@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import { Grid, InputLabel, MenuItem, Select, colors } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
+import DeleteButton from "../../../Component/Buttons/DeleteButton";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css"; 
 
 function CompleteResidentReqForm() {
   const [formData, setFormData] = useState({
+    
     referenceNo: "",
     serviceProvider: "",
     mobileNo: "",
@@ -41,7 +43,7 @@ function CompleteResidentReqForm() {
 
   const validate = (values) => {
     const errors = {};
-    const mobileno_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
+    const mobileNo_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
 
     if (!values.referenceNo) {
       errors.referenceNo = "Please Enter Reference No * ";
@@ -51,7 +53,7 @@ function CompleteResidentReqForm() {
     }
     if (!values.mobileNo) {
       errors.mobileNo = "Mobile Number is required *";
-    } else if (!mobileno_regex.test(values.mobileNo)) {
+    } else if (!mobileNo_regex.test(values.mobileNo)) {
       errors.mobileNo = "Enter a valid Mobile Number";
     }
     if (!values.completedDate) {
@@ -74,6 +76,7 @@ function CompleteResidentReqForm() {
             Reference No :
           </InputLabel>
           <TextField
+          
             id="outlined-basic"
             className="textFieldComponent"
             name="referenceNo"
@@ -181,6 +184,7 @@ function CompleteResidentReqForm() {
             </Grid>
             <Grid item>
               <BackButton />
+              
             </Grid>
           </Grid>
         </div>

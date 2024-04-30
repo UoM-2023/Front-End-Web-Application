@@ -49,7 +49,7 @@ function App() {
       <div className="appContainer">
         {/* <LoginPage /> */}
         {/* <Dashboard /> */}
-        <TopBar title="Residents Information" />
+        <TopBar title=" " />
 
         {/* <ResidentInforPage />
         <StaffDetails />

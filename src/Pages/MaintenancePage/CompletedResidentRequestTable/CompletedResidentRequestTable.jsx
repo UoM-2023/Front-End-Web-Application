@@ -13,6 +13,7 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import TopBar from "../../../Component/TopBar/TopBar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,24 +39,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function createData(
   no,
+  M_paymentId,
   referenceNo,
   serviceProvider,
   mobileNo,
   requestedDate,
   completedDate,
   paymentStatus,
-  paymemntID,
+  paymentID,
   action
 ) {
   return {
     no,
+    M_paymentId,
     referenceNo,
     serviceProvider,
     mobileNo,
     requestedDate,
     completedDate,
     paymentStatus,
-    paymemntID,
+    paymentID,
     action,
   };
 }
@@ -63,8 +66,9 @@ function createData(
 const rows = [
   createData(
     1,
+    "MP-222200",
     "M-220046",
-    "K.K.Gas Sevice",
+    "K.K.Gas Service",
     "0112364445",
     "04 JAN 2024",
     "07 JAN 2024",
@@ -78,6 +82,7 @@ const rows = [
   ),
   createData(
     2,
+    "MP-205674",
     "M-220047",
     "S.M.Gas Service",
     "0112555222",
@@ -91,56 +96,13 @@ const rows = [
       <DeleteButton />
     </div>
   ),
-  createData(
-    3,
-    "M-220050",
-    "J.K.Plummer",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "M-220049",
-    "J.K.Plummer",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "M-220050",
-    "Cane Electricians",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
+ 
 ];
 
 function CompletedResidentRequestTable() {
   return (
     <div className="completedResidentRequestTableContainer">
+     
       <Minibar />
       <div className="pageTop">
         <SearchBar />
@@ -160,6 +122,7 @@ function CompletedResidentRequestTable() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
+              <StyledTableCell align="left">M_paymentId</StyledTableCell>
               <StyledTableCell align="left">Reference No</StyledTableCell>
               <StyledTableCell align="left">Service Provider</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
@@ -174,6 +137,7 @@ function CompletedResidentRequestTable() {
             {rows.map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.no}</StyledTableCell>
+                <StyledTableCell align="left">{row.M_paymentId}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.referenceNo}
                 </StyledTableCell>
@@ -190,7 +154,7 @@ function CompletedResidentRequestTable() {
                 <StyledTableCell align="left">
                   {row.paymentStatus}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.paymemntID}</StyledTableCell>
+                <StyledTableCell align="left">{row.paymentID}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}
