@@ -73,7 +73,7 @@ const rows = [
     <div className="actionBtn">
       <EditButton />
       &nbsp; &nbsp;
-      <DeleteButton />
+      {/* <DeleteButton /> */}
     </div>
   ),
 ];

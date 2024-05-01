@@ -1,0 +1,23 @@
+.FormContainer{
+    margin: 5rem;
+  
+  }
+  
+  .SelectformComponent{
+      width: 30vw;
+      height: 5.5vh;
+  }
+  
+  .textFieldComponent .MuiInputBase-root {
+    width: 30vw;
+    height: 5.5vh;
+    font-size: 1rem;
+  }
+  
+  .textFieldComponent .MuiInputLabel-root {
+    font-size: 1rem;
+  }
+  .buttonSection{
+    margin-top: 2rem;
+    margin-left: 17.5vw;
+  }

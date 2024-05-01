@@ -13,8 +13,12 @@ import FormLabel from "@mui/material/FormLabel";
 import "./Addnewform.css";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+
 
 function StaffDetailsAddNewForm() {
+  const { staffID } = useParams();
+
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",
@@ -38,6 +42,77 @@ function StaffDetailsAddNewForm() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const navigate = useNavigate();
+
+  // Change Birthday Date Format
+
+  function formatDate(dateString) {
+    // Create a new Date object from the provided string
+    const date = new Date(dateString);
+
+    // Increment the date by one day
+    date.setDate(date.getDate());
+
+    // Extract year, month, and day components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    console.log("Current ID:", staffID);
+    if (staffID) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect call");
+      axios
+        .get(
+          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
+            staffID,
+          ]}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const staffData = data.result[0][0]; // Assuming you want the first item from the first array
+            const staffCategoryValue =
+              staffData.staff_category === "Admin"
+                ? "Admin"
+                : staffData.staff_category;
+
+            const formattedDate = formatDate(staffData.dob);
+            console.log(formattedDate);
+
+            setFormData({
+              first_name: staffData.first_name,
+              middle_name: staffData.middle_name,
+              last_name: staffData.last_name,
+              name_with_initials: staffData.name_with_initials,
+              gender: staffData.gender,
+              dob: formattedDate,
+              nic: staffData.nic,
+              staff_category: staffCategoryValue,
+              qualification: staffData.qualification,
+              email: staffData.email,
+              mobile_no: staffData.mobile_no,
+              Address: staffData.Address,
+              city: staffData.city,
+              username: staffData.username,
+              password: staffData.password,
+              img: staffData.img,
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err));
+    }
+  }, [staffID]);
+
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -49,23 +124,50 @@ function StaffDetailsAddNewForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+
+    if (staffID) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
+            staffID,
+          ]}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to update data:", err));
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+        .then((res) => {
+          console.log("Create Successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to Create data:", err));
+    }
+
+    // .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+    // .then((response) => {
+    //   // Handle successful response
+    //   console.log("Response:", response.data);
+    // })
+    // .catch((error) => {
+    //   // Handle error
+    //   console.error("Error:", error);
+    // });
   };
 
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.table(formData);
-
-      axios
-        .post("http://localhost:3001/staffDetails/addNewStaff", formData)
-        .then((response) => {
-          // Handle successful response
-          console.log("Response:", response.data);
-        })
-        .catch((error) => {
-          // Handle error
-          console.error("Error:", error);
-        });
+      console.log(formData.dob);
     }
   }, [formErrors]);
 

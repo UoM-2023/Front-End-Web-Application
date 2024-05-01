@@ -16,6 +16,12 @@ import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,8 +47,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function StaffList() {
   const [stafflist, setStafflist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [staffID, setStaffID] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setStaffID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
+    console.log("frontend use effect");
+    getStaffDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+  const getStaffDetails = () => {
     axios
       .get("http://localhost:3001/staffDetails/addNewStaff")
       .then((response) => {
@@ -51,9 +78,33 @@ function StaffList() {
         setStafflist(response.data.result);
       })
       .catch((error) => console.log(error));
-  }, []);
+  };
 
-  //console.log(stafflist);
+  // Handling the edit button
+  const handleEdit = (staffID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/staffDetails/updateStaff/${staffID}`)
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button
+  const handleDelete = (staffID) => {
+    axios
+      .delete(`http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${[staffID]}`)
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="unitListContainer">
@@ -62,6 +113,9 @@ function StaffList() {
         <SearchBar />
         <AddNewButton route="/staff details/addNewStaff" />
       </div>
+
+      {/* Staff Details Table */}
+
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -78,10 +132,11 @@ function StaffList() {
               {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Staff ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
+              <StyledTableCell align="left">NIC</StyledTableCell>
               <StyledTableCell align="left">Staff Role</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
-              {/* <StyledTableCell align="left">Created Date</StyledTableCell> */}
+              <StyledTableCell align="left">City</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -97,6 +152,7 @@ function StaffList() {
                     <StyledTableCell>
                       {apartflowtesting.name_with_initials}
                     </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.nic}</StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.staff_category}
                     </StyledTableCell>
@@ -104,19 +160,58 @@ function StaffList() {
                       {apartflowtesting.mobile_no}
                     </StyledTableCell>
                     <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.city}</StyledTableCell>
                     <StyledTableCell
                       sx={{
                         display: "flex",
+                        gap: "1rem",
                       }}
                     >
-                      <EditButton />
-                      &nbsp; &nbsp;
-                      <DeleteButton />
+                      <EditButton
+                        route={`/staff details/updateStaff/${[
+                          apartflowtesting.staffID,
+                        ]}`}
+                        onClick={() => handleEdit([apartflowtesting.staffID])}
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.staffID)
+                        }
+                      />
                     </StyledTableCell>
                   </StyledTableRow>
                 );
               })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete staff member"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(staffID)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
+          
         </Table>
       </TableContainer>
     </div>
