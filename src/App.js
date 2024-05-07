@@ -50,6 +50,8 @@ import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
 import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
 import CollapsibleTable from "./Pages/FinancePage/UtilityCharges/UtilityDetails";
+import UtilityDetailsUpdateForm from "./Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm";
+import UtilityDetailsAddNewForm from "./Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew";
 
 
 function App() {
@@ -82,7 +84,8 @@ function App() {
         <BrowserRouter>
           <MiniDrawer />
           <Routers />
-          {/* <CollapsibleTable /> */}
+        {/* <UtilityDetailsUpdateForm /> */}
+        {/* <UtilityDetailsAddNewForm /> */}
         </BrowserRouter>
 
         {/* <Minibar /> *}

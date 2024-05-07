@@ -14,6 +14,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import { Link, useNavigate } from "react-router-dom";
 import Minibar from "../Mininavbar/Minibar";
+import UtilityDetailsButton from "../../../Component/Buttons/UtilityDetailsButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,105 +40,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function createData(
   no,
-  utilityChargesID,
   unitID,
-  ownerName,
   utilityType,
-  date,
+  timePeriod,
+  balance,
   noOfUnits,
-  amount,
+  monthlyPayment,
+  totalAmount,
   action
 ) {
   return {
     no,
-    utilityChargesID,
     unitID,
-    ownerName,
     utilityType,
-    date,
+    timePeriod,
+    balance,
     noOfUnits,
-    amount,
-    action,
+    monthlyPayment,
+    totalAmount,
+    action
   };
 }
-
-const rows = [
-  createData(
-    1,
-    "U-256580",
-    "A-214100",
-    "A.W.G.Silva",
-    "Gas",
-    "15 JAN 2024",
-    "15",
-    "1456.85",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "U-256581",
-    "A-214101",
-    "A.W.G.Gamage",
-    "Water",
-    "15 JAN 2024",
-    "27",
-    "2,458.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "U-256582",
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Gas",
-    "15 JAN 2024",
-    "38",
-    "5,500.70",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "U-256583",
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Electricity",
-    "15 JAN 2024",
-    "51",
-    "12,500.00",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "U-256584",
-    "A-214104",
-    "A.W.Saman Abeykoon",
-    "Water",
-    "15 JAN 2024",
-    "29",
-    "2,450.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
 
 function UtilityCharges() {
   const navigate = useNavigate();
@@ -146,7 +69,10 @@ function UtilityCharges() {
       <Minibar />
       <div className="pageTop">
         <SearchBar/>
-        <AddNewButton route="/finance/utilitycharges/addUtility"/>
+        <div className="topButtons">
+          <UtilityDetailsButton route="/finance/utilitycharges/viewUtilityDetails" />
+          <AddNewButton route="/finance/utilitycharges/addUtility"/>
+        </div>
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -162,13 +88,13 @@ function UtilityCharges() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Utility Charges ID</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Owner Name</StyledTableCell>
               <StyledTableCell align="left">Utility Type</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">No Of Units</StyledTableCell>
-              <StyledTableCell align="right">Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="left">Time Period</StyledTableCell>
+              <StyledTableCell align="left">Balance</StyledTableCell>
+              <StyledTableCell align="left">No. of Units</StyledTableCell>
+              <StyledTableCell align="left">Monthly Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="right">Total Amount (Rs.)</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -177,18 +103,18 @@ function UtilityCharges() {
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.no}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.utilityChargesID}
+                  {row.unitID}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">{row.ownerName}</StyledTableCell>
+                <StyledTableCell align="left">{row.utilityType}</StyledTableCell>
+                <StyledTableCell align="left">{row.timePeriod}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.utilityType}
+                  {row.balance}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                <StyledTableCell align="left">{row.noOfUnits}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.noOfUnits}
+                  {row.monthlyPayment}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
+                <StyledTableCell align="right">{row.totalAmount}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}

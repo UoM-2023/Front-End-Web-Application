@@ -33,6 +33,9 @@ import NoticesTable from '../Pages/News&NoticesPage/Notices/Table/NoticesTable'
 import NoticesForm from '../Pages/News&NoticesPage/Notices/Form/NoticesForm'
 import EventsTable from '../Pages/News&NoticesPage/Events/Table/EventsTable'
 import EventsForm from '../Pages/News&NoticesPage/Events/Form/EventsForm'
+import UtilityDetails from '../Pages/FinancePage/UtilityCharges/UtilityDetails'
+import UtilityDetailsUpdateForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm'
+import UtilityDetailsAddNewForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew'
 
 const Routers = () => {
   return (
@@ -48,6 +51,9 @@ const Routers = () => {
                     {/* Utility payment section */}
             <Route path='utilitycharges' element={<Outlet />} >
               <Route index element={<UtilityCharges />} />
+              <Route path='viewUtilityDetails' element={<UtilityDetails />} />
+              <Route path='updateUtilityDetails' element={<UtilityDetailsUpdateForm/>} />
+              <Route path='addNewUtilityType' element={<UtilityDetailsAddNewForm/>} />
               <Route path='addUtility' element={<UtilityForm />}/>
             </Route>
 

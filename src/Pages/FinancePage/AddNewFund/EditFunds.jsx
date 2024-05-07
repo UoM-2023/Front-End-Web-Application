@@ -76,7 +76,7 @@ function EditFunds() {
 
   const addData = () => {
     const newData = [...fundTypes];
-    newData.push({ id: newData.length + 1, /* other data properties */ });
+    newData.push({ id: newData.length + 1,});
     setFundTypes(newData);
   };
 
@@ -86,7 +86,6 @@ function EditFunds() {
       console.log("Called");
       console.log(response);
       setFundTypes(response.data.result[0])
-      // console.log(response.data.result[0].fund_id)
 
     }).catch( (error) => {
       console.log(error);
@@ -105,11 +104,12 @@ function EditFunds() {
 
   const handleDelete = (id) => {
     console.log("Delete handler");
-
+    setFundTypes(prevData => prevData.filter(item => item.fund_id !== id));
     axios.delete(`http://localhost:3001/finance/editFunds/${id}`).then((response) =>{
 
       console.log("Delete handler called");
-      getFundTypes();
+      
+      // getFundTypes();
 
     }).catch((error)=>{
       console.log("Delete handle error",error);
