@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UtilityCharges.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -44,7 +44,6 @@ function createData(
   utilityType,
   timePeriod,
   balance,
-  noOfUnits,
   monthlyPayment,
   totalAmount,
   action
@@ -55,7 +54,6 @@ function createData(
     utilityType,
     timePeriod,
     balance,
-    noOfUnits,
     monthlyPayment,
     totalAmount,
     action
@@ -64,6 +62,7 @@ function createData(
 
 function UtilityCharges() {
   const navigate = useNavigate();
+  const [utilityCharges, setUtilityCharges] = useState([]);
   return (
     <div className="utilityChargesContainer">
       <Minibar />
@@ -87,35 +86,33 @@ function UtilityCharges() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Utility Type</StyledTableCell>
-              <StyledTableCell align="left">Time Period</StyledTableCell>
-              <StyledTableCell align="left">Balance</StyledTableCell>
-              <StyledTableCell align="left">No. of Units</StyledTableCell>
-              <StyledTableCell align="left">Monthly Amount (Rs.)</StyledTableCell>
-              <StyledTableCell align="right">Total Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="center">#No</StyledTableCell>
+              <StyledTableCell align="center">Unit ID</StyledTableCell>
+              <StyledTableCell align="center">Utility Type</StyledTableCell>
+              <StyledTableCell align="center">Time Period</StyledTableCell>
+              <StyledTableCell align="center">Balance</StyledTableCell>
+              <StyledTableCell align="center">Monthly Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="center">Total Amount (Rs.)</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {utilityCharges.map((row) => (
               <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
+                <StyledTableCell align="center">{row.no}</StyledTableCell>
+                <StyledTableCell align="center">
                   {row.unitID}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.utilityType}</StyledTableCell>
-                <StyledTableCell align="left">{row.timePeriod}</StyledTableCell>
-                <StyledTableCell align="left">
+                <StyledTableCell align="center">{row.utilityType}</StyledTableCell>
+                <StyledTableCell align="center">{row.timePeriod}</StyledTableCell>
+                <StyledTableCell align="center">
                   {row.balance}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.noOfUnits}</StyledTableCell>
                 <StyledTableCell align="center">
                   {row.monthlyPayment}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.totalAmount}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="center">{row.totalAmount}</StyledTableCell>
+                <StyledTableCell align="center">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
