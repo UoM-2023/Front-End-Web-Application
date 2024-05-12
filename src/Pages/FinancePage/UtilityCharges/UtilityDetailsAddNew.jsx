@@ -176,7 +176,8 @@ function UtilityDetailsAddNewForm() {
                     <Grid item>
                         {/* Add Row link */}
                         <Link component="button" variant="body2" onClick={onAddRow}>
-                            Add Row <KeyboardArrowDownRounded />
+                            {/* Add Row <KeyboardArrowDownRounded /> */}
+                            <AddRangeButton />
                         </Link>
                     </Grid>
                 </Grid>
