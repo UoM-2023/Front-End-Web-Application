@@ -15,7 +15,6 @@ import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 function StaffDetailsAddNewForm() {
   const { staffID } = useParams();
 
@@ -63,7 +62,7 @@ function StaffDetailsAddNewForm() {
   }
 
   useEffect(() => {
-    console.log("Current ID:", staffID);
+    console.log("Current Staff ID:", staffID);
     if (staffID) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
@@ -151,16 +150,6 @@ function StaffDetailsAddNewForm() {
         })
         .catch((err) => console.error("Failed to Create data:", err));
     }
-
-    // .post("http://localhost:3001/staffDetails/addNewStaff", formData)
-    // .then((response) => {
-    //   // Handle successful response
-    //   console.log("Response:", response.data);
-    // })
-    // .catch((error) => {
-    //   // Handle error
-    //   console.error("Error:", error);
-    // });
   };
 
   useEffect(() => {

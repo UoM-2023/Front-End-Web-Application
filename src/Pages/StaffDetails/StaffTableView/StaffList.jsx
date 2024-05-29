@@ -84,7 +84,9 @@ function StaffList() {
   const handleEdit = (staffID) => {
     console.log("Hanlde Edit Before axios");
     axios
-      .get(`http://localhost:3001/staffDetails/updateStaff/${staffID}`)
+      .get(
+        `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+      )
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -96,7 +98,11 @@ function StaffList() {
   // Handling the Delete button
   const handleDelete = (staffID) => {
     axios
-      .delete(`http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${[staffID]}`)
+      .delete(
+        `http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${[
+          staffID,
+        ]}`
+      )
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();
@@ -211,7 +217,6 @@ function StaffList() {
               </Dialog>
             </React.Fragment>
           </div>
-          
         </Table>
       </TableContainer>
     </div>

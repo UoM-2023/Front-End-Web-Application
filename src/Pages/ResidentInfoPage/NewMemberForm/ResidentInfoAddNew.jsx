@@ -12,8 +12,11 @@ import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ResidentInfoAddNew() {
+  const { residentID } = useParams();
+
   const [formData, setFormData] = useState({
     residentID: "",
     building: "",
@@ -25,7 +28,7 @@ function ResidentInfoAddNew() {
     last_name: "",
     name_with_initials: "",
     gender: "",
-    dob: Date,
+    dob: "",
     nic: "",
     member_type: "",
     email: "",
@@ -39,6 +42,79 @@ function ResidentInfoAddNew() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const navigate = useNavigate();
+
+  // Change Birthday Date Format
+
+  function formatDate(dateString) {
+    // Create a new Date object from the provided string
+    const date = new Date(dateString);
+
+    // Increment the date by one day
+    date.setDate(date.getDate());
+
+    // Extract year, month, and day components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    console.log("Current Resident ID:", residentID);
+    if (residentID) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect call");
+      axios
+        .get(
+          `http://localhost:3001/residentsDetails/addNewResident/updateResident${[
+            residentID,
+          ]}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const residentData = data.result[0][0]; // Assuming you want the first item from the first array
+            const residentTypeValue =
+              residentData.member_type === "Owner"
+                ? "Owner"
+                : residentData.member_type;
+
+            const formattedDate = formatDate(residentData.dob);
+            console.log(formattedDate);
+
+            setFormData({
+              // building: buildingValue,
+              // block_no: blocknoValue,
+              // unit_category: unitCategoryValue,
+              // unit_no: unitnoValue,
+              first_name: residentData.first_name,
+              middle_name: residentData.middle_name,
+              last_name: residentData.last_name,
+              name_with_initials: residentData.name_with_initials, 
+              gender: residentData.gender,
+              dob: formattedDate,
+              nic: residentData.nic,
+              member_type: residentTypeValue,
+              email: residentData.email,
+              mobile_no: residentData.mobile_no,
+              Address: residentData.Address,
+              username: residentData.username,
+              password: residentData.password,
+              img: residentData.img,
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Resident Data...", err));
+    }
+  }, [residentID]);
+
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -50,23 +126,39 @@ function ResidentInfoAddNew() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+
+    if (residentID) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          `http://localhost:3001/residentsDetails/addNewResident/updateResident/${[
+            residentID,
+          ]}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to update data:", err));
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        .post("http://localhost:3001/residentsDetails/addNewResident", formData)
+        .then((res) => {
+          console.log("Create Successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to Create data:", err));
+    }
   };
 
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.table(formData);
-
-      axios
-        .post("http://localhost:3001/residentsDetails/addNewResident", formData)
-        .then((response) => {
-          // Handle successful response
-          console.log("Response:", response.data);
-        })
-        .catch((error) => {
-          // Handle error
-          console.error("Error:", error);
-        });
     }
   }, [formErrors]);
 
@@ -564,7 +656,7 @@ function ResidentInfoAddNew() {
                 </div>
               </Grid>
               <Grid item>
-                <BackButton />
+                <BackButton route ="/resident details" />
               </Grid>
             </Grid>
           </div>

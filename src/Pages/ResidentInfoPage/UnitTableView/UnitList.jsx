@@ -15,6 +15,14 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,89 +46,73 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(no, unit, name, status, mobileNo, email, action) {
-  return { no, unit, name, status, mobileNo, email, action };
-}
-
-const rows = [
-  // createData(
-  //   1,
-  //   "A-214100",
-  //   "A.W.G.Silva",
-  //   "Owner",
-  //   "0767927004",
-  //   "awg25silva1999@gmail.com",
-  //   <div className="actionBtn">
-  //     <ViewButton route="/residents information/memberlist" />
-  //     &nbsp; &nbsp;
-  //     <EditButton />
-  //     &nbsp; &nbsp;
-  //     <DeleteButton />
-  //   </div>
-  // ),
-  // createData(
-  //   2,
-  //   "A-214101",
-  //   "A.W.G.Gamage",
-  //   "Owner",
-  //   "0711927004",
-  //   "awgsilva1999@gmail.com",
-  //   <div className="actionBtn">
-  //     <ViewButton />
-  //     &nbsp; &nbsp;
-  //     <EditButton />
-  //     &nbsp; &nbsp;
-  //     <DeleteButton />
-  //   </div>
-  // ),
-  // createData(
-  //   3,
-  //   "B-214102",
-  //   "A.W.G.Samaraweera",
-  //   "Owner",
-  //   "0767925504",
-  //   "awgsilva1999@gmail.com",
-  //   <div className="actionBtn">
-  //     <ViewButton />
-  //     &nbsp; &nbsp;
-  //     <EditButton />
-  //     &nbsp; &nbsp;
-  //     <DeleteButton />
-  //   </div>
-  // ),
-  // createData(
-  //   4,
-  //   "B-214103",
-  //   "A.W.Jerry Fernando",
-  //   "Owner",
-  //   "0117927004",
-  //   "awgsilva1999@gmail.com",
-  //   <div className="actionBtn">
-  //     <ViewButton />
-  //     &nbsp; &nbsp;
-  //     <EditButton />
-  //     &nbsp; &nbsp;
-  //     <DeleteButton />
-  //   </div>
-  // ),
-  // createData(
-  //   5,
-  //   "A-214104",
-  //   "A.W.Saman Abeykoon",
-  //   "Owner",
-  //   "0787027004",
-  //   "awgsilva1999@gmail.com",
-  //   <div className="actionBtn">
-  //     <ViewButton />
-  //     &nbsp; &nbsp;
-  //     <EditButton />
-  //     &nbsp; &nbsp;
-  //     <DeleteButton />
-  //   </div>
-  // ),
-];
-
 function UnitList() {
+  const [residentlist, setResidentlist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [residentID, setResidentID] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setResidentID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getResidentDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+  const getResidentDetails = () => {
+    axios
+      .get("http://localhost:3001/residentsDetails/addNewResident")
+      .then((response) => {
+        console.log(" get all Resident func CALLED");
+        console.log(response);
+        setResidentlist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+  const handleEdit = (residentID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        `http://localhost:3001/residentsDetails/addNewResident/updateResident/${residentID}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called........");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button
+  const handleDelete = (residentID) => {
+    axios
+      .delete(
+        `http://localhost:3001/residentsDetails/addNewResident/deleteResident/${[
+          residentID,
+        ]}`
+      )
+      .then((response) => {
+        console.log("---Hanlde Delete Called---");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="unitListContainer">
       <TopBar title="Residents Information" />
@@ -131,9 +123,9 @@ function UnitList() {
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "93.2vw",
+            maxWidth: "94.5vw",
             marginTop: 5,
-            marginLeft: 10,
+            marginLeft: 9,
             marginRight: 0,
             paddingTop: "100px",
           }}
@@ -141,28 +133,97 @@ function UnitList() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Unit</StyledTableCell>
+              <StyledTableCell align="left">Resident ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
+              <StyledTableCell align="left">Unit No</StyledTableCell>
+              <StyledTableCell align="left">Block No</StyledTableCell>
+              <StyledTableCell align="left">Building</StyledTableCell>
+              <StyledTableCell align="left">Member Type</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.unit}</StyledTableCell>
-                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">{row.email}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {residentlist &&
+              residentlist.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.residentID}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.name_with_initials}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.unit_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.block_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.building}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.member_type}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.mobile_no}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <ViewButton />
+                      <EditButton
+                        route={`/residents information/updateResident/${[
+                          apartflowtesting.residentID,
+                        ]}`}
+                        onClick={() =>
+                          handleEdit([apartflowtesting.residentID])
+                        }
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.residentID)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Resident Details"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(residentID)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

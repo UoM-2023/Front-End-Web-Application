@@ -111,11 +111,15 @@ const Routers = () => {
           />
         </Route>
 
-        {/* Unit Details */}
+        {/* Resident Details */}
         <Route path="/residents information" element={<Outlet />}>
           <Route index element={<UnitList />} />
           <Route path="addNewResident" element={<ResidentInfoAddNew />} />
           <Route path="memberlist" element={<MemberList />} />
+          <Route
+            path="updateResident/:residentID"
+            element={<ResidentInfoAddNew />}
+          />
         </Route>
 
         {/* Residential Units Route */}
