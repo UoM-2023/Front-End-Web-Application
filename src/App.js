@@ -36,11 +36,13 @@ import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/Resid
 import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
 import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
 import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
+import StaffUserCredentialsFrom from "./Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 
 function App() {
   return (
     <>
       <div className="appContainer">
+        <StaffUserCredentialsFrom />
         {/* <LoginPage /> */}
         {/* <Dashboard /> */}
         {/* <TopBar title="Residents Information" /> */}
@@ -64,11 +66,11 @@ function App() {
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
 
-        <BrowserRouter>
+        {/* <BrowserRouter>
           <MiniDrawer />
           <Routers />
-          {/* <CollapsibleTable /> */}
-        </BrowserRouter>
+        </BrowserRouter> */}
+        {/* <CollapsibleTable /> */}
 
         {/* <Minibar /> *}
            

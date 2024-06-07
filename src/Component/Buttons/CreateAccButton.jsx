@@ -2,31 +2,31 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-function CancelButton() {
+function CreateAccButton() {
   return (
-    <div className="ButtonContainer">
+    <div>
       <Stack spacing={2} direction="row">
         <Button
-          variant="outlined"
+          variant="contained"
+          className="submit"
+          type="submit"
           style={{
-            borderColor: "#E87042",
-            backgroundColor: "#ffff",
-            borderWidth: "0.1rem",
-            color: "#E87042",
+            backgroundColor: "#E87042",
+            color: "#fff",
             borderRadius: "0.5rem",
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
             fontSize: "0.85rem",
             fontWeight: "bold",
             paddingLeft: "1.2rem",
-            paddingRight: "1rem",
+            paddingRight: "1.2rem",
           }}
         >
-          Cancel
+          Create Account
         </Button>
       </Stack>
     </div>
   );
 }
 
-export default CancelButton;
+export default CreateAccButton;
