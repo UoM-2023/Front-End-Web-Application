@@ -8,13 +8,16 @@ import TextField from "@mui/material/TextField";
 import CreateAccButton from "../../Component/Buttons/CreateAccButton";
 import CancelButton from "../../Component/Buttons/CancelButton";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function StaffUserCredentialsFrom() {
+  const { UserID } = useParams();
+
   const [formData, setFormData] = useState({
-    staff_category: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
+    UserID: "",
+    userRole: "",
+    userPassword: "",
+    Confirmpassword: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -33,6 +36,34 @@ function StaffUserCredentialsFrom() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+
+    if (UserID) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
+            UserID,
+          ]}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to update data:", err));
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+        .then((res) => {
+          console.log("Create Successful:", res.data);
+          setIsSubmit(true);
+          //navigate("/staffDetails/addNewStaff");
+        })
+        .catch((err) => console.error("Failed to Create data:", err));
+    }
+
   };
 
   useEffect(() => {
@@ -46,21 +77,21 @@ function StaffUserCredentialsFrom() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.staff_category) {
-      errors.staff_category = "Please select Staff Category *";
+    if (!values.userRole) {
+      errors.userRole = "Please select Staff Category *";
     }
-    if (!values.username) {
-      errors.username = "Please Enter Staff ID *";
+    if (!values.UserID) {
+      errors.UserID = "Please Enter Staff ID *";
     }
-    if (!values.password) {
-      errors.password = "Password is required *";
-    } else if (values.password.length < 8) {
-      errors.password = "Password must be more than 8 characters *";
+    if (!values.userPassword) {
+      errors.userPassword = "Password is required *";
+    } else if (values.userPassword.length < 8) {
+      errors.userPassword = "Password must be more than 8 characters *";
     }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = "Confirm your Password ";
-    } else if (values.confirmPassword != values.password) {
-      errors.confirmPassword = "Passwords did not match *";
+    if (!values.Confirmpassword) {
+      errors.Confirmpassword = "Confirm your Password ";
+    } else if (values.Confirmpassword != values.userPassword) {
+      errors.Confirmpassword = "Passwords did not match *";
     }
     return errors;
   };
@@ -70,26 +101,26 @@ function StaffUserCredentialsFrom() {
       <div className="FormContainer">
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
-            <InputLabel htmlFor="staffID" className="namesTag">
-              Staff ID (Username) :
+            <InputLabel htmlFor="UserID" className="namesTag">
+              Staff ID (UserID) :
             </InputLabel>
             <TextField
               id="outlined-basic"
               className="textFieldComponent"
-              name="username"
+              name="UserID"
               onChange={onChangeHandler}
-              value={formData.username}
+              value={formData.UserID}
             />
           </div>
-          <p>{formErrors.username}</p>
+          <p>{formErrors.UserID}</p>
 
           <div className="inputItem">
             <InputLabel className="namesTag">Staff Category:</InputLabel>
             <Select
               className="SelectformComponent"
-              name="staff_category"
+              name="userRole"
               onChange={onChangeHandler}
-              value={formData.staff_category}
+              value={formData.userRole}
             >
               <MenuItem value="" className="optionContainer">
                 Select Staff Category
@@ -113,37 +144,37 @@ function StaffUserCredentialsFrom() {
               </MenuItem>
             </Select>
           </div>
-          <p>{formErrors.staff_category}</p>
+          <p>{formErrors.userRole}</p>
 
-          <div className="password">
-            <InputLabel htmlFor="password" className="namesTag">
+          <div className="Password">
+            <InputLabel htmlFor="userPassword" className="namesTag">
               Password :
             </InputLabel>
             <TextField
               id="outlined-basic"
               type="password"
               className="textFieldComponent"
-              name="password"
+              name="userPassword"
               onChange={onChangeHandler}
-              value={formData.password}
+              value={formData.userPassword}
             />
           </div>
-          <p>{formErrors.password}</p>
+          <p>{formErrors.userPassword}</p>
 
-          <div className="Confirmpassword">
+          <div className="ConfirmuserPassword">
             <InputLabel htmlFor="Confirmpassword" className="namesTag">
-              Confirm Password :
+              Confirm userPassword :
             </InputLabel>
             <TextField
               id="outlined-basic"
               type="password"
               className="textFieldComponent"
-              name="confirmPassword"
+              name="Confirmpassword"
               onChange={onChangeHandler}
-              value={formData.confirmPassword}
+              value={formData.Confirmpassword}
             />
           </div>
-          <p>{formErrors.confirmPassword}</p>
+          <p>{formErrors.Confirmpassword}</p>
 
           <div className="buttonSection">
             <Grid container spacing={2}>
