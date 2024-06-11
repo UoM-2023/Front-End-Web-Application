@@ -37,12 +37,19 @@ import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
 import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
 import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
 import StaffUserCredentialsFrom from "./Pages/UserCredentialsPage/StaffUserCredentialsFrom";
+import ResidentUserCredentialsFrom from "./Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
+import StaffUserCredentialsTable from "./Pages/UserCredentialsPage/StaffUserCredentialsTable";
 
 function App() {
   return (
     <>
       <div className="appContainer">
-        <StaffUserCredentialsFrom />
+        {/* <StaffUserCredentialsFrom />
+        <ResidentUserCredentialsFrom/> */}
+
+        {/* <StaffUserCredentialsTable/> */}
+
+        
         {/* <LoginPage /> */}
         {/* <Dashboard /> */}
         {/* <TopBar title="Residents Information" /> */}
@@ -66,10 +73,11 @@ function App() {
         <InternalMaintenanceTable />
   <CompletedResidentRequestTable /> */}
 
-        {/* <BrowserRouter>
+        <BrowserRouter>
           <MiniDrawer />
           <Routers />
-        </BrowserRouter> */}
+        </BrowserRouter>
+        
         {/* <CollapsibleTable /> */}
 
         {/* <Minibar /> *}

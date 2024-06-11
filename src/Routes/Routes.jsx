@@ -122,6 +122,17 @@ const Routers = () => {
           />
         </Route>
 
+         {/* User Credentials
+         
+         <Route path="/staff details" element={<Outlet />}>
+          <Route index element={<StaffList />} />
+          <Route path="addNewStaff" element={<StaffDetailsAddNewForm />} />
+          <Route
+            path="updateStaff/:staffID"
+            element={<StaffDetailsAddNewForm />}
+          />
+        </Route> */}
+
         {/* Residential Units Route */}
         <Route path="/residential units" element={<Outlet />}>
           <Route index element={<ResidentialUnitsTable />} />

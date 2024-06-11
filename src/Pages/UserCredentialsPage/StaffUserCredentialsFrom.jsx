@@ -1,14 +1,11 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import FormLabel from "@mui/material/FormLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import CreateAccButton from "../../Component/Buttons/CreateAccButton";
-import CancelButton from "../../Component/Buttons/CancelButton";
+import React, { useState, useEffect } from "react";
+import { Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import CreateAccButton from "../../Component/Buttons/CreateAccButton";
+import CancelButton from "../../Component/Buttons/CancelButton";
+import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
+import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 
 function StaffUserCredentialsFrom() {
   const { UserID } = useParams();
@@ -18,12 +15,42 @@ function StaffUserCredentialsFrom() {
     userRole: "",
     userPassword: "",
     Confirmpassword: "",
+    added_time: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Current User ID:", UserID);
+    if (UserID) {
+      console.log("Form useEffect call");
+      axios
+        .get(
+          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${UserID}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          if (data && data.result && data.result.length > 0) {
+            const userData = data.result[0][0];
+            const userCategoryValue =
+              userData.userRole === "Admin" ? "Admin" : userData.userRole;
+
+            setFormData({
+              userRole: userCategoryValue,
+              userPassword: userData.userPassword,
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err));
+    }
+  }, [UserID]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -36,47 +63,50 @@ function StaffUserCredentialsFrom() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
 
     if (UserID) {
-      // If there is an ID, it means we're editing existing data, so send a PUT request
       axios
         .put(
-          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
-            UserID,
-          ]}`,
+          `http://localhost:3001/userCredentials/NewUserCredentials/updateUserCredentials/${UserID}`,
           formData
         )
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
-          //navigate("/staffDetails/addNewStaff");
+          setSuccessMessage(res.data.message);
         })
-        .catch((err) => console.error("Failed to update data:", err));
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
-      // If there is no ID, it means we're creating new data, so send a POST request
       axios
-        .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+        .post(
+          "http://localhost:3001/userCredentials/NewUserCredentials/",
+          formData
+        )
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);
-          //navigate("/staffDetails/addNewStaff");
+          setSuccessMessage(res.data.message);
         })
-        .catch((err) => console.error("Failed to Create data:", err));
+        .catch((err) => console.error("Failed to Create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-
   };
 
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.table(formData);
-      console.log(formData.dob);
     }
   }, [formErrors]);
 
   const validate = (values) => {
     const errors = {};
-
     if (!values.userRole) {
       errors.userRole = "Please select Staff Category *";
     }
@@ -90,15 +120,40 @@ function StaffUserCredentialsFrom() {
     }
     if (!values.Confirmpassword) {
       errors.Confirmpassword = "Confirm your Password ";
-    } else if (values.Confirmpassword != values.userPassword) {
+    } else if (values.Confirmpassword !== values.userPassword) {
       errors.Confirmpassword = "Passwords did not match *";
     }
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      UserID: "",
+      userRole: "",
+      userPassword: "",
+      Confirmpassword: "",
+      added_time: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
     <div className="StaffUserCredentialsFromContainer">
-      <div className="FormContainer">
+      <div className="FormContainer" style={{ position: "relative" }}>
+        {isLoading && <LoadingIndicator />}
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
             <InputLabel htmlFor="UserID" className="namesTag">
@@ -113,7 +168,6 @@ function StaffUserCredentialsFrom() {
             />
           </div>
           <p>{formErrors.UserID}</p>
-
           <div className="inputItem">
             <InputLabel className="namesTag">Staff Category:</InputLabel>
             <Select
@@ -145,7 +199,6 @@ function StaffUserCredentialsFrom() {
             </Select>
           </div>
           <p>{formErrors.userRole}</p>
-
           <div className="Password">
             <InputLabel htmlFor="userPassword" className="namesTag">
               Password :
@@ -160,7 +213,6 @@ function StaffUserCredentialsFrom() {
             />
           </div>
           <p>{formErrors.userPassword}</p>
-
           <div className="ConfirmuserPassword">
             <InputLabel htmlFor="Confirmpassword" className="namesTag">
               Confirm userPassword :
@@ -175,7 +227,6 @@ function StaffUserCredentialsFrom() {
             />
           </div>
           <p>{formErrors.Confirmpassword}</p>
-
           <div className="buttonSection">
             <Grid container spacing={2}>
               <Grid item>
@@ -189,12 +240,12 @@ function StaffUserCredentialsFrom() {
             </Grid>
           </div>
         </form>
-        {Object.keys(formErrors).length === 0 && isSubmit ? (
-          <h3 className="success message">
-            Staff Account created successfully
-          </h3>
-        ) : (
-          <pre> </pre>
+        {openDialog && (
+          <SuccessAlertDialog
+            handleClose={handleCloseDialog}
+            handleReset={handleResetForm}
+            message={successMessage}
+          />
         )}
       </div>
     </div>

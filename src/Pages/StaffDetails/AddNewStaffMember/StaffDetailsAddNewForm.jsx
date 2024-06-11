@@ -102,8 +102,6 @@ function StaffDetailsAddNewForm() {
               mobile_no: staffData.mobile_no,
               Address: staffData.Address,
               city: staffData.city,
-              username: staffData.username,
-              password: staffData.password,
               img: staffData.img,
             });
           }
@@ -213,14 +211,6 @@ function StaffDetailsAddNewForm() {
     }
     if (!values.city) {
       errors.city = "City is required *";
-    }
-    if (!values.username) {
-      errors.username = "UserName is required *";
-    }
-    if (!values.password) {
-      errors.password = "Password is required *";
-    } else if (values.password.length < 8) {
-      errors.password = "Password must be more than 8 characters";
     }
     if (!values.img) {
       errors.img = "Please Upload Staff Member's Image file *";
@@ -462,35 +452,6 @@ function StaffDetailsAddNewForm() {
             />
           </div>
           <p>{formErrors.city}</p>
-
-          <div className="username">
-            <InputLabel htmlFor="username" className="namesTag">
-              User Name :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              className="textFieldComponent"
-              name="username"
-              onChange={onChangeHandler}
-              value={formData.username}
-            />
-          </div>
-          <p>{formErrors.username}</p>
-
-          <div className="password">
-            <InputLabel htmlFor="password" className="namesTag">
-              Password :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              type="password"
-              className="textFieldComponent"
-              name="password"
-              onChange={onChangeHandler}
-              value={formData.password}
-            />
-          </div>
-          <p>{formErrors.password}</p>
 
           <div className="img">
             <InputLabel htmlFor="img" className="namesTag">
