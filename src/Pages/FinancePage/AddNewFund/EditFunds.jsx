@@ -75,24 +75,22 @@ function EditFunds() {
 
   const addData = () => {
     const newData = [...fundTypes];
-    newData.push({ id: newData.length + 1 /* other data properties */ });
+    newData.push({ id: newData.length + 1, /* other data properties */ });
     setFundTypes(newData);
   };
 
   // Get the data from the backend to front end
   const getFundTypes = () => {
-    axios
-      .get("http://localhost:3001/finance/editFunds")
-      .then((response) => {
-        console.log("Called");
-        console.log(response);
-        setFundTypes(response.data.result[0]);
-        // console.log(response.data.result[0].fund_id)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    axios.get("http://localhost:3001/finance/editFunds").then( (response) => {
+      console.log("Called");
+      console.log(response);
+      setFundTypes(response.data.result[0])
+      // console.log(response.data.result[0].fund_id)
+
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
 
   // Handling the edit button
   const handleEdit = (id) => {
@@ -110,16 +108,15 @@ function EditFunds() {
   const handleDelete = (id) => {
     console.log("Delete handler");
 
-    axios
-      .delete(`http://localhost:3001/finance/editFunds/${id}`)
-      .then((response) => {
-        console.log("Delete handler called");
-        getFundTypes();
-      })
-      .catch((error) => {
-        console.log("Delete handle error", error);
-      });
-  };
+    axios.delete(`http://localhost:3001/finance/editFunds/${id}`).then((response) =>{
+
+      console.log("Delete handler called");
+      getFundTypes();
+
+    }).catch((error)=>{
+      console.log("Delete handle error",error);
+    })
+  }
 
   return (
     <div className="editFundsContainer">
