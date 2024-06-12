@@ -135,6 +135,7 @@ function UnitList() {
             <TableRow>
               <StyledTableCell align="left">Resident ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
+              <StyledTableCell align="left">Unit ID</StyledTableCell>
               <StyledTableCell align="left">Unit No</StyledTableCell>
               <StyledTableCell align="left">Block No</StyledTableCell>
               <StyledTableCell align="left">Building</StyledTableCell>
@@ -154,6 +155,9 @@ function UnitList() {
                     </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.name_with_initials}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.UnitID}
                     </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.unit_no}

@@ -21,6 +21,7 @@ function ResidentInfoAddNew() {
 
   const [formData, setFormData] = useState({
     residentID: "",
+    UnitID: "",
     building: "",
     block_no: "",
     unit_category: "",
@@ -182,6 +183,9 @@ function ResidentInfoAddNew() {
     if (!values.residentID) {
       errors.residentID = "Please Enter Resident ID * ";
     }
+    if (!values.UnitID) {
+      errors.UnitID = "Please Enter Unit ID * ";
+    }
     if (!values.building) {
       errors.building = "Please select Building * ";
     }
@@ -252,6 +256,7 @@ function ResidentInfoAddNew() {
   const handleResetForm = () => {
     setFormData({
       residentID: "",
+      UnitID: "",
       building: "",
       block_no: "",
       unit_category: "",
@@ -303,6 +308,20 @@ function ResidentInfoAddNew() {
             />
           </div>
           <p>{formErrors.residentID}</p>
+
+          <div className="inputItem">
+            <InputLabel htmlFor="Unit ID" className="namesTag">
+              Unit ID:
+            </InputLabel>
+            <TextField
+              id="outlined-basic"
+              className="textFieldComponent"
+              name="UnitID"
+              onChange={onChangeHandler}
+              value={formData.UnitID}
+            />
+          </div>
+          <p>{formErrors.UnitID}</p>
 
           <div className="inputItem">
             <InputLabel className="namesTag">Building :</InputLabel>
@@ -589,6 +608,13 @@ function ResidentInfoAddNew() {
               </MenuItem>
               <MenuItem value="Owner" name="Owner" className="optionContainer">
                 Owner
+              </MenuItem>
+              <MenuItem
+                value="Tenant"
+                name="Tenant"
+                className="optionContainer"
+              >
+                Tenant
               </MenuItem>
               <MenuItem
                 value="Member01"

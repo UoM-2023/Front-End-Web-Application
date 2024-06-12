@@ -69,6 +69,7 @@ function StaffList() {
   }, []);
 
   // Get the data from the backend to front end
+
   const getStaffDetails = () => {
     axios
       .get("http://localhost:3001/staffDetails/addNewStaff")
