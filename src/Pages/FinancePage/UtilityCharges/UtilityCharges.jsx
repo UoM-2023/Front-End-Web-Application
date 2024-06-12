@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UtilityCharges.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -14,6 +14,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import { Link, useNavigate } from "react-router-dom";
 import Minibar from "../Mininavbar/Minibar";
+import UtilityDetailsButton from "../../../Component/Buttons/UtilityDetailsButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,114 +40,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function createData(
   no,
-  utilityChargesID,
   unitID,
-  ownerName,
   utilityType,
-  date,
-  noOfUnits,
-  amount,
+  timePeriod,
+  balance,
+  monthlyPayment,
+  totalAmount,
   action
 ) {
   return {
     no,
-    utilityChargesID,
     unitID,
-    ownerName,
     utilityType,
-    date,
-    noOfUnits,
-    amount,
-    action,
+    timePeriod,
+    balance,
+    monthlyPayment,
+    totalAmount,
+    action
   };
 }
 
-const rows = [
-  createData(
-    1,
-    "U-256580",
-    "A-214100",
-    "A.W.G.Silva",
-    "Gas",
-    "15 JAN 2024",
-    "15",
-    "1456.85",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "U-256581",
-    "A-214101",
-    "A.W.G.Gamage",
-    "Water",
-    "15 JAN 2024",
-    "27",
-    "2,458.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "U-256582",
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Gas",
-    "15 JAN 2024",
-    "38",
-    "5,500.70",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "U-256583",
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Electricity",
-    "15 JAN 2024",
-    "51",
-    "12,500.00",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "U-256584",
-    "A-214104",
-    "A.W.Saman Abeykoon",
-    "Water",
-    "15 JAN 2024",
-    "29",
-    "2,450.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function UtilityCharges() {
   const navigate = useNavigate();
+  const [utilityCharges, setUtilityCharges] = useState([]);
   return (
     <div className="utilityChargesContainer">
       <Minibar />
       <div className="pageTop">
         <SearchBar/>
-        <AddNewButton route="/finance/utilitycharges/addUtility"/>
+        <div className="topButtons">
+          <UtilityDetailsButton route="/finance/utilitycharges/viewUtilityDetails" />
+          <AddNewButton route="/finance/utilitycharges/addUtility"/>
+        </div>
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -161,35 +86,33 @@ function UtilityCharges() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Utility Charges ID</StyledTableCell>
-              <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Owner Name</StyledTableCell>
-              <StyledTableCell align="left">Utility Type</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">No Of Units</StyledTableCell>
-              <StyledTableCell align="right">Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="center">#No</StyledTableCell>
+              <StyledTableCell align="center">Unit ID</StyledTableCell>
+              <StyledTableCell align="center">Utility Type</StyledTableCell>
+              <StyledTableCell align="center">Time Period</StyledTableCell>
+              <StyledTableCell align="center">Balance</StyledTableCell>
+              <StyledTableCell align="center">Monthly Amount (Rs.)</StyledTableCell>
+              <StyledTableCell align="center">Total Amount (Rs.)</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {utilityCharges.map((row) => (
               <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.utilityChargesID}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">{row.ownerName}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.utilityType}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                <StyledTableCell align="center">{row.no}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.noOfUnits}
+                  {row.unitID}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="center">{row.utilityType}</StyledTableCell>
+                <StyledTableCell align="center">{row.timePeriod}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.balance}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.monthlyPayment}
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.totalAmount}</StyledTableCell>
+                <StyledTableCell align="center">{row.action}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

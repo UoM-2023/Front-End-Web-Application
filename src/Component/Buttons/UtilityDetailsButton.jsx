@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { propTypes } from "react-bootstrap/esm/Image";
 
-const AddNewButton = ({ route }) => {
+const UtilityDetailsButton = ({route}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -22,24 +22,25 @@ const AddNewButton = ({ route }) => {
             borderRadius: "0.5rem",
             fontFamily:
               "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace",
-            fontSize: "0.9rem",
             width: "8rem",
+            lineHeight: "1rem",
             height: "2.8rem",
+            fontSize: "0.9rem",
             fontWeight: "bold",
             paddingLeft: "1.2rem",
-            paddingRight: "1.2rem",
+            paddingRight: "1.2rem", 
           }}
-          onClick={handleClick}
+          onClick = {handleClick}
         >
-          + Add New
+          View Details
         </Button>
       </Stack>
     </div>
   );
-};
+}
 
 // AddNewButton.propTypes = {
 //   route: propTypes.string.isRequired,
 // };
 
-export default AddNewButton;
+export default UtilityDetailsButton;
