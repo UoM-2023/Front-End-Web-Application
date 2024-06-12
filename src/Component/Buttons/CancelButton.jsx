@@ -2,7 +2,7 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-function CancelButton() {
+function CancelButton({ handleCancel }) {
   return (
     <div className="ButtonContainer">
       <Stack spacing={2} direction="row">
@@ -21,6 +21,7 @@ function CancelButton() {
             paddingLeft: "1.2rem",
             paddingRight: "1rem",
           }}
+          onClick={handleCancel}
         >
           Cancel
         </Button>

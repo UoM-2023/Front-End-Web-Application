@@ -38,6 +38,8 @@ import NoticesTable from "../Pages/News&NoticesPage/Notices/Table/NoticesTable";
 import NoticesForm from "../Pages/News&NoticesPage/Notices/Form/NoticesForm";
 import EventsTable from "../Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "../Pages/News&NoticesPage/Events/Form/EventsForm";
+import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
+import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 
 const Routers = () => {
   return (
@@ -45,6 +47,7 @@ const Routers = () => {
       <Routes>
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />
+
         {/* Finance Page Routs and its sub routes */}
         <Route path="/finance" element={<Outlet />}>
           <Route index element={<ResidentsPayments />} />
@@ -122,16 +125,29 @@ const Routers = () => {
           />
         </Route>
 
-         {/* User Credentials
-         
-         <Route path="/staff details" element={<Outlet />}>
-          <Route index element={<StaffList />} />
-          <Route path="addNewStaff" element={<StaffDetailsAddNewForm />} />
+        {/* User Credentials Page Routs and its sub routes */}
+
+        {/* Residents User Credentials Section */}
+
+        <Route path="/user credentials" element={<Outlet />}>
+          <Route index element={<ResidentUserCredentialsFrom />} />
           <Route
-            path="updateStaff/:staffID"
-            element={<StaffDetailsAddNewForm />}
+            path="updateResidentUserAccount/:UserID"
+            element={<ResidentUserCredentialsFrom />}
           />
-        </Route> */}
+
+          {/* Staff User Credentials Section */}
+
+          <Route path="StaffUserCredentials" element={<Outlet />}>
+            <Route index element={<StaffUserCredentialsFrom />} />
+            <Route
+              path="updateStaffUserAccount/:UserID"
+              element={<StaffUserCredentialsFrom />}
+            />
+          </Route>
+        </Route>
+
+        {/* END of User Credentials Page Routs and its sub routes */}
 
         {/* Residential Units Route */}
         <Route path="/residential units" element={<Outlet />}>

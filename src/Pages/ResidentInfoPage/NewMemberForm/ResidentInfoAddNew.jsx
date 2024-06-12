@@ -13,6 +13,8 @@ import axios from "axios";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 import { useNavigate, useParams } from "react-router-dom";
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 
 function ResidentInfoAddNew() {
   const { residentID } = useParams();
@@ -34,13 +36,14 @@ function ResidentInfoAddNew() {
     email: "",
     mobile_no: "",
     Address: "",
-    username: "",
-    password: "",
     img: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -97,7 +100,7 @@ function ResidentInfoAddNew() {
               first_name: residentData.first_name,
               middle_name: residentData.middle_name,
               last_name: residentData.last_name,
-              name_with_initials: residentData.name_with_initials, 
+              name_with_initials: residentData.name_with_initials,
               gender: residentData.gender,
               dob: formattedDate,
               nic: residentData.nic,
@@ -105,8 +108,6 @@ function ResidentInfoAddNew() {
               email: residentData.email,
               mobile_no: residentData.mobile_no,
               Address: residentData.Address,
-              username: residentData.username,
-              password: residentData.password,
               img: residentData.img,
             });
           }
@@ -126,6 +127,7 @@ function ResidentInfoAddNew() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
 
     if (residentID) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
@@ -139,9 +141,13 @@ function ResidentInfoAddNew() {
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
+          setSuccessMessage(res.data.message);
           //navigate("/staffDetails/addNewStaff");
         })
-        .catch((err) => console.error("Failed to update data:", err));
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
       axios
@@ -149,9 +155,13 @@ function ResidentInfoAddNew() {
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);
+          setSuccessMessage(res.data.message);
           //navigate("/staffDetails/addNewStaff");
         })
-        .catch((err) => console.error("Failed to Create data:", err));
+        .catch((err) => console.error("Failed to Create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -225,23 +235,60 @@ function ResidentInfoAddNew() {
     if (!values.Address) {
       errors.Address = "Address is required *";
     }
-    if (!values.username) {
-      errors.username = "UserName is required *";
-    }
-    if (!values.password) {
-      errors.password = "Password is required *";
-    } else if (values.password.length < 8) {
-      errors.password = "Password must be more than 8 characters";
-    }
     if (!values.img) {
       errors.img = "Please Upload Resident's Image file *";
     }
     return errors;
   };
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      residentID: "",
+      building: "",
+      block_no: "",
+      unit_category: "",
+      unit_no: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      name_with_initials: "",
+      gender: "",
+      dob: "",
+      nic: "",
+      member_type: "",
+      email: "",
+      mobile_no: "",
+      Address: "",
+      img: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
     <>
       <TopBar title="Residents Information" />
-      <div className="FormContainer">
+      <div
+        className="FormContainer"
+        style={{
+          position: "relative",
+          marginTop: "2rem",
+          marginLeft: "6rem",
+        }}
+      >
+        {isLoading && <LoadingIndicator />}
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
             <InputLabel htmlFor="Resident ID" className="namesTag">
@@ -603,35 +650,6 @@ function ResidentInfoAddNew() {
           </div>
           <p>{formErrors.Address}</p>
 
-          <div className="username">
-            <InputLabel htmlFor="username" className="namesTag">
-              User Name :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              className="textFieldComponent"
-              name="username"
-              onChange={onChangeHandler}
-              value={formData.username}
-            />
-          </div>
-          <p>{formErrors.username}</p>
-
-          <div className="password">
-            <InputLabel htmlFor="password" className="namesTag">
-              Password :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              type="password"
-              className="textFieldComponent"
-              name="password"
-              onChange={onChangeHandler}
-              value={formData.password}
-            />
-          </div>
-          <p>{formErrors.password}</p>
-
           <div className="img">
             <InputLabel htmlFor="img" className="namesTag">
               Select Image :
@@ -656,15 +674,17 @@ function ResidentInfoAddNew() {
                 </div>
               </Grid>
               <Grid item>
-                <BackButton route ="/resident details" />
+                <BackButton route="/resident details" />
               </Grid>
             </Grid>
           </div>
         </form>
-        {Object.keys(formErrors).length === 0 && isSubmit ? (
-          <h3 className="success message">Successfully Added </h3>
-        ) : (
-          <pre> </pre>
+        {openDialog && (
+          <SuccessAlertDialog
+            handleClose={handleCloseDialog}
+            handleReset={handleResetForm}
+            message={successMessage}
+          />
         )}
       </div>
     </>

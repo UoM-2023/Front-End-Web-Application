@@ -14,6 +14,8 @@ import "./Addnewform.css";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 
 function StaffDetailsAddNewForm() {
   const { staffID } = useParams();
@@ -40,6 +42,9 @@ function StaffDetailsAddNewForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -121,6 +126,7 @@ function StaffDetailsAddNewForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
 
     if (staffID) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
@@ -134,9 +140,13 @@ function StaffDetailsAddNewForm() {
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
+          setSuccessMessage(res.data.message);
           //navigate("/staffDetails/addNewStaff");
         })
-        .catch((err) => console.error("Failed to update data:", err));
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
       axios
@@ -144,9 +154,13 @@ function StaffDetailsAddNewForm() {
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);
+          setSuccessMessage(res.data.message);
           //navigate("/staffDetails/addNewStaff");
         })
-        .catch((err) => console.error("Failed to Create data:", err));
+        .catch((err) => console.error("Failed to Create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -218,10 +232,54 @@ function StaffDetailsAddNewForm() {
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      name_with_initials: "",
+      gender: "",
+      dob: "",
+      nic: "",
+      staff_category: "",
+      qualification: "",
+      staffID: "",
+      email: "",
+      mobile_no: "",
+      Address: "",
+      city: "",
+      username: "",
+      password: "",
+      img: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
     <>
       <TopBar title="Staff Details" />
-      <div className="FormContainer">
+      <div
+        className="FormContainer"
+        style={{
+          position: "relative",
+          marginTop: "2rem",
+          marginLeft: "6rem",
+        }}
+      >
+        {isLoading && <LoadingIndicator />}
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
             <InputLabel htmlFor="firstName" className="namesTag">
@@ -482,10 +540,12 @@ function StaffDetailsAddNewForm() {
             </Grid>
           </div>
         </form>
-        {Object.keys(formErrors).length === 0 && isSubmit ? (
-          <h3 className="success message">Successfully Added </h3>
-        ) : (
-          <pre> </pre>
+        {openDialog && (
+          <SuccessAlertDialog
+            handleClose={handleCloseDialog}
+            handleReset={handleResetForm}
+            message={successMessage}
+          />
         )}
       </div>
     </>

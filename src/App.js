@@ -38,7 +38,6 @@ import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
 import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
 import StaffUserCredentialsFrom from "./Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 import ResidentUserCredentialsFrom from "./Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
-import StaffUserCredentialsTable from "./Pages/UserCredentialsPage/StaffUserCredentialsTable";
 
 function App() {
   return (
@@ -46,8 +45,6 @@ function App() {
       <div className="appContainer">
         {/* <StaffUserCredentialsFrom />
         <ResidentUserCredentialsFrom/> */}
-
-        {/* <StaffUserCredentialsTable/> */}
 
         
         {/* <LoginPage /> */}

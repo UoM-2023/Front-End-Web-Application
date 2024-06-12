@@ -6,6 +6,8 @@ import CreateAccButton from "../../Component/Buttons/CreateAccButton";
 import CancelButton from "../../Component/Buttons/CancelButton";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
+import MinibarUserCredentials from "./Minibar UserCredentials/MinibarUserCredentials";
+import TopBar from "../../Component/TopBar/TopBar";
 
 function ResidentUserCredentialsFrom() {
   const { UserID } = useParams();
@@ -156,7 +158,16 @@ function ResidentUserCredentialsFrom() {
 
   return (
     <div className="ResidentUserCredentialsFromContainer">
-      <div className="FormContainer" style={{ position: "relative" }}>
+      <TopBar title="User Credentials" />
+      <MinibarUserCredentials />
+      <div
+        className="FormContainer"
+        style={{
+          position: "relative",
+          marginTop: "2rem",
+          marginLeft: "6rem",
+        }}
+      >
         {isLoading && <LoadingIndicator />}
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
@@ -211,7 +222,7 @@ function ResidentUserCredentialsFrom() {
                 </div>
               </Grid>
               <Grid item>
-                <CancelButton onClick={handleCancel} />
+                <CancelButton handleCancel={handleResetForm} />
               </Grid>
             </Grid>
           </div>
