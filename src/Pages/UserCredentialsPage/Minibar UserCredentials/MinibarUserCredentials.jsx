@@ -10,29 +10,17 @@ const theme = createTheme({
   },
 });
 
-const Minibar = () => {
+const MinibarUserCredentials = () => {
   const location = useLocation();
   const [value, setValue] = useState("one");
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/finance":
+      case "/user credentials":
         setValue("one");
         break;
-      case "/finance/utilitycharges":
+      case "/user credentials/StaffUserCredentials":
         setValue("two");
-        break;
-      case "/finance/expenses":
-        setValue("three");
-        break;
-      case "/finance/revenue":
-        setValue("four");
-        break;
-      case "/finance/warnings":
-        setValue("five");
-        break;
-      case "/finance/editFunds":
-        setValue("six");
         break;
       default:
         setValue(false);
@@ -60,39 +48,15 @@ const Minibar = () => {
         >
           <Tab
             value="one"
-            label="Resident Payments"
+            label="Residents Accounts"
             component={Link}
-            to="/finance"
+            to="/user credentials"
           />
           <Tab
             value="two"
-            label="Utility Charges"
+            label="Staff Accounts"
             component={Link}
-            to="/finance/utilitycharges"
-          />
-          <Tab
-            value="three"
-            label="Expenses"
-            component={Link}
-            to="/finance/expenses"
-          />
-          <Tab
-            value="four"
-            label="Revenue"
-            component={Link}
-            to="/finance/revenue"
-          />
-          <Tab
-            value="five"
-            label="Warnings"
-            component={Link}
-            to="/finance/warnings"
-          />
-          <Tab
-            value="six"
-            label="Edit Funds"
-            component={Link}
-            to="/finance/editFunds"
+            to="/user credentials/StaffUserCredentials"
           />
         </Tabs>
       </ThemeProvider>
@@ -100,4 +64,4 @@ const Minibar = () => {
   );
 };
 
-export default Minibar;
+export default MinibarUserCredentials;

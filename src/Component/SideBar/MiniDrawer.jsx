@@ -23,6 +23,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import CampaignIcon from "@mui/icons-material/Campaign";
 import GroupsIcon from "@mui/icons-material/Groups";
 import EngineeringIcon from "@mui/icons-material/Engineering";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Link, useNavigate } from "react-router-dom";
@@ -191,6 +192,7 @@ export default function MiniDrawer() {
             "News & Notices",
             "Residents Information",
             "Staff Details",
+            "User Credentials",
             "Settings",
             "info",
           ].map((text, index) => (
@@ -241,8 +243,10 @@ export default function MiniDrawer() {
                   ) : index === 9 ? (
                     <EngineeringIcon />
                   ) : index === 10 ? (
-                    <SettingsIcon />
+                    <PersonAddIcon />
                   ) : index === 11 ? (
+                    <SettingsIcon />
+                  ) : index === 12 ? (
                     <InfoOutlinedIcon />
                   ) : null}
                 </ListItemIcon>
@@ -255,3 +259,5 @@ export default function MiniDrawer() {
     </Box>
   );
 }
+
+//PersonAddIcon
