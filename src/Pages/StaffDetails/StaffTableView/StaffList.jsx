@@ -171,7 +171,7 @@ function StaffList() {
                     <StyledTableCell
                       sx={{
                         display: "flex",
-                        gap: "1rem",
+                        gap: "0.3rem",
                       }}
                     >
                       <EditButton

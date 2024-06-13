@@ -118,11 +118,11 @@ const Routers = () => {
         <Route path="/residents information" element={<Outlet />}>
           <Route index element={<UnitList />} />
           <Route path="addNewResident" element={<ResidentInfoAddNew />} />
-          <Route path="memberlist" element={<MemberList />} />
           <Route
             path="updateResident/:residentID"
             element={<ResidentInfoAddNew />}
           />
+          <Route path="viewResident/:UnitID" element={<MemberList />} />
         </Route>
 
         {/* User Credentials Page Routs and its sub routes */}

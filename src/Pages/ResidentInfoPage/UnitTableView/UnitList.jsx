@@ -96,6 +96,19 @@ function UnitList() {
       });
   };
 
+  // Handling the View button
+  const handleView = (UnitID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/residentsDetails/viewResident/${UnitID}`)
+      .then((response) => {
+        console.log("Hanlde View Called........");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   // Handling the Delete button
   const handleDelete = (residentID) => {
     axios
@@ -139,7 +152,7 @@ function UnitList() {
               <StyledTableCell align="left">Unit No</StyledTableCell>
               <StyledTableCell align="left">Block No</StyledTableCell>
               <StyledTableCell align="left">Building</StyledTableCell>
-              <StyledTableCell align="left">Member Type</StyledTableCell>
+              <StyledTableCell align="left">Type</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
@@ -147,58 +160,67 @@ function UnitList() {
           </TableHead>
           <TableBody>
             {residentlist &&
-              residentlist.map((apartflowtesting, index) => {
-                return (
-                  <StyledTableRow key={index}>
-                    <StyledTableCell>
-                      {apartflowtesting.residentID}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.name_with_initials}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.UnitID}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.unit_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.block_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.building}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.member_type}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.mobile_no}
-                    </StyledTableCell>
-                    <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
-                    <StyledTableCell
-                      sx={{
-                        display: "flex",
-                        gap: "1rem",
-                      }}
-                    >
-                      <ViewButton />
-                      <EditButton
-                        route={`/residents information/updateResident/${[
-                          apartflowtesting.residentID,
-                        ]}`}
-                        onClick={() =>
-                          handleEdit([apartflowtesting.residentID])
-                        }
-                      />
-                      <DeleteButton
-                        onClick={() =>
-                          onClickRowDelete(apartflowtesting.residentID)
-                        }
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                );
-              })}
+              residentlist
+                .filter((resident) => resident.member_type === "Owner")
+                .map((apartflowtesting, index) => {
+                  return (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell>
+                        {apartflowtesting.residentID}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.name_with_initials}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.UnitID}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.unit_no}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.block_no}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.building}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.member_type}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.mobile_no}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.email}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{
+                          display: "flex",
+                          gap: "0.3rem",
+                        }}
+                      >
+                        <ViewButton
+                          route={`/residents information/viewResident/${[
+                            apartflowtesting.UnitID,
+                          ]}`}
+                          onClick={() => handleView([apartflowtesting.UnitID])}
+                        />
+                        <EditButton
+                          route={`/residents information/updateResident/${[
+                            apartflowtesting.residentID,
+                          ]}`}
+                          onClick={() =>
+                            handleEdit([apartflowtesting.residentID])
+                          }
+                        />
+                        <DeleteButton
+                          onClick={() =>
+                            onClickRowDelete(apartflowtesting.residentID)
+                          }
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
           </TableBody>
 
           {/* Delete Button Dialog */}
