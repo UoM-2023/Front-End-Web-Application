@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import ResidentsPayments from '../Pages/FinancePage/ResidentsPayments/ResidentsPayments'
 import UtilityCharges from '../Pages/FinancePage/UtilityCharges/UtilityCharges'
@@ -36,11 +36,16 @@ import EventsForm from '../Pages/News&NoticesPage/Events/Form/EventsForm'
 import UtilityDetails from '../Pages/FinancePage/UtilityCharges/UtilityDetails'
 import UtilityDetailsUpdateForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm'
 import UtilityDetailsAddNewForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew'
+import { setAuthToken } from '../Pages/LoginPage/LoginServices/authService'
+import LoginPage from '../Pages/LoginPage/LoginPage'
 
-const Routers = () => {
+const Routers = ({user, setUser}) => {
+  
+
   return (
     <>
       <Routes>
+        <Route path='/login' element={<LoginPage setUser={setUser} />} />
         {/* Dashboard */}
           <Route path='/dashboard' element = {<DashBoard/> }/>
         {/* Finance Page Routs and its sub routes */}
