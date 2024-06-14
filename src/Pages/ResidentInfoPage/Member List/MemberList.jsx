@@ -123,7 +123,6 @@ function MemberList() {
 
   return (
     <div className="pageContainer">
-      <TopBar title="Residents Information" />
       <div className="memberListContainer">
         <div className="card1">
           <Card sx={{ maxWidth: 550, width: "30rem" }}>

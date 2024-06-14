@@ -128,7 +128,7 @@ function UnitList() {
 
   return (
     <div className="unitListContainer">
-      <TopBar title="Residents Information" />
+      {/* <TopBar title="Residents Information" /> */}
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/residents information/addNewResident" />
@@ -161,7 +161,7 @@ function UnitList() {
           <TableBody>
             {residentlist &&
               residentlist
-                .filter((resident) => resident.member_type === "Owner")
+                // .filter((resident) => resident.member_type === "Owner")
                 .map((apartflowtesting, index) => {
                   return (
                     <StyledTableRow key={index}>

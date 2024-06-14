@@ -324,7 +324,6 @@ function StaffDetailsAddNewForm() {
 
   return (
     <>
-      <TopBar title="Staff Details" />
       <div
         className="FormContainer"
         style={{

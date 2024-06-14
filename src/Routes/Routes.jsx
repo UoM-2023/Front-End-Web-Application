@@ -24,7 +24,6 @@ import InternalMaintenanceTable from "../Pages/MaintenancePage/InternalMaintenan
 import InternalMaintenanceForm from "../Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import StaffList from "../Pages/StaffDetails/StaffTableView/StaffList";
 import StaffDetailsAddNewForm from "../Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
-import Dashboard from "../Pages/DashboardPage/Dashboard";
 import UnitList from "../Pages/ResidentInfoPage/UnitTableView/UnitList";
 import ResidentInfoAddNew from "../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
 import MemberList from "../Pages/ResidentInfoPage/Member List/MemberList";
@@ -44,6 +43,7 @@ import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCred
 const Routers = () => {
   return (
     <>
+      <TopBar title="Residents Information" />
       <Routes>
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />

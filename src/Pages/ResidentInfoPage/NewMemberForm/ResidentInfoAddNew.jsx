@@ -66,7 +66,6 @@ function ResidentInfoAddNew() {
     return `${year}-${month}-${day}`;
   }
 
-
   useEffect(() => {
     console.log("Current Resident ID:", residentID);
     if (residentID) {
@@ -83,33 +82,56 @@ function ResidentInfoAddNew() {
 
           // Assuming your response data structure is correct
           if (data && data.result && data.result.length > 0) {
-            const staffData = data.result[0]; // Accessing the first item in the array
-            console.log("Staff Data:", staffData);
+            const residentData = data.result[0]; // Accessing the first item in the array
+            console.log("Resident Data:", residentData);
 
-            const staffCategoryValue =
-              staffData.staff_category === "Admin"
-                ? "Admin"
-                : staffData.staff_category;
+            const residentTypeValue =
+              residentData.member_type === "Owner"
+                ? "Owner"
+                : residentData.member_type;
 
-            const formattedDate = formatDate(staffData.dob);
+            const buildingValue =
+              residentData.building === "Wing 01"
+                ? "Wing 01"
+                : residentData.building;
+
+            const blocknoValue =
+              residentData.block_no === "Block 01"
+                ? "Block 01"
+                : residentData.block_no;
+
+            const unitCategoryValue =
+              residentData.unit_category === "Bed Room 01"
+                ? "Bed Room 01"
+                : residentData.unit_category;
+
+            const unitnoValue =
+              residentData.unit_no === "Unit 01"
+                ? "Unit 01"
+                : residentData.unit_no;
+
+            const formattedDate = formatDate(residentData.dob);
             console.log("Formatted Date:", formattedDate);
 
             setFormData({
-              residentID: staffData.residentID,
-              first_name: staffData.first_name,
-              middle_name: staffData.middle_name,
-              last_name: staffData.last_name,
-              name_with_initials: staffData.name_with_initials,
-              gender: staffData.gender,
+              residentID: residentData.residentID,
+              UnitID: residentData.UnitID,
+              building: buildingValue,
+              block_no: blocknoValue,
+              unit_category: unitCategoryValue,
+              unit_no: unitnoValue,
+              first_name: residentData.first_name,
+              middle_name: residentData.middle_name,
+              last_name: residentData.last_name,
+              name_with_initials: residentData.name_with_initials,
+              gender: residentData.gender,
               dob: formattedDate,
-              nic: staffData.nic,
-              staff_category: staffCategoryValue,
-              qualification: staffData.qualification,
-              email: staffData.email,
-              mobile_no: staffData.mobile_no,
-              Address: staffData.Address,
-              city: staffData.city,
-              img: staffData.img,
+              nic: residentData.nic,
+              member_type: residentTypeValue,
+              email: residentData.email,
+              mobile_no: residentData.mobile_no,
+              Address: residentData.Address,
+              img: residentData.img,
             });
           } else {
             console.error("Data structure does not match expected format");
@@ -119,9 +141,6 @@ function ResidentInfoAddNew() {
         .finally(() => setIsLoading(false));
     }
   }, [residentID]);
-
-
-
 
   // useEffect(() => {
   //   console.log("Current Resident ID:", residentID);
@@ -456,11 +475,11 @@ function ResidentInfoAddNew() {
                 Block 03
               </MenuItem>
               <MenuItem
-                value="Wing 04"
-                name="Wing 04"
+                value="Block 04"
+                name="Block 04"
                 className="optionContainer"
               >
-                Wing 04
+                Block 04
               </MenuItem>
             </Select>
           </div>

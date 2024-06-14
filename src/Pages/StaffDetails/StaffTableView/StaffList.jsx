@@ -115,7 +115,6 @@ function StaffList() {
 
   return (
     <div className="unitListContainer">
-      <TopBar title="Staff Details" />
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/staff details/addNewStaff" />
