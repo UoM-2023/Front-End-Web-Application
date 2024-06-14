@@ -158,7 +158,6 @@ function ResidentUserCredentialsFrom() {
 
   return (
     <div className="ResidentUserCredentialsFromContainer">
-      <TopBar title="User Credentials" />
       <MinibarUserCredentials />
       <div
         className="FormContainer"

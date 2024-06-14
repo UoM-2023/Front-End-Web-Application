@@ -43,7 +43,6 @@ import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCred
 const Routers = () => {
   return (
     <>
-      <TopBar title="Residents Information" />
       <Routes>
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />

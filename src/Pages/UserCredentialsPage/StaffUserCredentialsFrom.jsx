@@ -154,7 +154,6 @@ function StaffUserCredentialsFrom() {
 
   return (
     <div className="StaffUserCredentialsFromContainer">
-      <TopBar title="User Credentials" />
       <MinibarUserCredentials />
       <div
         className="FormContainer"

@@ -360,7 +360,6 @@ function ResidentInfoAddNew() {
 
   return (
     <>
-      <TopBar title="Residents Information" />
       <div
         className="FormContainer"
         style={{
