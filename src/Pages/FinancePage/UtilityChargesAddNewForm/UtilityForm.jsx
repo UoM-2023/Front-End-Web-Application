@@ -47,9 +47,12 @@ function UtilityForm() {
         .then(res => {
           console.log('Create successful:', res.data);
           setIsSubmit(true);
-          navigate("/finance/utilitycharges");
+          navigate(-1);
         })
-        .catch(err => console.error('Failed to create data:', err));
+        .catch(err => {
+          console.error('Failed to create data:', err);
+          alert("Failed");
+        });
   };
 
   useEffect(() => {

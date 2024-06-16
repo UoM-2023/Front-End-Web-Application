@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
@@ -14,13 +14,13 @@ import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPa
 import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
 import Expenses from "./Pages/FinancePage/Expenses/Expenses";
 import Revenue from "./Pages/FinancePage/Revenue/Revenue";
-// import ResidentialUnits from "./ResidentialUnits";
+import ResidentialUnits from "./ResidentialUnits";
 import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
 import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
 import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
 import Warnings from "./Pages/FinancePage/Warnings/Warnings";
 import MiniDrawer from "./Component/SideBar/MiniDrawer";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
 import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
@@ -32,83 +32,45 @@ import RequestsForm from "./Pages/MaintenancePage/RequestsAddNewForm/RequestsFor
 import InternalMaintenanceForm from "./Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import CompleteResidentReqForm from "./Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
 import EditFundsAddNew from "./Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew";
-import Guest from "./Pages/Guest/Guest";
-import GuestFormNew from "./Pages/GuestNew/GuestForm";
-import GuestTable from "./Pages/Guest/GuestTable";
-import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
-import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
-import DashBoard from "./Pages/DashBoard/DashBoard";
 import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
 import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
 import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
 import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
-import ResidentialUnitsForm from "./Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm";
-import ResidentialUnitsTable from "./Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable";
-import ComplaintsTable from "./Pages/ComplaintsPage/Table/ComplaintsTable";
-import NoticesTable from "./Pages/News&NoticesPage/Notices/Table/NoticesTable";
-import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
-import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
-import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
-import CollapsibleTable from "./Pages/FinancePage/UtilityCharges/UtilityDetails";
-import UtilityDetailsUpdateForm from "./Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm";
-import UtilityDetailsAddNewForm from "./Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew";
-
+import StaffUserCredentialsFrom from "./Pages/UserCredentialsPage/StaffUserCredentialsFrom";
+import ResidentUserCredentialsFrom from "./Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
+import { getDecodedToken, setAuthToken } from "./Pages/LoginPage/LoginServices/authService";
+import RouteTitles from "./Routes/RouteTitles";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [title,setTitle] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log(token);
+      const decodeUser = getDecodedToken(token);
+      setUser(decodeUser);
+      setAuthToken(token);
+    } else {
+      navigate('/login');
+    }
+  }, []);
+
+  useEffect(() => {
+    const path = location.pathname;
+    const newTitle = RouteTitles[path] || 'App Title';
+    setTitle(newTitle);
+  }, [location]);
+
   return (
     <>
       <div className="appContainer">
-        {/* <LoginPage /> */}
-        {/* <Dashboard /> */}
-        <TopBar title="Finance" />
-
-        {/* <ResidentInforPage />
-        <StaffDetails />
-        <MemberList />
-        <UnitList />
-        <StaffList />
-        <AddNewButton />
-        <ResidentsPayments />
-        <UtilityCharges />
-        <Expenses />
-        <Revenue />
-        <UtilityCharges />
-        <RevenueAddNewForm />
-        <UtilityChargesAddNewForm />
-        <ResidentialUnits />
-        <Warnings />
-        <RequestsTable />
-        <InternalMaintenanceTable />
-  <CompletedResidentRequestTable /> */}
-
-        <BrowserRouter>
-          <MiniDrawer />
-          <Routers />
-        {/* <UtilityDetailsUpdateForm /> */}
-        {/* <UtilityDetailsAddNewForm /> */}
-        </BrowserRouter>
-
-        {/* <Minibar /> *}
-           
-        {/* <InternalMaintenanceTable /> */}
-        {/*<UtilityForm />
-        <ResidentInfoAddNew />
-        
-        <ExpensesAddNewForm />
-        <ResidentsPaymentsForm />
-        <RevenueForm />
-        <RequestsForm />
-        <InternalMaintenanceForm /> */}
-        {/* <CompleteResidentReqForm />  */}
-        {/* <EditFundsAddNew /> */}
-        {/* <ResidentialUnitsAddNewForm /> */}
-        {/* <ComplaintAddForm/> */}
-        {/* <NoticeAddNewForm/> */}
-        {/* <EventsAddNewForm/> */}
-        {/* <StaffDetailsAddNewForm /> */}
-        {/* <MemberList /> */}
-        {/* <UnitList /> */}
-        
+        {user && <TopBar user={user} setUser={setUser} title={title} />}
+        {user && <MiniDrawer userRole={user.role} />}
+        <Routers user={user} setUser={setUser} />
       </div>
     </>
   );

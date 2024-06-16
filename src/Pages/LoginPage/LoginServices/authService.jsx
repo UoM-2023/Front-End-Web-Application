@@ -2,8 +2,14 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'
 
 
+const API_URL = 'http://localhost:3001'
+
+const axiosInstance = axios.create({
+    baseURL: API_URL,
+    withCredentials: true,
+});
 // Axios request interceptor. Before each request, check if the token is expired. If expired, refresh the token.
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
     async (config) => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -22,7 +28,7 @@ axios.interceptors.request.use(
   );
 
 // Axios response interceptor to handle token refreshing. If a 401 error (Unauthorized) occurs, retry the request after refreshing the token.
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config;
@@ -42,18 +48,19 @@ axios.interceptors.response.use(
     }
 );
 
-const logout = async () => {
+export const logout = async () => {
     try {
-        await axios.post('http://localhost:3001/auth/logout');
-        localStorage.removeItem('user');
+        console.log('Axios logout called');
+        await axiosInstance.post('/auth/logout');
+        localStorage.removeItem('token');
     } catch (error) {
         console.error('Logout error:', error);
     }
 }
 
-const refreshToken = async () => {
+export const refreshToken = async () => {
     try{
-        const response = await axios.post('http://localhost:3001/auth/refresh');
+        const response = await axiosInstance.post('/auth/refresh');
         const { token } = response.data;
         localStorage.setItem('token', token);
         setAuthToken(token);
@@ -65,16 +72,16 @@ const refreshToken = async () => {
     }
 };
 
-const setAuthToken = (token) => {
+export const setAuthToken = (token) => {
     if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-        delete axios.defaults.headers.common['Authorization'];
+        delete axiosInstance.defaults.headers.common['Authorization'];
     }
 }
 
-const getDecodedToken = (token) => {
+export const getDecodedToken = (token) => {
     return jwtDecode(token);
 }
 
-export { setAuthToken, logout, refreshToken, getDecodedToken };
+export default axiosInstance;

@@ -1,8 +1,16 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-function ViewButton() {
+function ViewButton({ route }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Navigate to the desired route when the button is clicked
+    navigate(route);
+  };
   return (
     <div>
       <Stack spacing={2} direction="row">
@@ -21,6 +29,7 @@ function ViewButton() {
             paddingLeft: "1.6rem",
             paddingRight: "1.6rem",
           }}
+          onClick={handleClick}
         >
           View
         </Button>

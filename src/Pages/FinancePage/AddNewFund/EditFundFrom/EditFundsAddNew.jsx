@@ -4,8 +4,7 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
 import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditFundsAddNew() {
   const { id } = useParams();
@@ -24,31 +23,35 @@ function EditFundsAddNew() {
 
   useEffect(() => {
     console.log("Current ID:", id);
-    if (id) {  // Check if there is an ID, which means we are in "edit" mode
+    if (id) {
+      // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect cal");
-      axios.get(`http://localhost:3001/finance/editFunds/${id}`)
-      .then(response => {
-        console.log("Response:",response);
-        const { data } = response;
-        console.log("Log has called",data);
-  
-        // Assuming your response data structure is correct
-        if (data && data.result && data.result.length > 0) {
-          const fundData = data.result[0][0]; // Assuming you want the first item from the first array
-          const chargedByValue = fundData.chargedBy === "All Units" ? "All Units" : fundData.chargedBy;
-          setFormData({
-            fundName: fundData.fundName,
-            chargedBy: chargedByValue,
-            amount: fundData.amount,
-            timePeriod: fundData.timePeriod,
-            modifiedBy: fundData.modified_by,
-          });
-        }
-      })
-      .catch(err => console.error("Failed to fetch data", err));
+      axios
+        .get(`http://localhost:3001/finance/editFunds/${id}`)
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const fundData = data.result[0][0]; // Assuming you want the first item from the first array
+            const chargedByValue =
+              fundData.chargedBy === "All Units"
+                ? "All Units"
+                : fundData.chargedBy;
+            setFormData({
+              fundName: fundData.fundName,
+              chargedBy: chargedByValue,
+              amount: fundData.amount,
+              timePeriod: fundData.timePeriod,
+              modifiedBy: fundData.modified_by,
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to fetch data", err));
     }
   }, [id]);
-  
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -69,25 +72,25 @@ function EditFundsAddNew() {
     // navigate("/finance/editFunds");
     if (id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios.put(`http://localhost:3001/finance/editFunds/${id}`, formData)
-        .then(res => {
-          console.log('Update successful:', res.data);
+      axios
+        .put(`http://localhost:3001/finance/editFunds/${id}`, formData)
+        .then((res) => {
+          console.log("Update successful:", res.data);
           setIsSubmit(true);
           navigate("/finance/editFunds");
         })
-        .catch(err => console.error('Failed to update data:', err));
+        .catch((err) => console.error("Failed to update data:", err));
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios.post('http://localhost:3001/finance/editFunds', formData)
-        .then(res => {
-          console.log('Create successful:', res.data);
+      axios
+        .post("http://localhost:3001/finance/editFunds", formData)
+        .then((res) => {
+          console.log("Create successful:", res.data);
           setIsSubmit(true);
           navigate("/finance/editFunds");
         })
-        .catch(err => console.error('Failed to create data:', err));
+        .catch((err) => console.error("Failed to create data:", err));
     }
-  
-    
   };
 
   useEffect(() => {
@@ -119,10 +122,8 @@ function EditFundsAddNew() {
   };
 
   return (
-    
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-
         <div className="inputItem">
           <InputLabel htmlFor="fundName" className="namesTag">
             Fund Name :
@@ -143,7 +144,7 @@ function EditFundsAddNew() {
             className="SelectformComponent"
             name="chargedBy"
             onChange={onChangeHandler}
-            value={formData.chargedBy || ''}
+            value={formData.chargedBy || ""}
           >
             <MenuItem value="" className="optionContainer">
               Select Charging Units
@@ -155,10 +156,18 @@ function EditFundsAddNew() {
             >
               All Units
             </MenuItem>
-            <MenuItem value="Type A" name="unitAType" className="optionContainer">
+            <MenuItem
+              value="Type A"
+              name="unitAType"
+              className="optionContainer"
+            >
               Type A
             </MenuItem>
-            <MenuItem value="Type B" name="unitBType" className="optionContainer">
+            <MenuItem
+              value="Type B"
+              name="unitBType"
+              className="optionContainer"
+            >
               Type B
             </MenuItem>
           </Select>

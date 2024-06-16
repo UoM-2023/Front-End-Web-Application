@@ -7,7 +7,7 @@ import BackButton from "../../../Component/Buttons/BackButton";
 import AddRangeButton from "../../../Component/Buttons/AddRow";
 import { KeyboardArrowDown, KeyboardArrowDownRounded, KeyboardArrowUp } from "@mui/icons-material";
 import axios from "axios"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
@@ -18,6 +18,8 @@ function UtilityDetailsAddNewForm() {
     rows: [{ priceRange: "", basePrice: "", unitPrice: "" }],
     modifiedBy: "",
   });
+
+  const { id } = useParams();
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);

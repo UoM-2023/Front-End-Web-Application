@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
+import SaveButton from "../../../Component/Buttons/SaveButton";
 //import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css"; 
+// import "../../Component/Forms/FormDesigns.css";
 
 function CompleteResidentReqForm() {
   const [formData, setFormData] = useState({
@@ -68,7 +68,7 @@ function CompleteResidentReqForm() {
 
   return (
     <div className="FormContainer">
-      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
+      <form className="MainForm" onSubmit={onSubmitHandler} method="post">
         <div className="inputItem">
           <InputLabel htmlFor="referenceNo" className="namesTag">
             Reference No :

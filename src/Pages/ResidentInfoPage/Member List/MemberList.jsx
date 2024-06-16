@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./MemberList.css";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -15,6 +15,8 @@ import TableHead from "@mui/material/TableHead";
 import { tableCellClasses } from "@mui/material/TableCell";
 import BackButton from "../../../Component/Buttons/BackButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
+import TopBar from "../../../Component/TopBar/TopBar";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -65,7 +67,7 @@ const rows2 = [
   createData("E-mail", "test12345@gmail.com"),
   createData("NIC", 197810200939),
   createData("Gender", "Male"),
-  createData("Rental period", "5 yrs"),
+  createData("Address", "No 50, 1st Lane, Ratnapura Road, Batugedara."),
 ];
 
 const rows3 = [
@@ -117,8 +119,61 @@ const rows3 = [
 ];
 
 function MemberList() {
+  const [residentlist, setResidentlist] = useState([]);
+
+  // Change Birthday Date Format
+
+  function formatDate(dateString) {
+    // Create a new Date object from the provided string
+    const date = new Date(dateString);
+
+    // Increment the date by one day
+    date.setDate(date.getDate());
+
+    // Extract year, month, and day components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getResidentDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+  const getResidentDetails = () => {
+    axios
+      .get("http://localhost:3001/residentsDetails/addNewResident")
+      .then((response) => {
+        console.log(" get all Resident func CALLED");
+        console.log(response);
+        setResidentlist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+  const handleEdit = (residentID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        `http://localhost:3001/residentsDetails/addNewResident/updateResident/${residentID}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called........");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="pageContainer">
+      <TopBar title="Residents Information" />
       <div className="memberListContainer">
         <div className="card1">
           <Card sx={{ maxWidth: 550, width: "30rem" }}>
@@ -181,6 +236,7 @@ function MemberList() {
                 />
                 <h3 className="lableTag">Tenant's Infomation</h3>
               </div>
+
               <CardContent>
                 <div className="tableContainer">
                   <TableContainer
@@ -238,54 +294,68 @@ function MemberList() {
                   >
                     <TableHead>
                       <TableRow>
-                        <StyledTableCell align="left">#No</StyledTableCell>
                         <StyledTableCell align="left">
                           Resident ID
                         </StyledTableCell>
                         <StyledTableCell align="left">Name</StyledTableCell>
                         <StyledTableCell align="left">Gender</StyledTableCell>
                         <StyledTableCell align="left">
+                          Date Of Birth
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
                           Mobile No
                         </StyledTableCell>
+                        <StyledTableCell align="left">Email</StyledTableCell>
                         <StyledTableCell align="left">NIC</StyledTableCell>
-                        <StyledTableCell align="left">Photo</StyledTableCell>
+                        <StyledTableCell align="left">
+                          Member Type
+                        </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows3.map((row) => (
-                        <StyledTableRow key={row.name}>
-                          <StyledTableCell align="left">
-                            {row.no}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.residentID}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.name}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.gender}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.mobileNo}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.nic}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.photo}
-                          </StyledTableCell>
-                        </StyledTableRow>
-                      ))}
+                      {residentlist &&
+                        residentlist.map((apartflowtesting, index) => {
+                          const formattedDate = formatDate(
+                            apartflowtesting.dob
+                          );
+                          console.log(formattedDate);
+
+                          return (
+                            <StyledTableRow key={index}>
+                              <StyledTableCell>
+                                {apartflowtesting.residentID}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.name_with_initials}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.gender}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {formattedDate}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.mobile_no}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.email}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.nic}
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                {apartflowtesting.member_type}
+                              </StyledTableCell>
+                            </StyledTableRow>
+                          );
+                        })}
                     </TableBody>
                   </Table>
                 </TableContainer>
               </CardActionArea>
             </div>
           </CardContent>
-          <div className="backBtn">
-            <BackButton />
-          </div>
+          <div className="backBtn">{/* <BackButton /> */}</div>
         </Card>
       </div>
     </div>

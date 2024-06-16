@@ -40,9 +40,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(utility_name, modified_by, modified_date, details = []) {
+function createData(utility_name, utility_id, modified_by, modified_date, details = []) {
   return {
     name: utility_name,
+    utility_id,
     modified_by,
     modified_date,
     details: details.map(price => ({
@@ -65,7 +66,7 @@ function Row({ row }) {
         <StyledTableCell align="center">{row.modified_by}</StyledTableCell>
         <StyledTableCell align="center">{row.modified_date.slice(0,10)}</StyledTableCell>
         <StyledTableCell sx={{ textAlign: 'center', verticalAlign: 'middle' }}>
-          <EditButton />
+          <EditButton route ={`/finance/utilitycharges/updateUtilityDetails/${row.utility_id}`} />
         </StyledTableCell>
         <StyledTableCell>
           <IconButton
@@ -121,6 +122,7 @@ function UtilityDetails() {
         console.log("API Response:", response.data);
         const formattedData = response.data.map(utility => createData(
           utility.utility_name,
+          utility.utility_id,
           utility.modified_by,
           utility.modified_date,
           utility.prices

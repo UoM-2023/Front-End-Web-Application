@@ -8,10 +8,15 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { logout } from "../../Pages/LoginPage/LoginServices/authService";
+// import { logout } from "../../Pages/LoginPage/LoginServices/authService";
 
-const TopBar = (props) => {
+const TopBar = ({user,setUser,title}) => {
   const [auth, setAuth] = React.useState(true); 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,7 +25,18 @@ const TopBar = (props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(props);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+      setAuth(false);
+      navigate('/login');
+    } catch (error) {
+      console.log("Failed to logout",error);
+    }
+  };
+  
   return (
     <div className="topBarContainer">
       <Box sx={{ flexGrow: 1 }}>
@@ -36,7 +52,7 @@ const TopBar = (props) => {
                 marginLeft: "5rem",
               }}
             >
-              {props.title}
+              {title}
             </Typography>
             {auth && (
               <div>
@@ -73,7 +89,7 @@ const TopBar = (props) => {
                 >
                   <MenuItem onClick={handleClose}>Your Profile</MenuItem>
                   <MenuItem onClick={handleClose}>Settings</MenuItem>
-                  <MenuItem onClick={handleClose} sx={{ fontWeight: "bold" }}>
+                  <MenuItem onClick={handleLogout} sx={{ fontWeight: "bold" }}>
                     Logout
                   </MenuItem>
                 </Menu>

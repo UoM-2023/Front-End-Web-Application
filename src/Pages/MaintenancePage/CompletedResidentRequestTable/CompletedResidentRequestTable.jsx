@@ -31,9 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: "#ECE1D9",
   },
   // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
+  "&:last-child td, &:last-child th": {},
 }));
 
 function createData(
@@ -144,7 +142,7 @@ function CompletedResidentRequestTable() {
       <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/maintenance/completed/addNewCompleted"/>
+        <AddNewButton route="/maintenance/completed/addNewCompleted" />
       </div>
       <TableContainer component={Paper}>
         <Table

@@ -16,6 +16,7 @@ import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
 import EditFundsAddNew from "./EditFundFrom/EditFundsAddNew";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,33 +60,33 @@ function createData(
     timePeriod,
     modifiedDate,
     modifiedBy,
-    action
+    action,
   };
 }
 
 function EditFunds() {
   let no = 1;
   const navigate = useNavigate();
-  const [fundTypes,setFundTypes] = useState([])
-  
+  const [fundTypes, setFundTypes] = useState([]);
 
   useEffect(() => {
     console.log("frontend use effect");
-    getFundTypes()
-  }, [])
+    getFundTypes();
+  }, []);
 
   const addData = () => {
     const newData = [...fundTypes];
-    newData.push({ id: newData.length + 1,});
+    newData.push({ id: newData.length + 1, /* other data properties */ });
     setFundTypes(newData);
   };
 
-// Get the data from the backend to front end
+  // Get the data from the backend to front end
   const getFundTypes = () => {
-    axios.get("http://localhost:3001/finance/editFunds").then( (response) => {
+    axiosInstance.get("http://localhost:3001/finance/editFunds").then( (response) => {
       console.log("Called");
       console.log(response);
       setFundTypes(response.data.result[0])
+      // console.log(response.data.result[0].fund_id)
 
     }).catch( (error) => {
       console.log(error);
@@ -95,21 +96,22 @@ function EditFunds() {
   // Handling the edit button
   const handleEdit = (id) => {
     console.log("Hanlde edit before axios");
-    axios.get(`http://localhost:3001/finance/editFunds/${id}`).then( (response) => {
-      console.log("Hanlde edit Called");
-    }).catch( (error) => {
-      console.log(error);
-    })
-  }
+    axiosInstance.get(`http://localhost:3001/finance/editFunds/${id}`)
+      .then((response) => {
+        console.log("Hanlde edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleDelete = (id) => {
     console.log("Delete handler");
-    setFundTypes(prevData => prevData.filter(item => item.fund_id !== id));
+
     axios.delete(`http://localhost:3001/finance/editFunds/${id}`).then((response) =>{
 
       console.log("Delete handler called");
-      
-      // getFundTypes();
+      getFundTypes();
 
     }).catch((error)=>{
       console.log("Delete handle error",error);
@@ -120,8 +122,8 @@ function EditFunds() {
     <div className="editFundsContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar/>
-        <AddNewButton route="/finance/editFunds/newFund"/>
+        <SearchBar />
+        <AddNewButton route="/finance/editFunds/newFund" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -142,36 +144,58 @@ function EditFunds() {
               <StyledTableCell align="center">Fund Name</StyledTableCell>
               <StyledTableCell align="center">Charged By</StyledTableCell>
               <StyledTableCell align="center">Amount</StyledTableCell>
-              <StyledTableCell align="center">Time Period <br />(In Months)</StyledTableCell>
+              <StyledTableCell align="center">
+                Time Period <br />
+                (In Months)
+              </StyledTableCell>
               <StyledTableCell align="center">Modified Date</StyledTableCell>
               <StyledTableCell align="center">Modified By</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { fundTypes.map((fundType, index) => (
+            {fundTypes.map((fundType, index) => (
               <StyledTableRow key={fundType.fund_id}>
                 {/* For the counting in first column */}
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
                 {/* <StyledTableCell align="center">
                   {fundType.fund_id}
                 </StyledTableCell> */}
-                <StyledTableCell align="center">{fundType.fundName}</StyledTableCell>
-                <StyledTableCell align="center">{fundType.chargedBy}</StyledTableCell>
-                <StyledTableCell align="center">{fundType.amount}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.fundName}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.chargedBy}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.amount}
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   {fundType.timePeriod}
                 </StyledTableCell>
-                <StyledTableCell align="center">{fundType.modified_date.slice(0,10)}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.modified_date.slice(0, 10)}
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   {fundType.modified_by}
                 </StyledTableCell>
-                <StyledTableCell align="center" sx={{ display: 'flex', justifyContent: 'center', gap:'1rem' }}>
-                    <EditButton route={`/finance/editFunds/updateFund/${fundType.fund_id}`} onClick={()=> handleEdit(fundType.fund_id)}/>
-                    <DeleteButton onClick = {()=> handleDelete(fundType.fund_id)}  /> 
+                <StyledTableCell
+                  align="center"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/finance/editFunds/updateFund/${fundType.fund_id}`}
+                    onClick={() => handleEdit(fundType.fund_id)}
+                  />
+                  <DeleteButton
+                    onClick={() => handleDelete(fundType.fund_id)}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
-              
             ))}
           </TableBody>
         </Table>
