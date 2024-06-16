@@ -1,4 +1,7 @@
+//---------------------------------------------------------------------------------------------------
+
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./TopBar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,6 +17,8 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 const TopBar = (props) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,6 +26,21 @@ const TopBar = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSettings = () => {
+    setAnchorEl(null);
+    navigate("/settings");
+  };
+
+  // Determine the title based on the current location
+  const getTitle = () => {
+    switch (location.pathname) {
+      case "/settings":
+        return "Settings";
+      default:
+        return props.title;
+    }
   };
 
   return (
@@ -38,7 +58,7 @@ const TopBar = (props) => {
                 marginLeft: "5rem",
               }}
             >
-              {props.title}
+              {getTitle()}
             </Typography>
             {auth && (
               <div>
@@ -76,22 +96,16 @@ const TopBar = (props) => {
                   <div style={{ padding: "1rem" }}>
                     <MenuItem onClick={handleClose}>
                       <div className="LoginUserDetails">
-                        {/* <span className="textItem">
-                          <b>Name :</b> A.B.C.Kulathilake
-                        </span> */}
                         <span className="textItem">
-                          <b>UserName :</b> AB-000001U
+                          <b>User Name :</b> AB-000001U
                         </span>
-                        {/* <span className="textItem">
-                          <b>Staff ID :</b> S-254109
-                        </span> */}
                         <span className="textItem">
                           <b>User Role :</b> Maintenance Manager
                         </span>
                       </div>
                     </MenuItem>
                     <hr />
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem onClick={handleSettings}>
                       <SettingsOutlinedIcon sx={{ marginRight: "1rem" }} />
                       Settings
                     </MenuItem>

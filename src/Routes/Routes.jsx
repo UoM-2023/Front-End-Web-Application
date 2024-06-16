@@ -39,10 +39,11 @@ import EventsTable from "../Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "../Pages/News&NoticesPage/Events/Form/EventsForm";
 import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
+import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 
 const Routers = () => {
   return (
-    <>
+    <div style={{ paddingTop: "5rem" }}>
       <Routes>
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />
@@ -148,6 +149,11 @@ const Routers = () => {
 
         {/* END of User Credentials Page Routs and its sub routes */}
 
+        {/* Settings Page Routs */}
+        <Route path="/settings" element={<Outlet />}>
+          <Route index element={<SettingsPage />} />
+        </Route>
+
         {/* Residential Units Route */}
         <Route path="/residential units" element={<Outlet />}>
           <Route index element={<ResidentialUnitsTable />} />
@@ -177,7 +183,7 @@ const Routers = () => {
           <Route path="eventsForm" element={<EventsForm />} />
         </Route>
       </Routes>
-    </>
+    </div>
   );
 };
 

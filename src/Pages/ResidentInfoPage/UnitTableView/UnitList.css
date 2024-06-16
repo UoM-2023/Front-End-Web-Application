@@ -3,3 +3,9 @@
     display: flex;
     cursor: pointer;
 }
+.pageTop {
+    display: flex;
+    position: sticky;
+    position: -webkit-sticky;
+    
+}
