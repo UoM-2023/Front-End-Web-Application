@@ -3,8 +3,9 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import axios from "axios";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 
 function ResidentsPaymentsForm() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,9 @@ function ResidentsPaymentsForm() {
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -29,6 +33,19 @@ function ResidentsPaymentsForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
+
+    axios
+      .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+      .then((res) => {
+        console.log("Create Successful:", res.data);
+        setIsSubmit(true);
+        setSuccessMessage(res.data.message);
+      })
+      .catch((err) => console.error("Failed to Create data:", err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -59,8 +76,41 @@ function ResidentsPaymentsForm() {
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      chargeType: "",
+      unitNumber: "",
+      residentName: "",
+      paymentMethod: "",
+      amount: "",
+      remark: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel className="namesTag">Charge Type :</InputLabel>
@@ -186,10 +236,12 @@ function ResidentsPaymentsForm() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );

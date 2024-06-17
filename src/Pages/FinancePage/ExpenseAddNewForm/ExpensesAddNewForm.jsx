@@ -3,21 +3,63 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function ExpensesAddNewForm() {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    expenseType: "",
-    staffID: "",
-    approvedBy: "",
-    paymentMethod: "",
+    expense_id: "",
     amount: "",
+    eType: "",
+    payment_method: "",
+    staff_id: "",
+    added_date: "",
     remark: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Current expenses ID:", id);
+    if (id) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect cal");
+      axios
+        .get(`http://localhost:3001/finance/expenses/updateExpenses/${id}`)
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct expensesData
+          if (data && data.result && data.result.length > 0) {
+            const expensesData = data.result[0][0]; // Assuming you want the first item from the first array
+            const chargedByValue =
+              expensesData.chargedBy === "All Units"
+                ? "All Units"
+                : expensesData.chargedBy;
+            setFormData({
+              fundName: expensesData.fundName,
+              chargedBy: chargedByValue,
+              amount: expensesData.amount,
+              timePeriod: expensesData.timePeriod,
+              modifiedBy: expensesData.modified_by,
+            });
+          } else {
+            console.error("Data structure does not match expected format");
+          }
+        })
+        .catch((err) => console.error("Failed to fetch data", err))
+        .finally(() => setIsLoading(false));
+    }
+  }, [id]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -61,7 +103,14 @@ function ExpensesAddNewForm() {
   };
 
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel className="namesTag">Expense Type :</InputLabel>

@@ -272,7 +272,7 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopBar from "../TopBar/TopBar";
 
 const drawerWidth = 240;
@@ -330,7 +330,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer({ userRole }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -341,15 +341,51 @@ export default function MiniDrawer() {
     setOpen((open) => !open);
   };
 
-  const handleListItemClick = (index, text) => {
+  const handleListItemClick = (index, route) => {
     setSelectedIndex(index);
-    setTitle(text); // Update the title
-    navigate(`/${text.toLowerCase()}`);
+    navigate(route);
   };
+
+  const adminItems = [
+    { text: "Dashboard", icon: <DashboardIcon /> },
+    { text: "Finance", icon: <AccountBalanceIcon /> },
+    { text: "Maintenance", icon: <BuildIcon /> },
+    { text: "Reservations", icon: <EventIcon /> },
+    { text: "Guests", icon: <TransferWithinAStationIcon /> },
+    { text: "Residential Units", icon: <MapsHomeWorkIcon /> },
+    { text: "Complaints", icon: <DriveFileRenameOutlineIcon /> },
+    { text: "News & Notices", icon: <CampaignIcon /> },
+    { text: "Residents Information", icon: <GroupsIcon /> },
+    { text: "Staff Details", icon: <EngineeringIcon /> },
+    { text: "User Credentials", icon: <PersonAddIcon /> },
+    { text: "Settings", icon: <SettingsIcon /> },
+    { text: "Info", icon: <InfoOutlinedIcon /> },
+  ];
+  const financeManagerItems = [
+    { text: "Dashboard", icon: <DashboardIcon /> },
+    { text: "Finance", icon: <AccountBalanceIcon /> },
+  ];
+
+  const securityManagerItems = [
+    { text: "Guests", icon: <TransferWithinAStationIcon /> },
+  ];
+
+  let drawerItems;
+
+  switch (userRole) {
+    case "admin":
+      drawerItems = adminItems;
+      break;
+    case "finance_manager":
+      drawerItems = financeManagerItems;
+      break;
+    default:
+      drawerItems = securityManagerItems;
+      break;
+  }
 
   return (
     <div className="SideBarContainer">
-      <TopBar title={title} />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
@@ -413,30 +449,16 @@ export default function MiniDrawer() {
           <Divider />
 
           <List>
-            {[
-              "Dashboard",
-              "Finance",
-              "Maintenance",
-              "Reservations",
-              "Guests",
-              "Residential Units",
-              "Complaints",
-              "News & Notices",
-              "Residents Information",
-              "Staff Details",
-              "User Credentials",
-              "Settings",
-              "info",
-            ].map((text, index) => (
+            {drawerItems.map((item, index) => (
               <ListItem
-                key={text}
+                key={item.text}
                 disablePadding
                 sx={{ display: "block", cursor: "pointer" }}
               >
                 <ListItemButton
                   selected={selectedIndex === index}
                   onClick={() => {
-                    handleListItemClick(index, text); // Pass text to update title
+                    handleListItemClick(index, `/${item.text.toLowerCase()}`);
                   }}
                   sx={{
                     minHeight: 48,
@@ -453,35 +475,12 @@ export default function MiniDrawer() {
                       color: selectedIndex === index ? "#E76736" : "#F9FAF9",
                     }}
                   >
-                    {index === 0 ? (
-                      <DashboardIcon />
-                    ) : index === 1 ? (
-                      <AccountBalanceIcon />
-                    ) : index === 2 ? (
-                      <BuildIcon /> // Add more icons as needed
-                    ) : index === 3 ? (
-                      <EventIcon />
-                    ) : index === 4 ? (
-                      <TransferWithinAStationIcon />
-                    ) : index === 5 ? (
-                      <MapsHomeWorkIcon />
-                    ) : index === 6 ? (
-                      <DriveFileRenameOutlineIcon />
-                    ) : index === 7 ? (
-                      <CampaignIcon />
-                    ) : index === 8 ? (
-                      <GroupsIcon />
-                    ) : index === 9 ? (
-                      <EngineeringIcon />
-                    ) : index === 10 ? (
-                      <PersonAddIcon />
-                    ) : index === 11 ? (
-                      <SettingsIcon />
-                    ) : index === 12 ? (
-                      <InfoOutlinedIcon />
-                    ) : null}
+                    {item.icon}
                   </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText
+                    primary={item.text}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}

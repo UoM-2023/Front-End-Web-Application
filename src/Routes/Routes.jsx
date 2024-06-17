@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Outlet,
   Route,
@@ -24,6 +24,7 @@ import InternalMaintenanceTable from "../Pages/MaintenancePage/InternalMaintenan
 import InternalMaintenanceForm from "../Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import StaffList from "../Pages/StaffDetails/StaffTableView/StaffList";
 import StaffDetailsAddNewForm from "../Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
+import Dashboard from "../Pages/DashboardPage/Dashboard";
 import UnitList from "../Pages/ResidentInfoPage/UnitTableView/UnitList";
 import ResidentInfoAddNew from "../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
 import MemberList from "../Pages/ResidentInfoPage/Member List/MemberList";
@@ -37,14 +38,20 @@ import NoticesTable from "../Pages/News&NoticesPage/Notices/Table/NoticesTable";
 import NoticesForm from "../Pages/News&NoticesPage/Notices/Form/NoticesForm";
 import EventsTable from "../Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "../Pages/News&NoticesPage/Events/Form/EventsForm";
+import UtilityDetails from "../Pages/FinancePage/UtilityCharges/UtilityDetails";
+import UtilityDetailsUpdateForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm";
+import UtilityDetailsAddNewForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew";
+import { setAuthToken } from "../Pages/LoginPage/LoginServices/authService";
+import LoginPage from "../Pages/LoginPage/LoginPage";
 import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 
-const Routers = () => {
+const Routers = ({ user, setUser }) => {
   return (
-    <div style={{ paddingTop: "5rem" }}>
+    <div>
       <Routes>
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />
 
@@ -57,6 +64,15 @@ const Routers = () => {
           <Route path="utilitycharges" element={<Outlet />}>
             <Route index element={<UtilityCharges />} />
             <Route path="addUtility" element={<UtilityForm />} />
+            <Route path="viewUtilityDetails" element={<UtilityDetails />} />
+            <Route
+              path="addNewUtilityType"
+              element={<UtilityDetailsAddNewForm />}
+            />
+            <Route
+              path="updateUtilityDetails/:id"
+              element={<UtilityDetailsAddNewForm />}
+            />
           </Route>
 
           {/* Expenses routes */}

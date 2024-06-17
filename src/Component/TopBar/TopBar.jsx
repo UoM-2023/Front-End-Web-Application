@@ -11,14 +11,16 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import axios from "axios";
+import { logout } from "../../Pages/LoginPage/LoginServices/authService";
+// import { logout } from "../../Pages/LoginPage/LoginServices/authService";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-const TopBar = (props) => {
+const TopBar = ({ user, setUser, title }) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,13 +35,14 @@ const TopBar = (props) => {
     navigate("/settings");
   };
 
-  // Determine the title based on the current location
-  const getTitle = () => {
-    switch (location.pathname) {
-      case "/settings":
-        return "Settings";
-      default:
-        return props.title;
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+      setAuth(false);
+      navigate("/login");
+    } catch (error) {
+      console.log("Failed to logout", error);
     }
   };
 
@@ -58,7 +61,7 @@ const TopBar = (props) => {
                 marginLeft: "5rem",
               }}
             >
-              {getTitle()}
+              {title}
             </Typography>
             {auth && (
               <div>
@@ -93,6 +96,9 @@ const TopBar = (props) => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
+                  {/* <MenuItem onClick={handleLogout} sx={{ fontWeight: "bold" }}>
+                    Logout
+                  </MenuItem> */}
                   <div style={{ padding: "1rem" }}>
                     <MenuItem onClick={handleClose}>
                       <div className="LoginUserDetails">
@@ -111,7 +117,7 @@ const TopBar = (props) => {
                     </MenuItem>
                     <hr />
                     <MenuItem
-                      onClick={handleClose}
+                      onClick={handleLogout}
                       sx={{
                         fontWeight: "bold",
                       }}

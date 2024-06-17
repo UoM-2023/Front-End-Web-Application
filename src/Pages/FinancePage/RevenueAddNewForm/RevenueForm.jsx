@@ -4,7 +4,9 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 
 function RevenueForm() {
   const [formData, setFormData] = useState({
@@ -12,11 +14,14 @@ function RevenueForm() {
     amount: "",
     rType: "",
     payment_method: "",
-    staffID: ""
+    staffID: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,12 +35,20 @@ function RevenueForm() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
-
-    axios.post('http://localhost:3001/finance/revenue',formData)
-    .then(res => console.log('RES::::::::',res.data))
-    .catch(err => console.log(err))
     setIsSubmit(true);
-    navigate("/finance/revenue")
+    setIsLoading(true);
+
+    axios
+      .post("http://localhost:3001/finance/revenue", formData)
+      .then((res) => {
+        console.log("Create Successful:", res.data);
+        setIsSubmit(true);
+        setSuccessMessage(res.data.message);
+      })
+      .catch((err) => console.error("Failed to Create data:", err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -65,8 +78,42 @@ function RevenueForm() {
     }
     return errors;
   };
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate("/finance/revenue");
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      paid_by: "",
+      amount: "",
+      rType: "",
+      payment_method: "",
+      staffID: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel className="namesTag">Revenue Type :</InputLabel>
@@ -79,15 +126,15 @@ function RevenueForm() {
             <MenuItem value="" className="optionContainer">
               Select Revenue Type
             </MenuItem>
-            <MenuItem value="pool" name="pool" className="optionContainer">
+            <MenuItem value="Pool" name="Pool" className="optionContainer">
               Pool
             </MenuItem>
-            <MenuItem value="gym" name="gym" className="optionContainer">
+            <MenuItem value="Gym" name="Gym" className="optionContainer">
               Gym
             </MenuItem>
             <MenuItem
-              value="eventHall01"
-              name="eventHall01"
+              value="Event Hall 01"
+              name="Event Hall 01"
               className="optionContainer"
             >
               Event Hall 01
@@ -95,7 +142,6 @@ function RevenueForm() {
           </Select>
         </div>
         <p>{formErrors.rType}</p>
-
 
         <div className="inputItem">
           <InputLabel htmlFor="Paid By" className="namesTag">
@@ -136,13 +182,13 @@ function RevenueForm() {
             <MenuItem value="" className="optionContainer">
               Select Payment Method
             </MenuItem>
-            <MenuItem value="cash" name="cash" className="optionContainer">
+            <MenuItem value="Cash" name="Cash" className="optionContainer">
               Cash
             </MenuItem>
-            <MenuItem value="card" name="card" className="optionContainer">
+            <MenuItem value="Card" name="Card" className="optionContainer">
               Card
             </MenuItem>
-            <MenuItem value="cheque" name="cheque" className="optionContainer">
+            <MenuItem value="Cheque" name="Cheque" className="optionContainer">
               Cheque
             </MenuItem>
           </Select>
@@ -180,10 +226,12 @@ function RevenueForm() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );
