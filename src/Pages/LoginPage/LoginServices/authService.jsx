@@ -46,6 +46,9 @@ axiosInstance.interceptors.response.use(
                 return Promise.reject(err); 
             }
         }
+        if (error.response && error.response.status === 401) {
+           navigate('/login');
+        }
         return Promise.reject(error)
     }
 );
