@@ -60,7 +60,7 @@ const Routers = ({user, setUser}) => {
             <Route path="addUtility" element={<UtilityForm />} />
             <Route path='viewUtilityDetails' element={<UtilityDetails />} />
             <Route path='addNewUtilityType' element={<UtilityDetailsAddNewForm />} />
-            <Route path='updateUtilityDetails/:id' element={<UtilityDetailsAddNewForm/>} />
+            <Route path='updateUtilityDetails/:id' element={<UtilityDetailsUpdateForm/>} />
           </Route>
 
           {/* Expenses routes */}

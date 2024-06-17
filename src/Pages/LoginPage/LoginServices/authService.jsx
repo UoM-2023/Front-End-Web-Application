@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom';
 
 
 const API_URL = 'http://localhost:3001'
@@ -8,6 +9,7 @@ const axiosInstance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
 });
+
 // Axios request interceptor. Before each request, check if the token is expired. If expired, refresh the token.
 axiosInstance.interceptors.request.use(
     async (config) => {

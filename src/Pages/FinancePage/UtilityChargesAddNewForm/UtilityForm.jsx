@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function UtilityForm() {
   const [formData, setFormData] = useState({
     unit_id: "",
+    month: "",
     electricityUsage: "",
     waterUsage:"",
     gasUsage: "",
@@ -34,10 +35,6 @@ function UtilityForm() {
         [name]: value,
     }));
 
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   [event.target.name]: event.target.value,
-    // }));
   };
 
   const onSubmitHandler = (event) => {
@@ -66,7 +63,10 @@ function UtilityForm() {
     const errors = {};
 
     if (!values.unit_id) {
-      errors.unit_i = "Please Enter Unit ID *";
+      errors.unit_id = "Please Enter Unit ID *";
+    }
+    if (!values.month) {
+      errors.month = "Please Enter Unit ID *";
     }
     if (!values.electricityUsage) {
       errors.residentName = "Please Enter Resident Name *";
@@ -99,7 +99,21 @@ function UtilityForm() {
             value={formData.unit_id}
           />
         </div>
-        <p>{formErrors.unitID}</p>
+        <p>{formErrors.unit_id}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="month" className="namesTag">
+            Month:
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="month"
+            onChange={onChangeHandler}
+            value={formData.month}
+          />
+        </div>
+        <p>{formErrors.month}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="electricityUsage" className="namesTag">
