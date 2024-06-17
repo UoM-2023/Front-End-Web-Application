@@ -79,6 +79,7 @@ const Routers = ({ user, setUser }) => {
           <Route path="expenses" element={<Outlet />}>
             <Route index element={<Expenses />} />
             <Route path="addExpense" element={<ExpensesAddNewForm />} />
+            <Route path="updateExpenses/:id" element={<ExpensesAddNewForm />} />
           </Route>
 
           {/* Revenue routes */}

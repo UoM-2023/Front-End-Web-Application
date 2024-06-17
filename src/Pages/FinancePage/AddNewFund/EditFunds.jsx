@@ -71,12 +71,6 @@ function EditFunds() {
     getFundTypes();
   }, []);
 
-  const addData = () => {
-    const newData = [...fundTypes];
-    newData.push({ id: newData.length + 1 /* other data properties */ });
-    setFundTypes(newData);
-  };
-
   // Get the data from the backend to front end
   const getFundTypes = () => {
     axiosInstance
@@ -136,7 +130,7 @@ function EditFunds() {
           }}
           aria-label="customized table"
         >
-          {/* Table Headings */}
+          {/*--------------- Table Headings ----------------------*/}
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
@@ -153,14 +147,14 @@ function EditFunds() {
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
+          {/* ------------- Table Data --------------------- */}
+
           <TableBody>
             {fundTypes.map((fundType, index) => (
               <StyledTableRow key={fundType.fund_id}>
                 {/* For the counting in first column */}
                 <StyledTableCell>{index + 1}</StyledTableCell>
-                {/* <StyledTableCell >
-                  {fundType.fund_id}
-                </StyledTableCell> */}
                 <StyledTableCell>{fundType.fundName}</StyledTableCell>
                 <StyledTableCell align="center">
                   {fundType.chargedBy}
