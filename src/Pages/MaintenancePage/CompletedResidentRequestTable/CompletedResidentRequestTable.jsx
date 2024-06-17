@@ -13,6 +13,7 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import DoneSwitch from "../../../Component/Switchs/DoneSwitch";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -72,6 +73,8 @@ const rows = [
       <EditButton />
       &nbsp; &nbsp;
       <DeleteButton />
+      &nbsp; &nbsp;
+      <DoneSwitch />
     </div>
   ),
   createData(

@@ -104,6 +104,7 @@ const Routers = ({ user, setUser }) => {
         <Route path="/maintenance" element={<Outlet />}>
           <Route index element={<RequestsTable />} />
           <Route path="newRequest" element={<RequestsForm />} />
+          <Route path="updateRequest/:id" element={<RequestsForm />} />
 
           {/* Completed Requests */}
           <Route path="completed" element={<Outlet />}>

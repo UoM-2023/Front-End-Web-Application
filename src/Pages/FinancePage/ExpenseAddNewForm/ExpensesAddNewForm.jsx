@@ -54,14 +54,13 @@ function ExpensesAddNewForm() {
               expensesData.payment_method === "Cash"
                 ? "Cash"
                 : expensesData.payment_method;
-                
+
             setFormData({
-              // expense_id: expensesData.expense_id,
+              expense_id: expensesData.expense_id,
               eType: eTypeValue,
               amount: expensesData.amount,
               payment_method: payment_methodValue,
               staff_id: expensesData.staff_id,
-              // added_date: expensesData.added_date,
               remark: expensesData.remark,
             });
           } else {

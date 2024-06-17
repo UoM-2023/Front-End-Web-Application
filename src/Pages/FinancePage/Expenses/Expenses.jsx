@@ -90,7 +90,8 @@ function Expenses() {
           }}
           aria-label="customized table"
         >
-          {/*-------------- Table Headings ----------------------*/}
+          {/*---- Table Headings ----*/}
+          
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
@@ -105,8 +106,7 @@ function Expenses() {
             </TableRow>
           </TableHead>
 
-          {/* -----------
-          ---- Table Data --------------------- */}
+          {/* ---- Table Data ---- */}
 
           <TableBody>
             {expenseslist.map((Expenses, index) => (
