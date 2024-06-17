@@ -4,18 +4,19 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
+import axios from "axios";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css"; 
 
 function CompleteResidentReqForm() {
   const [formData, setFormData] = useState({
     
-    referenceNo: "",
-    serviceProvider: "",
-    mobileNo: "",
-    completedDate: "",
-    paymentStatus: "",
-    paymentID: "",
+    Mnt_id: "",
+    ServiceProvider: "",
+    MobileNo: "",
+    completed_date: "",
+    Payment_Status: "",
+    Mnt_Payment_id: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -32,7 +33,18 @@ function CompleteResidentReqForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
-  };
+  
+
+  //Post Method
+
+  axios
+  .post("http://localhost:3001/maintenance/Completed_Mnt_Req", formData)
+  .then((res) => {
+    console.log("create successfully", res.data);
+    setIsSubmit(true);
+  })
+  .catch((err) => console.error("Failed to create"));
+};
 
   useEffect(() => {
     console.log(formErrors);
@@ -43,27 +55,27 @@ function CompleteResidentReqForm() {
 
   const validate = (values) => {
     const errors = {};
-    const mobileNo_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
+    const MobileNo_regex = /^(?:\+94|0)([1-9][0-9]{8})$/;
 
-    if (!values.referenceNo) {
-      errors.referenceNo = "Please Enter Reference No * ";
+    if (!values.Mnt_id) {
+      errors.Mnt_id = "Please Enter Reference No * ";
     }
-    if (!values.serviceProvider) {
-      errors.serviceProvider = "Please Enter Service Provider *";
+    if (!values.ServiceProvider) {
+      errors.ServiceProvider = "Please Enter Service Provider *";
     }
-    if (!values.mobileNo) {
-      errors.mobileNo = "Mobile Number is required *";
-    } else if (!mobileNo_regex.test(values.mobileNo)) {
-      errors.mobileNo = "Enter a valid Mobile Number";
+    if (!values.MobileNo) {
+      errors.MobileNo = "Mobile Number is required *";
+    } else if (!MobileNo_regex.test(values.MobileNo)) {
+      errors.MobileNo = "Enter a valid Mobile Number";
     }
-    if (!values.completedDate) {
-      errors.completedDate = "Please Enter Completed Date *";
+    if (!values.completed_date) {
+      errors.completed_date = "Please Enter Completed Date *";
     }
-    if (!values.paymentStatus) {
-      errors.paymentStatus = "Please select Payment Status *";
+    if (!values.Payment_Status) {
+      errors.Payment_Status = "Please select Payment Status *";
     }
-    if (!values.paymentID) {
-      errors.paymentID = "Please Enter Payment ID *";
+    if (!values.Mnt_Payment_id) {
+      errors.Mnt_Payment_id = "Please Enter Payment ID *";
     }
     return errors;
   };
@@ -72,70 +84,70 @@ function CompleteResidentReqForm() {
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel htmlFor="referenceNo" className="namesTag">
+          <InputLabel htmlFor="Mnt_id" className="namesTag">
             Reference No :
           </InputLabel>
           <TextField
           
             id="outlined-basic"
             className="textFieldComponent"
-            name="referenceNo"
+            name="Mnt_id"
             onChange={onChangeHandler}
-            value={formData.referenceNo}
+            value={formData.Mnt_id}
           />
         </div>
-        <p>{formErrors.referenceNo}</p>
+        <p>{formErrors.Mnt_id}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="serviceProvider" className="namesTag">
+          <InputLabel htmlFor="ServiceProvider" className="namesTag">
             Service Provider :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="serviceProvider"
+            name="ServiceProvider"
             onChange={onChangeHandler}
-            value={formData.serviceProvider}
+            value={formData.ServiceProvider}
           />
         </div>
-        <p>{formErrors.serviceProvider}</p>
+        <p>{formErrors.ServiceProvider}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="mobileNo" className="namesTag">
+          <InputLabel htmlFor="MobileNo" className="namesTag">
             Mobile Number :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="mobileNo"
+            name="MobileNo"
             onChange={onChangeHandler}
-            value={formData.mobileNo}
+            value={formData.MobileNo}
           />
         </div>
-        <p>{formErrors.mobileNo}</p>
+        <p>{formErrors.MobileNo}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="completedDate" className="namesTag">
+          <InputLabel htmlFor="completed_date" className="namesTag">
             Completed Date :
           </InputLabel>
           <TextField
             id="outlined-basic"
             type="date"
             className="textFieldComponent"
-            name="completedDate"
+            name="completed_date"
             onChange={onChangeHandler}
-            value={formData.completedDate}
+            value={formData.completed_date}
           />
         </div>
-        <p>{formErrors.completedDate}</p>
+        <p>{formErrors.completed_date}</p>
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Status :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="paymentStatus"
+            name="Payment_Status"
             onChange={onChangeHandler}
-            value={formData.paymentStatus}
+            value={formData.Payment_Status}
           >
             <MenuItem value="" className="optionContainer">
               Select Payment Status
@@ -159,21 +171,21 @@ function CompleteResidentReqForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.paymentStatus}</p>
+        <p>{formErrors.Payment_Status}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="paymentID" className="namesTag">
+          <InputLabel htmlFor="Mnt_Payment_id" className="namesTag">
             Payment ID :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="paymentID"
+            name="Mnt_Payment_id"
             onChange={onChangeHandler}
-            value={formData.paymentID}
+            value={formData.Mnt_Payment_id}
           />
         </div>
-        <p>{formErrors.paymentID}</p>
+        
 
         <div className="buttonSection">
           <Grid container spacing={2}>

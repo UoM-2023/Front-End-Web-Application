@@ -13,6 +13,8 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,53 +38,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  referenceNo,
-  maintenance,
-  serviceProvider,
-  mobileNo,
-  requestedDate,
-  completedDate,
-  paymentStatus,
-  paymentID,
-  action,
-) {
-  return {
-    no,
-    referenceNo,
-    maintenance,
-    serviceProvider,
-    mobileNo,
-    requestedDate,
-    completedDate,
-    paymentStatus,
-    paymentID,
-    action,
-  };
-}
 
-const rows = [
-  createData(
-    1,
-    "IM-220046",
-    "Lift repair",
-    "Oxford Elevators",
-    "0112364445",
-    "04 JAN 2024",
-    "07 JAN 2024",
-    "Paid",
-    "P-205075",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-
-];
 
 function InternalMaintenanceTable() {
+  const [Internal_Maintenance, Set_Internal_Maintenance] = useState([]);
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    get_Internal_MaintenanceData();
+  }, []);
+
+  //get the data from backend to frontend
+
+  const get_Internal_MaintenanceData = () => {
+    axios
+      .get("http://localhost:3001/maintenance/Internal_Mnt_Req")
+      .then((response) => {
+        console.log("called.....");
+        console.log(response);
+        Set_Internal_Maintenance(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="internalMaintenanceTableContainer">
       <Minibar />  
@@ -103,7 +81,7 @@ function InternalMaintenanceTable() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Reference No</StyledTableCell>
               <StyledTableCell align="left">Maintenance</StyledTableCell>
               <StyledTableCell align="left">Service Provider</StyledTableCell>
@@ -116,26 +94,39 @@ function InternalMaintenanceTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.referenceNo}
+
+            {Internal_Maintenance &&
+            Internal_Maintenance.map((ApartFlowTesting, index) => (
+              <StyledTableRow key={ApartFlowTesting.name}>
+                {/* <StyledTableCell align="left">{ApartFlowTesting.no}</StyledTableCell> */}
+                <StyledTableCell >
+                  {ApartFlowTesting.Internal_Mnt_Request_id}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.maintenance}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.serviceProvider}
+                <StyledTableCell >{ApartFlowTesting.Maintenance}</StyledTableCell>
+                <StyledTableCell >
+                  {ApartFlowTesting.ServiceProvider}
                 </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.mobileNo}
+                <StyledTableCell >
+                  {ApartFlowTesting.MobileNo}
                 </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.requestedDate}
+                <StyledTableCell >
+                  {ApartFlowTesting.requested_date}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.completedDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymentStatus}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymentID}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell >{ApartFlowTesting.completed_date}</StyledTableCell>
+                <StyledTableCell >{ApartFlowTesting.Payment_Status}</StyledTableCell>
+                <StyledTableCell >{ApartFlowTesting.Internal_Mnt_Payment_id}</StyledTableCell>
+                <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <EditButton />
+                      <DeleteButton
+                        // onClick={() => onclickRowDelete(apartflowtesting.id)}
+                      />
+                    </StyledTableCell>
+                
               </StyledTableRow>
             ))}
           </TableBody>

@@ -14,6 +14,14 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
 import TopBar from "../../../Component/TopBar/TopBar";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,76 +45,61 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  M_paymentId,
-  referenceNo,
-  serviceProvider,
-  mobileNo,
-  requestedDate,
-  completedDate,
-  paymentStatus,
-  paymentID,
-  action
-) {
-  return {
-    no,
-    M_paymentId,
-    referenceNo,
-    serviceProvider,
-    mobileNo,
-    requestedDate,
-    completedDate,
-    paymentStatus,
-    paymentID,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "MP-222200",
-    "M-220046",
-    "K.K.Gas Service",
-    "0112364445",
-    "04 JAN 2024",
-    "07 JAN 2024",
-    "Paid",
-    "P-205075",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "MP-205674",
-    "M-220047",
-    "S.M.Gas Service",
-    "0112555222",
-    "31 JAN 2024",
-    "15 FEB 2024",
-    "Pending",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
- 
-];
-
 function CompletedResidentRequestTable() {
+  const [completed_maintenance, Set_Completed_Maintenance] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [id, setID] = useState("");
+
+  const onclickRowDelete = (rowid) => {
+    setID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    get_Completed_MaintenanceData();
+  }, []);
+
+  //get the data from backend to frontend
+
+  const get_Completed_MaintenanceData = () => {
+    axios
+      .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
+      .then((response) => {
+        console.log("called.....");
+        console.log(response);
+        Set_Completed_Maintenance(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the Delete button
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Handle Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="completedResidentRequestTableContainer">
-     
       <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/maintenance/completed/addNewCompleted"/>
+        <AddNewButton route="/maintenance/completed/addNewCompleted" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -121,12 +114,12 @@ function CompletedResidentRequestTable() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">M_paymentId</StyledTableCell>
               <StyledTableCell align="left">Reference No</StyledTableCell>
               <StyledTableCell align="left">Service Provider</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
-              <StyledTableCell align="left">Requested Date</StyledTableCell>
+              {/* <StyledTableCell align="left">Requested Date</StyledTableCell> */}
               <StyledTableCell align="left">Completed Date</StyledTableCell>
               <StyledTableCell align="left">Payment Status</StyledTableCell>
               <StyledTableCell align="left">Payment ID</StyledTableCell>
@@ -134,31 +127,75 @@ function CompletedResidentRequestTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.M_paymentId}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.referenceNo}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.serviceProvider}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.requestedDate}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.completedDate}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.paymentStatus}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.paymentID}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {completed_maintenance &&
+              completed_maintenance.map((ApartFlowTesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {ApartFlowTesting.Completed_Mnt_id}
+                    </StyledTableCell>
+                    <StyledTableCell>{ApartFlowTesting.Mnt_id}</StyledTableCell>
+                    <StyledTableCell>
+                      {ApartFlowTesting.ServiceProvider}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {ApartFlowTesting.MobileNo}
+                    </StyledTableCell>
+                    {/* <StyledTableCell >
+                  {ApartFlowTesting.requestedDate}
+                </StyledTableCell> */}
+                    <StyledTableCell>
+                      {ApartFlowTesting.completed_date}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {ApartFlowTesting.Payment_Status}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {ApartFlowTesting.Mnt_Payment_id}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <EditButton />
+                      <DeleteButton
+                       onClick={() => onclickRowDelete(ApartFlowTesting.id)}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete staff member"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

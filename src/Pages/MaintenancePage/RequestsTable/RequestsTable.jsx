@@ -13,6 +13,14 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,66 +44,61 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  referenceNo,
-  unitID,
-  residentName,
-  maintenanceType,
-  requestedDate,
-  status,
-  action
-) {
-  return {
-    no,
-    referenceNo,
-    unitID,
-    residentName,
-    maintenanceType,
-    requestedDate,
-    status,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "M-120046",
-    "A-214112",
-    "P.O.Nimal Fernando",
-    "Water Supply",
-    "08 FEB 2024",
-    "Done",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "M-120047",
-    "A-214004",
-    "Q.Z.Ghotabhaya",
-    "Electricity Service",
-    "01 FEB 2024",
-    "Pending",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function RequestsTable() {
+  const [maintenance, SetMaintenance] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [id, setID] = useState("");
+
+  const onclickRowDelete = (rowid) => {
+    setID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getMaintenanceData();
+  }, []);
+
+  //get the data from backend to frontend
+
+  const getMaintenanceData = () => {
+    axios
+      .get("http://localhost:3001/maintenance/New_Mnt_Req")
+      .then((response) => {
+        console.log("called.....");
+        console.log(response);
+        SetMaintenance(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the Delete button
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Handle Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="requestsTableContainer">
       <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/maintenance/newRequest"/>
+        <AddNewButton route="/maintenance/newRequest" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -110,38 +113,87 @@ function RequestsTable() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Reference No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
+
+              <StyledTableCell align="left">Request ID</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
               <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Maintenance Type</StyledTableCell>
               <StyledTableCell align="left">Requested Date</StyledTableCell>
+              <StyledTableCell align="left">Description</StyledTableCell>
               <StyledTableCell align="left">Status</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.referenceNo}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.residentName}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.maintenanceType}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.requestedDate}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {maintenance &&
+              maintenance.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    {/* <StyledTableCell align="left">{apartflowtesting.}</StyledTableCell> */}
+                    <StyledTableCell>
+                      {apartflowtesting.Mnt_Request_id}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.Unit_id}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.Resident_Name}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.MType}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.requested_date}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.M_Description}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.Mnt_Status}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <EditButton />
+                      <DeleteButton
+                        onClick={() => onclickRowDelete(apartflowtesting.id)}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete staff member"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

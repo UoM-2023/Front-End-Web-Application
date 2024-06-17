@@ -23,6 +23,7 @@ const Minibar = () => {
             case '/maintenance':
             setValue('one');
             break;
+            
             case '/maintenance/completed':
                 setValue('two');
                 break;
