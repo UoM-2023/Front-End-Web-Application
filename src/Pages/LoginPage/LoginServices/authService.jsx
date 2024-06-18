@@ -55,16 +55,20 @@ export const logout = async () => {
         console.log('Axios logout called');
         await axiosInstance.post('/auth/logout');
         localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
     } catch (error) {
         console.error('Logout error:', error);
     }
+
 }
 
 export const refreshToken = async () => {
     try{
         const response = await axiosInstance.post('/auth/refresh');
-        const { token } = response.data;
+        const { token, userId } = response.data;
         localStorage.setItem('token', token);
+        localStorage.setItem('userId', userId);
         setAuthToken(token);
         return token;
     } catch (error) {

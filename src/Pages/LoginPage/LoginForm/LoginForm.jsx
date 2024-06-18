@@ -19,8 +19,10 @@ export default function LoginForm({setUser}) {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/auth/login',userData);
-      const { token } = response.data;
+      const { token, refreshToken, userId } = response.data;
       localStorage.setItem('token', token);
+      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('userId', userId);
       setAuthToken(token);
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);
