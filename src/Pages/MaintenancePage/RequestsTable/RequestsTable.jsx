@@ -206,7 +206,7 @@ function RequestsTable() {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  {"Delete staff member"}
+                  {"Delete Maintenance Request"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
