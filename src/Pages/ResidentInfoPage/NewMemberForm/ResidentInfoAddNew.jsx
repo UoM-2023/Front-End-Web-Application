@@ -10,8 +10,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";

@@ -113,6 +113,10 @@ const Routers = ({ user, setUser }) => {
               path="addNewCompleted"
               element={<CompleteResidentReqForm />}
             />
+            <Route
+              path="UpdateCompleted/:id"
+              element={<CompleteResidentReqForm />}
+            />
           </Route>
 
           {/* Internal maintenance */}

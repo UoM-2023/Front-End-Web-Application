@@ -91,7 +91,7 @@ function Expenses() {
           aria-label="customized table"
         >
           {/*---- Table Headings ----*/}
-          
+
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
