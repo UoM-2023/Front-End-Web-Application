@@ -48,6 +48,7 @@ function CompletedResidentRequestTable() {
   const [completedList, setCompletedList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
+  const [mReqid, setMReqid] = useState("");
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -75,6 +76,7 @@ function CompletedResidentRequestTable() {
 
   useEffect(() => {
     console.log("frontend use effect");
+    getRequested_date();
     getCompletedRequestDetails();
   }, []);
 
@@ -85,10 +87,26 @@ function CompletedResidentRequestTable() {
       .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
       .then((response) => {
         console.log("CALLED");
-        console.log(response);
+        const mntIds = response.data.result.map((item) => item.Mnt_id);
+        console.log(mntIds);
         setCompletedList(response.data.result);
       })
       .catch((error) => console.log(error));
+  };
+
+  // Get the data from the Maintenance_Request Table (requested_date)
+
+  const getRequested_date = (Mnt_id) => {
+    console.log("get Requested_date Before axios");
+    axios
+      .get(`http://localhost:3001/maintenance/New_Mnt_ReqDate/${Mnt_id}`)
+      .then((response) => {
+        console.log("getRequested_date...... Called");
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Handling the edit button
@@ -165,7 +183,7 @@ function CompletedResidentRequestTable() {
                   {CompletedReq.MobileNo}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {CompletedReq.MobileNo}
+                  {formatDate(CompletedReq.requested_date)}
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   {formatDate(CompletedReq.completed_date)}
