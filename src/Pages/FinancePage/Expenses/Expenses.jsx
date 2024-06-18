@@ -84,7 +84,7 @@ function Expenses() {
       <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/finance/expenses/addExpense"/>
+        <AddNewButton route="/finance/expenses/addExpense" />
       </div>
       <TableContainer component={Paper}>
         <Table

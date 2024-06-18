@@ -20,7 +20,8 @@ function ReservationNewTwo() {
     Name: "",
     sdate: "",
     edate:"",
-    payStatus: ""
+    PayStatus: "",
+    availability: ""
 
   });
 
@@ -54,7 +55,7 @@ function ReservationNewTwo() {
     if (!values.faciName) {
         errors.faciName = "Please select the Facility Name * ";
       }
-    if (!values.Unit) {
+    if (!values.Name) {
       errors.Name = "Please Enter The Name *";
     }
     if (!values.sdate) {
@@ -63,8 +64,11 @@ function ReservationNewTwo() {
     if (!values.edate) {
       errors.edate = "Please Enter The End Date *";
     }
-    if (!values.payStatus) {
-        errors.payStatus = "Please select the Payment Status * ";
+    if (!values.PayStatus) {
+        errors.PayStatus = "Please select the Payment Status * ";
+      }
+      if (!values.availability) {
+        errors.availability = "Please select the Availability Status * ";
       }
  
 
@@ -93,29 +97,23 @@ function ReservationNewTwo() {
               name="Wing 01"
               className="optionContainer"
             >
-              Wing 01
+              Gym
             </MenuItem>
             <MenuItem
               value="Wing 02"
               name="Wing 02"
               className="optionContainer"
             >
-              Wing 02
+              Pool
             </MenuItem>
             <MenuItem
               value="Wing 03"
               name="Wing 03"
               className="optionContainer"
             >
-              Wing 03
+              Event Hall
             </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
-            </MenuItem>
+            
           </Select>
         </div>
         <p>{formErrors.faciName}</p>
@@ -173,14 +171,13 @@ function ReservationNewTwo() {
 
 
 
-
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Status :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="faciName"
+            name="PayStatus"
             onChange={onChangeHandler}
-            value={formData.payStatus}
+            value={formData.PayStatus}
           >
             <MenuItem value="" className="optionContainer">
               Select Payment Status
@@ -190,32 +187,61 @@ function ReservationNewTwo() {
               name="Wing 01"
               className="optionContainer"
             >
-              Wing 01
+              Paid
             </MenuItem>
             <MenuItem
               value="Wing 02"
               name="Wing 02"
               className="optionContainer"
             >
-              Wing 02
+              Not Yet
             </MenuItem>
-            <MenuItem
-              value="Wing 03"
-              name="Wing 03"
-              className="optionContainer"
-            >
-              Wing 03
-            </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
-            </MenuItem>
+
+            
           </Select>
         </div>
-        <p>{formErrors.payStatus}</p>
+        <p>{formErrors.PayStatus}</p>
+
+        <div className="inputItem">
+          <InputLabel className="namesTag"> Availability :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="availability"
+            onChange={onChangeHandler}
+            value={formData.availability}
+          >
+            <MenuItem value="" className="optionContainer">
+              Select Availability
+            </MenuItem>
+            <MenuItem
+              value="Wing 01"
+              name="Wing 01"
+              className="optionContainer"
+            >
+              Reserved
+            </MenuItem>
+            <MenuItem
+              value="Wing 02"
+              name="Wing 02"
+              className="optionContainer"
+            >
+              Not Yet
+            </MenuItem>
+
+            
+          </Select>
+        </div>
+        <p>{formErrors.availability}</p>
+
+
+
+
+
+
+
+
+
+
 
 
 

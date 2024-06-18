@@ -14,13 +14,13 @@ import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPa
 import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
 import Expenses from "./Pages/FinancePage/Expenses/Expenses";
 import Revenue from "./Pages/FinancePage/Revenue/Revenue";
-import ResidentialUnits from "./ResidentialUnits";
+// import ResidentialUnits from "./ResidentialUnits";
 import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
 import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
 import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
 import Warnings from "./Pages/FinancePage/Warnings/Warnings";
 import MiniDrawer from "./Component/SideBar/MiniDrawer";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
 import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
@@ -45,6 +45,17 @@ import NotificationBar from "./Pages/DashBoard/NotificationBar";
 import ReservationTable from "./Pages/Reservations/ReservationTable";
 
 
+import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
+import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
+import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
+import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
+import ResidentialUnitsForm from "./Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm";
+import ResidentialUnitsTable from "./Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable";
+import ComplaintsTable from "./Pages/ComplaintsPage/Table/ComplaintsTable";
+import NoticesTable from "./Pages/News&NoticesPage/Notices/Table/NoticesTable";
+import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
+import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
+import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
 
 function App() {
   return (
@@ -84,7 +95,7 @@ function App() {
 
 
 
-        <TopBar title="Reservations" />
+        <TopBar title="Guests" />
 
 
         <BrowserRouter>
@@ -130,7 +141,7 @@ function App() {
 
 
 
-        {/* <DashBoard/> */}
+        {/* <Dashboard/> */}
         {/* <ResidentInforPage />
         <StaffDetails />
         <MemberList />
@@ -160,23 +171,31 @@ function App() {
 
 
           {/* <Minibar /> *}
+        <BrowserRouter>
+          <MiniDrawer />
+          <Routers />
+        </BrowserRouter>
+
+        {/* <Minibar /> *}
            
         {/* <InternalMaintenanceTable /> */}
-       {/*<UtilityForm />
+        {/*<UtilityForm />
         <ResidentInfoAddNew />
-        <StaffDetailsAddNewForm />
+        
         <ExpensesAddNewForm />
         <ResidentsPaymentsForm />
         <RevenueForm />
         <RequestsForm />
-  <InternalMaintenanceForm /> */}
+        <InternalMaintenanceForm /> */}
         {/* <CompleteResidentReqForm />  */}
         {/* <EditFundsAddNew /> */}
-        {/* <ResidentInfoAddNew /> */}
-        {/* <BrowserRouter>
-          {/* <InternalMaintenanceTable /> */}
-          {/* <Routers />
-        </BrowserRouter> */} 
+        {/* <ResidentialUnitsAddNewForm /> */}
+        {/* <ComplaintAddForm/> */}
+        {/* <NoticeAddNewForm/> */}
+        {/* <EventsAddNewForm/> */}
+        {/* <StaffDetailsAddNewForm /> */}
+        {/* <MemberList /> */}
+        {/* <UnitList /> */}
       </div>
     </>
   );

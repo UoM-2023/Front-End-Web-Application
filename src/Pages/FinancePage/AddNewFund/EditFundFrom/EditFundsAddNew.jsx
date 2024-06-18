@@ -44,7 +44,7 @@ function EditFundsAddNew() {
     const errors = {};
 
     if (!values.amount) {
-      errors.amount = "Please Enter Reference No * ";
+      errors.amount = "Please Enter Amount *";
     }
     if (!values.fundID) {
       errors.fundID = "Please Enter Fund ID *";
@@ -59,7 +59,7 @@ function EditFundsAddNew() {
       errors.modifiedDate = "Please Enter Completed Date *";
     }
     if (!values.chargedBy) {
-      errors.chargedBy = "Please select Payment Status *";
+      errors.chargedBy = "Please select Select Charging Units *";
     }
     if (!values.modifiedBy) {
       errors.modifiedBy = "Please Enter Modified Staff ID *";

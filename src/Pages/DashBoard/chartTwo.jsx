@@ -12,13 +12,13 @@ export default function ChartTwo() {
         series={[
           // { data: [35, 44, 24, 34], color: colors[0] },
           // { data: [51, 6, 49, 30], color: colors[1] },
-          { data: [40, 65, 50, 50, 70, 65, 60, 50, 40, 30, 50, 55], color: colors[2] },
-          { data: [15, 25, 30, 50, 60, 65, 70, 50, 60, 85, 88, 88], color: colors[1] },
+          { data: [40, 65, 50, 50, 70, 65, 60, 50, 40, 30, 50], color: colors[2] },
+          { data: [15, 25, 30, 50, 60, 65, 70, 50, 60, 85, 88], color: colors[1] },
           // { data: [80, 50, 15, 25], color: colors[3] },
         ]}
         height={250}
         width={1500}
-        xAxis={[{ data: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',], scaleType: 'band' }]}
+        xAxis={[{ data: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', ], scaleType: 'band' }]}
         margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
       />
     </div>

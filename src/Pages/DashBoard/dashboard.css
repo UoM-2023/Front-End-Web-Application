@@ -1,17 +1,14 @@
-.One {
-  display: flex;
-}
 
-.title {
-  margin-left: 25rem;
-}
-.CardsRowOne {
+.rowOne {
   display: flex;
   margin-top: 5rem;
+ padding-left: 8rem;
+ margin-bottom: 5rem;
 }
-.CardsRowTwo {
+.rowTwo {
   display: flex;
-  margin-top: 5rem;
+  margin-top: 2rem;
+  
 }
 .cardOne {
   margin-left: 8rem;

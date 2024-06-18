@@ -13,6 +13,7 @@ import EditButton from "../../Component/Buttons/EditButton";
 import DeleteButton from "../../Component/Buttons/DeleteButton";
 import AddNewButton from "../../Component/Buttons/AddNewButton";
 import SearchBar from "../../Component/SearchBar/SearchBar";
+import axios from "axios";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#f9f4f0",
@@ -35,68 +36,85 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, CheckedinDate, CheckedinTime, CheckedOutDate, CheckedOutTime, action) {
-  return { Unit, ResidentName, GuestName, VehicleNo, GuestNIC, CheckedinDate, CheckedinTime, CheckedOutDate, CheckedOutTime, action };
+function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action) {
+  return { Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action };
 }
 
 
-const rows = [
-  createData(
-    "A-102",
-    "Miller Donald",
-    "Tom Archer",
-    "WP 1967",
-    "9073665677",
-    "23/11/2023",
-    "09:00 AM",
-    "23/11/2023",
-    "04:30 PM",
-    <div className="actionBtn">
+// const rows = [
+//   createData(
+//     "A-102",
+//     "Miller Donald",
+//     "Tom Archer",
+//     "WP 1967",
+//     "9073665677",
+//     "23/11/2023",
+//     "09:00 AM",
+//     "23/11/2023",
+//     "04:30 PM",
+//     <div className="actionBtn">
 
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "A-103",
-    "Edward Young",
-    "Saam Nechol",
-    "-",
-    "8765565765",
-    "24/11/2023",
-    "",
-    "",
-    "",
-    <div className="actionBtn">
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
+//   createData(
+//     "A-103",
+//     "Edward Young",
+//     "Saam Nechol",
+//     "-",
+//     "8765565765",
+//     "24/11/2023",
+//     "",
+//     "",
+//     "",
+//     <div className="actionBtn">
 
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "A-104",
-    "Maily Cooper",
-    "Saly Peterson",
-    "-",
-    "9976565654",
-    "24/11/2023",
-    "",
-    "",
-    "",
-    <div className="actionBtn">
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
+//   createData(
+//     "A-104",
+//     "Maily Cooper",
+//     "Saly Peterson",
+//     "-",
+//     "9976565654",
+//     "24/11/2023",
+//     "",
+//     "",
+//     "",
+//     <div className="actionBtn">
 
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
 
 
-];
+// ];
 
 function GuestTable() {
+
+const [guestlist,setGuestlist] =React.useState([]);
+  React.useEffect(() => {
+    console.log("use effect ");
+    axios
+      .get("http://localhost:3001/guest/GuestDetails")
+      .then((response) => {
+        // Handle successful response
+        setGuestlist(response.data);
+        console.log("Response:", response.data);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
 
     <div className="GuestTableContainer">
@@ -130,14 +148,12 @@ function GuestTable() {
               <StyledTableCell align="left">Guest Name</StyledTableCell>
               <StyledTableCell align="left">Vehicle No</StyledTableCell>
               <StyledTableCell align="left">Guest NIC</StyledTableCell>
-              <StyledTableCell align="left">Checked in Date</StyledTableCell>
-              <StyledTableCell align="left">Checked in Time</StyledTableCell>
-              <StyledTableCell align="left">Checked Out Date</StyledTableCell>
-              <StyledTableCell align="left">Checked Out Time</StyledTableCell>
+              <StyledTableCell align="left">Checked in </StyledTableCell>
+              <StyledTableCell align="left">Checked Out </StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {rows.map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell align="left">{row.Unit}</StyledTableCell>
@@ -150,6 +166,26 @@ function GuestTable() {
                 <StyledTableCell align="left">{row.CheckedOutDate}</StyledTableCell>
                 <StyledTableCell align="left">{row.CheckedOutTime}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody> */}
+          <TableBody>
+            {guestlist.map((row) => (
+              <StyledTableRow key={row.Unit_ID}>
+                <StyledTableCell align="left">{row.Unit_ID}</StyledTableCell>
+                <StyledTableCell align="left">{row.Resident_Name}</StyledTableCell>
+                <StyledTableCell align="left">{row.Guest_Name}</StyledTableCell>
+                <StyledTableCell align="left">{row.Vehicle_Number}</StyledTableCell>
+                <StyledTableCell align="left">{row.GuestNIC}</StyledTableCell>
+                <StyledTableCell align="left">{row.Arrival_Date}</StyledTableCell>
+                <StyledTableCell align="left">{row.Checkedin}</StyledTableCell>
+                <StyledTableCell align="left">{row.CheckedOut}</StyledTableCell>
+                <StyledTableCell align="left">    <div className="actionBtn">
+
+<EditButton />
+&nbsp; &nbsp;
+<DeleteButton />
+</div></StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

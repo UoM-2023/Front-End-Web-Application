@@ -1,0 +1,7 @@
+.CardAndIcon{
+    display: flex;
+}
+.Icon{
+    margin-top: 2.5rem;
+    margin-right: 1rem;
+}

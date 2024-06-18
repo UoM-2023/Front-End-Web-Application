@@ -18,7 +18,8 @@ function GuestFormNew() {
 
     Unit: "",
     rName: "",
-    gName: "", 
+    gName: "",
+    gNIC: "",
     vehi_no : "",
     username: "",
 
@@ -60,6 +61,9 @@ function GuestFormNew() {
     }
     if (!values.gName) {
       errors.gName = "Please Enter Guest Name *";
+    }
+    if (!values.gNIC) {
+      errors.gName = "Please Enter Guest NIC Number *";
     }
 
     if (!values.vehi_no) {
@@ -123,6 +127,21 @@ function GuestFormNew() {
 
 
         <div className="address">
+          <InputLabel htmlFor="nicNo" className="namesTag">
+           Guest NIC Number :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="gNIC"
+            onChange={onChangeHandler}
+            value={formData.gNIC}
+          />
+        </div>
+        <p>{formErrors.gNIC}</p>
+
+
+        <div className="address">
           <InputLabel htmlFor="vehicleNo" className="namesTag">
             Vehicle No :
           </InputLabel>
@@ -138,7 +157,7 @@ function GuestFormNew() {
 
         <div className="inputItem">
           <InputLabel htmlFor="Date" className="namesTag">
-            Date :
+            Check In :
           </InputLabel>
           <TextField
             id="outlined-basic"
@@ -150,6 +169,24 @@ function GuestFormNew() {
           />
         </div>
         <p>{formErrors.date}</p>
+
+
+
+        <div className="inputItem">
+  <InputLabel htmlFor="Date" className="namesTag">
+    Check Out:
+  </InputLabel>
+  <TextField
+    id="outlined-basic"
+    type="date"
+    className="textFieldComponent"
+    name="checkoutDate" 
+    onChange={onChangeHandler}
+    value={formData.checkoutDate} 
+  />
+</div>
+
+
 
 
 

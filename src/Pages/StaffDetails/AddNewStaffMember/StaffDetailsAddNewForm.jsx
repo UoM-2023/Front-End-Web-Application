@@ -10,6 +10,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
+import "./Addnewform.css";
 
 function StaffDetailsAddNewForm() {
   const [formData, setFormData] = useState({

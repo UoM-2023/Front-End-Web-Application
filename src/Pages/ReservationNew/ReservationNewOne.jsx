@@ -87,29 +87,23 @@ function ReservationNewOne() {
               name="Wing 01"
               className="optionContainer"
             >
-              Wing 01
+             Gym
             </MenuItem>
             <MenuItem
               value="Wing 02"
               name="Wing 02"
               className="optionContainer"
             >
-              Wing 02
+              Pool
             </MenuItem>
             <MenuItem
               value="Wing 03"
               name="Wing 03"
               className="optionContainer"
             >
-              Wing 03
+              Event Hall
             </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
-            </MenuItem>
+
           </Select>
         </div>
         <p>{formErrors.faciName}</p>
