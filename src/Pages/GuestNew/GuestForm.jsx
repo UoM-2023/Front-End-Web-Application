@@ -1,32 +1,67 @@
 import { useState, useEffect } from "react";
-import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
-import TextField from "@mui/material/TextField";
-// import SaveButton from "../../../Component/Buttons/SaveButton";
-// import BackButton from "../../../Component/Buttons/BackButton";
-import FormControl from "@mui/material/FormControl";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
+import { Grid, InputLabel, TextField } from "@mui/material";
 import BackButton from "../../Component/Buttons/BackButton";
 import SaveButton from "../../Component/Buttons/SaveButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function GuestFormNew() {
+  const { guest_ID } = useParams();
+
   const [formData, setFormData] = useState({
-
-    Unit: "",
-    rName: "",
-    gName: "",
-    gNIC: "",
-    vehi_no : "",
-    username: "",
-
+    unit_ID: "",
+    resident_name: "",
+    guest_name: "",
+    guest_NIC: "",
+    vehicle_number: "",
+    check_In: "",
+    
+    // useresident_name: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  useEffect(() => {
+    console.log("Current Guest ID:", guest_ID);
+    if (guest_ID) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect call");
+      axios
+        .get(
+          //postman get url
+          `http://localhost:3001/GuestDetail/GuestDetails/${guest_ID}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const guestData = data.result[0]; // Accessing the first item in the array
+            console.log("Guest Data:", guestData);
+
+            setFormData({
+              unit_ID: guestData.unit_ID,
+              resident_name: guestData.resident_name,
+              guest_name: guestData.guest_name,
+              guest_NIC: guestData.guest_NIC,
+              vehicle_number: guestData.vehicle_number,
+              check_In: guestData.check_In,
+              check_Out: guestData.check_Out,
+              
+              
+              
+              //useresident_name not added
+            });
+          } else {
+            console.error("Data structure does not match expected format");
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err));
+    }
+  }, [guest_ID]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -39,6 +74,34 @@ function GuestFormNew() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+
+  
+      //primary key
+      if (guest_ID) {
+        // If there is an ID, it means we're editing existing data, so send a PUT request
+        axios
+          .put(
+            //postman edit url
+            `http://localhost:3001/GuestDetail/GuestDetails/${guest_ID}`,
+            formData
+          )
+          .then((res) => {
+            console.log("Update successful:", res.data);
+            setIsSubmit(true);
+          })
+          .catch((err) => console.error("Failed to update data:", err));
+      } else {
+        // If there is no ID, it means we're creating new data, so send a POST request
+        axios
+          // postman post url 
+          .post("http://localhost:3001/GuestDetail/GuestDetails", formData)
+          .then((res) => {
+            console.log("Create Successful:", res.data);
+            setIsSubmit(true);
+          })
+          .catch((err) => console.error("Failed to Create data:", err));
+      }
+    
   };
 
   useEffect(() => {
@@ -50,52 +113,47 @@ function GuestFormNew() {
 
   const validate = (values) => {
     const errors = {};
-    const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-
-    if (!values.Unit) {
-      errors.Unit = "Please Enter The Unit *";
+    if (!values.unit_ID) {
+      errors.unit_ID = "Please Enter The unit_ID *";
     }
-    if (!values.rName) {
-      errors.rName = "Please Enter Resident Name *";
+    if (!values.resident_name) {
+      errors.resident_name = "Please Enter Resident Name *";
     }
-    if (!values.gName) {
-      errors.gName = "Please Enter Guest Name *";
+    if (!values.guest_name) {
+      errors.guest_name = "Please Enter Guest Name *";
     }
-    if (!values.gNIC) {
-      errors.gName = "Please Enter Guest NIC Number *";
+    if (!values.guest_NIC) {
+      errors.guest_NIC = "Please Enter Guest NIC Number *";
     }
-
-    if (!values.vehi_no) {
-      errors.vehi_no = "Please Enter The Vehicle Number *";
+    if (!values.vehicle_number) {
+      errors.vehicle_number = "Please Enter The Vehicle Number *";
     }
-
-    if (!values.date && values.date) {
-        errors.date = "Please Enter The Date  *";
-      }  
-
-
+    if (!values.check_In) {
+      errors.check_In = "Please Enter The Date *";
+    }
+    if (!values.check_Out) {
+      errors.check_Out = "Please Enter The Date *";
+    }
     return errors;
   };
+
   return (
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        
-
-
         <div className="inputItem">
-          <InputLabel htmlFor="Unit" className="namesTag">
-            Unit :
+          <InputLabel htmlFor="unit_ID" className="namesTag">
+            unit_ID :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="Unit"
+            name="unit_ID"
             onChange={onChangeHandler}
-            value={formData.Unit}
+            value={formData.unit_ID}
           />
         </div>
-        <p>{formErrors.Unit}</p>
+        <p>{formErrors.unit_ID}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="residentName" className="namesTag">
@@ -104,12 +162,12 @@ function GuestFormNew() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="rName"
+            name="resident_name"
             onChange={onChangeHandler}
-            value={formData.rName}
+            value={formData.resident_name}
           />
         </div>
-        <p>{formErrors.rName}</p>
+        <p>{formErrors.resident_name}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="guestName" className="namesTag">
@@ -118,28 +176,26 @@ function GuestFormNew() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="gName"
+            name="guest_name"
             onChange={onChangeHandler}
-            value={formData.gName}
+            value={formData.guest_name}
           />
         </div>
-        <p>{formErrors.gName}</p>
-
+        <p>{formErrors.guest_name}</p>
 
         <div className="address">
           <InputLabel htmlFor="nicNo" className="namesTag">
-           Guest NIC Number :
+            Guest NIC Number :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="gNIC"
+            name="guest_NIC"
             onChange={onChangeHandler}
-            value={formData.gNIC}
+            value={formData.guest_NIC}
           />
         </div>
-        <p>{formErrors.gNIC}</p>
-
+        <p>{formErrors.guest_NIC}</p>
 
         <div className="address">
           <InputLabel htmlFor="vehicleNo" className="namesTag">
@@ -148,12 +204,12 @@ function GuestFormNew() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="vehi_no"
+            name="vehicle_number"
             onChange={onChangeHandler}
-            value={formData.vehi_no}
+            value={formData.vehicle_number}
           />
         </div>
-        <p>{formErrors.vehi_no}</p>
+        <p>{formErrors.vehicle_number}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="Date" className="namesTag">
@@ -163,38 +219,33 @@ function GuestFormNew() {
             id="outlined-basic"
             type="date"
             className="textFieldComponent"
-            name="date"
+            name="check_In"
             onChange={onChangeHandler}
-            value={formData.date}
+            value={formData.check_In}
           />
         </div>
-        <p>{formErrors.date}</p>
-
-
+        <p>{formErrors.check_In}</p>
 
         <div className="inputItem">
-  <InputLabel htmlFor="Date" className="namesTag">
-    Check Out:
-  </InputLabel>
-  <TextField
-    id="outlined-basic"
-    type="date"
-    className="textFieldComponent"
-    name="checkoutDate" 
-    onChange={onChangeHandler}
-    value={formData.checkoutDate} 
-  />
-</div>
-
-
-
-
+          <InputLabel htmlFor="Date" className="namesTag">
+            Check Out :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            type="date"
+            className="textFieldComponent"
+            name="check_Out"
+            onChange={onChangeHandler}
+            value={formData.check_Out}
+          />
+        </div>
+        <p>{formErrors.check_Out}</p>
 
         <div className="buttonSection">
           <Grid container spacing={2}>
             <Grid item>
               <div>
-                <SaveButton/>
+                <SaveButton />
               </div>
             </Grid>
             <Grid item>
@@ -203,12 +254,14 @@ function GuestFormNew() {
           </Grid>
         </div>
       </form>
+
       {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
+        <h3 className="success message">Successfully Added</h3>
       ) : (
         <pre> </pre>
       )}
     </div>
   );
 }
+
 export default GuestFormNew;

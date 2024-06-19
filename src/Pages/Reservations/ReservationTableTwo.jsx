@@ -28,6 +28,9 @@ import {
 } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom/server';
 import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 
 
@@ -111,71 +114,158 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION) {
-  return { n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION };
-}
+// function createData(n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION) {
+//   return { n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION };
+// }
 
 
-const rows = [
-  createData(
-    "W764783",
-    "James Thomas",
-    "Event Hall",
-    "22/06/2022",
-    "23/06/2022",
-    "24/06/2022",
+// const rows = [
+//   createData(
+//     "W764783",
+//     "James Thomas",
+//     "Event Hall",
+//     "22/06/2022",
+//     "23/06/2022",
+//     "24/06/2022",
 
-    <div className="actionBtn">
+//     <div className="actionBtn">
 
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "E764583",
-    "Cane Electricians",
-    "Event Hall",
-    "22/06/2022",
-    "25/06/2022",
-    "29/06/2022",
-
-
-    <div className="actionBtn">
-
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "G345678",
-    "Patrick Stefans",
-    "Gym",
-    "22/06/2022",
-    "27/06/2022",
-    "28/06/2022",
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
+//   createData(
+//     "E764583",
+//     "Cane Electricians",
+//     "Event Hall",
+//     "22/06/2022",
+//     "25/06/2022",
+//     "29/06/2022",
 
 
-    <div className="actionBtn">
+//     <div className="actionBtn">
 
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
+//   createData(
+//     "G345678",
+//     "Patrick Stefans",
+//     "Gym",
+//     "22/06/2022",
+//     "27/06/2022",
+//     "28/06/2022",
 
 
-];
+//     <div className="actionBtn">
+
+//       <EditButton />
+//       &nbsp; &nbsp;
+//       <DeleteButton />
+//     </div>
+//   ),
+
+
+// ];
 
 function ReservationTableTwo() {
+
+
+
+
+
+  const [facilitylist, setFacilitylist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [ref_no, setref_no] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setref_no(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getFacilityDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getFacilityDetails = () => {
+    axios
+      .get("http://localhost:3001/Facility/Facilities")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setFacilitylist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button (primary key)
+
+  const handleEdit = (ref_no) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        `http://localhost:3001/Facility/Facilities/${ref_no}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button (primary key)
+
+  const handleDelete = (ref_no) => {
+    axios
+      .delete(
+        `http://localhost:3001/Facility/Facilities/${[
+          ref_no,
+        ]}`
+      )
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
 
     <div className="GuestTableContainer">
 
 
-<div className="miniBar"><Minibar/></div>
-<div className="Currnet">
+      <div className="miniBar"><Minibar /></div>
+      <div className="Currnet">
         {/* <Router>
           <Box sx={{ width: '100%' }}>
             <Routes>
@@ -188,7 +278,7 @@ function ReservationTableTwo() {
 
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/reservations/reservation/addNew"/>
+        <AddNewButton route="/reservations/reservation/addNew" />
       </div>
 
       <TableContainer component={Paper}>
@@ -204,27 +294,53 @@ function ReservationTableTwo() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#</StyledTableCell>
               <StyledTableCell align="left">REF NO</StyledTableCell>
               <StyledTableCell align="left">FACILITY NAME</StyledTableCell>
               <StyledTableCell align="left">AMOUNT CHARGE</StyledTableCell>
               <StyledTableCell align="left">CHARGE PER</StyledTableCell>
-              <StyledTableCell align="left">STATUS</StyledTableCell>
+              <StyledTableCell align="left">Availability</StyledTableCell>
               <StyledTableCell align="left">ACTION</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.n}</StyledTableCell>
-                <StyledTableCell align="left">{row.REF_NO}</StyledTableCell>
-                <StyledTableCell align="left">{row.FACILITY_NAME}</StyledTableCell>
-                <StyledTableCell align="left">{row.AMOUNT_CHARGE}</StyledTableCell>
-                <StyledTableCell align="left">{row.CHARGE_PER}</StyledTableCell>
-                <StyledTableCell align="left">{row.STATUS}</StyledTableCell>
-                <StyledTableCell align="left">{row.ACTION}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+          {facilitylist &&
+              facilitylist.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.ref_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.facility_name}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.amount_charge}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.charge_per}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.availability}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "0.3rem",
+                      }}
+                    >
+                      <EditButton //front end route edit
+                        route={`/reservations/updateFacility/${[
+                          apartflowtesting.ref_no,
+                        ]}`}
+                        onClick={() => handleEdit([apartflowtesting.ref_no])}
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.ref_no)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>

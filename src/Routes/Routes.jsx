@@ -148,6 +148,11 @@ const Routers = () => {
         <Route path = '/guests' element = {<Outlet />}>
               <Route index element = {<GuestTable />} />
               <Route path='addNew' element={<GuestFormNew />} />
+                       {/* //edit route */}
+          <Route
+            path="updateGuest/:guest_ID"
+            element={<GuestFormNew />}
+          />
             
           </Route>
           {/* </Route> */}
@@ -155,17 +160,40 @@ const Routers = () => {
 
         {/* Reservation Section Routes */}
         <Route path = '/reservations' element = {<Outlet />}>
-              <Route index element = {<ReservationTable />} />
-              <Route path='addNew' element={<ReservationNewOne />} />
+              <Route index element = {<ReservationTableTwo />} />            
+              <Route path='addNew' element={<ReservationNewTwo />} />
+                        {/* //edit route */}
+          {/* <Route
+            path="updateFacility/:ref_no"
+            element={<ReservationNewTwo />}
+          />
+        </Route> */}
+                   
             
             {/* Completed Requests */}
             <Route path='reservation' element = {<Outlet />}>
-              <Route index element = {<ReservationTableTwo />} />
-              <Route path='addNew' element={<ReservationNewTwo />} />
-            </Route>
-
+              <Route index element = {<ReservationTable />} />
+              <Route path='addNew' element={<ReservationNewOne />} />
+                                      {/* //edit route */}
+          {/* <Route
+            path="updateReservation/:ref_no"
+            element={<ReservationNewOne />}
+          /> */}
 
           
+{/* 
+            <Route path = '/reservations' element = {<Outlet />}>
+              <Route index element = {<ReservationTable />} />            ReservationTable
+              <Route path='addNew' element={<ReservationNewOne />} />      ReservationNewOne
+             */}
+            {/* Completed Requests */}
+            {/* <Route path='reservation' element = {<Outlet />}>
+              <Route index element = {<ReservationTableTwo />} />
+              <Route path='addNew' element={<ReservationNewTwo />} />
+            </Route> */}
+
+
+</Route>
           </Route>
 
 

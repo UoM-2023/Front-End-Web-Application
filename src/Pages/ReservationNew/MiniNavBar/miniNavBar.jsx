@@ -51,6 +51,8 @@ const Minibar = () => {
           <Tab value="one" label="Facilities" component={Link} to="/reservations" />
           <Tab value="two" label="Reservations" component={Link} to="/reservations/reservation" />
 
+
+
         </Tabs>
       </ThemeProvider>
     </>

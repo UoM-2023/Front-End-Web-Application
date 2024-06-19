@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -36,10 +36,14 @@ import CardOne from './cardOne';
 import CardTwo from './cardTwo';
 import CardThree from './cardThree';
 import CardFour from './cardFour';
+import getSocketInit from '../../socket';
 
 
 
 export default function DashBoard() {
+
+  const socket = getSocketInit();
+  socket.connect();
 
   const navigate = useNavigate();
 
@@ -71,9 +75,28 @@ export default function DashBoard() {
   const handleEvents = () => {
     // Handle events functionality
   };
+  const [reservationCount,setReservationCount]=useState(0)
+
+  useEffect(() => {
+    const handleReservationCount = (data) => {
+      if (data == 'new reservation') {
+        console.log("Conversation created for user:", data);
+        setReservationCount((count) => count+1);
+      }
+    };
+
+    socket.on("ReservationCount", handleReservationCount);
+
+    return () => {
+      socket.off("ReservationCount", handleReservationCount);
+    };
+  }, [socket]);
+//////////////
+
 
   return (
     <div>
+
 
 
       <div className="rowOne">
@@ -88,7 +111,8 @@ export default function DashBoard() {
           onClick={handleReservation}
           className="cardSix"
           title=" Reservations"
-          content="01 Reservations For Today"
+          content={`${reservationCount} Reservation For Now `}
+
         />
       </div>
 
@@ -132,6 +156,20 @@ export default function DashBoard() {
 
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

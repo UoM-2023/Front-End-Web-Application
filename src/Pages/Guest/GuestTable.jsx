@@ -14,6 +14,8 @@ import DeleteButton from "../../Component/Buttons/DeleteButton";
 import AddNewButton from "../../Component/Buttons/AddNewButton";
 import SearchBar from "../../Component/SearchBar/SearchBar";
 import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#f9f4f0",
@@ -36,9 +38,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action) {
-  return { Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action };
-}
+
+//new hides
+
+
+// function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action) {
+//   return { Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action };
+// }
 
 
 // const rows = [
@@ -97,23 +103,110 @@ function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedi
 
 // ];
 
-function GuestTable() {
 
-const [guestlist,setGuestlist] =React.useState([]);
-  React.useEffect(() => {
-    console.log("use effect ");
+//new hides
+
+
+// function GuestTable() {
+
+// const [guestlist,setGuestlist] =React.useState([]);
+//   React.useEffect(() => {
+//     console.log("use effect ");
+//     axios
+//       .get("http://localhost:3001/guest/GuestDetails")
+//       .then((response) => {
+//         // Handle successful response
+//         setGuestlist(response.data);
+//         console.log("Response:", response.data);
+//       })
+//       .catch((error) => {
+//         // Handle error
+//         console.error("Error:", error);
+//       });
+//   }, []);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+function GuestTable() {
+  const [guestlist, setGuestlist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [guest_ID, setguest_ID] = useState("");
+
+
+
+  const onClickRowDelete = (rowid) => {
+    setguest_ID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getGuestDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getGuestDetails = () => {
     axios
-      .get("http://localhost:3001/guest/GuestDetails")
+      .get("http://localhost:3001/GuestDetail/GuestDetails")
       .then((response) => {
-        // Handle successful response
-        setGuestlist(response.data);
-        console.log("Response:", response.data);
+        console.log("CALLED");
+        console.log(response);
+        setGuestlist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button (primary key)
+
+  const handleEdit = (guest_ID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        `http://localhost:3001/GuestDetail/GuestDetails/${guest_ID}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called");
       })
       .catch((error) => {
-        // Handle error
-        console.error("Error:", error);
-      });
-  }, []);
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button (primary key)
+
+  const handleDelete = (guest_ID) => {
+    axios
+      .delete(
+        `http://localhost:3001/GuestDetail/GuestDetails/${[
+          guest_ID,
+        ]}`
+      )
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   return (
 
@@ -143,13 +236,14 @@ const [guestlist,setGuestlist] =React.useState([]);
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">Unit</StyledTableCell>
+              <StyledTableCell align="left">Guest ID</StyledTableCell>
+              <StyledTableCell align="left">Unit ID </StyledTableCell>
               <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Guest Name</StyledTableCell>
-              <StyledTableCell align="left">Vehicle No</StyledTableCell>
-              <StyledTableCell align="left">Guest NIC</StyledTableCell>
-              <StyledTableCell align="left">Checked in </StyledTableCell>
-              <StyledTableCell align="left">Checked Out </StyledTableCell>
+              <StyledTableCell align="left">Vehicle Num</StyledTableCell>
+              <StyledTableCell align="left">Guest NIC </StyledTableCell>
+              <StyledTableCell align="left">Check In </StyledTableCell>
+              <StyledTableCell align="left">Check Out </StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -170,24 +264,50 @@ const [guestlist,setGuestlist] =React.useState([]);
             ))}
           </TableBody> */}
           <TableBody>
-            {guestlist.map((row) => (
-              <StyledTableRow key={row.Unit_ID}>
-                <StyledTableCell align="left">{row.Unit_ID}</StyledTableCell>
-                <StyledTableCell align="left">{row.Resident_Name}</StyledTableCell>
-                <StyledTableCell align="left">{row.Guest_Name}</StyledTableCell>
-                <StyledTableCell align="left">{row.Vehicle_Number}</StyledTableCell>
-                <StyledTableCell align="left">{row.GuestNIC}</StyledTableCell>
-                <StyledTableCell align="left">{row.Arrival_Date}</StyledTableCell>
-                <StyledTableCell align="left">{row.Checkedin}</StyledTableCell>
-                <StyledTableCell align="left">{row.CheckedOut}</StyledTableCell>
-                <StyledTableCell align="left">    <div className="actionBtn">
 
-<EditButton />
-&nbsp; &nbsp;
-<DeleteButton />
-</div></StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {guestlist &&
+              guestlist.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.guest_ID}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.unit_ID}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.resident_name}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.guest_name}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.vehicle_number}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.guest_NIC}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.check_In}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.check_Out}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "0.3rem",
+                      }}
+                    >
+                      <EditButton //front end route edit
+                        route={`/guests/updateGuest/${[
+                          apartflowtesting.guest_ID,
+                        ]}`}
+                        onClick={() => handleEdit([apartflowtesting.guest_ID])}
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.guest_ID)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
+
+
           </TableBody>
         </Table>
       </TableContainer>
@@ -196,3 +316,43 @@ const [guestlist,setGuestlist] =React.useState([]);
 }
 
 export default GuestTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////
+//Table Body before Roouting
+
+// {guestlist.map((row) => (
+//   <StyledTableRow key={row.Unit_ID}>
+//     <StyledTableCell align="left">{row.Unit_ID}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Resident_Name}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Guest_Name}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Vehicle_Number}</StyledTableCell>
+//     <StyledTableCell align="left">{row.GuestNIC}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Arrival_Date}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Checkedin}</StyledTableCell>
+//     <StyledTableCell align="left">{row.CheckedOut}</StyledTableCell>
+//     <StyledTableCell align="left">    <div className="actionBtn">
+
+// <EditButton />
+// &nbsp; &nbsp;
+// <DeleteButton />
+// </div></StyledTableCell>
+//   </StyledTableRow>
+// ))}
