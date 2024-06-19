@@ -36,122 +36,88 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  referenceNo,
-  maintenance,
-  serviceProvider,
-  mobileNo,
-  requestedDate,
-  completedDate,
-  paymentStatus,
-  paymemntID,
-  action,
-) {
-  return {
-    no,
-    referenceNo,
-    maintenance,
-    serviceProvider,
-    mobileNo,
-    requestedDate,
-    completedDate,
-    paymentStatus,
-    paymemntID,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "M-220046",
-    "Lift repaire",
-    "Oxford Elevators",
-    "0112364445",
-    "04 JAN 2024",
-    "07 JAN 2024",
-    "Paid",
-    "P-205075",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "M-220047",
-    "Cleaning",
-    "Amarapala Cleaning",
-    "0112555222",
-    "31 JAN 2024",
-    "15 FEB 2024",
-    "Pending",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "M-220050",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "M-220049",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "M-220050",
-    "Cleaning",
-    "J.K.Cleaning",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function InternalMaintenanceTable() {
+  const [completedList, setCompletedList] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = useState("");
+  const [mReqid, setMReqid] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setId(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // Change Completed Date Format
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate());
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getCompletedRequestDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getCompletedRequestDetails = () => {
+    axios
+      .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
+      .then((response) => {
+        console.log("CALLED");
+        const mntIds = response.data.result.map((item) => item.Mnt_id);
+        console.log(mntIds);
+        setCompletedList(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+
+  const handleEdit = (id) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="internalMaintenanceTableContainer">
-      <Minibar />  
+      <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/maintenance/internal/addNew"/>
+        <AddNewButton route="/maintenance/internal/addNew" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -185,18 +151,22 @@ function InternalMaintenanceTable() {
                 <StyledTableCell align="left">
                   {row.referenceNo}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.maintenance}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {row.maintenance}
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {row.serviceProvider}
                 </StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.mobileNo}
-                </StyledTableCell>
+                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.requestedDate}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.completedDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymentStatus}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {row.completedDate}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {row.paymentStatus}
+                </StyledTableCell>
                 <StyledTableCell align="left">{row.paymemntID}</StyledTableCell>
                 <StyledTableCell align="left">{row.action}</StyledTableCell>
               </StyledTableRow>
