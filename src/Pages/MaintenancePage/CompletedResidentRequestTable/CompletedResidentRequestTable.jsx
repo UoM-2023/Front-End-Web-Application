@@ -76,7 +76,6 @@ function CompletedResidentRequestTable() {
 
   useEffect(() => {
     console.log("frontend use effect");
-    getRequested_date();
     getCompletedRequestDetails();
   }, []);
 
@@ -96,18 +95,18 @@ function CompletedResidentRequestTable() {
 
   // Get the data from the Maintenance_Request Table (requested_date)
 
-  const getRequested_date = (Mnt_id) => {
-    console.log("get Requested_date Before axios");
-    axios
-      .get(`http://localhost:3001/maintenance/New_Mnt_ReqDate/${Mnt_id}`)
-      .then((response) => {
-        console.log("getRequested_date...... Called");
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getRequested_date = (Mnt_id) => {
+  //   console.log("get Requested_date Before axios");
+  //   axios
+  //     .get(`http://localhost:3001/maintenance/New_Mnt_ReqDate/${Mnt_id}`)
+  //     .then((response) => {
+  //       console.log("getRequested_date...... Called");
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   // Handling the edit button
 

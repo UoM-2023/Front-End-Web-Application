@@ -175,25 +175,63 @@ function RequestsForm() {
               Select Maintenance Type
             </MenuItem>
             <MenuItem
-              value="Water Supply"
-              name="Water Supply"
+              value="Plumbing"
+              name="Plumbing"
               className="optionContainer"
             >
-              Water Supply
+              Plumbing
             </MenuItem>
             <MenuItem
-              value="Gas Supply"
-              name="Gas Supply"
+              value="Electrical"
+              name="Electrical"
               className="optionContainer"
             >
-              Gas Supply
+              Electrical
+            </MenuItem>
+            <MenuItem value="HVAC" name="HVAC" className="optionContainer">
+              HVAC
             </MenuItem>
             <MenuItem
-              value="Electricity Service"
-              name="Electricity Service"
+              value="Appliances"
+              name="Appliances"
               className="optionContainer"
             >
-              Electricity Service
+              Appliances
+            </MenuItem>
+            <MenuItem
+              value="General Maintenance"
+              name="General Maintenance"
+              className="optionContainer"
+            >
+              General Maintenance
+            </MenuItem>
+            <MenuItem
+              value="Pest Control"
+              name="Pest Control"
+              className="optionContainer"
+            >
+              Pest Control
+            </MenuItem>
+            <MenuItem
+              value="Safety and Security"
+              name="Safety and Security"
+              className="optionContainer"
+            >
+              Safety and Security
+            </MenuItem>
+            <MenuItem
+              value="Grounds keeping"
+              name="Grounds keeping"
+              className="optionContainer"
+            >
+              Grounds keeping
+            </MenuItem>
+            <MenuItem
+              value="Structural Repairs"
+              name="Structural Repairs"
+              className="optionContainer"
+            >
+              Structural Repairs
             </MenuItem>
             <MenuItem value="Other" name="Other" className="optionContainer">
               Other

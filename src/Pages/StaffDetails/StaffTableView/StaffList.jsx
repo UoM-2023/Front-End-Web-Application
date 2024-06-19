@@ -12,7 +12,6 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -81,7 +80,8 @@ function StaffList() {
       .catch((error) => console.log(error));
   };
 
-  // Handling the edit button
+  // Handling the edit button (primary key)
+
   const handleEdit = (staffID) => {
     console.log("Hanlde Edit Before axios");
     axios
@@ -96,7 +96,8 @@ function StaffList() {
       });
   };
 
-  // Handling the Delete button
+  // Handling the Delete button (primary key)
+
   const handleDelete = (staffID) => {
     axios
       .delete(
@@ -173,7 +174,7 @@ function StaffList() {
                         gap: "0.3rem",
                       }}
                     >
-                      <EditButton
+                      <EditButton //front end route edit
                         route={`/staff details/updateStaff/${[
                           apartflowtesting.staffID,
                         ]}`}
