@@ -13,6 +13,15 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,10 +46,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function InternalMaintenanceTable() {
-  const [completedList, setCompletedList] = useState([]);
+  const [internalReqList, setInternalReqList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
-  const [mReqid, setMReqid] = useState("");
+  const [iReqid, setIReqid] = useState("");
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -68,19 +77,19 @@ function InternalMaintenanceTable() {
 
   useEffect(() => {
     console.log("frontend use effect");
-    getCompletedRequestDetails();
+    getInternalRequestDetails();
   }, []);
 
   // Get the data from the backend to front end
 
-  const getCompletedRequestDetails = () => {
+  const getInternalRequestDetails = () => {
     axios
-      .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
+      .get("http://localhost:3001/maintenance/Internal_Mnt_Req")
       .then((response) => {
         console.log("CALLED");
         const mntIds = response.data.result.map((item) => item.Mnt_id);
         console.log(mntIds);
-        setCompletedList(response.data.result);
+        setInternalReqList(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -90,7 +99,7 @@ function InternalMaintenanceTable() {
   const handleEdit = (id) => {
     console.log("Hanlde Edit Before axios");
     axios
-      .get(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .get(`http://localhost:3001/maintenance/Internal_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -103,7 +112,7 @@ function InternalMaintenanceTable() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .delete(`http://localhost:3001/maintenance/Internal_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();
@@ -137,41 +146,88 @@ function InternalMaintenanceTable() {
               <StyledTableCell align="left">Maintenance</StyledTableCell>
               <StyledTableCell align="left">Service Provider</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
-              <StyledTableCell align="left">Requested Date</StyledTableCell>
               <StyledTableCell align="left">Completed Date</StyledTableCell>
               <StyledTableCell align="left">Payment Status</StyledTableCell>
               <StyledTableCell align="left">Payment ID</StyledTableCell>
+              <StyledTableCell align="left">Description</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
+            {internalReqList.map((internalReq, index) => (
+              <StyledTableRow key={internalReq.id}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.referenceNo}
+                  {internalReq.Internal_Mnt_Request_id}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.maintenance}
+                  {internalReq.Maintenance}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.serviceProvider}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.requestedDate}
+                  {internalReq.ServiceProvider}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.completedDate}
+                  {internalReq.MobileNo}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.paymentStatus}
+                  {formatDate(internalReq.completed_date)}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.paymemntID}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {internalReq.Payment_Status}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {internalReq.Internal_Mnt_Payment_id}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {internalReq.Description}
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    gap: "0.3rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/maintenance/internal/updateInternal/${[
+                      internalReq.id,
+                    ]}`}
+                    onClick={() => handleEdit([internalReq.id])}
+                  />
+                  <DeleteButton
+                    onClick={() => onClickRowDelete(internalReq.id)}
+                  />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Internal Maintenance"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

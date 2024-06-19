@@ -105,7 +105,6 @@ const Routers = ({ user, setUser }) => {
           <Route index element={<RequestsTable />} />
           <Route path="newRequest" element={<RequestsForm />} />
           <Route path="updateRequest/:id" element={<RequestsForm />} />
-
           {/* Completed Requests */}
           <Route path="completed" element={<Outlet />}>
             <Route index element={<CompletedResidentRequestTable />} />
@@ -118,11 +117,14 @@ const Routers = ({ user, setUser }) => {
               element={<CompleteResidentReqForm />}
             />
           </Route>
-
           {/* Internal maintenance */}
           <Route path="internal" element={<Outlet />}>
             <Route index element={<InternalMaintenanceTable />} />
-            <Route path="addNew" element={<InternalMaintenanceForm />}></Route>
+            <Route path="addNew" element={<InternalMaintenanceForm />} />
+            <Route
+              path="updateInternal/:id"
+              element={<InternalMaintenanceForm />}
+            />
           </Route>
         </Route>
 
