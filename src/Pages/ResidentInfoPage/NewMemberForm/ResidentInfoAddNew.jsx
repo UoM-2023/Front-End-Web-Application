@@ -140,57 +140,6 @@ function ResidentInfoAddNew() {
     }
   }, [residentID]);
 
-  // useEffect(() => {
-  //   console.log("Current Resident ID:", residentID);
-  //   if (residentID) {
-  //     // Check if there is an ID, which means we are in "edit" mode
-  //     console.log("Form useEffect call");
-  //     axios
-  //       .get(
-  //         `http://localhost:3001/residentsDetails/addNewResident/updateResident/${[
-  //           residentID,
-  //         ]}`
-  //       )
-  //       .then((response) => {
-  //         console.log("Response:", response);
-  //         const { data } = response;
-  //         console.log("Log has called", data);
-
-  //         // Assuming your response data structure is correct
-  //         if (data && data.result && data.result.length > 0) {
-  //           const residentData = data.result[0][0]; // Assuming you want the first item from the first array
-  //           const residentTypeValue =
-  //             residentData.member_type === "Owner"
-  //               ? "Owner"
-  //               : residentData.member_type;
-
-  //           const formattedDate = formatDate(residentData.dob);
-  //           console.log(formattedDate);
-
-  //           setFormData({
-  //             // building: buildingValue,
-  //             // block_no: blocknoValue,
-  //             // unit_category: unitCategoryValue,
-  //             // unit_no: unitnoValue,
-  //             first_name: residentData.first_name,
-  //             middle_name: residentData.middle_name,
-  //             last_name: residentData.last_name,
-  //             name_with_initials: residentData.name_with_initials,
-  //             gender: residentData.gender,
-  //             dob: formattedDate,
-  //             nic: residentData.nic,
-  //             member_type: residentTypeValue,
-  //             email: residentData.email,
-  //             mobile_no: residentData.mobile_no,
-  //             Address: residentData.Address,
-  //             img: residentData.img,
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => console.error("Failed to fetch Resident Data...", err));
-  //   }
-  // }, [residentID]);
-
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -325,6 +274,7 @@ function ResidentInfoAddNew() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    navigate("/residents information");
   };
 
   const handleResetForm = () => {

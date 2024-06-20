@@ -290,6 +290,7 @@ function StaffDetailsAddNewForm() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    navigate("/staff details");
   };
 
   const handleResetForm = () => {

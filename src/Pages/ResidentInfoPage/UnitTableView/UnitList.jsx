@@ -13,7 +13,6 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -50,6 +49,7 @@ function UnitList() {
   const [residentlist, setResidentlist] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [residentID, setResidentID] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setResidentID(rowid);
@@ -77,6 +77,7 @@ function UnitList() {
         console.log(" get all Resident func CALLED");
         console.log(response);
         setResidentlist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -126,11 +127,32 @@ function UnitList() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      residentlist.filter(
+        (f) =>
+          f.residentID.toLowerCase().includes(query) ||
+          f.name_with_initials.toLowerCase().includes(query) ||
+          f.nic.toLowerCase().includes(query) ||
+          f.Address.toLowerCase().includes(query) ||
+          f.UnitID.toLowerCase().includes(query) ||
+          f.unit_no.toLowerCase().includes(query) ||
+          f.block_no.toLowerCase().includes(query) ||
+          f.building.toLowerCase().includes(query) ||
+          f.member_type.toLowerCase().includes(query) ||
+          f.mobile_no.toLowerCase().includes(query) ||
+          f.email.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="unitListContainer">
-      {/* <TopBar title="Residents Information" /> */}
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/residents information/addNewResident" />
       </div>
       <TableContainer component={Paper}>
@@ -159,68 +181,62 @@ function UnitList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {residentlist &&
-              residentlist
-                // .filter((resident) => resident.member_type === "Owner")
-                .map((apartflowtesting, index) => {
-                  return (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell>
-                        {apartflowtesting.residentID}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.name_with_initials}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.UnitID}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.unit_no}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.block_no}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.building}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.member_type}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.mobile_no}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {apartflowtesting.email}
-                      </StyledTableCell>
-                      <StyledTableCell
-                        sx={{
-                          display: "flex",
-                          gap: "0.3rem",
-                        }}
-                      >
-                        <ViewButton
-                          route={`/residents information/viewResident/${[
-                            apartflowtesting.UnitID,
-                          ]}`}
-                          onClick={() => handleView([apartflowtesting.UnitID])}
-                        />
-                        <EditButton
-                          route={`/residents information/updateResident/${[
-                            apartflowtesting.residentID,
-                          ]}`}
-                          onClick={() =>
-                            handleEdit([apartflowtesting.residentID])
-                          }
-                        />
-                        <DeleteButton
-                          onClick={() =>
-                            onClickRowDelete(apartflowtesting.residentID)
-                          }
-                        />
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
-                })}
+            {records &&
+              records.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.residentID}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.name_with_initials}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.UnitID}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.unit_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.block_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.building}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.member_type}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.mobile_no}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "0.3rem",
+                      }}
+                    >
+                      <ViewButton
+                        route={`/residents information/viewResident/${[
+                          apartflowtesting.UnitID,
+                        ]}`}
+                        onClick={() => handleView([apartflowtesting.UnitID])}
+                      />
+                      <EditButton
+                        route={`/residents information/updateResident/${[
+                          apartflowtesting.residentID,
+                        ]}`}
+                        onClick={() =>
+                          handleEdit([apartflowtesting.residentID])
+                        }
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.residentID)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
 
           {/* Delete Button Dialog */}
