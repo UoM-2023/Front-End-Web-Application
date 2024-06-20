@@ -12,8 +12,8 @@ const CardFive = ({ onClick, className, title, content }) => {
       <Card
         onClick={onClick}
         sx={{
-          width: 310,
-          height: 160,
+          width: 340,
+          height: 180,
           backgroundColor: '#fff',
           borderRadius: 6,
           border: "#383737 solid",
@@ -23,15 +23,15 @@ const CardFive = ({ onClick, className, title, content }) => {
           <CardMedia />
           <div className="CardAndIcon">
             <span className="card">
-              <CardContent>
-                <p>{title}</p>
+              <CardContent sx={{ padding: 3.5 }}>
+              <p style={{ color: 'rgba(231,103,54,1)' }}>{title}</p>
                 <Typography variant="body2" color="text.secondary">
                   <h2>{content}</h2>
                 </Typography>
               </CardContent>
             </span>
             <span className="Icon">
-              <ThumbUpIcon sx={{ width: 65, height: 65 }} />
+              <ThumbUpIcon sx={{ width: 70, height: 70 }} />
             </span>
           </div>
         </CardActionArea>

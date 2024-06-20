@@ -46,8 +46,8 @@ import { useGetEvent } from '../../hooks/useGetEvent';
 
 export default function DashBoard() {
 
-  const socket = getSocketInit();
-  socket.connect();
+  // const socket = getSocketInit();
+  // socket.connect();
 
   const navigate = useNavigate();
 
@@ -90,12 +90,13 @@ export default function DashBoard() {
 
   if (isPending) return;
   return (
-    <div>
-
-
-
-      <div className="rowOne">
-        <Welcome />
+    
+   <div>
+    <div className="welcome"><Welcome /></div>
+      
+      <div className='dashcards'>  
+          <div className="rowOne">
+        
         <CardFive
           onClick={handleComplain}
           className="cardFive"
@@ -109,16 +110,18 @@ export default function DashBoard() {
           content={`${reservation} Reservation For Today `}
 
         />
-      </div>
 
-
-      <div className="rowTwo">
         <CardOne
           onClick={handlePayments}
           className="cardOne"
           title="New Payments"
           content={`${payment} Payments For Today `}
         />
+      </div>
+
+
+      <div className="rowTwo">
+
         <CardTwo
           onClick={handleGuests}
           className="cardTwo"
@@ -147,6 +150,7 @@ export default function DashBoard() {
         <span className="notificationBar"><NotificationBar /></span>
         <span className="submitButton"><SubmitButton /></span>
       </div> */}
+    </div>
     </div>
 
   )

@@ -1,40 +1,60 @@
-
+.welcome{
+  margin-top: 2rem;
+  margin-left: 0;
+}
 .rowOne {
   display: flex;
-  margin-top: 5rem;
- padding-left: 8rem;
- margin-bottom: 5rem;
+  justify-content: space-between;
+  gap: 15rem;
+  align-items: center;
+  margin-top: 6rem;
+ /* padding-left: 8rem;
+ margin-bottom: 5rem;  */
 }
 .rowTwo {
   display: flex;
-  margin-top: 2rem;
+  justify-content: space-between;
+  gap: 15rem;
+  align-items: center;
+  margin-top: 6rem;
   
 }
-.cardOne {
+
+.dashcards{
   margin-left: 8rem;
-  width: 22rem;
+  margin-right: 8rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+
+ .cardOne {
+  
+  flex: 0 0 auto;
+  margin: 0 10px;
 }
 .cardTwo {
-  margin-left: 2rem;
-  width: 22rem;
+  flex: 0 0 auto;
+  margin: 0 10px;
 }
 .cardThree {
-  margin-left: 2rem;
-  width: 22rem;
+  flex: 0 0 auto; /* Prevent cards from growing and shrinking */
+  margin: 0 10px;
 }
 .cardFour {
-  margin-left: 2rem;
-  width: 22rem;
-  margin-right: 4rem;
+  flex: 0 0 auto; /* Prevent cards from growing and shrinking */
+  margin: 0 10px;
+ 
 }
 .cardFive {
-  margin-left: 5.5rem;
-  width: 22rem;
+  flex: 0 0 auto;
+  margin: 0 10px;
+
 }
 .cardSix {
-  margin-left: 2rem;
-  width: 22rem;
-}
+  flex: 0 0 auto; /* Prevent cards from growing and shrinking */
+  margin: 0 10px;
+} */
 .PaymentAndIcon {
   display: flex;
   justify-content: space-between;
