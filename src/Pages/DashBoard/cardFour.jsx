@@ -12,8 +12,8 @@ const CardFour = ({ onClick, className, title, content }) => {
       <Card
         onClick={onClick}
         sx={{
-          width: 300,
-          height: 150,
+          width: 310,
+          height: 160,
           backgroundColor: '#fff',
           borderRadius: 6,
           border: "#383737 solid",
@@ -25,12 +25,12 @@ const CardFour = ({ onClick, className, title, content }) => {
               <CardContent>
                 <p>{title}</p>
                 <Typography variant="body2" color="text.secondary">
-                  <h3>{content}</h3>
+                <h2>{content}</h2>
                 </Typography>
               </CardContent>
             </span>
             <span className="Icon">
-              <EventsIcon />
+              <EventsIcon sx={{ width: 65, height: 65 }} />
             </span>
           </div>
         </CardActionArea>

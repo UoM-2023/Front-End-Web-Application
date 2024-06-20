@@ -2,5 +2,6 @@
     display: flex;                 /* Use flexbox layout */
     justify-content: space-around; /* Distribute items evenly along the main axis */
             /* Center items vertically */
+        
   }
   

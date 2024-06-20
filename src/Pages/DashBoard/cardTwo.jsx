@@ -30,7 +30,7 @@ const CardTwo = ({ onClick, className, title, content }) => {
               </CardContent>
             </span>
             <span className="Icon">
-              <VisitorIcon />
+              <VisitorIcon sx={{ width: 65, height: 65 }} />
             </span>
           </div>
         </CardActionArea>

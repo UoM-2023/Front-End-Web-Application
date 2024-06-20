@@ -126,9 +126,9 @@ function GuestFormNew() {
     if (!values.guest_NIC) {
       errors.guest_NIC = "Please Enter Guest NIC Number *";
     }
-    if (!values.vehicle_number) {
-      errors.vehicle_number = "Please Enter The Vehicle Number *";
-    }
+    // if (!values.vehicle_number) {
+    //   errors.vehicle_number = "Please Enter The Vehicle Number *";
+    // }
     if (!values.check_In) {
       errors.check_In = "Please Enter The Date *";
     }
@@ -209,7 +209,7 @@ function GuestFormNew() {
             value={formData.vehicle_number}
           />
         </div>
-        <p>{formErrors.vehicle_number}</p>
+        {/* <p>{formErrors.vehicle_number}</p> */}
 
         <div className="inputItem">
           <InputLabel htmlFor="Date" className="namesTag">

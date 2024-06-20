@@ -121,62 +121,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // }
 
 
-// const rows = [
-//   createData(
-//     "W764783",
-//     "James Thomas",
-//     "Event Hall",
-//     "22/06/2022",
-//     "23/06/2022",
-//     "24/06/2022",
-//     "Paid",
-//     "Reserved",
 
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "E764583",
-//     "Cane Electricians",
-//     "Event Hall",
-//     "22/06/2022",
-//     "25/06/2022",
-//     "29/06/2022",
-//     "Paid",
-//     "Reserved",
-
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "G345678",
-//     "Patrick Stefans",
-//     "Gym",
-//     "22/06/2022",
-//     "27/06/2022",
-//     "28/06/2022",
-//     "Paid",
-//     "Not Yet",
-
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-
-
-// ];
-///////////////////////////////////////////////////////////
 
 function ReservationTable() {
   const [reservationlist, setReservationlist] = useState([]);
@@ -263,29 +208,6 @@ function ReservationTable() {
       </div>
 
 
-
-      {/* <div className="Currnet">
-        <Router>
-          <Box sx={{ width: '100%' }}>
-            <Routes>
-              <Route path="*" element={<CurrentRoute />} />
-            </Routes>
-            <MyTabs />
-          </Box>
-        </Router>
-      </div> */}
-
-      {/* <div className="SearchBarAndADDnewButton">
-        <span className="SearchBar">
-          <SearchBar />
-        </span>
-
-        <span className="addNewButton">
-          <AddNewButton />
-        </span>
-      </div> */}
-
-
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -332,7 +254,7 @@ function ReservationTable() {
                     <StyledTableCell>{apartflowtesting.end_date}</StyledTableCell>
                     <StyledTableCell>{apartflowtesting.payment_status}</StyledTableCell>
                     <StyledTableCell>{apartflowtesting.availability}</StyledTableCell>
-                    {/* <StyledTableCell
+                    <StyledTableCell
                       sx={{
                         display: "flex",
                         gap: "0.3rem",
@@ -349,7 +271,7 @@ function ReservationTable() {
                           onClickRowDelete(apartflowtesting.ref_no)
                         }
                       />
-                    </StyledTableCell> */}
+                    </StyledTableCell>
                   </StyledTableRow>
                 );
               })}

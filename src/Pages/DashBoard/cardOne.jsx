@@ -30,7 +30,7 @@ const CardOne = ({ onClick, className, title, content }) => {
               </CardContent>
             </span>
             <span className="Icon">
-              <PaymentIcon />
+              <PaymentIcon sx={{ width: 65, height: 65 }} />
             </span>
           </div>
         </CardActionArea>

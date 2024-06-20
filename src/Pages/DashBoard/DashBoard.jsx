@@ -37,8 +37,12 @@ import CardTwo from './cardTwo';
 import CardThree from './cardThree';
 import CardFour from './cardFour';
 import getSocketInit from '../../socket';
-
-
+import { useGetReservation } from '../../hooks/useGetReservation';
+import { useGetGuest } from '../../hooks/useGetGuest';
+import { useGetComplain } from '../../hooks/useGetComplain';
+import { useGetPayment } from '../../hooks/useGetPayment';
+import { useGetMaintanance } from '../../hooks/useGetMaintanance';
+import { useGetEvent } from '../../hooks/useGetEvent'; 
 
 export default function DashBoard() {
 
@@ -61,39 +65,30 @@ export default function DashBoard() {
   const handleGuests = () => {
     navigate('/guests');
   };
-  const handleMaintanance = () => {
-    navigate('/maintenance');
-  };
-  const handlEvents = () => {
-    navigate('/guests');
-  };
+
 
   const handleMaintenance = () => {
-    // Handle maintenance functionality
+    navigate('/maintenance');
   };
 
   const handleEvents = () => {
-    // Handle events functionality
+    navigate('/eventsTable');
   };
-  const [reservationCount,setReservationCount]=useState(0)
-
-  useEffect(() => {
-    const handleReservationCount = (data) => {
-      if (data == 'new reservation') {
-        console.log("Conversation created for user:", data);
-        setReservationCount((count) => count+1);
-      }
-    };
-
-    socket.on("ReservationCount", handleReservationCount);
-
-    return () => {
-      socket.off("ReservationCount", handleReservationCount);
-    };
-  }, [socket]);
-//////////////
+  const [reservationCount, setReservationCount] = useState(0)
 
 
+
+
+
+  const { isPending, error, reservation } = useGetReservation();
+  const { guest } = useGetGuest();
+  const { complain } = useGetComplain();
+  const { payment } = useGetPayment();
+  const { maintanance } = useGetMaintanance();
+  const { event } = useGetEvent();
+
+
+  if (isPending) return;
   return (
     <div>
 
@@ -105,13 +100,13 @@ export default function DashBoard() {
           onClick={handleComplain}
           className="cardFive"
           title="Support"
-          content="No Requests For Today"
+          content={`${complain} Complains For Today `}
         />
         <CardSix
           onClick={handleReservation}
           className="cardSix"
           title=" Reservations"
-          content={`${reservationCount} Reservation For Now `}
+          content={`${reservation} Reservation For Today `}
 
         />
       </div>
@@ -122,36 +117,36 @@ export default function DashBoard() {
           onClick={handlePayments}
           className="cardOne"
           title="New Payments"
-          content="08 Payments For Today"
+          content={`${payment} Payments For Today `}
         />
         <CardTwo
           onClick={handleGuests}
           className="cardTwo"
           title="Today Visitors"
-          content="No Visitors For Today"
+          content={`${guest} Visitors For Today `}
         />
         <CardThree
           onClick={handleMaintenance}
           className="cardThree"
           title="Maintenance Requests"
-          content="No Maintenance Requests"
+          content={`${maintanance} Maintanance For Today `}
         />
         <CardFour
           onClick={handleEvents}
           className="cardFour"
           title="Today Events"
-          content="02 Events For Today"
+          content={`${event} Events For Today `}
         />
       </div>
-      <div className="charts">
+      {/* <div className="charts">
         <ChartTwo />
-      </div>
+      </div> */}
 
 
-      <div className="notificationBar">
+      {/* <div className="notificationBar">
         <span className="notificationBar"><NotificationBar /></span>
         <span className="submitButton"><SubmitButton /></span>
-      </div>
+      </div> */}
     </div>
 
   )
@@ -160,245 +155,3 @@ export default function DashBoard() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <div className="CardsRowTwo">
-
-<span className="welcome"><Welcome /></span>
-
-
-<span className="cardFive">
-  <Card 
-  onClick ={handleComplain}
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <CardMedia>
-
-      </CardMedia>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-          <CardContent>
-            <p>Support</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>No Requests For Today</h3>
-            </Typography>
-          </CardContent>
-        </span>
-        <span className="Icon">
-
-          <ThumbUpIcon sx={{ width: 65, height: 65 }} />
-        </span>
-      </div>
-    </CardActionArea>
-  </Card>
-</span>
-
-
-
-<span className="cardSix">
-
-  <Card
-  onClick ={handleReservation}
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <CardMedia >
-
-      </CardMedia>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-          <CardContent>
-         
-            <p>Today Reservations</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>01 Reservations For Today</h3>
-            </Typography>
-          </CardContent>
-        </span>
-        <span className="Icon">
-
-          <AutoStoriesIcon sx={{ width: 65, height: 65 }} />
-        </span>
-      </div>
-    </CardActionArea>
-  </Card>
-</span>
-
-
-
-
-</div> */}
-
-
-
-
-
-
-
-
-
-
-
-{/* <div className="CardsRowOne">
-<span className="cardOne">
-  <Card 
-  onClick ={handlePayments}
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <CardMedia>
-
-      </CardMedia>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-          <CardContent>
-            <p>New Payments</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>08 Payments For Today</h3>
-            </Typography>
-          </CardContent>
-        </span>
-        <span className="Icon">
-
-          <PaymentIcon />
-        </span>
-      </div>
-    </CardActionArea>
-  </Card>
-</span>
-
-
-<span className="cardTwo">
-  <Card
- onClick ={handleGuests} 
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-          <CardContent>
-            <p>Today Visitors</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>No Visitors For Today</h3>
-            </Typography>
-
-          </CardContent>
-        </span>
-        <span className="Icon">
-          <VIsitorIcon />
-        </span>
-
-
-      </div>
-    </CardActionArea>
-  </Card>
-</span>
-
-
-<span className="cardThree">
-  <Card 
-  onClick ={ handleMaintanance}
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-
-          <CardContent>
-            <p>Maintanance Requests</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>No Maintanace Requests</h3>
-            </Typography>
-
-          </CardContent>
-        </span>
-        <span className="Icon">
-          <MaintenanceIcon />
-        </span>
-      </div>
-
-    </CardActionArea>
-  </Card>
-</span>
-
-
-<span className="cardFour">
-  <Card 
-  onClick ={handlEvents}
-  sx={{
-    width: 300,                  // Set the width to 300px
-    height: 150,                 // Set the height to 200px
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    border: "#383737 solid",
-  }}>
-    <CardActionArea>
-      <div className="PaymentAndIcon">
-        <span className="NewPayments">
-          <CardContent>
-            <p>Today Events</p>
-
-            <Typography variant="body2" color="text.secondary">
-              <h3>02 Events  For Today</h3>
-              <h3></h3>
-            </Typography>
-
-          </CardContent>
-        </span>
-        <span className="Icon">
-          <EventsIcon />
-        </span>
-      </div>
-
-    </CardActionArea>
-  </Card>
-
-</span>
-
-</div> */}
