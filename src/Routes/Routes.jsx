@@ -115,13 +115,13 @@ const Routers = () => {
           </Route>
 
           {/* Complaints route */}
-          <Route path='complaints' element={<Outlet />} >
+          <Route path='/complaints' element={<Outlet />} >
               <Route index element={<ComplaintsTable/>} />
               <Route path='complaintsForm' element={<ComplaintsForm/>}/>
             </Route>
 
             {/* News & Notices section */}
-            <Route path='news & notices' element={<Outlet/>}>
+            <Route path='/news & notices' element={<Outlet/>}>
               {/* Notices Route */}
               <Route index element={<NoticesTable/>} />
               <Route path='noticesForm' element={<NoticesForm/>}/>
