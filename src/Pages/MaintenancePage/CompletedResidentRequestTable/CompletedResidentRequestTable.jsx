@@ -48,7 +48,7 @@ function CompletedResidentRequestTable() {
   const [completedList, setCompletedList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
-  const [mReqid, setMReqid] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -89,6 +89,7 @@ function CompletedResidentRequestTable() {
         const mntIds = response.data.result.map((item) => item.Mnt_id);
         console.log(mntIds);
         setCompletedList(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -121,11 +122,29 @@ function CompletedResidentRequestTable() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      completedList.filter(
+        (f) =>
+          f.Mnt_id.toLowerCase().includes(query) ||
+          f.ServiceProvider.toLowerCase().includes(query) ||
+          f.MobileNo.toLowerCase().includes(query) ||
+          f.requested_date.toLowerCase().includes(query) ||
+          f.completed_date.toLowerCase().includes(query) ||
+          f.Payment_Status.toLowerCase().includes(query) ||
+          f.Mnt_Payment_id.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="completedResidentRequestTableContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/maintenance/completed/addNewCompleted" />
       </div>
       <TableContainer component={Paper}>
@@ -154,7 +173,7 @@ function CompletedResidentRequestTable() {
           </TableHead>
 
           <TableBody>
-            {completedList.map((CompletedReq, index) => (
+            {records.map((CompletedReq, index) => (
               <StyledTableRow key={CompletedReq.id}>
                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">

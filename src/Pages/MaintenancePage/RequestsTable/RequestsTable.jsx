@@ -50,6 +50,7 @@ function RequestsTable() {
   const [mRequestList, setMRequestList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -78,6 +79,7 @@ function RequestsTable() {
         console.log("CALLED");
         console.log(response);
         setMRequestList(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -116,11 +118,28 @@ function RequestsTable() {
     );
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      mRequestList.filter(
+        (f) =>
+          f.Mnt_Request_id.toLowerCase().includes(query) ||
+          f.Unit_id.toLowerCase().includes(query) ||
+          f.Resident_Name.toLowerCase().includes(query) ||
+          f.MType.toLowerCase().includes(query) ||
+          f.requested_date.toLowerCase().includes(query) ||
+          f.Mnt_Status.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="requestsTableContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/maintenance/newRequest" />
       </div>
       <TableContainer component={Paper}>
@@ -149,7 +168,7 @@ function RequestsTable() {
           </TableHead>
 
           <TableBody>
-            {mRequestList.map((mRequests, index) => (
+            {records.map((mRequests, index) => (
               <StyledTableRow key={mRequests.id}>
                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">

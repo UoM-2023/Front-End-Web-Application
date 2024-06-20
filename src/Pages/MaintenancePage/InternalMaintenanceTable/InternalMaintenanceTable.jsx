@@ -49,7 +49,7 @@ function InternalMaintenanceTable() {
   const [internalReqList, setInternalReqList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
-  const [iReqid, setIReqid] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -90,6 +90,7 @@ function InternalMaintenanceTable() {
         const mntIds = response.data.result.map((item) => item.Mnt_id);
         console.log(mntIds);
         setInternalReqList(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -121,11 +122,30 @@ function InternalMaintenanceTable() {
         console.log(error);
       });
   };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      internalReqList.filter(
+        (f) =>
+          f.Internal_Mnt_Request_id.toLowerCase().includes(query) ||
+          f.Maintenance.toLowerCase().includes(query) ||
+          f.ServiceProvider.toLowerCase().includes(query) ||
+          f.MobileNo.toLowerCase().includes(query) ||
+          f.completed_date.toLowerCase().includes(query) ||
+          f.Payment_Status.toLowerCase().includes(query) ||
+          f.Internal_Mnt_Payment_id.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="internalMaintenanceTableContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/maintenance/internal/addNew" />
       </div>
       <TableContainer component={Paper}>
@@ -155,7 +175,7 @@ function InternalMaintenanceTable() {
           </TableHead>
 
           <TableBody>
-            {internalReqList.map((internalReq, index) => (
+            {records.map((internalReq, index) => (
               <StyledTableRow key={internalReq.id}>
                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">

@@ -138,7 +138,6 @@ function StaffList() {
     <div className="unitListContainer">
       <div className="pageTop">
         <SearchBar onChange={Filter} />
-        {/* <input onChange={Filter}/> */}
         <AddNewButton route="/staff details/addNewStaff" />
       </div>
 
