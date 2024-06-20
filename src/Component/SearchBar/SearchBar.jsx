@@ -48,7 +48,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     height: "1.3rem",
     marginLeft: "0",
     marginTop: "2px",
-  }, 
+  },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchBar() {
+function SearchBar({ onChange }) {
   const [selectedValues, setSelectedValues] = React.useState([]);
 
   const handleChange = (event) => {
@@ -76,6 +76,15 @@ function SearchBar() {
       );
     } else {
       setSelectedValues(selected);
+    }
+    if (onChange) {
+      onChange(event);
+    }
+  };
+
+  const handleSearchChange = (event) => {
+    if (onChange) {
+      onChange(event);
     }
   };
 
@@ -135,6 +144,7 @@ function SearchBar() {
             <StyledInputBase
               placeholder="Search"
               inputProps={{ "aria-label": "search" }}
+              onChange={handleSearchChange}
             />
           </Search>
         </Box>

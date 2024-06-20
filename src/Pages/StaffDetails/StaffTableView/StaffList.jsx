@@ -48,6 +48,7 @@ function StaffList() {
   const [stafflist, setStafflist] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [staffID, setStaffID] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setStaffID(rowid);
@@ -76,6 +77,7 @@ function StaffList() {
         console.log("CALLED");
         console.log(response);
         setStafflist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -114,10 +116,29 @@ function StaffList() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      stafflist.filter(
+        (f) =>
+          f.staffID.toLowerCase().includes(query) ||
+          f.name_with_initials.toLowerCase().includes(query) ||
+          f.nic.toLowerCase().includes(query) ||
+          f.staff_category.toLowerCase().includes(query) ||
+          f.mobile_no.toLowerCase().includes(query) ||
+          f.email.toLowerCase().includes(query) ||
+          f.city.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="unitListContainer">
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
+        {/* <input onChange={Filter}/> */}
         <AddNewButton route="/staff details/addNewStaff" />
       </div>
 
@@ -149,8 +170,8 @@ function StaffList() {
           </TableHead>
 
           <TableBody>
-            {stafflist &&
-              stafflist.map((apartflowtesting, index) => {
+            {records &&
+              records.map((apartflowtesting, index) => {
                 return (
                   <StyledTableRow key={index}>
                     <StyledTableCell>
