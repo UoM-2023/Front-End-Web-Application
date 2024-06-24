@@ -12,7 +12,6 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -49,6 +48,7 @@ function StaffList() {
   const [stafflist, setStafflist] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [staffID, setStaffID] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setStaffID(rowid);
@@ -77,11 +77,13 @@ function StaffList() {
         console.log("CALLED");
         console.log(response);
         setStafflist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
 
-  // Handling the edit button
+  // Handling the edit button (primary key)
+
   const handleEdit = (staffID) => {
     console.log("Hanlde Edit Before axios");
     axios
@@ -96,7 +98,8 @@ function StaffList() {
       });
   };
 
-  // Handling the Delete button
+  // Handling the Delete button (primary key)
+
   const handleDelete = (staffID) => {
     axios
       .delete(
@@ -113,11 +116,28 @@ function StaffList() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      stafflist.filter(
+        (f) =>
+          f.staffID.toLowerCase().includes(query) ||
+          f.name_with_initials.toLowerCase().includes(query) ||
+          f.nic.toLowerCase().includes(query) ||
+          f.staff_category.toLowerCase().includes(query) ||
+          f.mobile_no.toLowerCase().includes(query) ||
+          f.email.toLowerCase().includes(query) ||
+          f.city.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="unitListContainer">
-      <TopBar title="Staff Details" />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/staff details/addNewStaff" />
       </div>
 
@@ -149,8 +169,8 @@ function StaffList() {
           </TableHead>
 
           <TableBody>
-            {stafflist &&
-              stafflist.map((apartflowtesting, index) => {
+            {records &&
+              records.map((apartflowtesting, index) => {
                 return (
                   <StyledTableRow key={index}>
                     <StyledTableCell>
@@ -171,10 +191,10 @@ function StaffList() {
                     <StyledTableCell
                       sx={{
                         display: "flex",
-                        gap: "1rem",
+                        gap: "0.3rem",
                       }}
                     >
-                      <EditButton
+                      <EditButton //front end route edit
                         route={`/staff details/updateStaff/${[
                           apartflowtesting.staffID,
                         ]}`}

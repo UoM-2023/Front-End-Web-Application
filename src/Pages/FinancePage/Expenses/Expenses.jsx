@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Expenses.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,8 +11,8 @@ import Paper from "@mui/material/Paper";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
-import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import Minibar from "../Mininavbar/Minibar";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,49 +36,42 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  referenceNo,
-  amount,
-  expenseType,
-  paymentMethod,
-  staffID,
-  approvedID,
-  Date,
-  action
-) {
-  return {
-    no,
-    referenceNo,
-    amount,
-    expenseType,
-    paymentMethod,
-    staffID,
-    approvedID,
-    Date,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "E76536778",
-    "2400",
-    "Maintenance",
-    "Cash",
-    "M76346",
-    "A2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      {/* <DeleteButton /> */}
-    </div>
-  ),
-];
-
 function Expenses() {
+  const [expenseslist, setExpenseslist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  // const [id, setId] = useState("");
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getExpensesDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getExpensesDetails = () => {
+    axios
+      .get("http://localhost:3001/finance/expenses")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setExpenseslist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+  const handleEdit = (id) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/finance/updateExpenses/${id}`)
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="expensesContainer">
       <Minibar />
@@ -97,37 +90,61 @@ function Expenses() {
           }}
           aria-label="customized table"
         >
+          {/*---- Table Headings ----*/}
+
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Reference No</StyledTableCell>
-              <StyledTableCell align="left">Amount</StyledTableCell>
-              <StyledTableCell align="left">Expense Type</StyledTableCell>
-              <StyledTableCell align="left">Payment Method</StyledTableCell>
+              <StyledTableCell align="center">Reference No</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
+              <StyledTableCell align="center">Expense Type</StyledTableCell>
+              <StyledTableCell align="center">Payment Method</StyledTableCell>
               <StyledTableCell align="left">Staff ID</StyledTableCell>
-              <StyledTableCell align="left">Approved By</StyledTableCell>
               <StyledTableCell align="left">Date</StyledTableCell>
+              <StyledTableCell align="left">Remark</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
+          {/* ---- Table Data ---- */}
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.referenceNo}
+            {expenseslist.map((Expenses, index) => (
+              <StyledTableRow key={Expenses.id}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {Expenses.expense_id}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.expenseType}
+                <StyledTableCell align="right">
+                  {Expenses.amount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {Expenses.eType}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {Expenses.payment_method}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.paymentMethod}
+                  {Expenses.staff_id}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.staffID}</StyledTableCell>
-                <StyledTableCell align="left">{row.approvedID}</StyledTableCell>
-                <StyledTableCell align="left">{row.Date}</StyledTableCell>
-                <StyledTableCell align="right">{row.action}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {Expenses.added_date.slice(0, 10)}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {Expenses.remark}
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/finance/expenses/updateExpenses/${Expenses.id}`}
+                    onClick={() => handleEdit(Expenses.id)}
+                  />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

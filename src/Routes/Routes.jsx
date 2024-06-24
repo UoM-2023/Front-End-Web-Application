@@ -1,51 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { Outlet, Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import ResidentsPayments from '../Pages/FinancePage/ResidentsPayments/ResidentsPayments'
-import UtilityCharges from '../Pages/FinancePage/UtilityCharges/UtilityCharges'
-import Expenses from '../Pages/FinancePage/Expenses/Expenses'
-import Revenue from '../Pages/FinancePage/Revenue/Revenue'
-import Warnings from '../Pages/FinancePage/Warnings/Warnings'
-import EditFunds from '../Pages/FinancePage/AddNewFund/EditFunds'
-import ExpensesAddNewForm from '../Pages/FinancePage/ExpenseAddNewForm/ExpensesAddNewForm'
-import ResidentsPaymentsForm from '../Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentsPaymentsForm'
-import UtilityForm from '../Pages/FinancePage/UtilityChargesAddNewForm/UtilityForm'
-import EditFundsAddNew from '../Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew'
-import RevenueForm from '../Pages/FinancePage/RevenueAddNewForm/RevenueForm'
-import RequestsTable from '../Pages/MaintenancePage/RequestsTable/RequestsTable'
-import RequestsForm from '../Pages/MaintenancePage/RequestsAddNewForm/RequestsForm'
-import CompletedResidentRequestTable from '../Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable'
-import CompleteResidentReqForm from '../Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm'
-import InternalMaintenanceTable from '../Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable'
-import InternalMaintenanceForm from '../Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm'
-import StaffList from '../Pages/StaffDetails/StaffTableView/StaffList'
-import StaffDetailsAddNewForm from '../Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm'
-import Dashboard from '../Pages/DashboardPage/Dashboard'
-import UnitList from '../Pages/ResidentInfoPage/UnitTableView/UnitList'
-import ResidentInfoAddNew from '../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew'
-import MemberList from '../Pages/ResidentInfoPage/Member List/MemberList'
-import TopBar from '../Component/TopBar/TopBar'
-import DashBoard from '../Pages/DashBoard/DashBoard'
-import ResidentialUnitsTable from '../Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable'
-import ResidentialUnitsForm from '../Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm'
-import ComplaintsTable from '../Pages/ComplaintsPage/Table/ComplaintsTable'
-import ComplaintsForm from '../Pages/ComplaintsPage/Form/ComplaintsForm'
-import NoticesTable from '../Pages/News&NoticesPage/Notices/Table/NoticesTable'
-import NoticesForm from '../Pages/News&NoticesPage/Notices/Form/NoticesForm'
-import EventsTable from '../Pages/News&NoticesPage/Events/Table/EventsTable'
-import EventsForm from '../Pages/News&NoticesPage/Events/Form/EventsForm'
-import UtilityDetails from '../Pages/FinancePage/UtilityCharges/UtilityDetails'
-import UtilityDetailsUpdateForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm'
-import UtilityDetailsAddNewForm from '../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew'
-import { setAuthToken } from '../Pages/LoginPage/LoginServices/authService'
-import LoginPage from '../Pages/LoginPage/LoginPage'
+import React, { useEffect, useState } from "react";
+import {
+  Outlet,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import ResidentsPayments from "../Pages/FinancePage/ResidentsPayments/ResidentsPayments";
+import UtilityCharges from "../Pages/FinancePage/UtilityCharges/UtilityCharges";
+import Expenses from "../Pages/FinancePage/Expenses/Expenses";
+import Revenue from "../Pages/FinancePage/Revenue/Revenue";
+import Warnings from "../Pages/FinancePage/Warnings/Warnings";
+import EditFunds from "../Pages/FinancePage/AddNewFund/EditFunds";
+import ExpensesAddNewForm from "../Pages/FinancePage/ExpenseAddNewForm/ExpensesAddNewForm";
+import ResidentsPaymentsForm from "../Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentsPaymentsForm";
+import UtilityForm from "../Pages/FinancePage/UtilityChargesAddNewForm/UtilityForm";
+import EditFundsAddNew from "../Pages/FinancePage/AddNewFund/EditFundFrom/EditFundsAddNew";
+import RevenueForm from "../Pages/FinancePage/RevenueAddNewForm/RevenueForm";
+import RequestsTable from "../Pages/MaintenancePage/RequestsTable/RequestsTable";
+import RequestsForm from "../Pages/MaintenancePage/RequestsAddNewForm/RequestsForm";
+import CompletedResidentRequestTable from "../Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
+import CompleteResidentReqForm from "../Pages/MaintenancePage/CompletedResidentRequestForm/CompleteResidentReqForm";
+import InternalMaintenanceTable from "../Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
+import InternalMaintenanceForm from "../Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
+import StaffList from "../Pages/StaffDetails/StaffTableView/StaffList";
+import StaffDetailsAddNewForm from "../Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
+import Dashboard from "../Pages/DashboardPage/Dashboard";
+import UnitList from "../Pages/ResidentInfoPage/UnitTableView/UnitList";
+import ResidentInfoAddNew from "../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
+import MemberList from "../Pages/ResidentInfoPage/Member List/MemberList";
+import TopBar from "../Component/TopBar/TopBar";
+import DashBoard from "../Pages/DashBoard/DashBoard";
+import ResidentialUnitsTable from "../Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable";
+import ResidentialUnitsForm from "../Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm";
+import ComplaintsTable from "../Pages/ComplaintsPage/Table/ComplaintsTable";
+import ComplaintsForm from "../Pages/ComplaintsPage/Form/ComplaintsForm";
+import NoticesTable from "../Pages/News&NoticesPage/Notices/Table/NoticesTable";
+import NoticesForm from "../Pages/News&NoticesPage/Notices/Form/NoticesForm";
+import EventsTable from "../Pages/News&NoticesPage/Events/Table/EventsTable";
+import EventsForm from "../Pages/News&NoticesPage/Events/Form/EventsForm";
+import UtilityDetails from "../Pages/FinancePage/UtilityCharges/UtilityDetails";
+import UtilityDetailsUpdateForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm";
+import UtilityDetailsAddNewForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew";
+import { setAuthToken } from "../Pages/LoginPage/LoginServices/authService";
+import LoginPage from "../Pages/LoginPage/LoginPage";
 import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
+import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 
-const Routers = ({user, setUser}) => {
+const Routers = ({ user, setUser }) => {
   return (
-    <>
+    <div>
       <Routes>
-        <Route path='/login' element={<LoginPage setUser={setUser} />} />
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
         {/* Dashboard */}
         <Route path="/dashboard" element={<DashBoard />} />
 
@@ -67,6 +73,7 @@ const Routers = ({user, setUser}) => {
           <Route path="expenses" element={<Outlet />}>
             <Route index element={<Expenses />} />
             <Route path="addExpense" element={<ExpensesAddNewForm />} />
+            <Route path="updateExpenses/:id" element={<ExpensesAddNewForm />} />
           </Route>
 
           {/* Revenue routes */}
@@ -91,7 +98,7 @@ const Routers = ({user, setUser}) => {
         <Route path="/maintenance" element={<Outlet />}>
           <Route index element={<RequestsTable />} />
           <Route path="newRequest" element={<RequestsForm />} />
-
+          <Route path="updateRequest/:id" element={<RequestsForm />} />
           {/* Completed Requests */}
           <Route path="completed" element={<Outlet />}>
             <Route index element={<CompletedResidentRequestTable />} />
@@ -99,12 +106,19 @@ const Routers = ({user, setUser}) => {
               path="addNewCompleted"
               element={<CompleteResidentReqForm />}
             />
+            <Route
+              path="UpdateCompleted/:id"
+              element={<CompleteResidentReqForm />}
+            />
           </Route>
-
           {/* Internal maintenance */}
           <Route path="internal" element={<Outlet />}>
             <Route index element={<InternalMaintenanceTable />} />
-            <Route path="addNew" element={<InternalMaintenanceForm />}></Route>
+            <Route path="addNew" element={<InternalMaintenanceForm />} />
+            <Route
+              path="updateInternal/:id"
+              element={<InternalMaintenanceForm />}
+            />
           </Route>
         </Route>
 
@@ -122,11 +136,11 @@ const Routers = ({user, setUser}) => {
         <Route path="/residents information" element={<Outlet />}>
           <Route index element={<UnitList />} />
           <Route path="addNewResident" element={<ResidentInfoAddNew />} />
-          <Route path="memberlist" element={<MemberList />} />
           <Route
             path="updateResident/:residentID"
             element={<ResidentInfoAddNew />}
           />
+          <Route path="viewResident/:UnitID" element={<MemberList />} />
         </Route>
 
         {/* User Credentials Page Routs and its sub routes */}
@@ -152,6 +166,11 @@ const Routers = ({user, setUser}) => {
         </Route>
 
         {/* END of User Credentials Page Routs and its sub routes */}
+
+        {/* Settings Page Routs */}
+        <Route path="/settings" element={<Outlet />}>
+          <Route index element={<SettingsPage />} />
+        </Route>
 
         {/* Residential Units Route */}
         <Route path="/residential units" element={<Outlet />}>
@@ -182,7 +201,7 @@ const Routers = ({user, setUser}) => {
           <Route path="eventsForm" element={<EventsForm />} />
         </Route>
       </Routes>
-    </>
+    </div>
   );
 };
 

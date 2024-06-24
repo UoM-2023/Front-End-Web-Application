@@ -13,7 +13,6 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import TopBar from "../../../Component/TopBar/TopBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -50,6 +49,7 @@ function UnitList() {
   const [residentlist, setResidentlist] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [residentID, setResidentID] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setResidentID(rowid);
@@ -77,6 +77,7 @@ function UnitList() {
         console.log(" get all Resident func CALLED");
         console.log(response);
         setResidentlist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -90,6 +91,19 @@ function UnitList() {
       )
       .then((response) => {
         console.log("Hanlde Edit Called........");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the View button
+  const handleView = (UnitID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/residentsDetails/viewResident/${UnitID}`)
+      .then((response) => {
+        console.log("Hanlde View Called........");
       })
       .catch((error) => {
         console.log(error);
@@ -113,11 +127,32 @@ function UnitList() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      residentlist.filter(
+        (f) =>
+          f.residentID.toLowerCase().includes(query) ||
+          f.name_with_initials.toLowerCase().includes(query) ||
+          f.nic.toLowerCase().includes(query) ||
+          f.Address.toLowerCase().includes(query) ||
+          f.UnitID.toLowerCase().includes(query) ||
+          f.unit_no.toLowerCase().includes(query) ||
+          f.block_no.toLowerCase().includes(query) ||
+          f.building.toLowerCase().includes(query) ||
+          f.member_type.toLowerCase().includes(query) ||
+          f.mobile_no.toLowerCase().includes(query) ||
+          f.email.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="unitListContainer">
-      <TopBar title="Residents Information" />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/residents information/addNewResident" />
       </div>
       <TableContainer component={Paper}>
@@ -136,18 +171,17 @@ function UnitList() {
               <StyledTableCell align="left">Resident ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Unit No</StyledTableCell>
-              <StyledTableCell align="left">Block No</StyledTableCell>
-              <StyledTableCell align="left">Building</StyledTableCell>
-              <StyledTableCell align="left">Member Type</StyledTableCell>
+              <StyledTableCell align="left">Type</StyledTableCell>
+              <StyledTableCell align="left">NIC</StyledTableCell>
+              <StyledTableCell align="left">Address</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {residentlist &&
-              residentlist.map((apartflowtesting, index) => {
+            {records &&
+              records.map((apartflowtesting, index) => {
                 return (
                   <StyledTableRow key={index}>
                     <StyledTableCell>
@@ -156,20 +190,13 @@ function UnitList() {
                     <StyledTableCell>
                       {apartflowtesting.name_with_initials}
                     </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.UnitID}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.unit_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.block_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.building}
-                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.UnitID}</StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.member_type}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.nic}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.Address}
                     </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.mobile_no}
@@ -178,10 +205,15 @@ function UnitList() {
                     <StyledTableCell
                       sx={{
                         display: "flex",
-                        gap: "1rem",
+                        gap: "0.3rem",
                       }}
                     >
-                      <ViewButton />
+                      <ViewButton
+                        route={`/residents information/viewResident/${[
+                          apartflowtesting.UnitID,
+                        ]}`}
+                        onClick={() => handleView([apartflowtesting.UnitID])}
+                      />
                       <EditButton
                         route={`/residents information/updateResident/${[
                           apartflowtesting.residentID,

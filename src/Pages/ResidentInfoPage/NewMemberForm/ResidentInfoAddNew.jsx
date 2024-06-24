@@ -8,10 +8,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
@@ -73,9 +70,7 @@ function ResidentInfoAddNew() {
       console.log("Form useEffect call");
       axios
         .get(
-          `http://localhost:3001/residentsDetails/addNewResident/updateResident${[
-            residentID,
-          ]}`
+          `http://localhost:3001/residentsDetails/addNewResident/updateResident/${residentID}`
         )
         .then((response) => {
           console.log("Response:", response);
@@ -84,20 +79,20 @@ function ResidentInfoAddNew() {
 
           // Assuming your response data structure is correct
           if (data && data.result && data.result.length > 0) {
-            const residentData = data.result[0][0]; // Assuming you want the first item from the first array
+            const residentData = data.result[0]; // Accessing the first item in the array
+            console.log("Resident Data:", residentData);
+
             const residentTypeValue =
               residentData.member_type === "Owner"
                 ? "Owner"
                 : residentData.member_type;
 
             const formattedDate = formatDate(residentData.dob);
-            console.log(formattedDate);
+            console.log("Formatted Date:", formattedDate);
 
             setFormData({
-              // building: buildingValue,
-              // block_no: blocknoValue,
-              // unit_category: unitCategoryValue,
-              // unit_no: unitnoValue,
+              residentID: residentData.residentID,
+              UnitID: residentData.UnitID,
               first_name: residentData.first_name,
               middle_name: residentData.middle_name,
               last_name: residentData.last_name,
@@ -111,9 +106,12 @@ function ResidentInfoAddNew() {
               Address: residentData.Address,
               img: residentData.img,
             });
+          } else {
+            console.error("Data structure does not match expected format");
           }
         })
-        .catch((err) => console.error("Failed to fetch Resident Data...", err));
+        .catch((err) => console.error("Failed to fetch Data...", err))
+        .finally(() => setIsLoading(false));
     }
   }, [residentID]);
 
@@ -186,18 +184,6 @@ function ResidentInfoAddNew() {
     if (!values.UnitID) {
       errors.UnitID = "Please Enter Unit ID * ";
     }
-    if (!values.building) {
-      errors.building = "Please select Building * ";
-    }
-    if (!values.block_no) {
-      errors.block_no = "Please select Block Number * ";
-    }
-    if (!values.unit_category) {
-      errors.unit_category = "Please select Unit Category *";
-    }
-    if (!values.unit_no) {
-      errors.unit_no = "Please select Unit Number *";
-    }
     if (!values.first_name) {
       errors.first_name = "Please Enter First Name *";
     }
@@ -251,16 +237,13 @@ function ResidentInfoAddNew() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    navigate("/residents information");
   };
 
   const handleResetForm = () => {
     setFormData({
       residentID: "",
       UnitID: "",
-      building: "",
-      block_no: "",
-      unit_category: "",
-      unit_no: "",
       first_name: "",
       middle_name: "",
       last_name: "",
@@ -284,7 +267,6 @@ function ResidentInfoAddNew() {
 
   return (
     <>
-      <TopBar title="Residents Information" />
       <div
         className="FormContainer"
         style={{
@@ -322,164 +304,6 @@ function ResidentInfoAddNew() {
             />
           </div>
           <p>{formErrors.UnitID}</p>
-
-          <div className="inputItem">
-            <InputLabel className="namesTag">Building :</InputLabel>
-            <Select
-              className="SelectformComponent"
-              name="building"
-              onChange={onChangeHandler}
-              value={formData.building}
-            >
-              <MenuItem value="" className="optionContainer">
-                Select Building
-              </MenuItem>
-              <MenuItem
-                value="Wing 01"
-                name="Wing 01"
-                className="optionContainer"
-              >
-                Wing 01
-              </MenuItem>
-              <MenuItem
-                value="Wing 02"
-                name="Wing 02"
-                className="optionContainer"
-              >
-                Wing 02
-              </MenuItem>
-              <MenuItem
-                value="Wing 03"
-                name="Wing 03"
-                className="optionContainer"
-              >
-                Wing 03
-              </MenuItem>
-              <MenuItem
-                value="Wing 04"
-                name="Wing 04"
-                className="optionContainer"
-              >
-                Wing 04
-              </MenuItem>
-            </Select>
-          </div>
-          <p>{formErrors.building}</p>
-
-          <div className="inputItem">
-            <InputLabel className="namesTag">Block :</InputLabel>
-            <Select
-              className="SelectformComponent"
-              name="block_no"
-              onChange={onChangeHandler}
-              value={formData.block_no}
-            >
-              <MenuItem value="" className="optionContainer">
-                Select Block
-              </MenuItem>
-              <MenuItem
-                value="Block 01"
-                name="Block 01"
-                className="optionContainer"
-              >
-                Block 01
-              </MenuItem>
-              <MenuItem
-                value="Block 02"
-                name="Block 02"
-                className="optionContainer"
-              >
-                Block 02
-              </MenuItem>
-              <MenuItem
-                value="Block 03"
-                name="Block 03"
-                className="optionContainer"
-              >
-                Block 03
-              </MenuItem>
-              <MenuItem
-                value="Wing 04"
-                name="Wing 04"
-                className="optionContainer"
-              >
-                Wing 04
-              </MenuItem>
-            </Select>
-          </div>
-          <p>{formErrors.block_no}</p>
-
-          <div className="inputItem">
-            <InputLabel className="namesTag">Unit Category :</InputLabel>
-            <Select
-              className="SelectformComponent"
-              name="unit_category"
-              onChange={onChangeHandler}
-              value={formData.unit_category}
-            >
-              <MenuItem value="" className="optionContainer">
-                Select Unit Category
-              </MenuItem>
-              <MenuItem
-                value="Bed Room 01"
-                name="Bed Room 01"
-                className="optionContainer"
-              >
-                Bed Room 01
-              </MenuItem>
-              <MenuItem
-                value="Bed Room 02"
-                name="Bed Room 02"
-                className="optionContainer"
-              >
-                Bed Room 02
-              </MenuItem>
-              <MenuItem
-                value="Bed Room 03"
-                name="Bed Room 03"
-                className="optionContainer"
-              >
-                Bed Room 03
-              </MenuItem>
-            </Select>
-          </div>
-          <p>{formErrors.unit_category}</p>
-
-          <div className="inputItem">
-            <InputLabel className="namesTag">Unit :</InputLabel>
-            <Select
-              className="SelectformComponent"
-              name="unit_no"
-              onChange={onChangeHandler}
-              value={formData.unit_no}
-            >
-              <MenuItem value="" className="optionContainer">
-                Select Unit Number
-              </MenuItem>
-              <MenuItem
-                value="Unit 01"
-                name="Unit 01"
-                className="optionContainer"
-              >
-                Unit 01
-              </MenuItem>
-              <MenuItem
-                value="Unit 02"
-                name="Unit 02"
-                className="optionContainer"
-              >
-                Unit 02
-              </MenuItem>
-              <MenuItem
-                value="Unit 03"
-                name="Unit 03"
-                className="optionContainer"
-              >
-                Unit 03
-              </MenuItem>
-            </Select>
-          </div>
-          <p>{formErrors.unit_no}</p>
 
           <div className="inputItem">
             <InputLabel htmlFor="firstName" className="namesTag">
@@ -596,7 +420,9 @@ function ResidentInfoAddNew() {
           <p>{formErrors.nic}</p>
 
           <div className="inputItem">
-            <InputLabel className="namesTag">Member Type :</InputLabel>
+            <InputLabel className="namesTag">
+              Relationship with householder :
+            </InputLabel>
             <Select
               className="SelectformComponent"
               name="member_type"
@@ -617,18 +443,55 @@ function ResidentInfoAddNew() {
                 Tenant
               </MenuItem>
               <MenuItem
-                value="Member01"
-                name="Member01"
+                value="Husband"
+                name="Husband"
                 className="optionContainer"
               >
-                Member 01
+                Husband
+              </MenuItem>
+              <MenuItem value="Wife" name="Wife" className="optionContainer">
+                Wife
+              </MenuItem>
+              <MenuItem value="Son" name="Son" className="optionContainer">
+                Son
               </MenuItem>
               <MenuItem
-                value="Member02"
-                name="Member02"
+                value="Daughter"
+                name="Daughter"
                 className="optionContainer"
               >
-                Member 02
+                Daughter
+              </MenuItem>
+              <MenuItem
+                value="Father"
+                name="Father"
+                className="optionContainer"
+              >
+                Father
+              </MenuItem>
+              <MenuItem
+                value="Mother"
+                name="Mother"
+                className="optionContainer"
+              >
+                Mother
+              </MenuItem>
+              <MenuItem
+                value="Brother"
+                name="Brother"
+                className="optionContainer"
+              >
+                Brother
+              </MenuItem>
+              <MenuItem
+                value="Sister"
+                name="Sister"
+                className="optionContainer"
+              >
+                Sister
+              </MenuItem>
+              <MenuItem value="Other" name="Other" className="optionContainer">
+                Other
               </MenuItem>
             </Select>
           </div>

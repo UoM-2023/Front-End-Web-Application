@@ -1,4 +1,7 @@
+//---------------------------------------------------------------------------------------------------
+
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./TopBar.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -8,13 +11,14 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import { logout } from "../../Pages/LoginPage/LoginServices/authService";
 // import { logout } from "../../Pages/LoginPage/LoginServices/authService";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-const TopBar = ({user,setUser,title}) => {
-  const [auth, setAuth] = React.useState(true); 
+const TopBar = ({ user, setUser, title }) => {
+  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
@@ -26,17 +30,22 @@ const TopBar = ({user,setUser,title}) => {
     setAnchorEl(null);
   };
 
+  const handleSettings = () => {
+    setAnchorEl(null);
+    navigate("/settings");
+  };
+
   const handleLogout = async () => {
     try {
       await logout();
       setUser(null);
       setAuth(false);
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      console.log("Failed to logout",error);
+      console.log("Failed to logout", error);
     }
   };
-  
+
   return (
     <div className="topBarContainer">
       <Box sx={{ flexGrow: 1 }}>
@@ -87,11 +96,39 @@ const TopBar = ({user,setUser,title}) => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Your Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>Settings</MenuItem>
-                  <MenuItem onClick={handleLogout} sx={{ fontWeight: "bold" }}>
+                  {/* <MenuItem onClick={handleLogout} sx={{ fontWeight: "bold" }}>
                     Logout
-                  </MenuItem>
+                  </MenuItem> */}
+                  <div style={{ padding: "1rem" }}>
+                    <MenuItem onClick={handleClose}>
+                      <div className="LoginUserDetails">
+                        <span className="textItem">
+                          <b>User Name :</b> AB-000001U
+                        </span>
+                        <span className="textItem">
+                          <b>User Role :</b> Maintenance Manager
+                        </span>
+                      </div>
+                    </MenuItem>
+                    <hr />
+                    <MenuItem onClick={handleSettings}>
+                      <SettingsOutlinedIcon sx={{ marginRight: "1rem" }} />
+                      Settings
+                    </MenuItem>
+                    <hr />
+                    <MenuItem
+                      onClick={handleLogout}
+                      sx={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {" "}
+                      <LogoutIcon
+                        sx={{ marginRight: "1rem", marginLeft: "0.15rem" }}
+                      />
+                      Logout
+                    </MenuItem>
+                  </div>
                 </Menu>
               </div>
             )}
