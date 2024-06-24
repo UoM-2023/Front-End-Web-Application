@@ -8,7 +8,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
@@ -88,36 +87,12 @@ function ResidentInfoAddNew() {
                 ? "Owner"
                 : residentData.member_type;
 
-            const buildingValue =
-              residentData.building === "Wing 01"
-                ? "Wing 01"
-                : residentData.building;
-
-            const blocknoValue =
-              residentData.block_no === "Block 01"
-                ? "Block 01"
-                : residentData.block_no;
-
-            const unitCategoryValue =
-              residentData.unit_category === "Bed Room 01"
-                ? "Bed Room 01"
-                : residentData.unit_category;
-
-            const unitnoValue =
-              residentData.unit_no === "Unit 01"
-                ? "Unit 01"
-                : residentData.unit_no;
-
             const formattedDate = formatDate(residentData.dob);
             console.log("Formatted Date:", formattedDate);
 
             setFormData({
               residentID: residentData.residentID,
               UnitID: residentData.UnitID,
-              building: buildingValue,
-              block_no: blocknoValue,
-              unit_category: unitCategoryValue,
-              unit_no: unitnoValue,
               first_name: residentData.first_name,
               middle_name: residentData.middle_name,
               last_name: residentData.last_name,
@@ -209,18 +184,6 @@ function ResidentInfoAddNew() {
     if (!values.UnitID) {
       errors.UnitID = "Please Enter Unit ID * ";
     }
-    if (!values.building) {
-      errors.building = "Please select Building * ";
-    }
-    if (!values.block_no) {
-      errors.block_no = "Please select Block Number * ";
-    }
-    if (!values.unit_category) {
-      errors.unit_category = "Please select Unit Category *";
-    }
-    if (!values.unit_no) {
-      errors.unit_no = "Please select Unit Number *";
-    }
     if (!values.first_name) {
       errors.first_name = "Please Enter First Name *";
     }
@@ -281,10 +244,6 @@ function ResidentInfoAddNew() {
     setFormData({
       residentID: "",
       UnitID: "",
-      building: "",
-      block_no: "",
-      unit_category: "",
-      unit_no: "",
       first_name: "",
       middle_name: "",
       last_name: "",
