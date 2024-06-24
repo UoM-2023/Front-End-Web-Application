@@ -3,11 +3,14 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton"; 
+import { useParams } from "react-router-dom";
+import axios from "axios"
 
 
 function UtilityDetailsUpdateForm() {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    utilityType: "",
+    utility_name: "",
     priceRange: "",
     basePrice: "",
     unitPrice: "",
@@ -17,6 +20,31 @@ function UtilityDetailsUpdateForm() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  useEffect(() => {
+    console.log("Current id", id);
+    if (id) {
+      console.log("Update Fund useEffect");
+      axios.get(`http://localhost:3001/finance/utilityDetails/${id}`).then((response) => {
+        console.log("Response", response);
+        const { data } = response;
+        console.log("Response data",data);
+
+       
+        
+        if( response ){
+          const utilityData = data
+          console.log(utilityData);
+          setFormData({
+            utility_name: utilityData.utility_name,
+            priceRange: "",
+            basePrice: "",
+            unitPrice: "",
+            modifiedBy: "",
+          })
+        }
+      })
+    }
+  })
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -42,8 +70,8 @@ function UtilityDetailsUpdateForm() {
     // For check the price fields get double values only
     const price_regex = /^-?\d+(\.\d+)?$/;
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
+    if (!values.utility_name) {
+      errors.utility_name = "Please select Utility Type * ";
     }
     if (!values.priceRange) {
       errors.priceRange = "Please Enter The Price Range *";
@@ -68,7 +96,7 @@ function UtilityDetailsUpdateForm() {
   return (
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel className="namesTag">Utility Type :</InputLabel>
           <Select
             className="SelectformComponent"
@@ -94,7 +122,20 @@ function UtilityDetailsUpdateForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.utilityType}</p>
+        <p>{formErrors.utilityType}</p> */}
+
+        <div className="inputItem">
+          <InputLabel htmlFor="utilityTypejs" className="namesTag">
+            Utility Type
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="utility_name"
+            onChange={onChangeHandler}
+            value={formData.utility_name}
+          />
+        </div>
 
         <div className="inputItem">
         <InputLabel className="namesTag">Price Range :</InputLabel>

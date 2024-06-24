@@ -64,15 +64,9 @@ const Routers = ({ user, setUser }) => {
           <Route path="utilitycharges" element={<Outlet />}>
             <Route index element={<UtilityCharges />} />
             <Route path="addUtility" element={<UtilityForm />} />
-            <Route path="viewUtilityDetails" element={<UtilityDetails />} />
-            <Route
-              path="addNewUtilityType"
-              element={<UtilityDetailsAddNewForm />}
-            />
-            <Route
-              path="updateUtilityDetails/:id"
-              element={<UtilityDetailsAddNewForm />}
-            />
+            <Route path='viewUtilityDetails' element={<UtilityDetails />} />
+            <Route path='addNewUtilityType' element={<UtilityDetailsAddNewForm />} />
+            <Route path='updateUtilityDetails/:id' element={<UtilityDetailsUpdateForm/>} />
           </Route>
 
           {/* Expenses routes */}
