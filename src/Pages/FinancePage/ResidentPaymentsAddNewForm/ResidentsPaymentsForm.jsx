@@ -9,7 +9,7 @@ import BackButton from "../../../Component/Buttons/BackButton";
 function ResidentsPaymentsForm() {
   const [formData, setFormData] = useState({
     chargeType: "",
-    unitNumber: "",
+    unit_id: "",
     residentName: "",
     paymentMethod: "",
     amount: "",
@@ -44,8 +44,8 @@ function ResidentsPaymentsForm() {
     if (!values.chargeType) {
       errors.chargeType = "Please Select Charge Type * ";
     }
-    if (!values.unitNumber) {
-      errors.unitNumber = "Please Enter Unit Number *";
+    if (!values.unit_id) {
+      errors.unit_id = "Please Enter Unit Number *";
     }
     if (!values.residentName) {
       errors.residentName = "Please Enter Resident Name *";
@@ -86,6 +86,9 @@ function ResidentsPaymentsForm() {
             >
               Electricity
             </MenuItem>
+            <MenuItem value="all" name="all" className="optionContainer">
+              All
+            </MenuItem>
           </Select>
         </div>
         <p>{formErrors.chargeType}</p>
@@ -97,12 +100,12 @@ function ResidentsPaymentsForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="unitNumber"
+            name="unit_id"
             onChange={onChangeHandler}
-            value={formData.unitNumber}
+            value={formData.unit_id}
           />
         </div>
-        <p>{formErrors.unitNumber}</p>
+        <p>{formErrors.unit_id}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="residentName" className="namesTag">

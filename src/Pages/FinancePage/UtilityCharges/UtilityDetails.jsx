@@ -18,6 +18,7 @@ import { styled } from '@mui/system';
 import { TableCell, TableRow, tableCellClasses } from '@mui/material';
 import EditButton from '../../../Component/Buttons/EditButton';
 import AddNewButton from '../../../Component/Buttons/AddNewButton';
+import axiosInstance from '../../LoginPage/LoginServices/authService';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -117,7 +118,7 @@ function UtilityDetails() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/finance/utilityDetails')
+    axiosInstance.get('/finance/utilityDetails')
       .then(response => {
         console.log("API Response:", response.data);
         const formattedData = response.data.map(utility => createData(

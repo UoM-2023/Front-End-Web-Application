@@ -5,6 +5,7 @@ import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton"; 
 import { useParams } from "react-router-dom";
 import axios from "axios"
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 
 function UtilityDetailsUpdateForm() {
@@ -24,7 +25,7 @@ function UtilityDetailsUpdateForm() {
     console.log("Current id", id);
     if (id) {
       console.log("Update Fund useEffect");
-      axios.get(`http://localhost:3001/finance/utilityDetails/${id}`).then((response) => {
+      axiosInstance.get(`/finance/utilityDetails/${id}`).then((response) => {
         console.log("Response", response);
         const { data } = response;
         console.log("Response data",data);

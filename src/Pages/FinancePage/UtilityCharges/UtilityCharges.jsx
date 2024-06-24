@@ -8,6 +8,7 @@ import AddNewButton from '../../../Component/Buttons/AddNewButton';
 import './UtilityCharges.css';
 import SearchBar from '../../../Component/SearchBar/SearchBar';
 import UtilityDetailsButton from '../../../Component/Buttons/UtilityDetailsButton';
+import axiosInstance from '../../LoginPage/LoginServices/authService';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -98,7 +99,7 @@ function UtilityCharges() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/finance/getUtilityCharges')
+    axiosInstance.get('/finance/getUtilityCharges')
       .then(response => {
         if (response.data && response.data.result) {
           console.log(response.data.result);

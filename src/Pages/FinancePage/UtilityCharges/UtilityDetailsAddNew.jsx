@@ -8,6 +8,7 @@ import AddRangeButton from "../../../Component/Buttons/AddRow";
 import { KeyboardArrowDown, KeyboardArrowDownRounded, KeyboardArrowUp } from "@mui/icons-material";
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 
 
@@ -23,6 +24,8 @@ function UtilityDetailsAddNewForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  
 
   const onChangeHandler = (event, index) => {
       const { name, value } = event.target;
@@ -74,7 +77,7 @@ function UtilityDetailsAddNewForm() {
       }));
   
       try {
-        const response = axios.post('http://localhost:3001/finance/utilityDetails', { utilityData, priceData });
+        const response = axiosInstance.post('/finance/utilityDetails', { utilityData, priceData });
         console.log(response.data);
         // navigate('/finance/viewUtilityDetails');
         setIsSubmit(true);
