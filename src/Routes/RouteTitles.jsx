@@ -54,6 +54,7 @@ const RouteTitles = {
   // --------- User Credentials ----------------------
 
   "/user%20credentials": "User Credentials",
+  "/user%20credentials/StaffUserCredentials": "User Credentials",
 
   // ---------- Settings ----------------------
 

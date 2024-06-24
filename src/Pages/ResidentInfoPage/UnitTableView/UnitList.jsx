@@ -171,10 +171,9 @@ function UnitList() {
               <StyledTableCell align="left">Resident ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Unit No</StyledTableCell>
-              <StyledTableCell align="left">Block No</StyledTableCell>
-              <StyledTableCell align="left">Building</StyledTableCell>
               <StyledTableCell align="left">Type</StyledTableCell>
+              <StyledTableCell align="left">NIC</StyledTableCell>
+              <StyledTableCell align="left">Address</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
@@ -193,16 +192,11 @@ function UnitList() {
                     </StyledTableCell>
                     <StyledTableCell>{apartflowtesting.UnitID}</StyledTableCell>
                     <StyledTableCell>
-                      {apartflowtesting.unit_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.block_no}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.building}
-                    </StyledTableCell>
-                    <StyledTableCell>
                       {apartflowtesting.member_type}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.nic}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.Address}
                     </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.mobile_no}
