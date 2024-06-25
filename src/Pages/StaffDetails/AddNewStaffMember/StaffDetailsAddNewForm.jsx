@@ -9,7 +9,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import "./Addnewform.css";
-import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
@@ -116,56 +115,6 @@ function StaffDetailsAddNewForm() {
         .finally(() => setIsLoading(false));
     }
   }, [staffID]);
-
-  // useEffect(() => {
-  //   console.log("Current Staff ID:", staffID);
-  //   if (staffID) {
-  //     // Check if there is an ID, which means we are in "edit" mode
-  //     console.log("Form useEffect call");
-  //     axios
-  //       .get(
-  //         `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
-  //           staffID,
-  //         ]}`
-  //       )
-  //       .then((response) => {
-  //         console.log("Response:", response);
-  //         const { data } = response;
-  //         console.log("Log has called", data);
-
-  //         // Assuming your response data structure is correct
-  //         if (data && data.result && data.result.length > 0) {
-  //           const staffData = data.result[0][0]; // Assuming you want the first item from the first array
-  //           const staffCategoryValue =
-  //             staffData.staff_category === "Admin"
-  //               ? "Admin"
-  //               : staffData.staff_category;
-
-  //           const formattedDate = formatDate(staffData.dob);
-  //           console.log(formattedDate);
-
-  //           setFormData({
-  //             staffID:staffData.staffID,
-  //             first_name: staffData.first_name,
-  //             middle_name: staffData.middle_name,
-  //             last_name: staffData.last_name,
-  //             name_with_initials: staffData.name_with_initials,
-  //             gender: staffData.gender,
-  //             dob: formattedDate,
-  //             nic: staffData.nic,
-  //             staff_category: staffCategoryValue,
-  //             qualification: staffData.qualification,
-  //             email: staffData.email,
-  //             mobile_no: staffData.mobile_no,
-  //             Address: staffData.Address,
-  //             city: staffData.city,
-  //             img: staffData.img,
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => console.error("Failed to fetch Data...", err));
-  //   }
-  // }, [staffID]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -309,8 +258,6 @@ function StaffDetailsAddNewForm() {
       mobile_no: "",
       Address: "",
       city: "",
-      username: "",
-      password: "",
       img: "",
     });
   };
