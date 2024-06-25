@@ -39,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Expenses() {
   const [expenseslist, setExpenseslist] = useState([]);
   const [open, setOpen] = React.useState(false);
-  // const [id, setId] = useState("");
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     console.log("frontend use effect");
@@ -55,6 +55,7 @@ function Expenses() {
         console.log("CALLED");
         console.log(response);
         setExpenseslist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -72,11 +73,28 @@ function Expenses() {
       });
   };
 
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      expenseslist.filter(
+        (f) =>
+          f.expense_id.toLowerCase().includes(query) ||
+          f.amount.toString().toLowerCase().includes(query) ||
+          f.eType.toLowerCase().includes(query) ||
+          f.payment_method.toLowerCase().includes(query) ||
+          f.staff_id.toLowerCase().includes(query) ||
+          f.added_date.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="expensesContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/finance/expenses/addExpense" />
       </div>
       <TableContainer component={Paper}>
@@ -109,7 +127,7 @@ function Expenses() {
           {/* ---- Table Data ---- */}
 
           <TableBody>
-            {expenseslist.map((Expenses, index) => (
+            {records.map((Expenses, index) => (
               <StyledTableRow key={Expenses.id}>
                 <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="center">

@@ -139,9 +139,6 @@ function UnitList() {
           f.nic.toLowerCase().includes(query) ||
           f.Address.toLowerCase().includes(query) ||
           f.UnitID.toLowerCase().includes(query) ||
-          f.unit_no.toLowerCase().includes(query) ||
-          f.block_no.toLowerCase().includes(query) ||
-          f.building.toLowerCase().includes(query) ||
           f.member_type.toLowerCase().includes(query) ||
           f.mobile_no.toLowerCase().includes(query) ||
           f.email.toLowerCase().includes(query)

@@ -82,7 +82,7 @@ function StaffList() {
       .catch((error) => console.log(error));
   };
 
-  // Handling the edit button (primary key)
+  // Handling the edit button 
 
   const handleEdit = (staffID) => {
     console.log("Hanlde Edit Before axios");
@@ -98,7 +98,7 @@ function StaffList() {
       });
   };
 
-  // Handling the Delete button (primary key)
+  // Handling the Delete button 
 
   const handleDelete = (staffID) => {
     axios
