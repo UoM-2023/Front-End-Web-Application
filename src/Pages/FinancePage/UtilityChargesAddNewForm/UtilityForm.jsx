@@ -3,17 +3,18 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-import "./FormDesigns.css"; 
+import "./FormDesigns.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 
 function UtilityForm() {
   const [formData, setFormData] = useState({
     unit_id: "",
     month: "",
     electricityUsage: "",
-    waterUsage:"",
+    waterUsage: "",
     gasUsage: "",
     staffID: "",
     remark: "",
@@ -21,6 +22,10 @@ function UtilityForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
@@ -30,26 +35,32 @@ function UtilityForm() {
       console.error("formData is undefined");
       return;
     }
-    setFormData(prevData => ({
-        ...prevData,
-        [name]: value,
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
     }));
-
   };
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
-    axios.post('http://localhost:3001/finance/addUtilityUsage', formData)
-        .then(res => {
-          console.log('Create successful:', res.data);
-          setIsSubmit(true);
-          navigate(-1);
-        })
-        .catch(err => {
-          console.error('Failed to create data:', err);
-          alert("Failed");
-        });
+    setIsLoading(true);
+
+    axios
+      .post("http://localhost:3001/finance/addUtilityUsage", formData)
+      .then((res) => {
+        console.log("Create successful:", res.data);
+        setIsSubmit(true);
+        setSuccessMessage(res.data.message);
+        // navigate(-1);
+      })
+      .catch((err) => {
+        console.error("Failed to create data:", err);
+        alert("Failed");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -83,10 +94,44 @@ function UtilityForm() {
     return errors;
   };
 
-  return (
-    <div className="FormContainer">
-      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate(-1);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      unit_id: "",
+      month: "",
+      electricityUsage: "",
+      waterUsage: "",
+      gasUsage: "",
+      staffID: "",
+      remark: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
+  return (
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
+      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel htmlFor="unit_id" className="namesTag">
             Unit ID:
@@ -130,7 +175,6 @@ function UtilityForm() {
           />
         </div>
         <p>{formErrors.electricityUsage}</p>
-
 
         <div className="inputItem">
           <InputLabel htmlFor="waterUsage" className="namesTag">
@@ -178,7 +222,6 @@ function UtilityForm() {
         </div>
         <p>{formErrors.staffID}</p>
 
-
         <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
             Remark :
@@ -205,10 +248,12 @@ function UtilityForm() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );

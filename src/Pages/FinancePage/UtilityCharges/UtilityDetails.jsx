@@ -1,23 +1,23 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import * as React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "./UtilityCharges.css";
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { styled } from '@mui/system';
-import { TableCell, TableRow, tableCellClasses } from '@mui/material';
-import EditButton from '../../../Component/Buttons/EditButton';
-import AddNewButton from '../../../Component/Buttons/AddNewButton';
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { styled } from "@mui/system";
+import { TableCell, TableRow, tableCellClasses } from "@mui/material";
+import EditButton from "../../../Component/Buttons/EditButton";
+import AddNewButton from "../../../Component/Buttons/AddNewButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,16 +40,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(utility_name, utility_id, modified_by, modified_date, details = []) {
+function createData(
+  utility_name,
+  utility_id,
+  modified_by,
+  modified_date,
+  details = []
+) {
   return {
     name: utility_name,
     utility_id,
     modified_by,
     modified_date,
-    details: details.map(price => ({
+    details: details.map((price) => ({
       unit_range: price.price_range,
       base_price: price.base_price,
-      unit_price: price.unit_price
+      unit_price: price.unit_price,
     })),
   };
 }
@@ -59,14 +65,18 @@ function Row({ row }) {
 
   return (
     <React.Fragment>
-      <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <StyledTableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <StyledTableCell component="th" scope="row">
           {row.name}
         </StyledTableCell>
         <StyledTableCell align="center">{row.modified_by}</StyledTableCell>
-        <StyledTableCell align="center">{row.modified_date.slice(0,10)}</StyledTableCell>
-        <StyledTableCell sx={{ textAlign: 'center', verticalAlign: 'middle' }}>
-          <EditButton route ={`/finance/utilitycharges/updateUtilityDetails/${row.utility_id}`} />
+        <StyledTableCell align="center">
+          {row.modified_date.slice(0, 10)}
+        </StyledTableCell>
+        <StyledTableCell sx={{ textAlign: "center", verticalAlign: "middle" }}>
+          <EditButton
+            route={`/finance/utilitycharges/updateUtilityDetails/${row.utility_id}`}
+          />
         </StyledTableCell>
         <StyledTableCell>
           <IconButton
@@ -79,7 +89,10 @@ function Row({ row }) {
         </StyledTableCell>
       </StyledTableRow>
       <StyledTableRow>
-        <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <StyledTableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={6}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
@@ -88,7 +101,9 @@ function Row({ row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align="center">Price Range</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Price Range
+                    </StyledTableCell>
                     <StyledTableCell align="center">Base Price</StyledTableCell>
                     <StyledTableCell align="center">Unit Price</StyledTableCell>
                   </TableRow>
@@ -96,11 +111,19 @@ function Row({ row }) {
                 <TableBody>
                   {row.details.map((detailsRow, index) => (
                     <TableRow key={index}>
-                      <StyledTableCell component="th" scope="row" align="center">
+                      <StyledTableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                      >
                         {detailsRow.unit_range}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{detailsRow.base_price}</StyledTableCell>
-                      <StyledTableCell align="center">{detailsRow.unit_price}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        {detailsRow.base_price}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {detailsRow.unit_price}
+                      </StyledTableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -117,38 +140,44 @@ function UtilityDetails() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/finance/utilityDetails')
-      .then(response => {
+    axios
+      .get("http://localhost:3001/finance/utilityDetails")
+      .then((response) => {
         console.log("API Response:", response.data);
-        const formattedData = response.data.map(utility => createData(
-          utility.utility_name,
-          utility.utility_id,
-          utility.modified_by,
-          utility.modified_date,
-          utility.prices
-        ));
+        const formattedData = response.data.map((utility) =>
+          createData(
+            utility.utility_name,
+            utility.utility_id,
+            utility.modified_by,
+            utility.modified_date,
+            utility.prices
+          )
+        );
         setRows(formattedData);
       })
-      .catch(error => {
-        console.error('Error fetching utility data:', error);
+      .catch((error) => {
+        console.error("Error fetching utility data:", error);
       });
   }, []);
 
   return (
-    <div className='utilityDetailsContainer'>
-      <div className='pageTop'>
+    <div className="utilityDetailsContainer">
+      <div className="pageTop">
         <div></div>
-        <AddNewButton route="/finance/utilitycharges/addNewUtilityType"/>
+        <AddNewButton route="/finance/utilitycharges/addNewUtilityType" />
       </div>
-      
-      <TableContainer component={Paper} sx={{ boxShadow: 'none', border: 0 }}>
-        <Table aria-label="collapsible table" sx={{
-              maxWidth: "93.5vw",
-              marginTop: 5,
-              marginLeft: 10,
-              marginRight: 0,
-              paddingTop: "1rem",
-            }} >
+
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: 0 }}>
+        <Table
+          aria-label="collapsible table"
+          sx={{
+            maxWidth: "93.5vw",
+            marginTop: 5,
+            marginLeft: 10,
+            marginRight: 0,
+            paddingTop: "1rem",
+          }}
+        >
           <TableHead>
             <TableRow>
               <StyledTableCell>Utility Name</StyledTableCell>
