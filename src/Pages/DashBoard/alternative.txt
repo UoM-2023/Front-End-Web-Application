@@ -1,0 +1,90 @@
+---------------------- old welcomeback card ------------------------------
+
+<span className="Welcomeback">
+          <Card sx={{ maxWidth: 600 }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="170"
+                image="https://cdn.vectorstock.com/i/1000x1000/33/37/exterior-or-facade-of-tall-city-apartment-building-vector-20513337.webp"
+                alt="green iguana"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Welcome Back!
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  ApartFlow Dashboard
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </span>
+
+
+---------------------------------------------------------------
+
+
+
+
+
+-------------old Emergency Card ------------------------------
+
+        <span className="Emergency">
+          <Card sx={{ maxWidth: 1500, backgroundColor: '#eb6e3c' }}>
+            <CardActionArea>
+
+              <CardContent>
+                <h1 className='title'>Emergency!!</h1>
+                <Typography variant="body2" color="text.secondary">
+                  <div className="TypeAreaAndButton">
+                    <span className="TextArea"><TextArea /></span>
+                    <span className="Button">
+                      <AddNewButton />
+                    </span>
+                  </div>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </span>
+
+---------------------------------------------------------------
+
+
+
+-------------old Card One ------------------------------
+
+<span className="cardOne">
+          <Card sx={{
+            maxWidth: 1000,
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            border: "#383737 solid",
+          }}>
+            <CardActionArea>
+              <CardMedia>
+
+              </CardMedia>
+              <div className="PaymentAndIcon">
+                <span className="NewPayments">
+                  <CardContent>
+                    <h1>New</h1>
+                    <h1>Payments</h1>
+                    <Typography variant="body2" color="text.secondary">
+                      No Events For Today
+                    </Typography>
+                  </CardContent>
+                </span>
+                <span className="Icon">
+                  <PaymentIcon />
+                </span>
+              </div>
+
+
+            </CardActionArea>
+          </Card>
+        </span>
+
+     
+---------------------------------------------------------------   

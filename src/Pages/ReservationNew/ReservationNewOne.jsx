@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
-// import SaveButton from "../../../Component/Buttons/SaveButton";
-// import BackButton from "../../../Component/Buttons/BackButton";
 import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -10,21 +8,84 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import BackButton from "../../Component/Buttons/BackButton";
 import SaveButton from "../../Component/Buttons/SaveButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function ReservationNewOne() {
+  const { ref_no } = useParams();
+
   const [formData, setFormData] = useState({
-
-    Unit: "",
-    rName: "",
-    building: "",
-
-
+    facility_name: "",
+    amount_charge: "",
+    charge_per: "",
+    availability: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  useEffect(() => {
+    console.log("Current Facility ID:", ref_no);
+    if (ref_no) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect call");
+      axios
+        .get(
+          //postman get url
+          `http://localhost:3001/Facility/Facilities/${ref_no}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const facilityData = data.result[0]; // Accessing the first item in the array
+            console.log("Facility Data:", facilityData);
+
+
+            //selection use
+            const facility_nameValue =
+              facilityData.facility_name === "Gym"
+                ? "Gym"
+                : facilityData.facility_name;
+
+
+            //selection use
+            const charge_perValue =
+              facilityData.charge_per === "Event"
+                ? "Event"
+                : facilityData.charge_per;
+
+
+
+            //selection use
+            const availabilityValue =
+              facilityData.availability === "Reserved"
+                ? "Reserved"
+                : facilityData.availability;
+
+
+
+
+            setFormData({
+
+
+              facility_name: facility_nameValue,
+              amount_charge: facilityData.amount_charge,
+              charge_per: charge_perValue,
+              availability: availabilityValue,
+
+            });
+          } else {
+            console.error("Data structure does not match expected format");
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err))
+
+    }
+  }, [ref_no]);//primary key
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -37,7 +98,43 @@ function ReservationNewOne() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+
+
+    //primary key
+    if (ref_no) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          //postman edit url
+          `http://localhost:3001/Facility/Facilities/${[
+            ref_no,
+          ]}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+
+
+        })
+        .catch((err) => console.error("Failed to update data:", err));
+
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        // postman post url 
+        .post("http://localhost:3001/Facility/Facilities", formData)
+        .then((res) => {
+          console.log("Create Successful:", res.data);
+          setIsSubmit(true);
+
+
+        })
+        .catch((err) => console.error("Failed to Create data:", err));
+
+    }
   };
+
 
   useEffect(() => {
     console.log(formErrors);
@@ -48,102 +145,108 @@ function ReservationNewOne() {
 
   const validate = (values) => {
     const errors = {};
-    const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-
-
-    if (!values.Unit) {
-      errors.Unit = "Please Enter The Unit *";
+    if (!values.facility_name) {
+      errors.facility_name = "Please Enter The facility_name *";
     }
-    if (!values.rName) {
-      errors.rName = "Please Enter Resident Name *";
+    if (!values.amount_charge) {
+      errors.amount_charge = "Please Enter Resident Name *";
     }
-    if (!values.faciName) {
-        errors.faciName = "Please select the Facility Name * ";
-      }
- 
-
-
+    if (!values.charge_per) {
+      errors.charge_per = "Please select the charge_per * ";
+    }
+    if (!values.availability) {
+      errors.availability = "Please select the availability * ";
+    }
     return errors;
   };
+
   return (
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        
-
-
-      <div className="inputItem">
+        <div className="inputItem">
           <InputLabel className="namesTag">Facility Name :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="faciName"
+            name="facility_name"
             onChange={onChangeHandler}
-            value={formData.faciName}
+            value={formData.facility_name}
           >
             <MenuItem value="" className="optionContainer">
               Select Facility Name
             </MenuItem>
-            <MenuItem
-              value="Wing 01"
-              name="Wing 01"
-              className="optionContainer"
-            >
-              Wing 01
+            <MenuItem value="Gym" name="Gym" className="optionContainer">
+              Gym
             </MenuItem>
-            <MenuItem
-              value="Wing 02"
-              name="Wing 02"
-              className="optionContainer"
-            >
-              Wing 02
+            <MenuItem value="Pool" name="Pool" className="optionContainer">
+              Pool
             </MenuItem>
-            <MenuItem
-              value="Wing 03"
-              name="Wing 03"
-              className="optionContainer"
-            >
-              Wing 03
-            </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
+            <MenuItem value="Event Hall" name="Event Hall" className="optionContainer">
+              Event Hall
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.faciName}</p>
-
-
-
+        <p>{formErrors.facility_name}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="Unit" className="namesTag">
-            Unit :
+          <InputLabel htmlFor="facility_name" className="namesTag">
+            Amount Charge :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="Unit"
+            name="amount_charge"
             onChange={onChangeHandler}
-            value={formData.Unit}
+            value={formData.amount_charge}
           />
         </div>
-        <p>{formErrors.Unit}</p>
+        <p>{formErrors.amount_charge}</p>
+
 
         <div className="inputItem">
-          <InputLabel htmlFor="residentName" className="namesTag">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="rName"
+          <InputLabel className="namesTag">Charge Per :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="charge_per"
             onChange={onChangeHandler}
-            value={formData.rName}
-          />
+            value={formData.charge_per}
+          >
+            <MenuItem value="" className="optionContainer">
+              Select Charge Per
+            </MenuItem>
+            <MenuItem value="Event" name="Event" className="optionContainer">
+              Event
+            </MenuItem>
+            <MenuItem value="Session" name="Session" className="optionContainer">
+              Session
+            </MenuItem>
+            <MenuItem value=" Month" name=" Month" className="optionContainer">
+              Month
+            </MenuItem>
+          </Select>
         </div>
-        <p>{formErrors.rName}</p>
+        <p>{formErrors.charge_per}</p>
+
+
+        <div className="inputItem">
+          <InputLabel className="namesTag">Availability :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="availability"
+            onChange={onChangeHandler}
+            value={formData.availability}
+          >
+            <MenuItem value="" className="optionContainer">
+              Select Availability
+            </MenuItem>
+            <MenuItem value="Reserved" name="Reserved" className="optionContainer">
+              Reserved
+            </MenuItem>
+            <MenuItem value=" Not Yet" name=" Not Yet" className="optionContainer">
+              Not Yet
+            </MenuItem>
+          </Select>
+        </div>
+        <p>{formErrors.availability}</p>
 
 
 
@@ -153,7 +256,7 @@ function ReservationNewOne() {
           <Grid container spacing={2}>
             <Grid item>
               <div>
-                <SaveButton/>
+                <SaveButton />
               </div>
             </Grid>
             <Grid item>
@@ -170,4 +273,5 @@ function ReservationNewOne() {
     </div>
   );
 }
+
 export default ReservationNewOne;

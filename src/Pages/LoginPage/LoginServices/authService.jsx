@@ -85,6 +85,7 @@ export const setAuthToken = (token) => {
 };
 
 export const getDecodedToken = (token) => {
+  console.log(token);
   return jwtDecode(token);
 };
 
