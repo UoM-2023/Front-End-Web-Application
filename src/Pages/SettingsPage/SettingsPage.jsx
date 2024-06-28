@@ -282,6 +282,14 @@ function SettingsPage() {
         <div className="pageTitle">
           <h2>Profile Settings</h2>
         </div>
+        <div className="pageTopContent">
+          <span className="loginDetailsText">
+            <b>User Name:</b> kulathilaka.21
+          </span>
+          <span className="loginDetailsText">
+            <b>User Role:</b> Finance Manager
+          </span>
+        </div>
         {isLoading && <LoadingIndicator />}
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="Password">

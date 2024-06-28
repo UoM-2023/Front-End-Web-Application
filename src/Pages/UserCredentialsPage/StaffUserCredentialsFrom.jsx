@@ -145,7 +145,7 @@ function StaffUserCredentialsFrom() {
               <MenuItem value="" className="optionContainer">
                 Select Staff Category
               </MenuItem>
-              <MenuItem value="Admin" name="Admin" className="optionContainer">
+              <MenuItem value="admin" name="admin" className="optionContainer">
                 Admin
               </MenuItem>
               <MenuItem
