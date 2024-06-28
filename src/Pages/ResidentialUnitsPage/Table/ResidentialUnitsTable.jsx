@@ -38,8 +38,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const ActionContainer = styled('div')({
   display: 'flex',
-  // justifyContent: 'space-between',
-  alignItems: 'right',
+    // justifyContent: 'space-between',
+    justifyContent: 'center', // Center horizontally
+    alignItems: 'center', // Center vertically
   // gap: '8px',  // Adjust the gap as needed
 });
 
@@ -99,7 +100,6 @@ function ResidentialUnitsTable() {
               <StyledTableCell align="left">Block</StyledTableCell>
               <StyledTableCell align="left">Building</StyledTableCell>
               <StyledTableCell align="left">Category</StyledTableCell>
-              <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Status</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
@@ -111,7 +111,6 @@ function ResidentialUnitsTable() {
                 <StyledTableCell align="left">{row.Block_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.Building}</StyledTableCell>
                 <StyledTableCell align="left">{row.Category}</StyledTableCell>
-                <StyledTableCell align="left">{row.Resident_name}</StyledTableCell>
                 <StyledTableCell align="left">{row.RStatus}</StyledTableCell>
                 <StyledTableCell align="right">
                   <ActionContainer>

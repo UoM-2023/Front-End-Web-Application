@@ -42,8 +42,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const ActionContainer = styled('div')({
   display: 'flex',
   // justifyContent: 'space-between',
-  alignItems: 'right',
-  // gap: '8px',  // Adjust the gap as needed
+  justifyContent: 'center', // Center horizontally
+  alignItems: 'center', // Center vertically
+  //gap: '8px',  // Adjust the gap as needed
+  
 });
 
 function NoticesTable() {

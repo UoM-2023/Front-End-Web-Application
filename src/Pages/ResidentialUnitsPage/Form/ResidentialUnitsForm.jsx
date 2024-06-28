@@ -15,7 +15,6 @@ function ResidentialUnitsForm() {
     Block_no: "",
     Building: "",
     Category: "",
-    Resident_name: "",
     RStatus: "",
   });
 
@@ -65,9 +64,6 @@ function ResidentialUnitsForm() {
       }
       if (!values.RStatus) {
         errors.RStatus = "Please select Status *";
-      }
-      if (!values.Resident_name) {
-        errors.Resident_name = "Please enter Resident Name *";
       }
       return errors;
   };
@@ -134,16 +130,16 @@ function ResidentialUnitsForm() {
               Select Building
             </MenuItem>
             <MenuItem value="Wing 01" name="Wing 01" className="optionContainer">
-            Wing 01
+            Wing A
             </MenuItem>
             <MenuItem value="Wing 02" name="Wing 02" className="optionContainer">
-            Wing 02
+            Wing B
             </MenuItem>
             <MenuItem value="Wing 03" name="Wing 03" className="optionContainer" >
-            Wing 03
+            Wing C
             </MenuItem>
             <MenuItem value="Wing 04" name="Wing 04" className="optionContainer">
-            Wing 04
+            Wing D
             </MenuItem>
           </Select>
         </div>
@@ -178,18 +174,6 @@ function ResidentialUnitsForm() {
         </div>
         <p>{formErrors.Category}</p>
 
-        <div className="inputItem">
-          <InputLabel htmlFor="Resident_name" className="Resident_name">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="Resident_name"
-            onChange={onChangeHandler}
-            value={formData.Resident_name}/>
-        </div>
-        <p>{formErrors.Resident_name}</p>
 
         <div className="inputItems">
           <InputLabel htmlFor="RStatus" className="namesTag">

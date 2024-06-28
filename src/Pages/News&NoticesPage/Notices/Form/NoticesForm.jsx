@@ -7,6 +7,7 @@ import "./NoticesForm.css";
 import TopBar from "../../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
 
 function NoticesForm() {
@@ -19,6 +20,27 @@ function NoticesForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+    // Initialize Socket.IO client
+    const socket = io('http://localhost:3001/newsNotices/newNotice');
+
+    useEffect(() => {
+      // Set up Socket.IO event listeners
+      socket.on('connect', () => {
+        console.log('Connected to backend');
+      });
+  
+      socket.on('noticeUpdated', (data) => {
+        console.log('Notice updated:', data);
+        // Handle the notice update (e.g., show a notification or update state)
+      });
+  
+      // Clean up Socket.IO event listeners on component unmount
+      return () => {
+        socket.off('connect');
+        socket.off('noticeUpdated');
+      };
+    }, []);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
