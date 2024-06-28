@@ -84,9 +84,9 @@ const Minibar = () => {
           />
           <Tab
             value="five"
-            label="Warnings"
+            label="Balance"
             component={Link}
-            to="/finance/warnings"
+            to="/finance/balance"
           />
           <Tab
             value="six"

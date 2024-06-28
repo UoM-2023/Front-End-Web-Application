@@ -6,8 +6,7 @@ import BackButton from "../../../Component/Buttons/BackButton";
 import "./FormDesigns.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
-import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function UtilityForm() {
   const [formData, setFormData] = useState({
@@ -19,6 +18,15 @@ function UtilityForm() {
     staffID: "",
     remark: "",
   });
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      setFormData((prevFormData) => ({ ...prevFormData, userId }));
+    } else {
+      console.error("No userId found in localStorage");
+    }
+  }, []);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -45,14 +53,13 @@ function UtilityForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsLoading(true);
-
-    axios
-      .post("http://localhost:3001/finance/addUtilityUsage", formData)
+    axiosInstance
+      .post("/finance/addUtilityUsage", formData)
       .then((res) => {
         console.log("Create successful:", res.data);
         setIsSubmit(true);
         setSuccessMessage(res.data.message);
-        // navigate(-1);
+        //navigate(-1);
       })
       .catch((err) => {
         console.error("Failed to create data:", err);
@@ -208,7 +215,7 @@ function UtilityForm() {
         </div>
         <p>{formErrors.gasUsage}</p>
 
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
             Staff ID :
           </InputLabel>
@@ -220,7 +227,7 @@ function UtilityForm() {
             value={formData.staffID}
           />
         </div>
-        <p>{formErrors.staffID}</p>
+        <p>{formErrors.staffID}</p> */}
 
         <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">

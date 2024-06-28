@@ -6,7 +6,7 @@ const RouteTitles = {
   "/finance/utilitycharges": "Utility Charges",
   "/finance/expenses": "Expenses",
   "/finance/revenue": "Revenues",
-  "/finance/warnings": "Warnings",
+  "/finance/balance": "Balance",
   "/finance/editFunds": "Fund Types",
 
   // ------- Maintenance ----------------------------------

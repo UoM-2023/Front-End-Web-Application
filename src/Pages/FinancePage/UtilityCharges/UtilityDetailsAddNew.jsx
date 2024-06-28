@@ -12,6 +12,7 @@ import {
 } from "@mui/icons-material";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function UtilityDetailsAddNewForm() {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function UtilityDetailsAddNewForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  
 
   const onChangeHandler = (event, index) => {
     const { name, value } = event.target;
@@ -66,15 +69,25 @@ function UtilityDetailsAddNewForm() {
     event.preventDefault();
     setFormErrors(validate(formData));
 
-    const utilityData = {
-      utilityType: formData.utilityType,
-      modifiedBy: formData.modifiedBy,
-    };
-    const priceData = formData.rows.map((row) => ({
-      priceRange: row.priceRange,
-      basePrice: row.basePrice,
-      unitPrice: row.unitPrice,
-    }));
+      const utilityData = {
+        utilityType: formData.utilityType,
+        modifiedBy: formData.modifiedBy,
+      };
+      const priceData = formData.rows.map(row => ({
+        priceRange: row.priceRange,
+        basePrice: row.basePrice,
+        unitPrice: row.unitPrice,
+      }));
+  
+      try {
+        const response = axiosInstance.post('/finance/utilityDetails', { utilityData, priceData });
+        console.log(response.data);
+        // navigate('/finance/viewUtilityDetails');
+        setIsSubmit(true);
+          
+      } catch (error) {
+        console.error('Error:', error);
+      }
 
     try {
       const response = axios.post(

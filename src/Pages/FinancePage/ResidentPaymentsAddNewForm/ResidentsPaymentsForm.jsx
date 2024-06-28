@@ -6,21 +6,24 @@ import BackButton from "../../../Component/Buttons/BackButton";
 import axios from "axios";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function ResidentsPaymentsForm() {
   const [formData, setFormData] = useState({
-    chargeType: "",
-    unitNumber: "",
-    residentName: "",
-    paymentMethod: "",
+    unit_id: "",
+    charge_type: "",
+    method: "",
     amount: "",
-    remark: "",
+    payment_id: "",
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -35,12 +38,13 @@ function ResidentsPaymentsForm() {
     setIsSubmit(true);
     setIsLoading(true);
 
-    axios
-      .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+    axiosInstance
+      .post("/finance/payment", formData)
       .then((res) => {
         console.log("Create Successful:", res.data);
         setIsSubmit(true);
         setSuccessMessage(res.data.message);
+        navigate(-1);
       })
       .catch((err) => console.error("Failed to Create data:", err))
       .finally(() => {
@@ -58,17 +62,15 @@ function ResidentsPaymentsForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.chargeType) {
-      errors.chargeType = "Please Select Charge Type * ";
+    if (!values.charge_type) {
+      errors.charge_type = "Please Select Charge Type * ";
     }
-    if (!values.unitNumber) {
-      errors.unitNumber = "Please Enter Unit Number *";
+    if (!values.unit_id) {
+      errors.unit_id = "Please Enter Unit Number *";
     }
-    if (!values.residentName) {
-      errors.residentName = "Please Enter Resident Name *";
-    }
-    if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Select Payment Method *";
+    
+    if (!values.method) {
+      errors.method = "Please Select Payment Method *";
     }
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
@@ -86,12 +88,11 @@ function ResidentsPaymentsForm() {
 
   const handleResetForm = () => {
     setFormData({
-      chargeType: "",
-      unitNumber: "",
-      residentName: "",
-      paymentMethod: "",
+      unit_id: "",
+      charge_type: "",
+      method: "",
       amount: "",
-      remark: "",
+      payment_id: "",
     });
   };
 
@@ -113,68 +114,58 @@ function ResidentsPaymentsForm() {
       {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel className="namesTag">Charge Type :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="chargeType"
-            onChange={onChangeHandler}
-            value={formData.chargeType}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Utility Type
-            </MenuItem>
-            <MenuItem value="gas" name="gas" className="optionContainer">
-              Gas
-            </MenuItem>
-            <MenuItem value="water" name="water" className="optionContainer">
-              Water
-            </MenuItem>
-            <MenuItem
-              value="electricity"
-              name="electricity"
-              className="optionContainer"
-            >
-              Electricity
-            </MenuItem>
-          </Select>
-        </div>
-        <p>{formErrors.chargeType}</p>
-
-        <div className="inputItem">
           <InputLabel htmlFor="unitNumber" className="namesTag">
             Unit Number :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="unitNumber"
+            name="unit_id"
             onChange={onChangeHandler}
-            value={formData.unitNumber}
+            value={formData.unit_id}
           />
         </div>
-        <p>{formErrors.unitNumber}</p>
-
+        <p>{formErrors.unit_id}</p>
         <div className="inputItem">
-          <InputLabel htmlFor="residentName" className="namesTag">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="residentName"
+          <InputLabel className="namesTag">Charge Type :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="charge_type"
             onChange={onChangeHandler}
-            value={formData.residentName}
-          />
+            value={formData.charge_type}
+          >
+            <MenuItem value="" className="optionContainer">
+              Select Charge Type
+            </MenuItem>
+            <MenuItem value="Utility" name="Utility" className="optionContainer">
+              Utility
+            </MenuItem>
+            <MenuItem value="Management" name="Management" className="optionContainer">
+              Management
+            </MenuItem>
+            <MenuItem
+              value="Sinking"
+              name="Sinking"
+              className="optionContainer"
+            >
+              Sinking
+            </MenuItem>
+            <MenuItem value="All" name="All" className="optionContainer">
+              All
+            </MenuItem>
+          </Select>
         </div>
-        <p>{formErrors.residentName}</p>
+        <p>{formErrors.chargeType}</p>
+
+
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Method :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="paymentMethod"
+            name="method"
             onChange={onChangeHandler}
-            value={formData.paymentMethod}
+            value={formData.method}
           >
             <MenuItem value="" className="optionContainer">
               Select Payment Method
@@ -209,19 +200,6 @@ function ResidentsPaymentsForm() {
           />
         </div>
         <p>{formErrors.amount}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Remark :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="remark"
-            onChange={onChangeHandler}
-            value={formData.remark}
-          />
-        </div>
 
         <div className="buttonSection">
           <Grid container spacing={2}>

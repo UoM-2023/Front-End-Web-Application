@@ -21,9 +21,12 @@ export default function LoginForm({ setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/auth/login", userData);
-      const { token } = response.data;
-      localStorage.setItem("token", token);
+      const response = await axiosInstance.post('/auth/login',userData);
+      const { token, refreshToken, userId } = response.data;
+      console.log("Token", token, refreshToken, userId);
+      localStorage.setItem('token', token);
+      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('userId', userId);
       setAuthToken(token);
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);

@@ -3,21 +3,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import "./UtilityCharges.css";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { styled } from "@mui/system";
-import { TableCell, TableRow, tableCellClasses } from "@mui/material";
-import EditButton from "../../../Component/Buttons/EditButton";
-import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { styled } from '@mui/system';
+import { TableCell, TableRow, tableCellClasses } from '@mui/material';
+import EditButton from '../../../Component/Buttons/EditButton';
+import AddNewButton from '../../../Component/Buttons/AddNewButton';
+import axiosInstance from '../../LoginPage/LoginServices/authService';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -140,9 +141,8 @@ function UtilityDetails() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/finance/utilityDetails")
-      .then((response) => {
+    axiosInstance.get('/finance/utilityDetails')
+      .then(response => {
         console.log("API Response:", response.data);
         const formattedData = response.data.map((utility) =>
           createData(

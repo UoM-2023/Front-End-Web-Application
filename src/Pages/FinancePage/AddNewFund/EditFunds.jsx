@@ -73,24 +73,21 @@ function EditFunds() {
 
   // Get the data from the backend to front end
   const getFundTypes = () => {
-    axiosInstance
-      .get("http://localhost:3001/finance/editFunds")
-      .then((response) => {
-        console.log("Called");
-        console.log(response);
-        setFundTypes(response.data.result[0]);
-        // console.log(response.data.result[0].fund_id)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    axiosInstance.get("/finance/editFunds").then( (response) => {
+      console.log("Called");
+      console.log(response);
+      setFundTypes(response.data.result[0])
+      // console.log(response.data.result[0].fund_id)
+
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
 
   // Handling the edit button
   const handleEdit = (id) => {
     console.log("Hanlde edit before axios");
-    axiosInstance
-      .get(`http://localhost:3001/finance/editFunds/${id}`)
+    axiosInstance.get(`/finance/editFunds/${id}`)
       .then((response) => {
         console.log("Hanlde edit Called");
       })

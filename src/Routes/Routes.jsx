@@ -9,7 +9,6 @@ import ResidentsPayments from "../Pages/FinancePage/ResidentsPayments/ResidentsP
 import UtilityCharges from "../Pages/FinancePage/UtilityCharges/UtilityCharges";
 import Expenses from "../Pages/FinancePage/Expenses/Expenses";
 import Revenue from "../Pages/FinancePage/Revenue/Revenue";
-import Warnings from "../Pages/FinancePage/Warnings/Warnings";
 import EditFunds from "../Pages/FinancePage/AddNewFund/EditFunds";
 import ExpensesAddNewForm from "../Pages/FinancePage/ExpenseAddNewForm/ExpensesAddNewForm";
 import ResidentsPaymentsForm from "../Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentsPaymentsForm";
@@ -46,6 +45,7 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 import SettingsPage from "../Pages/SettingsPage/SettingsPage";
+import Balance from "../Pages/FinancePage/Warnings/Balance";
 
 const Routers = ({ user, setUser }) => {
   return (
@@ -83,7 +83,7 @@ const Routers = ({ user, setUser }) => {
           </Route>
 
           {/* Warnings Route */}
-          <Route path="warnings" element={<Warnings />} />
+          <Route path="balance" element={<Balance />} />
           {/* <Route path='fundtypes' element={<EditFunds />}/> */}
 
           {/* Edit fund route */}

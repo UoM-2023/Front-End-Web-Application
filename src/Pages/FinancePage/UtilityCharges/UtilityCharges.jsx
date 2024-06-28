@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { styled } from "@mui/system";
-import {
-  Box,
-  Collapse,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Paper,
-  tableCellClasses,
-} from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import "./UtilityCharges.css";
-import SearchBar from "../../../Component/SearchBar/SearchBar";
-import UtilityDetailsButton from "../../../Component/Buttons/UtilityDetailsButton";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { styled } from '@mui/system';
+import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, tableCellClasses, } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AddNewButton from '../../../Component/Buttons/AddNewButton';
+import './UtilityCharges.css';
+import SearchBar from '../../../Component/SearchBar/SearchBar';
+import UtilityDetailsButton from '../../../Component/Buttons/UtilityDetailsButton';
+import axiosInstance from '../../LoginPage/LoginServices/authService';
+import Minibar from '../Mininavbar/Minibar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -130,9 +119,8 @@ function UtilityCharges() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/finance/getUtilityCharges")
-      .then((response) => {
+    axiosInstance.get('/finance/getUtilityCharges')
+      .then(response => {
         if (response.data && response.data.result) {
           console.log(response.data.result);
           setRows(response.data.result);
@@ -147,9 +135,10 @@ function UtilityCharges() {
   }, []);
 
   return (
-    <div className="utilityDetailsContainer">
-      <div className="pageTop">
-        <SearchBar />
+    <div className='utilityDetailsContainer'>
+      <Minibar />
+      <div className='pageTop'>
+      <SearchBar/>
         <div className="topButtons">
           <UtilityDetailsButton route="/finance/utilitycharges/viewUtilityDetails" />
           <AddNewButton route="/finance/utilitycharges/addUtility" />
