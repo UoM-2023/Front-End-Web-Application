@@ -4,19 +4,43 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
 import "./NoticesForm.css"; 
+import TopBar from "../../../../Component/TopBar/TopBar";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
 
 function NoticesForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     type: "",
     title: "",
-    sDate: "",
-    eDate: "",
     description: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+    // Initialize Socket.IO client
+    const socket = io('http://localhost:3001/newsNotices/newNotice');
+
+    useEffect(() => {
+      // Set up Socket.IO event listeners
+      socket.on('connect', () => {
+        console.log('Connected to backend');
+      });
+  
+      socket.on('noticeUpdated', (data) => {
+        console.log('Notice updated:', data);
+        // Handle the notice update (e.g., show a notification or update state)
+      });
+  
+      // Clean up Socket.IO event listeners on component unmount
+      return () => {
+        socket.off('connect');
+        socket.off('noticeUpdated');
+      };
+    }, []);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -27,6 +51,12 @@ function NoticesForm() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    axios.post('http://localhost:3001/newsNotices/newNotice', formData)
+    .then(res => {
+      console.log(res);
+      navigate('/news & notices')
+    })
+    .catch(err => console.log(err));
     setFormErrors(validate(formData));
     setIsSubmit(true);
   };
@@ -47,12 +77,6 @@ function NoticesForm() {
     if (!values.title) {
       errors.title = "Please Enter Notice Title *";
     }
-    if (!values.sDate) {
-      errors.sDate = "Please Enter Start Date *";
-    }
-    if (!values.eDate) {
-      errors.eDate = "Please Enter End Date *";
-    }
     if (!values.description) {
       errors.description = "Please Enter Description *";
     }
@@ -60,6 +84,8 @@ function NoticesForm() {
   };
 
   return (
+    <>
+    {/* <TopBar title="News & Notices" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
@@ -73,11 +99,17 @@ function NoticesForm() {
             <MenuItem value="" className="optionContainer">
               Select Notice Type
             </MenuItem>
-            <MenuItem value="proposal" name="proposal" className="optionContainer">
-              Proposal
+            <MenuItem value="emergency" name="emergency" className="optionContainer">
+              Emergency
             </MenuItem>
             <MenuItem value="announcement" name="announcement" className="optionContainer">
               Announcement
+            </MenuItem>
+            <MenuItem value="proposal" name="proposal" className="optionContainer">
+              Proposal
+            </MenuItem>
+            <MenuItem value="emergency" name="emergency" className="optionContainer">
+              Emergency
             </MenuItem>
             <MenuItem value="other" name="other" className="optionContainer">
               Other
@@ -87,34 +119,18 @@ function NoticesForm() {
         <p>{formErrors.type}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="sDate" className="namesTag">
-            Start Date :
+          <InputLabel htmlFor="title" className="namesTag">
+            Notice Title :
           </InputLabel>
           <TextField
             id="outlined-basic"
-            type="date"
             className="textFieldComponent"
-            name="sDate"
+            name="title"
             onChange={onChangeHandler}
-            value={formData.sDate}
+            value={formData.title}
           />
         </div>
-        <p>{formErrors.sDate}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="eDate" className="namesTag">
-            End Date :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            type="date"
-            className="textFieldComponent"
-            name="eDate"
-            onChange={onChangeHandler}
-            value={formData.eDate}
-          />
-        </div>
-        <p>{formErrors.eDate}</p>
+        <p>{formErrors.title}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="description" className="namesTag">
@@ -150,6 +166,7 @@ function NoticesForm() {
         <pre> </pre>
       )}
     </div>
+    </>
   );
 }
 

@@ -255,6 +255,48 @@ const Routers = ({ user, setUser }) => {
           </Route>
         </Route>
 
+          {/* Staff Details */}
+          <Route path = '/staff details' element = {<Outlet/>} >
+            <Route index element = {<StaffList />} />
+            <Route path='addNewStaff' element = {<StaffDetailsAddNewForm/>} />
+          </Route>
+
+          {/* Unit Details */}
+          <Route path = '/residents information' element = {<Outlet />} >
+            <Route index element = {<UnitList />} />
+            <Route path = 'addNewResident' element = {<ResidentInfoAddNew/>} />
+            <Route path = 'memberlist' element = {<MemberList />} />
+          </Route>
+
+          {/* Residential Units Route */}
+          <Route path = '/residential units' element = {<Outlet />} >
+            <Route index element = {<ResidentialUnitsTable/>} />
+            <Route path = 'residentialUnitsForm' element = {<ResidentialUnitsForm/>} />
+            <Route/>
+            
+          </Route>
+
+          {/* Complaints route */}
+          <Route path='/complaints' element={<Outlet />} >
+              <Route index element={<ComplaintsTable/>} />
+              <Route path='complaintsForm' element={<ComplaintsForm/>}/>
+            </Route>
+
+            {/* News & Notices section */}
+            <Route path='/news & notices' element={<Outlet/>}>
+              {/* Notices Route */}
+              <Route index element={<NoticesTable/>} />
+              <Route path='noticesForm' element={<NoticesForm/>}/>
+            </Route>
+
+            {/* Events Route */}
+          <Route path='eventsTable' element={<Outlet />} >
+              <Route index element={<EventsTable/>} />
+              <Route path='eventsForm' element={<EventsForm/>}/>
+            </Route>
+            
+
+
         {/* Events Route */}
         <Route path="eventsTable" element={<Outlet />}>
           <Route index element={<EventsTable />} />

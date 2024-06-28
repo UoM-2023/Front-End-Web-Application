@@ -4,7 +4,6 @@ import MiniDrawer from "./Component/SideBar/MiniDrawer";
 import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
-import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
 import StaffDetailsAddNewForm from "./Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
 import ExpensesAddNewForm from "./Pages/FinancePage/ExpenseAddNewForm/ExpensesAddNewForm";
 import ResidentsPaymentsForm from "./Pages/FinancePage/ResidentPaymentsAddNewForm/ResidentsPaymentsForm";
@@ -24,8 +23,6 @@ import ChartTwo from "./Pages/DashBoard/chartTwo";
 import Welcome from "./Pages/DashBoard/Welcome";
 import NotificationBar from "./Pages/DashBoard/NotificationBar";
 import ReservationTable from "./Pages/Reservations/ReservationTable";
-
-import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
 import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
 import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
 import EventsAddNewForm from "./Pages/EventsAddNewForm/EventsAddNewForm";
