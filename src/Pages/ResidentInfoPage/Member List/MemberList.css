@@ -53,3 +53,6 @@
   margin-right: 0.5rem;
   
 }
+.table-row-custom {
+  border-bottom: 2px solid white;
+}

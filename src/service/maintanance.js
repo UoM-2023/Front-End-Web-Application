@@ -28,16 +28,15 @@ function compareDates(dateString) {
 
   // Compare the two dates
   if (inputDate == today) {
-      return true ;
-  } 
+    return true;
+  }
 }
-
-
-
 
 export async function getMaintanance() {
   try {
-    const response = await axios.get("http://localhost:3001/maintenance/New_Mnt_Req");
+    const response = await axios.get(
+      "http://localhost:3001/maintenance/New_Mnt_Req"
+    );
 
     if (!response.data || !response.data.result) {
       return 0; // Return 0 if there are no maintanances or no 'result' in the response
@@ -53,18 +52,19 @@ export async function getMaintanance() {
       return (
         maintananceDate.getFullYear() == today.getFullYear() &&
         maintananceDate.getMonth() == today.getMonth() &&
-        
-        maintananceDate.getDate() == today.getDate()+1
+        maintananceDate.getDate() == today.getDate() + 1
       );
     };
 
     // Filter today's maintanances
-    const todayMaintanances = maintanances.filter((maintanance) => compareDates(maintanance.requested_date));
+    const todayMaintanances = maintanances.filter((maintanance) =>
+      compareDates(maintanance.requested_date)
+    );
 
     const length = todayMaintanances.length;
     return length;
   } catch (error) {
-    console.error('Error fetching maintanances:', error);
+    console.error("Error fetching maintanances:", error);
     return 0; // Return 0 in case of error
   }
 }

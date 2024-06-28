@@ -3,22 +3,63 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
-//import "./FormDesigns.css";
-// import "../../Component/Forms/FormDesigns.css";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import LoadingIndicator from "../../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../../Component/Dialogs/SuccessAlertDialog";
 
 function EditFundsAddNew() {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    fundID: "",
     fundName: "",
     chargedBy: "",
     amount: "",
     timePeriod: "",
-    modifiedDate: "",
     modifiedBy: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Current ID:", id);
+    if (id) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect cal");
+      axios
+        .get(`http://localhost:3001/finance/editFunds/${id}`)
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const fundData = data.result[0][0]; // Assuming you want the first item from the first array
+            const chargedByValue =
+              fundData.chargedBy === "All Units"
+                ? "All Units"
+                : fundData.chargedBy;
+            setFormData({
+              fundName: fundData.fundName,
+              chargedBy: chargedByValue,
+              amount: fundData.amount,
+              timePeriod: fundData.timePeriod,
+              modifiedBy: fundData.modified_by,
+            });
+          } else {
+            console.error("Data structure does not match expected format");
+          }
+        })
+        .catch((err) => console.error("Failed to fetch data", err))
+        .finally(() => setIsLoading(false));
+    }
+  }, [id]);
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -31,6 +72,46 @@ function EditFundsAddNew() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
+
+    // axios.post('http://localhost:3001/finance/editFunds',formData)
+    // .then(res => console.log('RES::::::::',res.data))
+    // .catch(err => console.log(err))
+
+    // setIsSubmit(true);
+    // navigate("/finance/editFunds");
+    if (id) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          `http://localhost:3001/finance/editFunds/updateFund/${id}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+          setSuccessMessage(res.data.message);
+          //navigate("/finance/editFunds");
+        })
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        .post("http://localhost:3001/finance/editFunds", formData)
+        .then((res) => {
+          console.log("Create successful:", res.data);
+          setIsSubmit(true);
+          setSuccessMessage(res.data.message);
+          //navigate("/finance/editFunds");
+        })
+        .catch((err) => console.error("Failed to create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -46,17 +127,11 @@ function EditFundsAddNew() {
     if (!values.amount) {
       errors.amount = "Please Enter Amount *";
     }
-    if (!values.fundID) {
-      errors.fundID = "Please Enter Fund ID *";
-    }
     if (!values.fundName) {
       errors.fundName = "Fund Name is required *";
     }
     if (!values.timePeriod) {
       errors.timePeriod = "Time Period is required *";
-    }
-    if (!values.modifiedDate) {
-      errors.modifiedDate = "Please Enter Completed Date *";
     }
     if (!values.chargedBy) {
       errors.chargedBy = "Please select Select Charging Units *";
@@ -67,23 +142,42 @@ function EditFundsAddNew() {
     return errors;
   };
 
-  return (
-    <div className="FormContainer">
-      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        <div className="inputItem">
-          <InputLabel htmlFor="fundID" className="namesTag">
-            Fund ID :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="fundID"
-            onChange={onChangeHandler}
-            value={formData.fundID}
-          />
-        </div>
-        <p>{formErrors.fundID}</p>
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate("/finance/editFunds");
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      fundName: "",
+      chargedBy: "",
+      amount: "",
+      timePeriod: "",
+      modifiedBy: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
+  return (
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
+      <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel htmlFor="fundName" className="namesTag">
             Fund Name :
@@ -104,23 +198,31 @@ function EditFundsAddNew() {
             className="SelectformComponent"
             name="chargedBy"
             onChange={onChangeHandler}
-            value={formData.chargedBy}
+            value={formData.chargedBy || ""}
           >
             <MenuItem value="" className="optionContainer">
               Select Charging Units
             </MenuItem>
             <MenuItem
-              value="allUnits"
+              value="All Units"
               name="allUnits"
               className="optionContainer"
             >
               All Units
             </MenuItem>
-            <MenuItem value="unit01" name="unit01" className="optionContainer">
-              Unit 01
+            <MenuItem
+              value="Type A"
+              name="unitAType"
+              className="optionContainer"
+            >
+              Type A
             </MenuItem>
-            <MenuItem value="unit02" name="unit02" className="optionContainer">
-              Unit 02
+            <MenuItem
+              value="Type B"
+              name="unitBType"
+              className="optionContainer"
+            >
+              Type B
             </MenuItem>
           </Select>
         </div>
@@ -158,21 +260,6 @@ function EditFundsAddNew() {
         <p>{formErrors.timePeriod}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="modifiedDate" className="namesTag">
-            Modified Date :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            type="date"
-            className="textFieldComponent"
-            name="modifiedDate"
-            onChange={onChangeHandler}
-            value={formData.modifiedDate}
-          />
-        </div>
-        <p>{formErrors.modifiedDate}</p>
-
-        <div className="inputItem">
           <InputLabel htmlFor="modifiedBy" className="namesTag">
             Modified By :
           </InputLabel>
@@ -199,10 +286,12 @@ function EditFundsAddNew() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );

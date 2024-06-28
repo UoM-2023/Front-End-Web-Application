@@ -23,7 +23,7 @@ function BackButton() {
             paddingRight: "1.56rem",
             fontWeight: "bold",
           }}
-          onClick={()=> navigate(-1)}
+          onClick={() => navigate(-1)}
         >
           Back
         </Button>

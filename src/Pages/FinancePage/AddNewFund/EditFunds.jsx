@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EditFunds.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -13,6 +13,16 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../Mininavbar/Minibar";
+import axios from "axios";
+import EditFundsAddNew from "./EditFundFrom/EditFundsAddNew";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,70 +46,75 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  fundID,
-  fundName,
-  chargedBy,
-  amount,
-  timePeriod,
-  modifiedDate,
-  modifiedBy,
-  action
-) {
-  return {
-    no,
-    fundID,
-    fundName,
-    chargedBy,
-    amount,
-    timePeriod,
-    modifiedDate,
-    modifiedBy,
-    action
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "C-001",
-    "Management Fund",
-    "All Units",
-    "2400.00",
-    "1 Month",
-    "12/1/2024",
-    "M-102",
-    <div className="actionBtn">
-        <EditButton />
-        &nbsp; &nbsp;
-        <DeleteButton />
-    </div>
-  ),
-  createData(
-    1,
-    "C-001",
-    "Management Fund",
-    "All Units",
-    "2400.00",
-    "1 Month",
-    "12/1/2024",
-    "M-102",
-    <div className="actionBtn">
-        <EditButton />
-        &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function EditFunds() {
+  let no = 1;
+  const navigate = useNavigate();
+  const [fundTypes, setFundTypes] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [fund_id, setfund_id] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setfund_id(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getFundTypes();
+  }, []);
+
+  // Get the data from the backend to front end
+  const getFundTypes = () => {
+    axiosInstance.get("/finance/editFunds").then( (response) => {
+      console.log("Called");
+      console.log(response);
+      setFundTypes(response.data.result[0])
+      // console.log(response.data.result[0].fund_id)
+
+    }).catch( (error) => {
+      console.log(error);
+    })
+  }
+
+  // Handling the edit button
+  const handleEdit = (id) => {
+    console.log("Hanlde edit before axios");
+    axiosInstance.get(`/finance/editFunds/${id}`)
+      .then((response) => {
+        console.log("Hanlde edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDelete = (id) => {
+    console.log("Delete handler");
+    axios
+      .delete(`http://localhost:3001/finance/editFunds/deleteFund/${id}`)
+      .then((response) => {
+        console.log("Delete handler called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Delete handle error", error);
+      });
+  };
+
   return (
     <div className="editFundsContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar/>
-        <AddNewButton route="/finance/editFunds/newFund"/>
+        <SearchBar />
+        <AddNewButton route="/finance/editFunds/newFund" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -112,40 +127,91 @@ function EditFunds() {
           }}
           aria-label="customized table"
         >
+          {/*--------------- Table Headings ----------------------*/}
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Fund ID</StyledTableCell>
+              {/* <StyledTableCell align="left">Fund ID</StyledTableCell> */}
               <StyledTableCell align="left">Fund Name</StyledTableCell>
-              <StyledTableCell align="left">Charged By</StyledTableCell>
-              <StyledTableCell align="left">Amount</StyledTableCell>
-              <StyledTableCell align="left">Time Period</StyledTableCell>
-              <StyledTableCell align="left">Modified Date</StyledTableCell>
+              <StyledTableCell align="center">Charged By</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
+              <StyledTableCell align="center">
+                Time Period <br />
+                (In Months)
+              </StyledTableCell>
+              <StyledTableCell align="center">Modified Date</StyledTableCell>
               <StyledTableCell align="left">Modified By</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
+          {/* ------------- Table Data --------------------- */}
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.fundID}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.fundName}</StyledTableCell>
-                <StyledTableCell align="left">{row.chargedBy}</StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.timePeriod}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.modifiedDate}</StyledTableCell>
+            {fundTypes.map((fundType, index) => (
+              <StyledTableRow key={fundType.fund_id}>
+                {/* For the counting in first column */}
+                <StyledTableCell>{index + 1}</StyledTableCell>
+                <StyledTableCell>{fundType.fundName}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.modifiedBy}
+                  {fundType.chargedBy}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.action}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {fundType.amount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.timePeriod}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {fundType.modified_date.slice(0, 10)}
+                </StyledTableCell>
+                <StyledTableCell>{fundType.modified_by}</StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/finance/editFunds/updateFund/${fundType.fund_id}`}
+                    onClick={() => handleEdit(fundType.fund_id)}
+                  />
+                  <DeleteButton
+                    onClick={() => onClickRowDelete(fundType.fund_id)}
+                  />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Fund Type"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(fund_id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

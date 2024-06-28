@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Revenue.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -10,10 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import EditButton from "../../../Component/Buttons/EditButton";
-import DeleteButton from "../../../Component/Buttons/DeleteButton";
-import { Link, Outlet } from "react-router-dom";
 import Minibar from "../Mininavbar/Minibar";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,116 +35,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-    no,
-    revenueId,
-    paidBy,
-    amount,
-    type,
-    paymentMethod,
-    staffID,
-    Date,
-    action
-) {
-  return {
-    no,
-    revenueId,
-    paidBy,
-    amount,
-    type,
-    paymentMethod,
-    staffID,
-    Date,
-    action
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "R76536778",
-    "Kamal Perera",
-    "2500",
-    "Pool",
-    "Cash",
-    "M2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "R76536778",
-    "Kamal Perera",
-    "2500",
-    "Pool",
-    "Cash",
-    "M2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "R76536778",
-    "Kamal Perera",
-    "2500",
-    "Pool",
-    "Cash",
-    "M2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "R76536778",
-    "Amal Kamal",
-    "2500",
-    "Gym",
-    "Cash",
-    "M2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "R76536778",
-    "Amal Perera",
-    "250000000",
-    "Residental Unit A-108",
-    "Cash",
-    "M2256",
-    "16/12/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function Revenue() {
+  const [revenues, setRevenues] = useState([]);
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    getRevenue();
+  }, []);
+
+  const getRevenue = () => {
+    axios
+      .get("http://localhost:3001/finance/revenue")
+      .then((response) => {
+        console.log("Called");
+        console.log(response);
+        setRevenues(response.data.result);
+        setRecords(response.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      revenues.filter(
+        (f) =>
+          f.revenue_id.toLowerCase().includes(query) ||
+          f.paid_by.toLowerCase().includes(query) ||
+          f.amount.toString().toLowerCase().includes(query) ||
+          f.rType.toLowerCase().includes(query) ||
+          f.payment_method.toLowerCase().includes(query) ||
+          f.staff_id.toLowerCase().includes(query) ||
+          f.added_date.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="revenueContainer">
       <Minibar />
-        <div className="pageTop">
-            <SearchBar/>
-            <AddNewButton route="/finance/revenue/addRevenue" />
-        </div>
+      <div className="pageTop">
+        <SearchBar onChange={Filter} />
+        <AddNewButton route="/finance/revenue/addRevenue" />
+      </div>
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -156,33 +91,39 @@ function Revenue() {
             marginRight: 0,
             paddingTop: "1rem",
           }}
-          aria-label="customized table" 
+          aria-label="customized table"
         >
           <TableHead>
             <TableRow>
-                <StyledTableCell align="left">#No</StyledTableCell>
-                <StyledTableCell align="left">Revenue ID</StyledTableCell>
-                <StyledTableCell align="left">Paid By</StyledTableCell>
-                <StyledTableCell align="left">Amount</StyledTableCell>
-                <StyledTableCell align="left">Type</StyledTableCell>
-                <StyledTableCell align="left">Payment Method</StyledTableCell>
-                <StyledTableCell align="left">Staff ID</StyledTableCell>
-                <StyledTableCell align="left">Date</StyledTableCell>
-                <StyledTableCell align="center">Action</StyledTableCell>
+              <StyledTableCell align="left">#No</StyledTableCell>
+              <StyledTableCell align="left">Revenue ID</StyledTableCell>
+              <StyledTableCell align="left">Paid By</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
+              <StyledTableCell align="center">Type</StyledTableCell>
+              <StyledTableCell align="center">Payment Method</StyledTableCell>
+              <StyledTableCell align="left">Staff ID</StyledTableCell>
+              <StyledTableCell align="left">Date</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.revenueId}</StyledTableCell>
-                <StyledTableCell align="left">{row.paidBy}</StyledTableCell>
-                <StyledTableCell align="left">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">{row.type}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymentMethod}</StyledTableCell>
-                <StyledTableCell align="left">{row.staffID}</StyledTableCell>
-                <StyledTableCell align="left">{row.Date}</StyledTableCell>
-                <StyledTableCell align="right">{row.action}</StyledTableCell>
+            {records.map((revenue, index) => (
+              <StyledTableRow key={revenue.revenue_id}>
+                <StyledTableCell>{index + 1}</StyledTableCell>
+                <StyledTableCell>{revenue.revenue_id}</StyledTableCell>
+                <StyledTableCell>{revenue.paid_by}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {revenue.amount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {revenue.rType}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {revenue.payment_method}
+                </StyledTableCell>
+                <StyledTableCell>{revenue.staff_id}</StyledTableCell>
+                <StyledTableCell>
+                  {revenue.added_date.slice(0, 10)}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
