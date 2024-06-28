@@ -12,6 +12,15 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,105 +44,111 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  staffID,
-  name,
-  staffRole,
-  mobileNo,
-  email,
-  createdDate,
-  action
-) {
-  return { no, staffID, name, staffRole, mobileNo, email, createdDate, action };
-}
-
-const rows = [
-  createData(
-    1,
-    "A-214100",
-    "A.W.G.Silva",
-    "Finance Manager",
-    "0767927004",
-    "awg25silva1999@gmail.com",
-    "05/29/2019",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "A-214101",
-    "A.W.G.Gamage",
-    "Front Office Manager",
-    "0711927004",
-    "awgsilva1999@gmail.com",
-    "10/03/2021",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Security Officer",
-    "0767925504",
-    "awgsilva1999@gmail.com",
-    "03/30/2020",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Admin",
-    "0117927004",
-    "awgsilva1999@gmail.com",
-    "01/19/2023",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "S-214104",
-    "A.W.Saman Abeykoon",
-    "Maintenance Manager",
-    "0787027004",
-    "awgsilva1999@gmail.com",
-    "07/23/2020",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function StaffList() {
+  const [stafflist, setStafflist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [staffID, setStaffID] = useState("");
+  const [records, setRecords] = useState([]);
+
+  const onClickRowDelete = (rowid) => {
+    setStaffID(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getStaffDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getStaffDetails = () => {
+    axios
+      .get("http://localhost:3001/staffDetails/addNewStaff")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setStafflist(response.data.result);
+        setRecords(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button 
+
+  const handleEdit = (staffID) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button 
+
+  const handleDelete = (staffID) => {
+    axios
+      .delete(
+        `http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${[
+          staffID,
+        ]}`
+      )
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      stafflist.filter(
+        (f) =>
+          f.staffID.toLowerCase().includes(query) ||
+          f.name_with_initials.toLowerCase().includes(query) ||
+          f.nic.toLowerCase().includes(query) ||
+          f.staff_category.toLowerCase().includes(query) ||
+          f.mobile_no.toLowerCase().includes(query) ||
+          f.email.toLowerCase().includes(query) ||
+          f.city.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="unitListContainer">
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/staff details/addNewStaff" />
       </div>
+
+      {/* Staff Details Table */}
+
       <TableContainer component={Paper}>
         <Table
           sx={{
-            maxWidth: "94.5vw",
+            maxWidth: "93.5vw",
             marginTop: 5,
-            marginLeft: 9,
+            marginLeft: 9.5,
             marginRight: 0,
             paddingTop: "100px",
           }}
@@ -141,32 +156,88 @@ function StaffList() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Staff ID</StyledTableCell>
               <StyledTableCell align="left">Name</StyledTableCell>
+              <StyledTableCell align="left">NIC</StyledTableCell>
               <StyledTableCell align="left">Staff Role</StyledTableCell>
               <StyledTableCell align="left">Mobile No</StyledTableCell>
               <StyledTableCell align="left">Email</StyledTableCell>
-              <StyledTableCell align="left">Created Date</StyledTableCell>
+              <StyledTableCell align="left">City</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.staffID}</StyledTableCell>
-                <StyledTableCell align="left">{row.name}</StyledTableCell>
-                <StyledTableCell align="left">{row.staffRole}</StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">{row.email}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.createdDate}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {records &&
+              records.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.staffID}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.name_with_initials}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.nic}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.staff_category}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.mobile_no}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.city}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "0.3rem",
+                      }}
+                    >
+                      <EditButton //front end route edit
+                        route={`/staff details/updateStaff/${[
+                          apartflowtesting.staffID,
+                        ]}`}
+                        onClick={() => handleEdit([apartflowtesting.staffID])}
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.staffID)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete staff member"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(staffID)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

@@ -1,26 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import LoginPage from "./Pages/LoginPage/LoginPage";
-import Dashboard from "./Pages/DashboardPage/Dashboard";
-import ResidentInforPage from "./Pages/ResidentInfoPage/ResidentInforPage";
-import StaffDetails from "./Pages/StaffDetails/StaffDetails";
-import UnitList from "./Pages/ResidentInfoPage/UnitTableView/UnitList";
-import TopBar from "./Component/TopBar/TopBar";
-import StaffList from "./Pages/StaffDetails/StaffTableView/StaffList";
-import SearchBar from "./Component/SearchBar/SearchBar";
-import AddNewButton from "./Component/Buttons/AddNewButton";
-import MemberList from "./Pages/ResidentInfoPage/Member List/MemberList";
-import ResidentsPayments from "./Pages/FinancePage/ResidentsPayments/ResidentsPayments";
-import UtilityCharges from "./Pages/FinancePage/UtilityCharges/UtilityCharges";
-import Expenses from "./Pages/FinancePage/Expenses/Expenses";
-import Revenue from "./Pages/FinancePage/Revenue/Revenue";
-// import ResidentialUnits from "./ResidentialUnits";
-import RequestsTable from "./Pages/MaintenancePage/RequestsTable/RequestsTable";
-import InternalMaintenanceTable from "./Pages/MaintenancePage/InternalMaintenanceTable/InternalMaintenanceTable";
-import CompletedResidentRequestTable from "./Pages/MaintenancePage/CompletedResidentRequestTable/CompletedResidentRequestTable";
-import Warnings from "./Pages/FinancePage/Warnings/Warnings";
 import MiniDrawer from "./Component/SideBar/MiniDrawer";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import Minibar from "./Pages/FinancePage/Mininavbar/Minibar";
 import Routers from "./Routes/Routes";
 import ResidentInfoAddNew from "./Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
@@ -38,6 +19,12 @@ import GuestTable from "./Pages/Guest/GuestTable";
 import ReservationNewOne from "./Pages/ReservationNew/ReservationNewOne";
 import ReservationNewTwo from "./Pages/ReservationNew/ReservationNewTwo";
 import DashBoard from "./Pages/DashBoard/DashBoard";
+import ChartOne from "./Pages/DashBoard/ChartOne";
+import ChartTwo from "./Pages/DashBoard/chartTwo";
+import Welcome from "./Pages/DashBoard/Welcome";
+import NotificationBar from "./Pages/DashBoard/NotificationBar";
+import ReservationTable from "./Pages/Reservations/ReservationTable";
+
 import ResidentialUnitsAddNewForm from "./Pages/ResidentialUnitsAddNewForm/ResidentialUnitsAddNewForm";
 import ComplaintAddForm from "./Pages/ComplaintAddNewForm/ComplaintAddForm";
 import NoticeAddNewForm from "./Pages/NoticeAddNewForm/NoticeAddNewForm";
@@ -49,59 +36,65 @@ import NoticesTable from "./Pages/News&NoticesPage/Notices/Table/NoticesTable";
 import NoticesForm from "./Pages/News&NoticesPage/Notices/Form/NoticesForm";
 import EventsTable from "./Pages/News&NoticesPage/Events/Table/EventsTable";
 import EventsForm from "./Pages/News&NoticesPage/Events/Form/EventsForm";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {
+  getDecodedToken,
+  setAuthToken,
+} from "./Pages/LoginPage/LoginServices/authService";
+import RouteTitles from "./Routes/RouteTitles";
+import TopBar from "./Component/TopBar/TopBar";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [title, setTitle] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log(token);
+      const decodeUser = getDecodedToken(token);
+      setUser(decodeUser);
+      setAuthToken(token);
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
+  useEffect(() => {
+    const path = location.pathname;
+    const newTitle = RouteTitles[path] || "App Title";
+    setTitle(newTitle);
+  }, [location]);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        // staleTime: 60 * 1000,
+        staleTime: 0,
+      },
+    },
+  });
+
   return (
     <>
       <div className="appContainer">
-        {/* <LoginPage /> */}
-        {/* <Dashboard /> */}
-        
+        {/* 
+         <BrowserRouter>
+           <MiniDrawer />
+           <QueryClientProvider client={queryClient}>
+             <ReactQueryDevtools initialIsOpen={false} />
 
-        {/* <ResidentInforPage />
-        <StaffDetails />
-        <MemberList />
-        <UnitList />
-        <StaffList />
-        <AddNewButton />
-        <ResidentsPayments />
-        <UtilityCharges />
-        <Expenses />
-        <Revenue />
-        <UtilityCharges />
-        <RevenueAddNewForm />
-        <UtilityChargesAddNewForm />
-        <ResidentialUnits />
-        <Warnings />
-        <RequestsTable />
-        <InternalMaintenanceTable />
-  <CompletedResidentRequestTable /> */}
+             <Routers />
+           </QueryClientProvider>
+           <ReservationTable/>
+         </BrowserRouter> */}
 
-        <BrowserRouter>
-          <MiniDrawer />
-          <Routers />
-        </BrowserRouter>
-
-        {/* <Minibar /> *}
-           
-        {/* <InternalMaintenanceTable /> */}
-        {/*<UtilityForm />
-        <ResidentInfoAddNew />
-        
-        <ExpensesAddNewForm />
-        <ResidentsPaymentsForm />
-        <RevenueForm />
-        <RequestsForm />
-        <InternalMaintenanceForm /> */}
-        {/* <CompleteResidentReqForm />  */}
-        {/* <EditFundsAddNew /> */}
-        {/* <ResidentialUnitsAddNewForm /> */}
-        {/* <ComplaintAddForm/> */}
-        {/* <NoticeAddNewForm/> */}
-        {/* <EventsAddNewForm/> */}
-        {/* <StaffDetailsAddNewForm /> */}
-        {/* <MemberList /> */}
-        {/* <UnitList /> */}
+        {user && <TopBar user={user} setUser={setUser} title={title} />}
+        {user && <MiniDrawer userRole={user.role} />}
+        <Routers user={user} setUser={setUser} />
       </div>
     </>
   );

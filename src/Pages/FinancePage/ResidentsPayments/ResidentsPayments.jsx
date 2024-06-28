@@ -12,6 +12,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import { Outlet, useOutlet } from "react-router-dom";
 import Minibar from "../Mininavbar/Minibar";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,83 +36,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  paymentID,
-  unitID,
-  residentName,
-  method,
-  chargeType,
-  paymentDateTime,
-  amount
-) {
-  return {
-    no,
-    paymentID,
-    unitID,
-    residentName,
-    method,
-    chargeType,
-    paymentDateTime,
-    amount,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "P-205061",
-    "A-214100",
-    "A.W.G.Silva",
-    "Online",
-    "Gas",
-    "05/29/2019, 12:55 PM",
-    "4,500.00"
-  ),
-  createData(
-    2,
-    "P-205062",
-    "A-214102",
-    "A.W.G.Gamage",
-    "Online",
-    "Electricity",
-    "10/03/2021, 10:50 PM",
-    "14,800.00"
-  ),
-  createData(
-    3,
-    "P-205063",
-    "A-214103",
-    "A.W.G.Samaraweera",
-    "Online",
-    "Gas",
-    "03/30/2020, 08:21 AM",
-    "24,900.00"
-  ),
-  createData(
-    4,
-    "P-205065",
-    "A-214104",
-    "A.W.Jerry Fernando",
-    "Online",
-    "Water",
-    "01/19/2023, 02:36 PM",
-    "2,400.00"
-  ),
-  createData(
-    5,
-    "P-205066",
-    "A-214105",
-    "A.W.Saman Abeykoon",
-    "Online",
-    "Gas",
-    "07/23/2020, 07:45 PM",
-    "10,550.00"
-  ),
-];
 
 function ResidentsPayments() {
+  const [paymentList, setPaymentList] = useState([]);
 
+  useEffect(() => {
+    console.log("Payment use effect");
+    getPaymentDetails();
+  })
+
+  const getPaymentDetails = () => {
+    axiosInstance.get('/finance/getAllPayments')
+    .then((response) => {
+      console.log("response:",response);
+      setPaymentList(response.data.result[0]);
+    })
+    .catch((error) => {
+      console.log("Error fetching payment data: ", error);
+    })
+  }
   return (
     <div className="residentsPaymentsContainer">
       <Minibar />
@@ -132,33 +75,33 @@ function ResidentsPayments() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Payment ID</StyledTableCell>
-              <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Resident Name</StyledTableCell>
-              <StyledTableCell align="left">Method</StyledTableCell>
-              <StyledTableCell align="left">Charge Type</StyledTableCell>
-              <StyledTableCell align="left">
-                Payment Date & Time
+              <StyledTableCell align="center">#No</StyledTableCell>
+              <StyledTableCell align="center">Payment ID</StyledTableCell>
+              <StyledTableCell align="center">Unit ID</StyledTableCell>
+              <StyledTableCell align="center">Resident Name</StyledTableCell>
+              <StyledTableCell align="center">Method</StyledTableCell>
+              <StyledTableCell align="center">Charge Type</StyledTableCell>
+              <StyledTableCell align="center">
+                Payment Date
               </StyledTableCell>
-              <StyledTableCell align="right">Amount</StyledTableCell>
+              <StyledTableCell align="right">Amount(LKR.)</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">{row.paymentID}</StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.residentName}
+            {paymentList.map((Payments, index) => (
+              <StyledTableRow key={Payments.payment_id}>
+                <StyledTableCell align="center">{index + 1}</StyledTableCell>
+                <StyledTableCell align="center">{Payments.payment_id}</StyledTableCell>
+                <StyledTableCell align="center">{Payments.unit_id}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {Payments.name_with_initials}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.method}</StyledTableCell>
-                <StyledTableCell align="left">{row.chargeType}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.paymentDateTime}
+                <StyledTableCell align="center">{Payments.method}</StyledTableCell>
+                <StyledTableCell align="center">{Payments.charge_type}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {Payments.payment_date.slice(0,10)}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
+                <StyledTableCell align="right">{Payments.amount}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

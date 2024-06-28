@@ -1,19 +1,15 @@
-import React from "react";
-import "./UtilityCharges.css";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import EditButton from "../../../Component/Buttons/EditButton";
-import DeleteButton from "../../../Component/Buttons/DeleteButton";
-import SearchBar from "../../../Component/SearchBar/SearchBar";
-import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import { Link, useNavigate } from "react-router-dom";
-import Minibar from "../Mininavbar/Minibar";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { styled } from '@mui/system';
+import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper, tableCellClasses, } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AddNewButton from '../../../Component/Buttons/AddNewButton';
+import './UtilityCharges.css';
+import SearchBar from '../../../Component/SearchBar/SearchBar';
+import UtilityDetailsButton from '../../../Component/Buttons/UtilityDetailsButton';
+import axiosInstance from '../../LoginPage/LoginServices/authService';
+import Minibar from '../Mininavbar/Minibar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,170 +27,162 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(even)": {
     backgroundColor: "#ECE1D9",
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function createData(
-  no,
-  utilityChargesID,
-  unitID,
-  ownerName,
-  utilityType,
-  date,
-  noOfUnits,
-  amount,
-  action
-) {
-  return {
-    no,
-    utilityChargesID,
-    unitID,
-    ownerName,
-    utilityType,
-    date,
-    noOfUnits,
-    amount,
-    action,
-  };
+function Row({ index, row }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <StyledTableRow>
+        <StyledTableCell align="center">{row.unit_id}</StyledTableCell>
+        {/* <StyledTableCell>{row.utility_type}</StyledTableCell> */}
+        <StyledTableCell align="center">{row.util_month}</StyledTableCell>
+        <StyledTableCell align="center">{row.prev_balance}</StyledTableCell>
+        <StyledTableCell align="center">{row.month_amount}</StyledTableCell>
+        <StyledTableCell align="center">{row.tot_amount}</StyledTableCell>
+        <StyledTableCell align="center">
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </StyledTableCell>
+      </StyledTableRow>
+      <StyledTableRow>
+        <StyledTableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={7}
+        >
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Typography variant="h6" gutterBottom component="div">
+                Utility Details
+              </Typography>
+              <Table size="small" aria-label="details">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">
+                      Utility Type
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Usage</StyledTableCell>
+                    <StyledTableCell align="center">Cost</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <StyledTableCell align="center">Gas</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.gasUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.gasCost}
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
+                    <StyledTableCell align="center">Water</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.waterUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.waterCost}
+                    </StyledTableCell>
+                  </TableRow>
+                  <TableRow>
+                    <StyledTableCell align="center">
+                      Electricity
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.electricityUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.electricityCost}
+                    </StyledTableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </StyledTableCell>
+      </StyledTableRow>
+    </>
+  );
 }
 
-const rows = [
-  createData(
-    1,
-    "U-256580",
-    "A-214100",
-    "A.W.G.Silva",
-    "Gas",
-    "15 JAN 2024",
-    "15",
-    "1456.85",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "U-256581",
-    "A-214101",
-    "A.W.G.Gamage",
-    "Water",
-    "15 JAN 2024",
-    "27",
-    "2,458.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "U-256582",
-    "S-214102",
-    "A.W.G.Samaraweera",
-    "Gas",
-    "15 JAN 2024",
-    "38",
-    "5,500.70",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "U-256583",
-    "S-214103",
-    "A.W.Jerry Fernando",
-    "Electricity",
-    "15 JAN 2024",
-    "51",
-    "12,500.00",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "U-256584",
-    "A-214104",
-    "A.W.Saman Abeykoon",
-    "Water",
-    "15 JAN 2024",
-    "29",
-    "2,450.75",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function UtilityCharges() {
-  const navigate = useNavigate();
+  const [rows, setRows] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axiosInstance.get('/finance/getUtilityCharges')
+      .then(response => {
+        if (response.data && response.data.result) {
+          console.log(response.data.result);
+          setRows(response.data.result);
+        } else {
+          setError("Unexpected response format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching utility data:", error);
+        setError("Failed to fetch data");
+      });
+  }, []);
+
   return (
-    <div className="utilityChargesContainer">
+    <div className='utilityDetailsContainer'>
       <Minibar />
-      <div className="pageTop">
-        <SearchBar/>
-        <AddNewButton route="/finance/utilitycharges/addUtility"/>
+      <div className='pageTop'>
+      <SearchBar/>
+        <div className="topButtons">
+          <UtilityDetailsButton route="/finance/utilitycharges/viewUtilityDetails" />
+          <AddNewButton route="/finance/utilitycharges/addUtility" />
+        </div>
       </div>
-      <TableContainer component={Paper}>
-        <Table
-          sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table" 
-        >
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Utility Charges ID</StyledTableCell>
-              <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Owner Name</StyledTableCell>
-              <StyledTableCell align="left">Utility Type</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">No Of Units</StyledTableCell>
-              <StyledTableCell align="right">Amount (Rs.)</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.utilityChargesID}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">{row.ownerName}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.utilityType}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.date}</StyledTableCell>
+
+      {error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <TableContainer component={Paper} sx={{ boxShadow: "none", border: 0 }}>
+          <Table
+            aria-label="collapsible table"
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                {/* <StyledTableCell>#No</StyledTableCell> */}
+                <StyledTableCell align="center">Unit ID</StyledTableCell>
+                {/* <StyledTableCell>Utility Type</StyledTableCell> */}
+                <StyledTableCell align="center">Month</StyledTableCell>
+                <StyledTableCell align="center">Balance</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.noOfUnits}
+                  Monthly Amount (Rs.)
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <StyledTableCell align="center">
+                  Total Amount (Rs.)
+                </StyledTableCell>
+                <StyledTableCell align="center">See Details</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => (
+                <Row key={index} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </div>
   );
 }

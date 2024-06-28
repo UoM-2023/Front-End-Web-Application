@@ -3,35 +3,73 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-import "./FormDesigns.css"; 
-
+import "./FormDesigns.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 
 function UtilityForm() {
   const [formData, setFormData] = useState({
-    utilityType: "",
-    unitID: "",
-    residentName: "",
+    unit_id: "",
+    month: "",
+    electricityUsage: "",
+    waterUsage: "",
+    gasUsage: "",
     staffID: "",
-    paymentMethod: "",
-    noOfUnits: "",
-    amount: "",
     remark: "",
   });
 
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      setFormData((prevFormData) => ({ ...prevFormData, userId }));
+    } else {
+      console.error("No userId found in localStorage");
+    }
+  }, []);
+
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
+    const { name, value } = event.target;
+
+    if (!formData) {
+      console.error("formData is undefined");
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
-      [event.target.name]: event.target.value,
+      [name]: value,
     }));
   };
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
-    setIsSubmit(true);
+    setIsLoading(true);
+    axiosInstance
+      .post("/finance/addUtilityUsage", formData)
+      .then((res) => {
+        console.log("Create successful:", res.data);
+        setIsSubmit(true);
+        setSuccessMessage(res.data.message);
+        //navigate(-1);
+      })
+      .catch((err) => {
+        console.error("Failed to create data:", err);
+        alert("Failed");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -44,93 +82,142 @@ function UtilityForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.utilityType) {
-      errors.utilityType = "Please select Utility Type * ";
+    if (!values.unit_id) {
+      errors.unit_id = "Please Enter Unit ID *";
     }
-    if (!values.unitID) {
-      errors.unitID = "Please Enter Unit ID *";
+    if (!values.month) {
+      errors.month = "Please Enter Unit ID *";
     }
-    if (!values.residentName) {
+    if (!values.electricityUsage) {
       errors.residentName = "Please Enter Resident Name *";
+    }
+    if (!values.waterUsage) {
+      errors.paymentMethod = "Please Select Payment Method *";
+    }
+    if (!values.gasUsage) {
+      errors.noOfUnits = "Please Enter No Of Units *";
     }
     if (!values.staffID) {
       errors.staffID = "Please Enter Staff ID *";
     }
-    if (!values.paymentMethod) {
-      errors.paymentMethod = "Please Select Payment Method *";
-    }
-    if (!values.noOfUnits) {
-      errors.noOfUnits = "Please Enter No Of Units *";
-    }
-    if (!values.amount) {
-      errors.amount = "Please Enter Amount *";
-    }
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate(-1);
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      unit_id: "",
+      month: "",
+      electricityUsage: "",
+      waterUsage: "",
+      gasUsage: "",
+      staffID: "",
+      remark: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
-          <InputLabel className="namesTag">Utility Type :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="utilityType"
-            onChange={onChangeHandler}
-            value={formData.utilityType}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Utility Type
-            </MenuItem>
-            <MenuItem value="gas" name="gas" className="optionContainer">
-              Gas
-            </MenuItem>
-            <MenuItem value="water" name="water" className="optionContainer">
-              Water
-            </MenuItem>
-            <MenuItem
-              value="electricity"
-              name="electricity"
-              className="optionContainer"
-            >
-              Electricity
-            </MenuItem>
-            <MenuItem value="other" name="other" className="optionContainer">
-              Other
-            </MenuItem>
-          </Select>
-        </div>
-        <p>{formErrors.utilityType}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
+          <InputLabel htmlFor="unit_id" className="namesTag">
             Unit ID:
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="unitID"
+            name="unit_id"
             onChange={onChangeHandler}
-            value={formData.unitID}
+            value={formData.unit_id}
           />
         </div>
-        <p>{formErrors.unitID}</p>
+        <p>{formErrors.unit_id}</p>
 
         <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Resident Name :
+          <InputLabel htmlFor="month" className="namesTag">
+            Month:
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="residentName"
+            name="month"
             onChange={onChangeHandler}
-            value={formData.residentName}
+            value={formData.month}
           />
         </div>
-        <p>{formErrors.residentName}</p>
+        <p>{formErrors.month}</p>
 
         <div className="inputItem">
+          <InputLabel htmlFor="electricityUsage" className="namesTag">
+            Electricity Usage :
+          </InputLabel>
+          <TextField
+            type="number"
+            min="0.00"
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="electricityUsage"
+            onChange={onChangeHandler}
+            value={formData.electricityUsage}
+          />
+        </div>
+        <p>{formErrors.electricityUsage}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="waterUsage" className="namesTag">
+            Water Usage
+          </InputLabel>
+          <TextField
+            type="number"
+            min="0.00"
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="waterUsage"
+            onChange={onChangeHandler}
+            value={formData.waterUsage}
+          />
+        </div>
+        <p>{formErrors.waterUsage}</p>
+
+        <div className="inputItem">
+          <InputLabel htmlFor="gasUsage" className="namesTag">
+            Gas Usage
+          </InputLabel>
+          <TextField
+            type="number"
+            min="0.00"
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="gasUsage"
+            onChange={onChangeHandler}
+            value={formData.gasUsage}
+          />
+        </div>
+        <p>{formErrors.gasUsage}</p>
+
+        {/* <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
             Staff ID :
           </InputLabel>
@@ -142,65 +229,7 @@ function UtilityForm() {
             value={formData.staffID}
           />
         </div>
-        <p>{formErrors.staffID}</p>
-
-        <div className="inputItem">
-          <InputLabel className="namesTag">Payment Method :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="paymentMethod"
-            onChange={onChangeHandler}
-            value={formData.paymentMethod}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Payment Method
-            </MenuItem>
-            <MenuItem value="cash" name="cash" className="optionContainer">
-              Cash
-            </MenuItem>
-            <MenuItem value="card" name="card" className="optionContainer">
-              Card
-            </MenuItem>
-            <MenuItem value="cheque" name="cheque" className="optionContainer">
-              Cheque
-            </MenuItem>
-          </Select>
-        </div>
-        <p>{formErrors.paymentMethod}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            No Of Units :
-          </InputLabel>
-          <TextField
-            type="number"
-            min="0.00"
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="noOfUnits"
-            onChange={onChangeHandler}
-            value={formData.noOfUnits}
-          />
-        </div>
-        <p>{formErrors.noOfUnits}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="amount" className="namesTag">
-            Amount (Rs.) :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            type="number"
-            step="0.01"
-            min="0.00"
-            placeholder="0.00"
-            className="textFieldComponent"
-            name="amount"
-            onChange={onChangeHandler}
-            value={formData.amount}
-          />
-        </div>
-        <p>{formErrors.amount}</p>
+        <p>{formErrors.staffID}</p> */}
 
         <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
@@ -228,10 +257,12 @@ function UtilityForm() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );
