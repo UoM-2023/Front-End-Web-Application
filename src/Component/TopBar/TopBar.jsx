@@ -109,6 +109,7 @@ const TopBar = ({ user, setUser, title }) => {
                         <span className="textItem">
                           <b>User Role :</b>
                           {user.role}
+                          {localStorage.setItem("role", user.role)}
                         </span>
                       </div>
                     </MenuItem>

@@ -191,8 +191,9 @@ import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import axios from "axios";
 import UpdatePasswordButn from "../../Component/Buttons/UpdatePasswordButn";
 
-function SettingsPage() {
+function SettingsPage(user) {
   const UserID = localStorage.getItem("userId");
+  const UserRole = localStorage.getItem("role");
 
   const [formData, setFormData] = useState({
     oldPassword: "",
@@ -283,10 +284,10 @@ function SettingsPage() {
         </div>
         <div className="pageTopContent">
           <span className="loginDetailsText">
-            <b>User Name:</b> kulathilaka.21
+            <b>User Name:</b> {UserID}
           </span>
           <span className="loginDetailsText">
-            <b>User Role:</b> Finance Manager
+            <b>User Role:</b> {UserRole}
           </span>
         </div>
         {isLoading && <LoadingIndicator />}
