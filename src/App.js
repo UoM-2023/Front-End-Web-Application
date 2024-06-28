@@ -292,7 +292,7 @@ function App() {
         {/* <CompletedResidentRequestForm /> */}
         {/* <BrowserRouter> */}
 
-        <TopBar title="Guests" />
+        <TopBar title="Guest" />
 
         <BrowserRouter>
           <MiniDrawer />
