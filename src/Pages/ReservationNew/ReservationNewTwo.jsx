@@ -23,6 +23,7 @@ function ReservationNewTwo() {
   const [formData, setFormData] = useState({
 
     facility_name: "",
+    // Unit_id: "",
     resident_name: "",
     start_date: "",
     end_date:"",
@@ -85,6 +86,7 @@ function ReservationNewTwo() {
             setFormData({
 
               facility_name: facility_nameValue,
+              // Unit_id: reservationData.Unit_id,
               resident_name: reservationData.resident_name,
               start_date: reservationData.start_date,
               end_date: reservationData.end_date,
@@ -171,6 +173,9 @@ if (ref_no) {
     if (!values.facility_name) {
         errors.facility_name = "Please select the Facility Name * ";
       }
+      // if (!values.Unit_id) {
+      //   errors.Unit_id = "Please Enter  the Unit ID * ";
+      // }
     if (!values.resident_name) {
       errors.resident_name = "Please Enter The Resident Name *";
     }
@@ -235,6 +240,19 @@ if (ref_no) {
         <p>{formErrors.facility_name}</p>
 
 
+        {/* <div className="inputItem">
+          <InputLabel htmlFor="Name" className="namesTag">
+           Unit ID :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="Unit_id"
+            onChange={onChangeHandler}
+            value={formData.Unit_id}
+          />
+        </div>
+        <p>{formErrors.Unit_id}</p> */}
 
 
         <div className="inputItem">
