@@ -10,22 +10,101 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import BackButton from "../../Component/Buttons/BackButton";
 import SaveButton from "../../Component/Buttons/SaveButton";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 
 function ReservationNewTwo() {
+
+  const { ref_no } = useParams();
+
+
   const [formData, setFormData] = useState({
 
-    faciName: "",
-    Name: "",
-    sdate: "",
-    edate:"",
-    payStatus: ""
+    facility_name: "",
+    // Unit_id: "",
+    resident_name: "",
+    start_date: "",
+    end_date:"",
+    payment_status: "",
+    availability: ""
 
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+
+
+
+
+  useEffect(() => {
+    console.log("Current Reservation ID:", ref_no);
+    if (ref_no) {
+      // Check if there is an ID, which means we are in "edit" mode
+      console.log("Form useEffect call");
+      axios
+        .get(
+            //postman get url
+          `http://localhost:3001/Reservation/Reservations/${ref_no}`
+        )
+        .then((response) => {
+          console.log("Response:", response);
+          const { data } = response;
+          console.log("Log has called", data);
+
+          // Assuming your response data structure is correct
+          if (data && data.result && data.result.length > 0) {
+            const reservationData = data.result[0]; // Accessing the first item in the array
+            console.log("Reservation Data:", reservationData);
+
+
+
+            //selection use
+            const facility_nameValue =
+              reservationData.facility_name === "Gym"//1st value form data
+                ? "Gym"
+                : reservationData.facility_name;  //staff_category -->selection eka aithi eka
+
+  
+                const payment_statusValue =
+                reservationData.payment_status === "Paid"//1st value form data
+                  ? "Paid"
+                  : reservationData.payment_status;  //staff_category -->selection eka aithi eka
+  
+                  const availabilityValue =
+                  reservationData.availability === "Paid"//1st value form data
+                    ? "Paid"
+                    : reservationData.availability;  //staff_category -->selection eka aithi eka
+    
+    
+
+
+  
+
+            setFormData({
+
+              facility_name: facility_nameValue,
+              // Unit_id: reservationData.Unit_id,
+              resident_name: reservationData.resident_name,
+              start_date: reservationData.start_date,
+              end_date: reservationData.end_date,
+              payment_status: payment_statusValue,
+              availability: availabilityValue,
+
+            });
+          } else {
+            console.error("Data structure does not match expected format");
+          }
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err))
+        
+    }
+  }, [ref_no]);//primary key
+
+
+
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -38,7 +117,47 @@ function ReservationNewTwo() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
-  };
+  
+
+
+
+//primary key
+if (ref_no) {
+  // If there is an ID, it means we're editing existing data, so send a PUT request
+  axios
+    .put(
+        //postman edit url
+      `http://localhost:3001/Reservation/Reservations/${[
+        ref_no,
+      ]}`,
+      formData
+    )
+    .then((res) => {
+      console.log("Update successful:", res.data);
+      setIsSubmit(true);
+      
+     
+    })
+    .catch((err) => console.error("Failed to update data:", err));
+    
+} else {
+  // If there is no ID, it means we're creating new data, so send a POST request
+  axios
+ // postman post url 
+    .post("http://localhost:3001/Reservation/Reservations", formData)
+    .then((res) => {
+      console.log("Create Successful:", res.data);
+      setIsSubmit(true);
+     
+    
+    })
+    .catch((err) => console.error("Failed to Create data:", err));
+   
+}
+};
+
+
+
 
   useEffect(() => {
     console.log(formErrors);
@@ -51,20 +170,26 @@ function ReservationNewTwo() {
     const errors = {};
     const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-    if (!values.faciName) {
-        errors.faciName = "Please select the Facility Name * ";
+    if (!values.facility_name) {
+        errors.facility_name = "Please select the Facility Name * ";
       }
-    if (!values.Unit) {
-      errors.Name = "Please Enter The Name *";
+      // if (!values.Unit_id) {
+      //   errors.Unit_id = "Please Enter  the Unit ID * ";
+      // }
+    if (!values.resident_name) {
+      errors.resident_name = "Please Enter The Resident Name *";
     }
-    if (!values.sdate) {
-        errors.sdate = "Please Enter The Start Date *";
+    if (!values.start_date) {
+        errors.start_date = "Please Enter The Start Date *";
       }
-    if (!values.edate) {
-      errors.edate = "Please Enter The End Date *";
+    if (!values.end_date) {
+      errors.end_date = "Please Enter The End Date *";
     }
-    if (!values.payStatus) {
-        errors.payStatus = "Please select the Payment Status * ";
+    if (!values.payment_status) {
+        errors.payment_status = "Please select the Payment Status * ";
+      }
+      if (!values.availability) {
+        errors.availability = "Please select the availability Status * ";
       }
  
 
@@ -81,61 +206,68 @@ function ReservationNewTwo() {
           <InputLabel className="namesTag">Facility Name :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="faciName"
+            name="facility_name"
             onChange={onChangeHandler}
-            value={formData.faciName}
+            value={formData.facility_name}
           >
             <MenuItem value="" className="optionContainer">
               Select Facility Name
             </MenuItem>
             <MenuItem
-              value="Wing 01"
-              name="Wing 01"
+              value="Gym"
+              name="Gym"
               className="optionContainer"
             >
-              Wing 01
+              Gym
             </MenuItem>
             <MenuItem
-              value="Wing 02"
-              name="Wing 02"
+              value="Pool"
+              name="Pool"
               className="optionContainer"
             >
-              Wing 02
+              Pool
             </MenuItem>
             <MenuItem
-              value="Wing 03"
-              name="Wing 03"
+              value="Event Hall"
+              name="Event Hall"
               className="optionContainer"
             >
-              Wing 03
+              Event Hall
             </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
-            </MenuItem>
+            
           </Select>
         </div>
-        <p>{formErrors.faciName}</p>
+        <p>{formErrors.facility_name}</p>
 
 
-
-
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="Name" className="namesTag">
-           Name :
+           Unit ID :
           </InputLabel>
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="Name"
+            name="Unit_id"
             onChange={onChangeHandler}
-            value={formData.Name}
+            value={formData.Unit_id}
           />
         </div>
-        <p>{formErrors.Name}</p>
+        <p>{formErrors.Unit_id}</p> */}
+
+
+        <div className="inputItem">
+          <InputLabel htmlFor="Name" className="namesTag">
+           Resident Name :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="resident_name"
+            onChange={onChangeHandler}
+            value={formData.resident_name}
+          />
+        </div>
+        <p>{formErrors.resident_name}</p>
 
 
         <div className="inputItem">
@@ -146,12 +278,12 @@ function ReservationNewTwo() {
             id="outlined-basic"
             type="date"
             className="textFieldComponent"
-            name="sdate"
+            name="start_date"
             onChange={onChangeHandler}
-            value={formData.sdate}
+            value={formData.start_date}
           />
         </div>
-        <p>{formErrors.sdate}</p>
+        <p>{formErrors.start_date}</p>
 
 
 
@@ -164,13 +296,12 @@ function ReservationNewTwo() {
             id="outlined-basic"
             type="date"
             className="textFieldComponent"
-            name="edate"
+            name="end_date"
             onChange={onChangeHandler}
-            value={formData.edate}
+            value={formData.end_date}
           />
         </div>
-        <p>{formErrors.edate}</p>
-
+        <p>{formErrors.end_date}</p>
 
 
 
@@ -178,47 +309,63 @@ function ReservationNewTwo() {
           <InputLabel className="namesTag">Payment Status :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="faciName"
+            name="payment_status"
             onChange={onChangeHandler}
-            value={formData.payStatus}
+            value={formData.payment_status}
           >
             <MenuItem value="" className="optionContainer">
               Select Payment Status
             </MenuItem>
             <MenuItem
-              value="Wing 01"
-              name="Wing 01"
+              value="Paid"
+              name="Paid"
               className="optionContainer"
             >
-              Wing 01
+              Paid
             </MenuItem>
             <MenuItem
-              value="Wing 02"
-              name="Wing 02"
+              value="Not Yet"
+              name="Not Yet"
               className="optionContainer"
             >
-              Wing 02
+              Not Yet
             </MenuItem>
-            <MenuItem
-              value="Wing 03"
-              name="Wing 03"
-              className="optionContainer"
-            >
-              Wing 03
-            </MenuItem>
-            <MenuItem
-              value="Block 04"
-              name="Block 04"
-              className="optionContainer"
-            >
-              Block 04
-            </MenuItem>
+
+            
           </Select>
         </div>
-        <p>{formErrors.payStatus}</p>
+        <p>{formErrors.payment_status}</p>
 
+        <div className="inputItem">
+          <InputLabel className="namesTag"> availability :</InputLabel>
+          <Select
+            className="SelectformComponent"
+            name="availability"
+            onChange={onChangeHandler}
+            value={formData.availability}
+          >
+            <MenuItem value="" className="optionContainer">
+              Select Availability
+            </MenuItem>
+            <MenuItem
+              value="Reserved"
+              name="Reserved"
+              className="optionContainer"
+            >
+              Reserved
+            </MenuItem>
+            <MenuItem
+              value=" Not Yet"
+              name=" Not Yet"
+              className="optionContainer"
+            >
+              Not Yet
+            </MenuItem>
 
-
+            
+          </Select>
+        </div>
+        <p>{formErrors.availability}</p>
 
 
 

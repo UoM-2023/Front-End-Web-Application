@@ -4,15 +4,18 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
 import "./ResidentialUnitsForm.css";
-
+import TopBar from "../../../Component/TopBar/TopBar";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function ResidentialUnitsForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    building: "",
-    block: "",
-    unitCategory: "",
-    unit: "",
-    status: "",
+    Unit_id: "",
+    Block_no: "",
+    Building: "",
+    Category: "",
+    RStatus: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -27,6 +30,12 @@ function ResidentialUnitsForm() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    axios.post('http://localhost:3001/residentialUnits/addNewUnit', formData)
+    .then(res => {
+      console.log(res);
+      navigate('/residential units')
+    })
+    .catch(err => console.log(err));
     setFormErrors(validate(formData));
     setIsSubmit(true);
   };
@@ -41,63 +50,52 @@ function ResidentialUnitsForm() {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.building) {
-        errors.building = "Please select Building * ";
+    if (!values.Building) {
+        errors.Building = "Please select Building * ";
       }
-      if (!values.block) {
-        errors.block = "Please select Block Number * ";
+      if (!values.Block_no) {
+        errors.Block_no = "Please select Block Number * ";
       }
-      if (!values.unitCategory) {
-        errors.unitCategory = "Please select Unit Category *";
+      if (!values.Category) {
+        errors.Category = "Please select Unit Category *";
       }
-      if (!values.unit) {
-        errors.unit = "Please select Unit Number *";
+      if (!values.Unit_id) {
+        errors.Unit_id = "Please select Unit Number *";
       }
-      if (!values.status) {
-        errors.status = "Please select Status *";
+      if (!values.RStatus) {
+        errors.RStatus = "Please select Status *";
       }
       return errors;
   };
 
   return (
+    <>
+    {/* <TopBar title="Residential Units" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        <div className="inputItem">
-          <InputLabel className="namesTag">Building :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="utilityType"
+      <div className="inputItem">
+          <InputLabel htmlFor="Unit_id" className="Unit_id">
+            Unit :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="Unit_id"
             onChange={onChangeHandler}
-            value={formData.building}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Building
-            </MenuItem>
-            <MenuItem value="Wing 01" name="Wing 01" className="optionContainer">
-            Wing 01
-            </MenuItem>
-            <MenuItem value="Wing 02" name="Wing 02" className="optionContainer">
-            Wing 02
-            </MenuItem>
-            <MenuItem value="Wing 03" name="Wing 03" className="optionContainer" >
-            Wing 03
-            </MenuItem>
-            <MenuItem value="Wing 04" name="Wing 04" className="optionContainer">
-            Wing 04
-            </MenuItem>
-          </Select>
+            value={formData.Unit_id}/>
         </div>
-        <p>{formErrors.building}</p>
+        <p>{formErrors.Unit_id}</p>
+
 
         <div className="inputItems">
-          <InputLabel htmlFor="Block" className="namesTag">
+          <InputLabel htmlFor="Block_no" className="namesTag">
           Block:
           </InputLabel>
           <Select
             className="SelectformComponent"
-            name="block"
+            name="Block_no"
             onChange={onChangeHandler}
-            value={formData.block}
+            value={formData.Block_no}
           >
             <MenuItem value="" className="optionContainer">
               Select Block
@@ -116,46 +114,46 @@ function ResidentialUnitsForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.block}</p>
+        <p>{formErrors.Block_no}</p>
 
-        <div className="inputItems">
-          <InputLabel htmlFor="Unit" className="namesTag">
-          Unit:
-          </InputLabel>
+        <div className="inputItem">
+          <InputLabel className="namesTag">
+            Building :
+            </InputLabel>
           <Select
             className="SelectformComponent"
-            name="unit"
+            name="Building"
             onChange={onChangeHandler}
-            value={formData.unit}
+            value={formData.Building}
           >
             <MenuItem value="" className="optionContainer">
-              Select Unit
+              Select Building
             </MenuItem>
-            <MenuItem value="Unit 01" className="optionContainer">
-            Unit 01
+            <MenuItem value="Wing 01" name="Wing 01" className="optionContainer">
+            Wing A
             </MenuItem>
-            <MenuItem value="Unit 02" className="optionContainer">
-            Unit 02
+            <MenuItem value="Wing 02" name="Wing 02" className="optionContainer">
+            Wing B
             </MenuItem>
-            <MenuItem value="Unit 03" className="optionContainer">
-            Unit 03
+            <MenuItem value="Wing 03" name="Wing 03" className="optionContainer" >
+            Wing C
             </MenuItem>
-            <MenuItem value="Unit 04" className="optionContainer">
-            Unit 04
+            <MenuItem value="Wing 04" name="Wing 04" className="optionContainer">
+            Wing D
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.unit}</p>
+        <p>{formErrors.Building}</p>
 
         <div className="inputItems">
-          <InputLabel htmlFor="UnitCategory" className="namesTag">
+          <InputLabel htmlFor="Category" className="namesTag">
           Unit Category:
           </InputLabel>
           <Select
             className="SelectformComponent"
-            name="unitCategory"
+            name="Category"
             onChange={onChangeHandler}
-            value={formData.unitCategory}
+            value={formData.Category}
           >
             <MenuItem value="" className="optionContainer">
               Select Unit Category
@@ -174,17 +172,18 @@ function ResidentialUnitsForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.unitCategory}</p>
+        <p>{formErrors.Category}</p>
+
 
         <div className="inputItems">
-          <InputLabel htmlFor="Status" className="namesTag">
+          <InputLabel htmlFor="RStatus" className="namesTag">
           Status:
           </InputLabel>
           <Select
             className="SelectformComponent"
-            name="status"
+            name="RStatus"
             onChange={onChangeHandler}
-            value={formData.status}
+            value={formData.RStatus}
           >
             <MenuItem value="" className="optionContainer">
               Select Status
@@ -197,7 +196,7 @@ function ResidentialUnitsForm() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.status }</p>
+        <p>{formErrors.RStatus }</p>
 
         <div className="buttonSection">
           <Grid container spacing={2}>
@@ -219,6 +218,7 @@ function ResidentialUnitsForm() {
         <pre> </pre>
       )}
     </div>
+    </>
   );
 }
 

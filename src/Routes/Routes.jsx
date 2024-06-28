@@ -23,7 +23,7 @@ import InternalMaintenanceTable from "../Pages/MaintenancePage/InternalMaintenan
 import InternalMaintenanceForm from "../Pages/MaintenancePage/InternalMaintenanceAddNewForm/InternalMaintenanceForm";
 import StaffList from "../Pages/StaffDetails/StaffTableView/StaffList";
 import StaffDetailsAddNewForm from "../Pages/StaffDetails/AddNewStaffMember/StaffDetailsAddNewForm";
-import Dashboard from "../Pages/DashboardPage/Dashboard";
+// import Dashboard from "../Pages/DashboardPage/Dashboard";
 import UnitList from "../Pages/ResidentInfoPage/UnitTableView/UnitList";
 import ResidentInfoAddNew from "../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
 import MemberList from "../Pages/ResidentInfoPage/Member List/MemberList";
@@ -46,6 +46,12 @@ import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUs
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
 import SettingsPage from "../Pages/SettingsPage/SettingsPage";
 import Balance from "../Pages/FinancePage/Warnings/Balance";
+import GuestTable from "../Pages/Guest/GuestTable";
+import GuestFormNew from "../Pages/GuestNew/GuestForm";
+import ReservationNewTwo from "../Pages/ReservationNew/ReservationNewTwo";
+import ReservationTableTwo from "../Pages/Reservations/ReservationTableTwo";
+import ReservationTable from "../Pages/Reservations/ReservationTable";
+import ReservationNewOne from "../Pages/ReservationNew/ReservationNewOne";
 
 const Routers = ({ user, setUser }) => {
   return (
@@ -66,7 +72,7 @@ const Routers = ({ user, setUser }) => {
             <Route path="addUtility" element={<UtilityForm />} />
             <Route path='viewUtilityDetails' element={<UtilityDetails />} />
             <Route path='addNewUtilityType' element={<UtilityDetailsAddNewForm />} />
-            <Route path='updateUtilityDetails/:id' element={<UtilityDetailsUpdateForm/>} />
+            <Route path='updateUtilityDetails/:id' element={<UtilityDetailsUpdateForm />} />
           </Route>
 
           {/* Expenses routes */}
@@ -195,13 +201,109 @@ const Routers = ({ user, setUser }) => {
           <Route path="noticesForm" element={<NoticesForm />} />
         </Route>
 
+
+
+        {/* guest Section Routes */}
+        <Route path='/guests' element={<Outlet />}>
+          <Route index element={<GuestTable />} />
+          <Route path='addNew' element={<GuestFormNew />} />
+          {/* //edit route */}
+          <Route
+            path="updateGuest/:guest_ID"
+            element={<GuestFormNew />}
+          />
+
+        </Route>
+        {/* </Route> */}
+
+
+        {/* Reservation Section Routes */}
+        <Route path='/reservations' element={<Outlet />}>
+          <Route index element={<ReservationTableTwo />} />
+          <Route path='addNew' element={<ReservationNewTwo />} />
+          {/* //edit route */}
+          {/* <Route
+            path="updateFacility/:ref_no"
+            element={<ReservationNewTwo />}
+          />
+        </Route> */}
+
+
+          {/* Completed Requests */}
+          <Route path='reservation' element={<Outlet />}>
+            <Route index element={<ReservationTable />} />
+            <Route path='addNew' element={<ReservationNewOne />} />
+            {/* //edit route */}
+            {/* <Route
+            path="updateReservation/:ref_no"
+            element={<ReservationNewOne />}
+          /> */}
+
+
+            {/* 
+            <Route path = '/reservations' element = {<Outlet />}>
+              <Route index element = {<ReservationTable />} />            ReservationTable
+              <Route path='addNew' element={<ReservationNewOne />} />      ReservationNewOne
+             */}
+            {/* Completed Requests */}
+            {/* <Route path='reservation' element = {<Outlet />}>
+              <Route index element = {<ReservationTableTwo />} />
+              <Route path='addNew' element={<ReservationNewTwo />} />
+            </Route> */}
+
+
+          </Route>
+        </Route>
+
+          {/* Staff Details */}
+          <Route path = '/staff details' element = {<Outlet/>} >
+            <Route index element = {<StaffList />} />
+            <Route path='addNewStaff' element = {<StaffDetailsAddNewForm/>} />
+          </Route>
+
+          {/* Unit Details */}
+          <Route path = '/residents information' element = {<Outlet />} >
+            <Route index element = {<UnitList />} />
+            <Route path = 'addNewResident' element = {<ResidentInfoAddNew/>} />
+            <Route path = 'memberlist' element = {<MemberList />} />
+          </Route>
+
+          {/* Residential Units Route */}
+          <Route path = '/residential units' element = {<Outlet />} >
+            <Route index element = {<ResidentialUnitsTable/>} />
+            <Route path = 'residentialUnitsForm' element = {<ResidentialUnitsForm/>} />
+            <Route/>
+            
+          </Route>
+
+          {/* Complaints route */}
+          <Route path='/complaints' element={<Outlet />} >
+              <Route index element={<ComplaintsTable/>} />
+              <Route path='complaintsForm' element={<ComplaintsForm/>}/>
+            </Route>
+
+            {/* News & Notices section */}
+            <Route path='/news & notices' element={<Outlet/>}>
+              {/* Notices Route */}
+              <Route index element={<NoticesTable/>} />
+              <Route path='noticesForm' element={<NoticesForm/>}/>
+            </Route>
+
+            {/* Events Route */}
+          <Route path='eventsTable' element={<Outlet />} >
+              <Route index element={<EventsTable/>} />
+              <Route path='eventsForm' element={<EventsForm/>}/>
+            </Route>
+            
+
+
         {/* Events Route */}
         <Route path="eventsTable" element={<Outlet />}>
           <Route index element={<EventsTable />} />
           <Route path="eventsForm" element={<EventsForm />} />
         </Route>
       </Routes>
-    </div>
+    </div >
   );
 };
 

@@ -29,6 +29,10 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { StaticRouter } from 'react-router-dom/server';
+import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 //routing
 
@@ -110,92 +114,97 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(ReferenceNumber, Name, FacilityName, RequstedDate, StartDate, EndDate, PaymentStatus, Status, action) {
-  return { ReferenceNumber, Name, FacilityName, RequstedDate, StartDate, EndDate, PaymentStatus, Status, action };
-}
+//new comments///////////////////////////////////////////
+
+// function createData(ReferenceNumber, Name, FacilityName, RequstedDate, StartDate, EndDate, PaymentStatus, Status, action) {
+//   return { ReferenceNumber, Name, FacilityName, RequstedDate, StartDate, EndDate, PaymentStatus, Status, action };
+// }
 
 
-const rows = [
-  createData(
-    "W764783",
-    "James Thomas",
-    "Event Hall",
-    "22/06/2022",
-    "23/06/2022",
-    "24/06/2022",
-    "Paid",
-    "Reserved",
 
-    <div className="actionBtn">
-
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "E764583",
-    "Cane Electricians",
-    "Event Hall",
-    "22/06/2022",
-    "25/06/2022",
-    "29/06/2022",
-    "Paid",
-    "Reserved",
-
-    <div className="actionBtn">
-
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    "G345678",
-    "Patrick Stefans",
-    "Gym",
-    "22/06/2022",
-    "27/06/2022",
-    "28/06/2022",
-    "Paid",
-    "Not Yet",
-
-    <div className="actionBtn">
-
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-
-
-];
 
 function ReservationTable() {
+  const [reservationlist, setReservationlist] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [ref_no, setref_no] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setref_no(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+//////facility.
+  useEffect(() => {
+    console.log("frontend use effect");
+    getReservationDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+////faciity
+  const getReservationDetails = () => {
+    axios
+      .get("http://localhost:3001/Reservation/Reservations")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setReservationlist(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button (primary key)
+
+  const handleEdit = (ref_no) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(
+        ` http://localhost:3001/Reservation/Reservations/${ref_no}`
+      )
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button (primary key)
+
+  const handleDelete = (ref_no) => {
+    axios
+      .delete(
+        `http://localhost:3001/Reservation/Reservations/${[
+          ref_no,
+        ]}`
+      )
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
   return (
 
     <div className="GuestTableContainer">
 
+      <div className="miniBar"><Minibar /></div>
 
-      <div className="Currnet">
-        <Router>
-          <Box sx={{ width: '100%' }}>
-            <Routes>
-              <Route path="*" element={<CurrentRoute />} />
-            </Routes>
-            <MyTabs />
-          </Box>
-        </Router>
-      </div>
 
-      <div className="SearchBarAndADDnewButton">
-        <span className="SearchBar">
-          <SearchBar />
-        </span>
 
-        <span className="addNewButton">
-          <AddNewButton />
-        </span>
+      <div className="pageTop">
+        <SearchBar />
+        <AddNewButton route="/reservations/addNew" />
       </div>
 
 
@@ -213,31 +222,62 @@ function ReservationTable() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">Reference Number</StyledTableCell>
-              <StyledTableCell align="left">Name</StyledTableCell>
+              <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Facility Name</StyledTableCell>
               <StyledTableCell align="left">Requsted Date</StyledTableCell>
               <StyledTableCell align="left">Start Date</StyledTableCell>
               <StyledTableCell align="left">End Date</StyledTableCell>
               <StyledTableCell align="left">Payment Status</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
+              <StyledTableCell align="left">Availability</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.ReferenceNumber}</StyledTableCell>
-                <StyledTableCell align="left">{row.Name}</StyledTableCell>
-                <StyledTableCell align="left">{row.FacilityName}</StyledTableCell>
-                <StyledTableCell align="left">{row.RequstedDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.StartDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.EndDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.PaymentStatus}</StyledTableCell>
-                <StyledTableCell align="left">{row.Status}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+
+            
+              {reservationlist.map((apartflowtesting, index) => {
+                return (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>
+                      {apartflowtesting.ref_no}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.resident_name}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.facility_name}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.requested_date}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.start_date}
+                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.end_date}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.payment_status}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.availability}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{
+                        display: "flex",
+                        gap: "0.3rem",
+                      }}
+                    >
+                      <EditButton //front end route edit
+                        route={`/staff details/updateStaff/${[
+                          apartflowtesting.ref_no,
+                        ]}`}
+                        onClick={() => handleEdit([apartflowtesting.ref_no])}
+                      />
+                      <DeleteButton
+                        onClick={() =>
+                          onClickRowDelete(apartflowtesting.ref_no)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
+
+
         </Table>
       </TableContainer>
 
@@ -247,3 +287,35 @@ function ReservationTable() {
 }
 
 export default ReservationTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////table body before routing///////////////
+
+
+// {rows.map((row) => (
+//   <StyledTableRow key={row.name}>
+//     <StyledTableCell align="left">{row.ReferenceNumber}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Name}</StyledTableCell>
+//     <StyledTableCell align="left">{row.FacilityName}</StyledTableCell>
+//     <StyledTableCell align="left">{row.RequstedDate}</StyledTableCell>
+//     <StyledTableCell align="left">{row.StartDate}</StyledTableCell>
+//     <StyledTableCell align="left">{row.EndDate}</StyledTableCell>
+//     <StyledTableCell align="left">{row.PaymentStatus}</StyledTableCell>
+//     <StyledTableCell align="left">{row.Status}</StyledTableCell>
+//     <StyledTableCell align="left">{row.action}</StyledTableCell>
+//   </StyledTableRow>
+// ))}

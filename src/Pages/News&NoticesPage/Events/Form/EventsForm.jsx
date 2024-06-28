@@ -4,21 +4,19 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
 import "./EventsForm.css"; 
-// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
-// import dayjs from 'dayjs';
+import TopBar from "../../../../Component/TopBar/TopBar";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
 function EventsForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     event: "",
     place: "",
     sDate: "",
     eDate: "",
-    sTime: "",
-    eTime: "",
+    description: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -33,6 +31,12 @@ function EventsForm() {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    axios.post('http://localhost:3001/newsNotices/newEvent', formData)
+    .then(res => {
+      console.log(res);
+      navigate('/eventsTable')
+    })
+    .catch(err => console.log(err));
     setFormErrors(validate(formData));
     setIsSubmit(true);
   };
@@ -59,16 +63,15 @@ function EventsForm() {
     if (!values.eDate) {
       errors.eDate = "Please Enter End Date *";
     }
-    if (!values.sTime) {
-      errors.sTime = "Please Enter Start Time *";
+    if (!values.description) {
+      errors.description = "Please Add Description *";
     }
-    if (!values.eTime) {
-        errors.eTime = "Please Enter End Time *";
-      }
     return errors;
   };
 
   return (
+    <>
+    {/* <TopBar title="News & Notices" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
       <div className="inputItem">
@@ -78,7 +81,7 @@ function EventsForm() {
           <TextField
             id="outlined-basic"
             className="textFieldComponent"
-            name="description"
+            name="event"
             onChange={onChangeHandler}
             value={formData.event}
           />
@@ -87,24 +90,27 @@ function EventsForm() {
 
 
         <div className="inputItem">
-          <InputLabel className="namesTag">Place :</InputLabel>
+          <InputLabel className="namesTag">Venue :</InputLabel>
           <Select
             className="SelectformComponent"
-            name="type"
+            name="place"
             onChange={onChangeHandler}
             value={formData.place}
           >
             <MenuItem value="" className="optionContainer">
-              Select Event Place
+              Select Venue
             </MenuItem>
-            <MenuItem value="eventHall" name="eventHall" className="optionContainer">
+            <MenuItem value="eventhall" name="eventhall" className="optionContainer">
               Event Hall
             </MenuItem>
-            <MenuItem value="commonArea" name="commonArea" className="optionContainer">
-              Common Area
+            <MenuItem value="garden" name="dargen" className="optionContainer">
+              Garden
             </MenuItem>
-            <MenuItem value="park" name="park" className="optionContainer">
-              Park
+            <MenuItem value="playarea" name="playarea" className="optionContainer">
+              Play Area
+            </MenuItem>
+            <MenuItem value="rooftop" name="rooftop" className="optionContainer">
+              Roof Top
             </MenuItem>
           </Select>
         </div>
@@ -140,27 +146,20 @@ function EventsForm() {
         </div>
         <p>{formErrors.eDate}</p>
 
-       {/*} <div className="inputItem" name="sTime" style={{ color: '#808080' ,width:'22rem' }}>
-  <InputLabel htmlFor="sTime" className="namesTag" style={{color:'black'}}>
-            Start Time :
+        <div className="inputItem">
+          <InputLabel htmlFor="description" className="namesTag">
+            Description :
           </InputLabel>
-  <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={[
-          'TimePicker',
-          'MobileTimePicker',
-          'DesktopTimePicker',
-          'StaticTimePicker',
-        ]}
-      >
-        <DemoItem>
-          <DesktopTimePicker defaultValue={dayjs('2022-04-17T15:30')} />
-        </DemoItem>
-        
-      </DemoContainer>
-    </LocalizationProvider>
-    </div>
-    <p>{formErrors.sTime}</p>*/}
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="description"
+            onChange={onChangeHandler}
+            value={formData.description}
+          />
+        </div>
+        <p>{formErrors.description}</p>
+
 
 
         <div className="buttonSection">
@@ -182,6 +181,7 @@ function EventsForm() {
         <pre> </pre>
       )}
     </div>
+    </>
   );
 }
 
