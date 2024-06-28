@@ -4,7 +4,7 @@ export async function createPayment({ formData }) {
   try {
     console.log(formData);
     const data = await axios.post(
-      "http://localhost:3001/finance/payment",
+      "http://localhost:3001/finance/getAllPayments",
       formData
     );
 
@@ -28,16 +28,15 @@ function compareDates(dateString) {
 
   // Compare the two dates
   if (inputDate == today) {
-      return true ;
-  } 
+    return true;
+  }
 }
-
-
-
 
 export async function getPayment() {
   try {
-    const response = await axios.get("http://localhost:3001/finance/payment");
+    const response = await axios.get(
+      "http://localhost:3001/finance/getAllPayments"
+    );
 
     if (!response.data || !response.data.result) {
       return 0; // Return 0 if there are no reservations or no 'result' in the response
@@ -54,18 +53,20 @@ export async function getPayment() {
       return (
         paymentDate.getFullYear() == today.getFullYear() &&
         paymentDate.getMonth() == today.getMonth() &&
-        paymentDate.getDate() == today.getDate()+1
+        paymentDate.getDate() == today.getDate() + 1
       );
     };
 
     // Filter today's reservations
-     ////////add the date according to DB/////////////
-    const todayPayments = payments.filter((payment) => compareDates(payment.pay_date));
+    ////////add the date according to DB/////////////
+    const todayPayments = payments.filter((payment) =>
+      compareDates(payment.pay_date)
+    );
 
     const length = todayPayments.length;
     return length;
   } catch (error) {
-    console.error('Error fetching payments:', error);
+    console.error("Error fetching payments:", error);
     return 0; // Return 0 in case of error
   }
 }
