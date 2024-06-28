@@ -11,9 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import axios from "axios";
 import { logout } from "../../Pages/LoginPage/LoginServices/authService";
-// import { logout } from "../../Pages/LoginPage/LoginServices/authService";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Outlet,
   Route,
@@ -26,7 +26,6 @@ import StaffDetailsAddNewForm from "../Pages/StaffDetails/AddNewStaffMember/Staf
 import UnitList from "../Pages/ResidentInfoPage/UnitTableView/UnitList";
 import ResidentInfoAddNew from "../Pages/ResidentInfoPage/NewMemberForm/ResidentInfoAddNew";
 import MemberList from "../Pages/ResidentInfoPage/Member List/MemberList";
-import TopBar from "../Component/TopBar/TopBar";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import ResidentialUnitsTable from "../Pages/ResidentialUnitsPage/Table/ResidentialUnitsTable";
 import ResidentialUnitsForm from "../Pages/ResidentialUnitsPage/Form/ResidentialUnitsForm";
