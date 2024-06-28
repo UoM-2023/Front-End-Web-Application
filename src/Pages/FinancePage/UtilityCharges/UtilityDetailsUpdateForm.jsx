@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
-import BackButton from "../../../Component/Buttons/BackButton"; 
+import BackButton from "../../../Component/Buttons/BackButton";
 import { useParams } from "react-router-dom";
 import axios from "axios"
 import axiosInstance from "../../LoginPage/LoginServices/authService";
@@ -30,22 +30,20 @@ function UtilityDetailsUpdateForm() {
         const { data } = response;
         console.log("Response data",data);
 
-       
-        
-        if( response ){
-          const utilityData = data
-          console.log(utilityData);
-          setFormData({
-            utility_name: utilityData.utility_name,
-            priceRange: "",
-            basePrice: "",
-            unitPrice: "",
-            modifiedBy: "",
-          })
-        }
-      })
+          if (response) {
+            const utilityData = data;
+            console.log(utilityData);
+            setFormData({
+              utility_name: utilityData.utility_name,
+              priceRange: "",
+              basePrice: "",
+              unitPrice: "",
+              modifiedBy: "",
+            });
+          }
+        });
     }
-  })
+  });
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -80,17 +78,17 @@ function UtilityDetailsUpdateForm() {
     if (!values.basePrice) {
       errors.basePrice = "Please Enter Base Price *";
     } else if (!price_regex.test(values.basePrice)) {
-        errors.basePrice = "Enter a valid Base Price";
-      }
+      errors.basePrice = "Enter a valid Base Price";
+    }
     if (!values.unitPrice) {
       errors.unitPrice = "Please Enter Unit Price *";
     } else if (!price_regex.test(values.unitPrice)) {
-        errors.unitPrice = "Enter a valid Date of Birth";
-      }
+      errors.unitPrice = "Enter a valid Date of Birth";
+    }
     if (!values.modifiedBy) {
       errors.modifiedBy = "Please Enter Your ID *";
     }
-    
+
     return errors;
   };
 
@@ -139,7 +137,7 @@ function UtilityDetailsUpdateForm() {
         </div>
 
         <div className="inputItem">
-        <InputLabel className="namesTag">Price Range :</InputLabel>
+          <InputLabel className="namesTag">Price Range :</InputLabel>
           <Select
             className="SelectformComponent"
             name="priceRange"
@@ -153,25 +151,20 @@ function UtilityDetailsUpdateForm() {
               0 - 30
             </MenuItem>
             <MenuItem value="31-60" name="31-60" className="optionContainer">
-              31 - 60 
+              31 - 60
             </MenuItem>
-            <MenuItem
-              value="61-90" name="61-90"
-              className="optionContainer"
-            >
+            <MenuItem value="61-90" name="61-90" className="optionContainer">
               61 - 90
             </MenuItem>
-            <MenuItem
-              value="91-120" name="91-120"
-              className="optionContainer"
-            >
+            <MenuItem value="91-120" name="91-120" className="optionContainer">
               91 - 120
             </MenuItem>
             <MenuItem
-              value="121-180" name="121-180"
+              value="121-180"
+              name="121-180"
               className="optionContainer"
             >
-                121 - 180
+              121 - 180
             </MenuItem>
           </Select>
         </div>

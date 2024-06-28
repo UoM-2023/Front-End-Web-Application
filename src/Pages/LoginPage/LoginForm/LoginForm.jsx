@@ -7,12 +7,12 @@ import axios from "axios";
 import { setAuthToken } from "../LoginServices/authService";
 import { jwtDecode } from "jwt-decode";
 
-export default function LoginForm({setUser}) {
-  const [userData,setUserData] = useState({userID:'',password:''})
+export default function LoginForm({ setUser }) {
+  const [userData, setUserData] = useState({ userID: "", password: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setUserData({...userData, [e.target.name]: e.target.value});
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -26,12 +26,11 @@ export default function LoginForm({setUser}) {
       setAuthToken(token);
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      console.log("Login Error",error);
+      console.log("Login Error", error);
     }
-  }
-
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -43,13 +42,13 @@ export default function LoginForm({setUser}) {
           <div className="inputs">
             <div className="input">
               <img src={username} alt="" className="inputPic" />
-              <input 
-                type="text" 
-                placeholder="User name" 
+              <input
+                type="text"
+                placeholder="User name"
                 className="userName"
                 name="userID"
                 value={userData.userID}
-                onChange={handleChange} 
+                onChange={handleChange}
               />
             </div>
             <div className="input">
@@ -72,8 +71,7 @@ export default function LoginForm({setUser}) {
             <div className="resetPassword">Reset Password</div>
           </div>
         </div>
-      </div>      
+      </div>
     </form>
-    
   );
 }

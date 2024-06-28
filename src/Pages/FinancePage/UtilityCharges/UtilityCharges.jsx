@@ -13,10 +13,10 @@ import Minibar from '../Mininavbar/Minibar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#f9f4f0',
-    color: '#605D5D',
-    fontSize: '16px',
-    fontWeight: 'bold',
+    backgroundColor: "#f9f4f0",
+    color: "#605D5D",
+    fontSize: "16px",
+    fontWeight: "bold",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -24,15 +24,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(even)': {
-    backgroundColor: '#ECE1D9',
+  "&:nth-of-type(even)": {
+    backgroundColor: "#ECE1D9",
   },
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function Row({ index,row }) {
+function Row({ index, row }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -44,7 +44,7 @@ function Row({ index,row }) {
         <StyledTableCell align="center">{row.prev_balance}</StyledTableCell>
         <StyledTableCell align="center">{row.month_amount}</StyledTableCell>
         <StyledTableCell align="center">{row.tot_amount}</StyledTableCell>
-        <StyledTableCell align='center'>
+        <StyledTableCell align="center">
           <IconButton
             aria-label="expand row"
             size="small"
@@ -55,7 +55,10 @@ function Row({ index,row }) {
         </StyledTableCell>
       </StyledTableRow>
       <StyledTableRow>
-        <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+        <StyledTableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={7}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
@@ -64,26 +67,42 @@ function Row({ index,row }) {
               <Table size="small" aria-label="details">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell align='center'>Utility Type</StyledTableCell>
-                    <StyledTableCell align='center'>Usage</StyledTableCell>
-                    <StyledTableCell align='center'>Cost</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Utility Type
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Usage</StyledTableCell>
+                    <StyledTableCell align="center">Cost</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <StyledTableCell align='center'>Gas</StyledTableCell>
-                    <StyledTableCell align='center'>{row.gasUsage}</StyledTableCell>
-                    <StyledTableCell align='center'>{row.gasCost}</StyledTableCell>
+                    <StyledTableCell align="center">Gas</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.gasUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.gasCost}
+                    </StyledTableCell>
                   </TableRow>
                   <TableRow>
-                    <StyledTableCell align='center'>Water</StyledTableCell>
-                    <StyledTableCell align='center'>{row.waterUsage}</StyledTableCell>
-                    <StyledTableCell align='center'>{row.waterCost}</StyledTableCell>
+                    <StyledTableCell align="center">Water</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.waterUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.waterCost}
+                    </StyledTableCell>
                   </TableRow>
                   <TableRow>
-                    <StyledTableCell align='center'>Electricity</StyledTableCell>
-                    <StyledTableCell align='center'>{row.electricityUsage}</StyledTableCell>
-                    <StyledTableCell align='center'>{row.electricityCost}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Electricity
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.electricityUsage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.electricityCost}
+                    </StyledTableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -106,12 +125,12 @@ function UtilityCharges() {
           console.log(response.data.result);
           setRows(response.data.result);
         } else {
-          setError('Unexpected response format');
+          setError("Unexpected response format");
         }
       })
-      .catch(error => {
-        console.error('Error fetching utility data:', error);
-        setError('Failed to fetch data');
+      .catch((error) => {
+        console.error("Error fetching utility data:", error);
+        setError("Failed to fetch data");
       });
   }, []);
 
@@ -122,31 +141,38 @@ function UtilityCharges() {
       <SearchBar/>
         <div className="topButtons">
           <UtilityDetailsButton route="/finance/utilitycharges/viewUtilityDetails" />
-          <AddNewButton route="/finance/utilitycharges/addUtility"/>
+          <AddNewButton route="/finance/utilitycharges/addUtility" />
         </div>
       </div>
 
       {error ? (
         <div>Error: {error}</div>
       ) : (
-        <TableContainer component={Paper} sx={{ boxShadow: 'none', border: 0 }}>
-          <Table aria-label="collapsible table" sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}>
+        <TableContainer component={Paper} sx={{ boxShadow: "none", border: 0 }}>
+          <Table
+            aria-label="collapsible table"
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+          >
             <TableHead>
               <TableRow>
                 {/* <StyledTableCell>#No</StyledTableCell> */}
-                <StyledTableCell align='center'>Unit ID</StyledTableCell>
+                <StyledTableCell align="center">Unit ID</StyledTableCell>
                 {/* <StyledTableCell>Utility Type</StyledTableCell> */}
-                <StyledTableCell align='center'>Month</StyledTableCell>
-                <StyledTableCell align='center'>Balance</StyledTableCell>
-                <StyledTableCell align='center'>Monthly Amount (Rs.)</StyledTableCell>
-                <StyledTableCell align='center'>Total Amount (Rs.)</StyledTableCell>
-                <StyledTableCell align='center'>See Details</StyledTableCell>
+                <StyledTableCell align="center">Month</StyledTableCell>
+                <StyledTableCell align="center">Balance</StyledTableCell>
+                <StyledTableCell align="center">
+                  Monthly Amount (Rs.)
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Total Amount (Rs.)
+                </StyledTableCell>
+                <StyledTableCell align="center">See Details</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

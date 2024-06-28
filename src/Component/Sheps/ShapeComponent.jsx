@@ -1,8 +1,9 @@
-// Login Page Shape Component 
+// Login Page Shape Component
 
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./ShapeComponent.css"; // Create this CSS file for custom styling
+import { Grid } from "@mui/material";
 
 function ShapeComponent() {
   return (
@@ -35,14 +36,15 @@ function ShapeComponent() {
           </Row>
         </Container>
       </div>
-
-      <div className="loginPageImage">
-        <img
-          src="./Assest/LoginImg.png"
-          alt="LoginImage"
-          className="loginimg"
-        />
-      </div>
+      <Grid>
+        <div className="loginPageImage">
+          <img
+            src="./Assest/LoginImg.png"
+            alt="LoginImage"
+            className="loginimg"
+          />
+        </div>
+      </Grid>
     </div>
   );
 }

@@ -10,9 +10,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
-import EditButton from "../../../Component/Buttons/EditButton";
-import DeleteButton from "../../../Component/Buttons/DeleteButton";
-import { Link, Outlet } from "react-router-dom";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
 
@@ -40,6 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Revenue() {
   const [revenues, setRevenues] = useState([]);
+  const [records, setRecords] = useState([]);
+
   useEffect(() => {
     getRevenue();
   }, []);
@@ -50,17 +49,37 @@ function Revenue() {
       .then((response) => {
         console.log("Called");
         console.log(response);
-        setRevenues(response.data.result[0]);
+        setRevenues(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      revenues.filter(
+        (f) =>
+          f.revenue_id.toLowerCase().includes(query) ||
+          f.paid_by.toLowerCase().includes(query) ||
+          f.amount.toString().toLowerCase().includes(query) ||
+          f.rType.toLowerCase().includes(query) ||
+          f.payment_method.toLowerCase().includes(query) ||
+          f.staff_id.toLowerCase().includes(query) ||
+          f.added_date.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="revenueContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/finance/revenue/addRevenue" />
       </div>
       <TableContainer component={Paper}>
@@ -79,27 +98,32 @@ function Revenue() {
               <StyledTableCell align="left">#No</StyledTableCell>
               <StyledTableCell align="left">Revenue ID</StyledTableCell>
               <StyledTableCell align="left">Paid By</StyledTableCell>
-              <StyledTableCell align="left">Amount</StyledTableCell>
-              <StyledTableCell align="left">Type</StyledTableCell>
-              <StyledTableCell align="left">Payment Method</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
+              <StyledTableCell align="center">Type</StyledTableCell>
+              <StyledTableCell align="center">Payment Method</StyledTableCell>
               <StyledTableCell align="left">Staff ID</StyledTableCell>
               <StyledTableCell align="left">Date</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {revenues.map((revenue) => (
+            {records.map((revenue, index) => (
               <StyledTableRow key={revenue.revenue_id}>
-                <StyledTableCell>{revenue.id}</StyledTableCell>
+                <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{revenue.revenue_id}</StyledTableCell>
                 <StyledTableCell>{revenue.paid_by}</StyledTableCell>
-                <StyledTableCell>{revenue.amount}</StyledTableCell>
-                <StyledTableCell>{revenue.rType}</StyledTableCell>
-                <StyledTableCell>{revenue.payment_method}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {revenue.amount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {revenue.rType}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {revenue.payment_method}
+                </StyledTableCell>
                 <StyledTableCell>{revenue.staff_id}</StyledTableCell>
                 <StyledTableCell>
                   {revenue.added_date.slice(0, 10)}
                 </StyledTableCell>
-                <StyledTableCell>{revenue.action}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
