@@ -185,7 +185,6 @@
 import React, { useState } from "react";
 import "./SettingsPage.css";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
-import { useParams } from "react-router-dom";
 import { Grid, InputLabel, TextField } from "@mui/material";
 import CancelButton from "../../Component/Buttons/CancelButton";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
@@ -193,7 +192,6 @@ import axios from "axios";
 import UpdatePasswordButn from "../../Component/Buttons/UpdatePasswordButn";
 
 function SettingsPage() {
-  // const { UserID } = useParams();
   const UserID = localStorage.getItem("userId");
 
   const [formData, setFormData] = useState({
