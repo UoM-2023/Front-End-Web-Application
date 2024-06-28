@@ -21,6 +21,7 @@ const TopBar = ({ user, setUser, title }) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const UserID = localStorage.getItem("userId");
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -103,10 +104,11 @@ const TopBar = ({ user, setUser, title }) => {
                     <MenuItem onClick={handleClose}>
                       <div className="LoginUserDetails">
                         <span className="textItem">
-                          <b>User Name :</b> AB-000001U
+                          <b>User Name :</b> {UserID}
                         </span>
                         <span className="textItem">
-                          <b>User Role :</b> Maintenance Manager
+                          <b>User Role :</b>
+                          {user.role}
                         </span>
                       </div>
                     </MenuItem>

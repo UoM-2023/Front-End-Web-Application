@@ -193,7 +193,8 @@ import axios from "axios";
 import UpdatePasswordButn from "../../Component/Buttons/UpdatePasswordButn";
 
 function SettingsPage() {
-  const { UserID } = useParams();
+  // const { UserID } = useParams();
+  const UserID = localStorage.getItem("userId");
 
   const [formData, setFormData] = useState({
     oldPassword: "",
