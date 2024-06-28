@@ -90,7 +90,7 @@ function ComplaintsForm() {
 
   return (
     <>
-    <TopBar title="Complaints" /> 
+    {/* <TopBar title="Complaints" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
 

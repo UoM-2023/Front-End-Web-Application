@@ -191,7 +191,7 @@ function EventsTable() {
 
   return (
     <div className="eventsTableContainer">
-      <TopBar title="News & Notices" />
+      {/* <TopBar title="News & Notices" /> */}
       <MiniNavBar/>
       <div className="pageTop">
         <SearchBar />

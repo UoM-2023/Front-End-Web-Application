@@ -72,7 +72,7 @@ function NoticesTable() {
 
   return (
     <div className="noticesTableContainer">
-      <TopBar title="News & Notices" />
+      {/* <TopBar title="News & Notices" /> */}
       <MiniNavBar/>
       <div className="pageTop">
         <SearchBar />

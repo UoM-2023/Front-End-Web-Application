@@ -79,7 +79,7 @@ function ResidentialUnitsTable() {
 
   return (
     <div className="residentialUnitsContainer">
-      <TopBar title="Residential Units" />
+      {/* <TopBar title="Residential Units" /> */}
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/residential units/residentialUnitsForm" />

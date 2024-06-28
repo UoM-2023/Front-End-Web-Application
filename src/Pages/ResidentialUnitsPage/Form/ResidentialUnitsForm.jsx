@@ -70,7 +70,7 @@ function ResidentialUnitsForm() {
 
   return (
     <>
-    <TopBar title="Residential Units" /> 
+    {/* <TopBar title="Residential Units" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
       <div className="inputItem">

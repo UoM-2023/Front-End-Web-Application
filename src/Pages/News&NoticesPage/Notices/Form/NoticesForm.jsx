@@ -85,7 +85,7 @@ function NoticesForm() {
 
   return (
     <>
-    <TopBar title="News & Notices" /> 
+    {/* <TopBar title="News & Notices" />  */}
     <div className="FormContainer">
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">

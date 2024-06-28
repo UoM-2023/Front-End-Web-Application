@@ -70,7 +70,7 @@ function ComplaintsTable() {
 
   return (
     <div className="complaintsContainer">
-      <TopBar title="Complaints" />
+      {/* <TopBar title="Complaints" /> */}
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/complaints/complaintsForm" />
