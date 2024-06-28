@@ -13,6 +13,16 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import DoneSwitch from "../../../Component/Switchs/DoneSwitch";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,114 +44,107 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": {},
 }));
 
-function createData(
-  no,
-  referenceNo,
-  serviceProvider,
-  mobileNo,
-  requestedDate,
-  completedDate,
-  paymentStatus,
-  paymemntID,
-  action
-) {
-  return {
-    no,
-    referenceNo,
-    serviceProvider,
-    mobileNo,
-    requestedDate,
-    completedDate,
-    paymentStatus,
-    paymemntID,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "M-220046",
-    "K.K.Gas Sevice",
-    "0112364445",
-    "04 JAN 2024",
-    "07 JAN 2024",
-    "Paid",
-    "P-205075",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "M-220047",
-    "S.M.Gas Service",
-    "0112555222",
-    "31 JAN 2024",
-    "15 FEB 2024",
-    "Pending",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    3,
-    "M-220050",
-    "J.K.Plummer",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    4,
-    "M-220049",
-    "J.K.Plummer",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    5,
-    "M-220050",
-    "Cane Electricians",
-    "0112555222",
-    "25 JAN 2024",
-    "15 FEB 2024",
-    "Paid",
-    "P-205060",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function CompletedResidentRequestTable() {
+  const [completedList, setCompletedList] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = useState("");
+  const [records, setRecords] = useState([]);
+
+  const onClickRowDelete = (rowid) => {
+    setId(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // Change Completed Date Format
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate());
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getCompletedRequestDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getCompletedRequestDetails = () => {
+    axios
+      .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
+      .then((response) => {
+        console.log("CALLED");
+        const mntIds = response.data.result.map((item) => item.Mnt_id);
+        console.log(mntIds);
+        setCompletedList(response.data.result);
+        setRecords(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+
+  const handleEdit = (id) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      completedList.filter(
+        (f) =>
+          f.Mnt_id.toLowerCase().includes(query) ||
+          f.ServiceProvider.toLowerCase().includes(query) ||
+          f.MobileNo.toLowerCase().includes(query) ||
+          f.requested_date.toLowerCase().includes(query) ||
+          f.completed_date.toLowerCase().includes(query) ||
+          f.Payment_Status.toLowerCase().includes(query) ||
+          f.Mnt_Payment_id.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="completedResidentRequestTableContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/maintenance/completed/addNewCompleted" />
       </div>
       <TableContainer component={Paper}>
@@ -168,31 +171,78 @@ function CompletedResidentRequestTable() {
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
+            {records.map((CompletedReq, index) => (
+              <StyledTableRow key={CompletedReq.id}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.referenceNo}
+                  {CompletedReq.Mnt_id}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.serviceProvider}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.mobileNo}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.requestedDate}
+                  {CompletedReq.ServiceProvider}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.completedDate}
+                  {CompletedReq.MobileNo}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.paymentStatus}
+                  {formatDate(CompletedReq.requested_date)}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.paymemntID}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {formatDate(CompletedReq.completed_date)}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {CompletedReq.Payment_Status}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {CompletedReq.Mnt_Payment_id}
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    gap: "0.3rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/maintenance/completed/UpdateCompleted/${[
+                      CompletedReq.id,
+                    ]}`}
+                    onClick={() => handleEdit([CompletedReq.id])}
+                  />
+                  <DeleteButton
+                    onClick={() => onClickRowDelete(CompletedReq.id)}
+                  />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Completed Request"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

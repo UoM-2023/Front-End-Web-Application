@@ -9,6 +9,7 @@ import './UtilityCharges.css';
 import SearchBar from '../../../Component/SearchBar/SearchBar';
 import UtilityDetailsButton from '../../../Component/Buttons/UtilityDetailsButton';
 import axiosInstance from '../../LoginPage/LoginServices/authService';
+import Minibar from '../Mininavbar/Minibar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -116,6 +117,7 @@ function UtilityCharges() {
 
   return (
     <div className='utilityDetailsContainer'>
+      <Minibar />
       <div className='pageTop'>
       <SearchBar/>
         <div className="topButtons">

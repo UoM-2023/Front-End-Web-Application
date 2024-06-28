@@ -5,6 +5,8 @@ import SaveButton from "../../../../Component/Buttons/SaveButton";
 import BackButton from "../../../../Component/Buttons/BackButton";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingIndicator from "../../../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../../../Component/Dialogs/SuccessAlertDialog";
 
 function EditFundsAddNew() {
   const { id } = useParams();
@@ -18,6 +20,9 @@ function EditFundsAddNew() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,9 +52,12 @@ function EditFundsAddNew() {
               timePeriod: fundData.timePeriod,
               modifiedBy: fundData.modified_by,
             });
+          } else {
+            console.error("Data structure does not match expected format");
           }
         })
-        .catch((err) => console.error("Failed to fetch data", err));
+        .catch((err) => console.error("Failed to fetch data", err))
+        .finally(() => setIsLoading(false));
     }
   }, [id]);
 
@@ -63,6 +71,8 @@ function EditFundsAddNew() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
+    setIsSubmit(true);
+    setIsLoading(true);
 
     // axios.post('http://localhost:3001/finance/editFunds',formData)
     // .then(res => console.log('RES::::::::',res.data))
@@ -73,13 +83,20 @@ function EditFundsAddNew() {
     if (id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
       axios
-        .put(`http://localhost:3001/finance/editFunds/${id}`, formData)
+        .put(
+          `http://localhost:3001/finance/editFunds/updateFund/${id}`,
+          formData
+        )
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
-          navigate("/finance/editFunds");
+          setSuccessMessage(res.data.message);
+          //navigate("/finance/editFunds");
         })
-        .catch((err) => console.error("Failed to update data:", err));
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
       axios
@@ -87,9 +104,13 @@ function EditFundsAddNew() {
         .then((res) => {
           console.log("Create successful:", res.data);
           setIsSubmit(true);
-          navigate("/finance/editFunds");
+          setSuccessMessage(res.data.message);
+          //navigate("/finance/editFunds");
         })
-        .catch((err) => console.error("Failed to create data:", err));
+        .catch((err) => console.error("Failed to create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -121,8 +142,41 @@ function EditFundsAddNew() {
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate("/finance/editFunds");
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      fundName: "",
+      chargedBy: "",
+      amount: "",
+      timePeriod: "",
+      modifiedBy: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         <div className="inputItem">
           <InputLabel htmlFor="fundName" className="namesTag">
@@ -232,10 +286,12 @@ function EditFundsAddNew() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );

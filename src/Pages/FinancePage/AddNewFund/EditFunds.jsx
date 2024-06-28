@@ -17,6 +17,12 @@ import axios from "axios";
 import EditFundsAddNew from "./EditFundFrom/EditFundsAddNew";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../LoginPage/LoginServices/authService";
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Dialog from "@mui/material/Dialog";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,45 +46,30 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  fundID,
-  fundName,
-  chargedBy,
-  amount,
-  timePeriod,
-  modifiedDate,
-  modifiedBy,
-  action
-) {
-  return {
-    no,
-    fundID,
-    fundName,
-    chargedBy,
-    amount,
-    timePeriod,
-    modifiedDate,
-    modifiedBy,
-    action,
-  };
-}
-
 function EditFunds() {
   let no = 1;
   const navigate = useNavigate();
   const [fundTypes, setFundTypes] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [fund_id, setfund_id] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setfund_id(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     console.log("frontend use effect");
     getFundTypes();
   }, []);
-
-  const addData = () => {
-    const newData = [...fundTypes];
-    newData.push({ id: newData.length + 1, /* other data properties */ });
-    setFundTypes(newData);
-  };
 
   // Get the data from the backend to front end
   const getFundTypes = () => {
@@ -107,16 +98,16 @@ function EditFunds() {
 
   const handleDelete = (id) => {
     console.log("Delete handler");
-
-    axios.delete(`http://localhost:3001/finance/editFunds/${id}`).then((response) =>{
-
-      console.log("Delete handler called");
-      getFundTypes();
-
-    }).catch((error)=>{
-      console.log("Delete handle error",error);
-    })
-  }
+    axios
+      .delete(`http://localhost:3001/finance/editFunds/deleteFund/${id}`)
+      .then((response) => {
+        console.log("Delete handler called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Delete handle error", error);
+      });
+  };
 
   return (
     <div className="editFundsContainer">
@@ -136,38 +127,36 @@ function EditFunds() {
           }}
           aria-label="customized table"
         >
-          {/* Table Headings */}
+          {/*--------------- Table Headings ----------------------*/}
           <TableHead>
             <TableRow>
-              <StyledTableCell align="center">#No</StyledTableCell>
-              {/* <StyledTableCell align="center">Fund ID</StyledTableCell> */}
-              <StyledTableCell align="center">Fund Name</StyledTableCell>
+              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">Fund ID</StyledTableCell> */}
+              <StyledTableCell align="left">Fund Name</StyledTableCell>
               <StyledTableCell align="center">Charged By</StyledTableCell>
-              <StyledTableCell align="center">Amount</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
               <StyledTableCell align="center">
                 Time Period <br />
                 (In Months)
               </StyledTableCell>
               <StyledTableCell align="center">Modified Date</StyledTableCell>
-              <StyledTableCell align="center">Modified By</StyledTableCell>
+              <StyledTableCell align="left">Modified By</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
+          {/* ------------- Table Data --------------------- */}
+
           <TableBody>
             {fundTypes.map((fundType, index) => (
               <StyledTableRow key={fundType.fund_id}>
                 {/* For the counting in first column */}
-                <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                {/* <StyledTableCell align="center">
-                  {fundType.fund_id}
-                </StyledTableCell> */}
-                <StyledTableCell align="center">
-                  {fundType.fundName}
-                </StyledTableCell>
+                <StyledTableCell>{index + 1}</StyledTableCell>
+                <StyledTableCell>{fundType.fundName}</StyledTableCell>
                 <StyledTableCell align="center">
                   {fundType.chargedBy}
                 </StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell align="right">
                   {fundType.amount}
                 </StyledTableCell>
                 <StyledTableCell align="center">
@@ -176,11 +165,8 @@ function EditFunds() {
                 <StyledTableCell align="center">
                   {fundType.modified_date.slice(0, 10)}
                 </StyledTableCell>
-                <StyledTableCell align="center">
-                  {fundType.modified_by}
-                </StyledTableCell>
+                <StyledTableCell>{fundType.modified_by}</StyledTableCell>
                 <StyledTableCell
-                  align="center"
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -192,15 +178,42 @@ function EditFunds() {
                     onClick={() => handleEdit(fundType.fund_id)}
                   />
                   <DeleteButton
-                    onClick={() => handleDelete(fundType.fund_id)}
+                    onClick={() => onClickRowDelete(fundType.fund_id)}
                   />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Fund Type"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(fund_id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
-      {/* <EditFundsAddNew formData={formData} /> */}
     </div>
   );
 }

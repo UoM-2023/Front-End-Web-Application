@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
 
 
-const API_URL = 'https://e8ba-2402-4000-21c2-e188-ad0b-f674-765d-4395.ngrok-free.app'
+const API_URL = 'http://localhost:3001'
 
 const axiosInstance = axios.create({
     baseURL: API_URL,

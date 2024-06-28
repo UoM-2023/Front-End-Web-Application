@@ -1,0 +1,72 @@
+/* .SettingsPageContainer {
+    margin-left: 5rem;
+    margin-right: 0.1rem;
+}
+.pageTopContent{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+    gap: 2rem;
+}
+.loginDetailsText {
+    margin: 0;
+    padding: 0;
+    font-size: large;
+    color: rgb(64, 57, 57);
+    
+  }
+
+.FormContainer {
+    width: auto;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.pageTitle {
+    margin-left: 6rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+} */
+
+
+.SettingsPageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    margin-top: -2rem;
+}
+
+.Formcontainer {
+    width: auto;
+    background-color: #e8714205; /* Changed for better visibility */
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem; /* Added padding for better spacing */
+    box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.332); /* Added shadow for better aesthetics */
+    border-radius: 8px; /* Added border radius for rounded corners */
+}
+
+.pageTitle {
+    text-align: center; /* Center the title text */
+    margin-bottom: 2rem;
+    margin-top: -1.5rem;
+}
+
+.pageTopContent {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+    gap: 2rem;
+}
+
+.loginDetailsText {
+    margin: 0;
+    padding: 0;
+    font-size: large;
+    color: rgb(64, 57, 57);
+}

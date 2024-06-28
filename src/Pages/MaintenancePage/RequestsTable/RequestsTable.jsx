@@ -13,6 +13,16 @@ import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../mininavbar/minibar.maintenance";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import DoneSwitch from "../../../Component/Switchs/DoneSwitch";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,66 +46,101 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  no,
-  referenceNo,
-  unitID,
-  residentName,
-  maintenanceType,
-  requestedDate,
-  status,
-  action
-) {
-  return {
-    no,
-    referenceNo,
-    unitID,
-    residentName,
-    maintenanceType,
-    requestedDate,
-    status,
-    action,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "M-120046",
-    "A-214112",
-    "P.O.Nimal Fernando",
-    "Water Supply",
-    "08 FEB 2024",
-    "Done",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-  createData(
-    2,
-    "M-120047",
-    "A-214004",
-    "Q.Z.Ghotabhaya",
-    "Electricity Service",
-    "01 FEB 2024",
-    "Pending",
-    <div className="actionBtn">
-      <EditButton />
-      &nbsp; &nbsp;
-      <DeleteButton />
-    </div>
-  ),
-];
-
 function RequestsTable() {
+  const [mRequestList, setMRequestList] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [id, setId] = useState("");
+  const [records, setRecords] = useState([]);
+
+  const onClickRowDelete = (rowid) => {
+    setId(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("frontend use effect");
+    getMaintenanceRequestDetails();
+  }, []);
+
+  // Get the data from the backend to front end
+
+  const getMaintenanceRequestDetails = () => {
+    axios
+      .get("http://localhost:3001/maintenance/New_Mnt_Req")
+      .then((response) => {
+        console.log("CALLED");
+        console.log(response);
+        setMRequestList(response.data.result);
+        setRecords(response.data.result);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Handling the edit button
+  const handleEdit = (id) => {
+    console.log("Hanlde Edit Before axios");
+    axios
+      .get(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Edit Called");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Handling the Delete button
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleStatusChange = (id, newStatus) => {
+    setMRequestList((prevList) =>
+      prevList.map((request) =>
+        request.id === id ? { ...request, Mnt_Status: newStatus } : request
+      )
+    );
+  };
+
+  // Search Bar Function
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      mRequestList.filter(
+        (f) =>
+          f.Mnt_Request_id.toLowerCase().includes(query) ||
+          f.Unit_id.toLowerCase().includes(query) ||
+          f.Resident_Name.toLowerCase().includes(query) ||
+          f.MType.toLowerCase().includes(query) ||
+          f.requested_date.toLowerCase().includes(query) ||
+          f.Mnt_Status.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="requestsTableContainer">
       <Minibar />
       <div className="pageTop">
-        <SearchBar />
-        <AddNewButton route="/maintenance/newRequest"/>
+        <SearchBar onChange={Filter} />
+        <AddNewButton route="/maintenance/newRequest" />
       </div>
       <TableContainer component={Paper}>
         <Table
@@ -116,32 +161,86 @@ function RequestsTable() {
               <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Maintenance Type</StyledTableCell>
               <StyledTableCell align="left">Requested Date</StyledTableCell>
+              <StyledTableCell align="left">Description</StyledTableCell>
               <StyledTableCell align="left">Status</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.no}</StyledTableCell>
+            {records.map((mRequests, index) => (
+              <StyledTableRow key={mRequests.id}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.referenceNo}
-                </StyledTableCell>
-                <StyledTableCell align="left">{row.unitID}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {row.residentName}
+                  {mRequests.Mnt_Request_id}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.maintenanceType}
+                  {mRequests.Unit_id}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {row.requestedDate}
+                  {mRequests.Resident_Name}
                 </StyledTableCell>
-                <StyledTableCell align="left">{row.status}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {mRequests.MType}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {mRequests.requested_date.slice(0, 10)}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {mRequests.M_Description}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {mRequests.Mnt_Status}
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    gap: "0.3rem",
+                  }}
+                >
+                  <EditButton
+                    route={`/maintenance/updateRequest/${[mRequests.id]}`}
+                    onClick={() => handleEdit([mRequests.id])}
+                  />
+                  <DeleteButton
+                    onClick={() => onClickRowDelete(mRequests.id)}
+                  />
+                  <DoneSwitch
+                    id={mRequests.id}
+                    status={mRequests.Mnt_Status}
+                    onStatusChange={handleStatusChange}
+                  />
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Maintenance Request"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(id)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>
