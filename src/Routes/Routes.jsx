@@ -206,6 +206,11 @@ const Routers = ({ user, setUser }) => {
             element={<ResidentialUnitsForm />}
           />
           <Route />
+          <Route
+            path="UpdateresidentialUnits/:Unit_id"
+            element={<ResidentialUnitsForm />}
+          />
+          <Route />
         </Route>
 
         {/*----------- Complaints route ---------------*/}
