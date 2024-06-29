@@ -11,9 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import axios from "axios";
 import { logout } from "../../Pages/LoginPage/LoginServices/authService";
-// import { logout } from "../../Pages/LoginPage/LoginServices/authService";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
@@ -21,6 +19,7 @@ const TopBar = ({ user, setUser, title }) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const UserID = localStorage.getItem("userId");
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -103,10 +102,12 @@ const TopBar = ({ user, setUser, title }) => {
                     <MenuItem onClick={handleClose}>
                       <div className="LoginUserDetails">
                         <span className="textItem">
-                          <b>User Name :</b> AB-000001U
+                          <b>User Name :</b> {UserID}
                         </span>
                         <span className="textItem">
-                          <b>User Role :</b> Maintenance Manager
+                          <b>User Role :</b>
+                          {user.role}
+                          {localStorage.setItem("role", user.role)}
                         </span>
                       </div>
                     </MenuItem>

@@ -169,7 +169,6 @@ function StaffDetailsAddNewForm() {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.table(formData);
-      console.log(formData.dob);
     }
   }, [formErrors]);
 

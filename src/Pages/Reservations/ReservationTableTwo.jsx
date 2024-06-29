@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./reservationtableTwo.css"
+import "./reservationtableTwo.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,12 +12,11 @@ import EditButton from "../../Component/Buttons/EditButton";
 import DeleteButton from "../../Component/Buttons/DeleteButton";
 import SearchBar from "../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../Component/Buttons/AddNewButton";
-
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
 import {
   MemoryRouter,
   Route,
@@ -25,25 +24,29 @@ import {
   Link,
   matchPath,
   useLocation,
-} from 'react-router-dom';
-import { StaticRouter } from 'react-router-dom/server';
+} from "react-router-dom";
+import { StaticRouter } from "react-router-dom/server";
 import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-
-
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 //routing
 
 function Router(props) {
   const { children } = props;
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <StaticRouter location="/drafts">{children}</StaticRouter>;
   }
 
   return (
-    <MemoryRouter initialEntries={['/drafts']} initialIndex={0}>
+    <MemoryRouter initialEntries={["/drafts"]} initialIndex={0}>
       {children}
     </MemoryRouter>
   );
@@ -72,12 +75,17 @@ function MyTabs() {
   // This means that if you have nested routes like:
   // users, users/new, users/edit.
   // Then the order should be ['users/add', 'users/edit', 'users'].
-  const routeMatch = useRouteMatch(['/inbox/:id', '/drafts']);
+  const routeMatch = useRouteMatch(["/inbox/:id", "/drafts"]);
   const currentTab = routeMatch?.pattern?.path;
 
   return (
     <Tabs value={currentTab}>
-      <Tab label="Facilities" value="/inbox/:id" to="/inbox/1" component={Link} />
+      <Tab
+        label="Facilities"
+        value="/inbox/:id"
+        to="/inbox/1"
+        component={Link}
+      />
       <Tab label="Reservations" value="/drafts" to="/drafts" component={Link} />
     </Tabs>
   );
@@ -85,12 +93,7 @@ function MyTabs() {
 
 function CurrentRoute() {
   const location = useLocation();
-
-
-}////////////////////////////////////////////////////////////////
-
-
-
+} ////////////////////////////////////////////////////////////////
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -114,72 +117,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// function createData(n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION) {
-//   return { n, REF_NO, FACILITY_NAME, AMOUNT_CHARGE, CHARGE_PER, STATUS, ACTION };
-// }
-
-
-// const rows = [
-//   createData(
-//     "W764783",
-//     "James Thomas",
-//     "Event Hall",
-//     "22/06/2022",
-//     "23/06/2022",
-//     "24/06/2022",
-
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "E764583",
-//     "Cane Electricians",
-//     "Event Hall",
-//     "22/06/2022",
-//     "25/06/2022",
-//     "29/06/2022",
-
-
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "G345678",
-//     "Patrick Stefans",
-//     "Gym",
-//     "22/06/2022",
-//     "27/06/2022",
-//     "28/06/2022",
-
-
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-
-
-// ];
-
 function ReservationTableTwo() {
-
-
-
-
-
   const [facilitylist, setFacilitylist] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [ref_no, setref_no] = useState("");
+  const [records, setRecords] = useState([]);
 
   const onClickRowDelete = (rowid) => {
     setref_no(rowid);
@@ -208,6 +150,7 @@ function ReservationTableTwo() {
         console.log("CALLED");
         console.log(response);
         setFacilitylist(response.data.result);
+        setRecords(response.data.result);
       })
       .catch((error) => console.log(error));
   };
@@ -217,9 +160,7 @@ function ReservationTableTwo() {
   const handleEdit = (ref_no) => {
     console.log("Hanlde Edit Before axios");
     axios
-      .get(
-        `http://localhost:3001/Facility/Facilities/${ref_no}`
-      )
+      .get(`http://localhost:3001/Facility/Facilities/${ref_no}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -232,11 +173,7 @@ function ReservationTableTwo() {
 
   const handleDelete = (ref_no) => {
     axios
-      .delete(
-        `http://localhost:3001/Facility/Facilities/${[
-          ref_no,
-        ]}`
-      )
+      .delete(`http://localhost:3001/Facility/Facilities/${[ref_no]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();
@@ -246,25 +183,27 @@ function ReservationTableTwo() {
       });
   };
 
+  // Search Bar Function
 
-
-
-
-
-
-
-
-
-
-
-
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setRecords(
+      facilitylist.filter(
+        (f) =>
+          f.ref_no.toLowerCase().includes(query) ||
+          f.facility_name.toLowerCase().includes(query) ||
+          f.amount_charge.toString().toLowerCase().includes(query) ||
+          f.charge_per.toLowerCase().includes(query) ||
+          f.availability.toLowerCase().includes(query)
+      )
+    );
+  };
 
   return (
-
     <div className="GuestTableContainer">
-
-
-      <div className="miniBar"><Minibar /></div>
+      <div className="miniBar">
+        <Minibar />
+      </div>
       <div className="Currnet">
         {/* <Router>
           <Box sx={{ width: '100%' }}>
@@ -277,7 +216,7 @@ function ReservationTableTwo() {
       </div>
 
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/reservations/reservation/addNew" />
       </div>
 
@@ -294,26 +233,26 @@ function ReservationTableTwo() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">REF NO</StyledTableCell>
-              <StyledTableCell align="left">FACILITY NAME</StyledTableCell>
-              <StyledTableCell align="left">AMOUNT CHARGE</StyledTableCell>
-              <StyledTableCell align="left">CHARGE PER</StyledTableCell>
+              <StyledTableCell align="left">Ref NO</StyledTableCell>
+              <StyledTableCell align="left">Facility Name</StyledTableCell>
+              <StyledTableCell align="left">Amount Charge</StyledTableCell>
+              <StyledTableCell align="left">Charge Per</StyledTableCell>
               <StyledTableCell align="left">Availability</StyledTableCell>
-              <StyledTableCell align="left">ACTION</StyledTableCell>
+              <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-          {facilitylist &&
-              facilitylist.map((apartflowtesting, index) => {
+            {records &&
+              records.map((apartflowtesting, index) => {
                 return (
                   <StyledTableRow key={index}>
-                    <StyledTableCell>
-                      {apartflowtesting.ref_no}
-                    </StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.ref_no}</StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.facility_name}
                     </StyledTableCell>
-                    <StyledTableCell>{apartflowtesting.amount_charge}</StyledTableCell>
+                    <StyledTableCell>
+                      {apartflowtesting.amount_charge}
+                    </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.charge_per}
                     </StyledTableCell>
@@ -326,8 +265,8 @@ function ReservationTableTwo() {
                         gap: "0.3rem",
                       }}
                     >
-                      <EditButton //front end route edit
-                        route={`/reservations/updateFacility/${[
+                      <EditButton
+                        route={`/reservations/reservation/updateFacility/${[
                           apartflowtesting.ref_no,
                         ]}`}
                         onClick={() => handleEdit([apartflowtesting.ref_no])}
@@ -342,6 +281,34 @@ function ReservationTableTwo() {
                 );
               })}
           </TableBody>
+
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Facility"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(ref_no)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>
