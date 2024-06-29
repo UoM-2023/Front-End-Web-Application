@@ -38,7 +38,6 @@ import EventsForm from "../Pages/News&NoticesPage/Events/Form/EventsForm";
 import UtilityDetails from "../Pages/FinancePage/UtilityCharges/UtilityDetails";
 import UtilityDetailsUpdateForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsUpdateForm";
 import UtilityDetailsAddNewForm from "../Pages/FinancePage/UtilityCharges/UtilityDetailsAddNew";
-import { setAuthToken } from "../Pages/LoginPage/LoginServices/authService";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import ResidentUserCredentialsFrom from "../Pages/UserCredentialsPage/ResidentUserCredentialsFrom";
 import StaffUserCredentialsFrom from "../Pages/UserCredentialsPage/StaffUserCredentialsFrom";
