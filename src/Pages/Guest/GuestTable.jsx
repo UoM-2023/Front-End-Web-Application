@@ -39,96 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-//new hides
-
-
-// function createData(Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action) {
-//   return { Unit, ResidentName, GuestName, VehicleNo, GuestNIC, Checkedin, CheckedOut, action };
-// }
-
-
-// const rows = [
-//   createData(
-//     "A-102",
-//     "Miller Donald",
-//     "Tom Archer",
-//     "WP 1967",
-//     "9073665677",
-//     "23/11/2023",
-//     "09:00 AM",
-//     "23/11/2023",
-//     "04:30 PM",
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "A-103",
-//     "Edward Young",
-//     "Saam Nechol",
-//     "-",
-//     "8765565765",
-//     "24/11/2023",
-//     "",
-//     "",
-//     "",
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     "A-104",
-//     "Maily Cooper",
-//     "Saly Peterson",
-//     "-",
-//     "9976565654",
-//     "24/11/2023",
-//     "",
-//     "",
-//     "",
-//     <div className="actionBtn">
-
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-
-
-// ];
-
-
-//new hides
-
-
-// function GuestTable() {
-
-// const [guestlist,setGuestlist] =React.useState([]);
-//   React.useEffect(() => {
-//     console.log("use effect ");
-//     axios
-//       .get("http://localhost:3001/guest/GuestDetails")
-//       .then((response) => {
-//         // Handle successful response
-//         setGuestlist(response.data);
-//         console.log("Response:", response.data);
-//       })
-//       .catch((error) => {
-//         // Handle error
-//         console.error("Error:", error);
-//       });
-//   }, []);
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function GuestTable() {
   const [guestlist, setGuestlist] = useState([]);
@@ -219,10 +129,7 @@ function GuestTable() {
       </div>
 
 
-      {/* <div className="AddNewButton1">
-      <span className="AddNewButton"><AddNewButton/></span>
-      
-      </div> */}
+  
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -238,7 +145,6 @@ function GuestTable() {
             <TableRow>
               <StyledTableCell align="left">Guest ID</StyledTableCell>
               <StyledTableCell align="left">Unit ID </StyledTableCell>
-              <StyledTableCell align="left">Resident Name</StyledTableCell>
               <StyledTableCell align="left">Guest Name</StyledTableCell>
               <StyledTableCell align="left">Vehicle Num</StyledTableCell>
               <StyledTableCell align="left">Guest NIC </StyledTableCell>
@@ -275,7 +181,6 @@ function GuestTable() {
                     <StyledTableCell>
                       {apartflowtesting.unit_ID}
                     </StyledTableCell>
-                    <StyledTableCell>{apartflowtesting.resident_name}</StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.guest_name}
                     </StyledTableCell>

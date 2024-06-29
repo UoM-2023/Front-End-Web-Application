@@ -10,13 +10,12 @@ function GuestFormNew() {
 
   const [formData, setFormData] = useState({
     unit_ID: "",
-    resident_name: "",
     guest_name: "",
     guest_NIC: "",
     vehicle_number: "",
     check_In: "",
     
-    // useresident_name: "",
+    
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -44,7 +43,6 @@ function GuestFormNew() {
 
             setFormData({
               unit_ID: guestData.unit_ID,
-              resident_name: guestData.resident_name,
               guest_name: guestData.guest_name,
               guest_NIC: guestData.guest_NIC,
               vehicle_number: guestData.vehicle_number,
@@ -117,9 +115,7 @@ function GuestFormNew() {
     if (!values.unit_ID) {
       errors.unit_ID = "Please Enter The unit_ID *";
     }
-    if (!values.resident_name) {
-      errors.resident_name = "Please Enter Resident Name *";
-    }
+
     if (!values.guest_name) {
       errors.guest_name = "Please Enter Guest Name *";
     }
@@ -155,19 +151,7 @@ function GuestFormNew() {
         </div>
         <p>{formErrors.unit_ID}</p>
 
-        <div className="inputItem">
-          <InputLabel htmlFor="residentName" className="namesTag">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="resident_name"
-            onChange={onChangeHandler}
-            value={formData.resident_name}
-          />
-        </div>
-        <p>{formErrors.resident_name}</p>
+
 
         <div className="inputItem">
           <InputLabel htmlFor="guestName" className="namesTag">
