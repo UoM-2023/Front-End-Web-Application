@@ -218,6 +218,10 @@ const Routers = ({ user, setUser }) => {
         <Route path="complaints" element={<Outlet />}>
           <Route index element={<ComplaintsTable />} />
           <Route path="complaintsForm" element={<ComplaintsForm />} />
+          <Route
+            path="UpdateComplait/:Reference_id"
+            element={<ComplaintsForm />}
+          />
         </Route>
 
         {/*------------ News & Notices section -------------*/}
