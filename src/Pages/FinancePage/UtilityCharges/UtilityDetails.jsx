@@ -164,7 +164,7 @@ function UtilityDetails() {
     <div className="utilityDetailsContainer">
       <div className="pageTop">
         <div></div>
-        <AddNewButton route="/finance/utilitycharges/addNewUtilityType" />
+        {/* <AddNewButton route="/finance/utilitycharges/addNewUtilityType" /> */}
       </div>
 
       <TableContainer component={Paper} sx={{ boxShadow: "none", border: 0 }}>

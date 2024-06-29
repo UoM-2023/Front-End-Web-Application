@@ -43,7 +43,7 @@ function ResidentsPayments() {
   useEffect(() => {
     console.log("Payment use effect");
     getPaymentDetails();
-  })
+  },[]);
 
   const getPaymentDetails = () => {
     axiosInstance.get('/finance/getAllPayments')

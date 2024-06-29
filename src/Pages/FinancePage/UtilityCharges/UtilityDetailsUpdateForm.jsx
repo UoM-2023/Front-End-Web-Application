@@ -27,14 +27,15 @@ function UtilityDetailsUpdateForm() {
       console.log("Update Fund useEffect");
       axiosInstance.get(`/finance/utilityDetails/${id}`).then((response) => {
         console.log("Response", response);
-        const { data } = response;
+        const { data }  = response;
         console.log("Response data",data);
-
+        
           if (response) {
-            const utilityData = data;
-            console.log(utilityData);
+            const { result } = data;
+            console.log(result);
+            // console.log("Response Dumb",utilityData[0].utility_name);
             setFormData({
-              utility_name: utilityData.utility_name,
+              utility_name: result.utility_name,
               priceRange: "",
               basePrice: "",
               unitPrice: "",
@@ -43,7 +44,7 @@ function UtilityDetailsUpdateForm() {
           }
         });
     }
-  });
+  },[]);
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -51,9 +52,24 @@ function UtilityDetailsUpdateForm() {
     }));
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
+
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        const response = await axiosInstance.put(`/finance/updateutilityDetails`, formData);
+        console.log(response);
+        if (response.status === 200) {
+          alert("Data updated successfully");
+        } else {
+          alert("Failed to update data");
+        }
+      } catch (error) {
+        console.error("There was an error updating the data!", error);
+      }
+    }
+
     setIsSubmit(true);
   };
 
@@ -203,8 +219,8 @@ function UtilityDetailsUpdateForm() {
             Modified By
           </InputLabel>
           <TextField
-            type="number"
-            min="0.00"
+            // type="number"
+            // min="0.00"
             id="outlined-basic"
             className="textFieldComponent"
             name="modifiedBy"

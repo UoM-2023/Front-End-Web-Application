@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
-// import SaveButton from "../../../Component/Buttons/SaveButton";
-// import BackButton from "../../../Component/Buttons/BackButton";
 import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -10,34 +8,51 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import BackButton from "../../Component/Buttons/BackButton";
 import SaveButton from "../../Component/Buttons/SaveButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
+import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 
 function ReservationNewTwo() {
-
   const { ref_no } = useParams();
 
-
   const [formData, setFormData] = useState({
-
     facility_name: "",
     // Unit_id: "",
     resident_name: "",
     start_date: "",
-    end_date:"",
+    end_date: "",
     payment_status: "",
-    availability: ""
-
+    availability: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
 
+  // Change Dates Date Format
 
+  function formatDate(dateString) {
+    // Create a new Date object from the provided string
+    const date = new Date(dateString);
 
+    // Increment the date by one day
+    date.setDate(date.getDate());
+
+    // Extract year, month, and day components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}`;
+  }
 
   useEffect(() => {
     console.log("Current Reservation ID:", ref_no);
@@ -46,7 +61,7 @@ function ReservationNewTwo() {
       console.log("Form useEffect call");
       axios
         .get(
-            //postman get url
+          //postman get url
           `http://localhost:3001/Reservation/Reservations/${ref_no}`
         )
         .then((response) => {
@@ -59,52 +74,42 @@ function ReservationNewTwo() {
             const reservationData = data.result[0]; // Accessing the first item in the array
             console.log("Reservation Data:", reservationData);
 
-
-
             //selection use
             const facility_nameValue =
-              reservationData.facility_name === "Gym"//1st value form data
+              reservationData.facility_name === "Gym" //1st value form data
                 ? "Gym"
-                : reservationData.facility_name;  //staff_category -->selection eka aithi eka
+                : reservationData.facility_name; //staff_category -->selection eka aithi eka
 
-  
-                const payment_statusValue =
-                reservationData.payment_status === "Paid"//1st value form data
-                  ? "Paid"
-                  : reservationData.payment_status;  //staff_category -->selection eka aithi eka
-  
-                  const availabilityValue =
-                  reservationData.availability === "Paid"//1st value form data
-                    ? "Paid"
-                    : reservationData.availability;  //staff_category -->selection eka aithi eka
-    
-    
+            const payment_statusValue =
+              reservationData.payment_status === "Paid" //1st value form data
+                ? "Paid"
+                : reservationData.payment_status; //staff_category -->selection eka aithi eka
 
+            const availabilityValue =
+              reservationData.availability === "Paid" //1st value form data
+                ? "Paid"
+                : reservationData.availability; //staff_category -->selection eka aithi eka
 
-  
+            const formatted_start_date = formatDate(reservationData.start_date);
+            const formatted_end_date = formatDate(reservationData.end_date);
 
             setFormData({
-
               facility_name: facility_nameValue,
               // Unit_id: reservationData.Unit_id,
               resident_name: reservationData.resident_name,
-              start_date: reservationData.start_date,
-              end_date: reservationData.end_date,
+              start_date: formatted_start_date,
+              end_date: formatted_end_date,
               payment_status: payment_statusValue,
               availability: availabilityValue,
-
             });
           } else {
             console.error("Data structure does not match expected format");
           }
         })
         .catch((err) => console.error("Failed to fetch Data...", err))
-        
+        .finally(() => setIsLoading(false));
     }
-  }, [ref_no]);//primary key
-
-
-
+  }, [ref_no]); //primary key
 
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
@@ -117,47 +122,42 @@ function ReservationNewTwo() {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
-  
+    setIsLoading(true);
 
-
-
-//primary key
-if (ref_no) {
-  // If there is an ID, it means we're editing existing data, so send a PUT request
-  axios
-    .put(
-        //postman edit url
-      `http://localhost:3001/Reservation/Reservations/${[
-        ref_no,
-      ]}`,
-      formData
-    )
-    .then((res) => {
-      console.log("Update successful:", res.data);
-      setIsSubmit(true);
-      
-     
-    })
-    .catch((err) => console.error("Failed to update data:", err));
-    
-} else {
-  // If there is no ID, it means we're creating new data, so send a POST request
-  axios
- // postman post url 
-    .post("http://localhost:3001/Reservation/Reservations", formData)
-    .then((res) => {
-      console.log("Create Successful:", res.data);
-      setIsSubmit(true);
-     
-    
-    })
-    .catch((err) => console.error("Failed to Create data:", err));
-   
-}
-};
-
-
-
+    //primary key
+    if (ref_no) {
+      // If there is an ID, it means we're editing existing data, so send a PUT request
+      axios
+        .put(
+          //postman edit url
+          `http://localhost:3001/Reservation/Reservations/${[ref_no]}`,
+          formData
+        )
+        .then((res) => {
+          console.log("Update successful:", res.data);
+          setIsSubmit(true);
+          setSuccessMessage(res.data.message);
+        })
+        .catch((err) => console.error("Failed to update data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      // If there is no ID, it means we're creating new data, so send a POST request
+      axios
+        // postman post url
+        .post("http://localhost:3001/Reservation/Reservations", formData)
+        .then((res) => {
+          console.log("Create Successful:", res.data);
+          setIsSubmit(true);
+          setSuccessMessage(res.data.message);
+        })
+        .catch((err) => console.error("Failed to Create data:", err))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
 
   useEffect(() => {
     console.log(formErrors);
@@ -171,38 +171,68 @@ if (ref_no) {
     const dob_regex = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
     if (!values.facility_name) {
-        errors.facility_name = "Please select the Facility Name * ";
-      }
-      // if (!values.Unit_id) {
-      //   errors.Unit_id = "Please Enter  the Unit ID * ";
-      // }
+      errors.facility_name = "Please select the Facility Name * ";
+    }
+    // if (!values.Unit_id) {
+    //   errors.Unit_id = "Please Enter  the Unit ID * ";
+    // }
     if (!values.resident_name) {
       errors.resident_name = "Please Enter The Resident Name *";
     }
     if (!values.start_date) {
-        errors.start_date = "Please Enter The Start Date *";
-      }
+      errors.start_date = "Please Enter The Start Date *";
+    }
     if (!values.end_date) {
       errors.end_date = "Please Enter The End Date *";
     }
     if (!values.payment_status) {
-        errors.payment_status = "Please select the Payment Status * ";
-      }
-      if (!values.availability) {
-        errors.availability = "Please select the availability Status * ";
-      }
- 
-
+      errors.payment_status = "Please select the Payment Status * ";
+    }
+    if (!values.availability) {
+      errors.availability = "Please select the availability Status * ";
+    }
 
     return errors;
   };
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate("/reservations/reservation");
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      facility_name: "",
+      resident_name: "",
+      start_date: "",
+      end_date: "",
+      payment_status: "",
+      availability: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
-        
-
-
-      <div className="inputItem">
+        <div className="inputItem">
           <InputLabel className="namesTag">Facility Name :</InputLabel>
           <Select
             className="SelectformComponent"
@@ -213,18 +243,10 @@ if (ref_no) {
             <MenuItem value="" className="optionContainer">
               Select Facility Name
             </MenuItem>
-            <MenuItem
-              value="Gym"
-              name="Gym"
-              className="optionContainer"
-            >
+            <MenuItem value="Gym" name="Gym" className="optionContainer">
               Gym
             </MenuItem>
-            <MenuItem
-              value="Pool"
-              name="Pool"
-              className="optionContainer"
-            >
+            <MenuItem value="Pool" name="Pool" className="optionContainer">
               Pool
             </MenuItem>
             <MenuItem
@@ -234,11 +256,9 @@ if (ref_no) {
             >
               Event Hall
             </MenuItem>
-            
           </Select>
         </div>
         <p>{formErrors.facility_name}</p>
-
 
         {/* <div className="inputItem">
           <InputLabel htmlFor="Name" className="namesTag">
@@ -254,10 +274,9 @@ if (ref_no) {
         </div>
         <p>{formErrors.Unit_id}</p> */}
 
-
         <div className="inputItem">
           <InputLabel htmlFor="Name" className="namesTag">
-           Resident Name :
+            Resident Name :
           </InputLabel>
           <TextField
             id="outlined-basic"
@@ -268,7 +287,6 @@ if (ref_no) {
           />
         </div>
         <p>{formErrors.resident_name}</p>
-
 
         <div className="inputItem">
           <InputLabel htmlFor="StartDate" className="namesTag">
@@ -285,9 +303,6 @@ if (ref_no) {
         </div>
         <p>{formErrors.start_date}</p>
 
-
-
-
         <div className="inputItem">
           <InputLabel htmlFor="EnDate" className="namesTag">
             End Date :
@@ -303,8 +318,6 @@ if (ref_no) {
         </div>
         <p>{formErrors.end_date}</p>
 
-
-
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Status :</InputLabel>
           <Select
@@ -316,11 +329,7 @@ if (ref_no) {
             <MenuItem value="" className="optionContainer">
               Select Payment Status
             </MenuItem>
-            <MenuItem
-              value="Paid"
-              name="Paid"
-              className="optionContainer"
-            >
+            <MenuItem value="Paid" name="Paid" className="optionContainer">
               Paid
             </MenuItem>
             <MenuItem
@@ -330,8 +339,6 @@ if (ref_no) {
             >
               Not Yet
             </MenuItem>
-
-            
           </Select>
         </div>
         <p>{formErrors.payment_status}</p>
@@ -361,19 +368,15 @@ if (ref_no) {
             >
               Not Yet
             </MenuItem>
-
-            
           </Select>
         </div>
         <p>{formErrors.availability}</p>
-
-
 
         <div className="buttonSection">
           <Grid container spacing={2}>
             <Grid item>
               <div>
-                <SaveButton/>
+                <SaveButton />
               </div>
             </Grid>
             <Grid item>
@@ -382,10 +385,12 @@ if (ref_no) {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );
