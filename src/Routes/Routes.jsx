@@ -281,6 +281,7 @@ const Routers = ({ user, setUser }) => {
         <Route path="eventsTable" element={<Outlet />}>
           <Route index element={<EventsTable />} />
           <Route path="eventsForm" element={<EventsForm />} />
+          <Route path="eventsUpdate/:Event_no" element={<EventsForm />} />
         </Route>
       </Routes>
     </div>

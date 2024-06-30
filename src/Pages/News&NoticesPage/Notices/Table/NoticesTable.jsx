@@ -12,11 +12,15 @@ import EditButton from "../../../../Component/Buttons/EditButton";
 import DeleteButton from "../../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../../Component/Buttons/AddNewButton";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MiniNavBar from "../../MiniNavBar/MiniNaveBar";
-import TopBar from "../../../../Component/TopBar/TopBar";
-import axios from 'axios';
-
+import axios from "axios";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,41 +43,69 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const ActionContainer = styled('div')({
-  display: 'flex',
+const ActionContainer = styled("div")({
+  display: "flex",
   // justifyContent: 'space-between',
-  justifyContent: 'center', // Center horizontally
-  alignItems: 'center', // Center vertically
+  justifyContent: "center", // Center horizontally
+  alignItems: "center", // Center vertically
   //gap: '8px',  // Adjust the gap as needed
-  
 });
 
 function NoticesTable() {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [Notice_no, setNotice_no] = useState("");
+
+  const onClickRowDelete = (rowid) => {
+    setNotice_no(rowid);
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    axios.get('http://localhost:3001/newsNotices/newNotice')
-      .then(response => {
+    axios
+      .get("http://localhost:3001/newsNotices/newNotice")
+      .then((response) => {
         if (response.data && Array.isArray(response.data.result)) {
           setRows(response.data.result);
         } else {
-          console.error('Response data is not an array:', response.data);
+          console.error("Response data is not an array:", response.data);
         }
       })
-      .catch(error => {
-        console.error('There was an error fetching the data!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  };
+
+  // Handling the Delete button
+
+  const handleDelete = (Notice_no) => {
+    axios
+      .delete(`http://localhost:3001/newsNotices/newNotice/${[Notice_no]}`)
+      .then((response) => {
+        console.log("Hanlde Delete Called");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
   return (
     <div className="noticesTableContainer">
-      {/* <TopBar title="News & Notices" /> */}
-      <MiniNavBar/>
+      <MiniNavBar />
       <div className="pageTop">
         <SearchBar />
         <AddNewButton route="/news & notices/noticesForm" />
@@ -87,9 +119,11 @@ function NoticesTable() {
             marginRight: 0,
             paddingTop: "1rem",
           }}
-          aria-label="customized table">
+          aria-label="customized table"
+        >
           <TableHead>
             <TableRow>
+              <StyledTableCell align="left">#No</StyledTableCell>
               <StyledTableCell align="left">Notice No</StyledTableCell>
               <StyledTableCell align="left">Notice Type</StyledTableCell>
               <StyledTableCell align="left">Notice Title</StyledTableCell>
@@ -98,22 +132,55 @@ function NoticesTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.Notice_no}>
+            {rows.map((row, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">{row.Notice_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Type}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Title}</StyledTableCell>
-                <StyledTableCell align="left">{row.N_Description}</StyledTableCell>
-                <StyledTableCell align="right">
-                  <ActionContainer>
-                    <EditButton />
-                    &nbsp; &nbsp;
-                    <DeleteButton/>
-                  </ActionContainer>
+                <StyledTableCell align="left">
+                  {row.N_Description}
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{
+                    display: "flex",
+                    gap: "0.3rem",
+                  }}
+                >
+                  <DeleteButton
+                    onClick={() => onClickRowDelete(row.Notice_no)}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
+          {/* Delete Button Dialog */}
+
+          <div className="Delete Dialog">
+            <React.Fragment>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Delete Notice"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete this?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>No</Button>
+                  <Button onClick={() => handleDelete(Notice_no)} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </React.Fragment>
+          </div>
         </Table>
       </TableContainer>
     </div>

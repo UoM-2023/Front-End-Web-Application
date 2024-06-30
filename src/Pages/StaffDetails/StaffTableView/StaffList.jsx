@@ -64,7 +64,6 @@ function StaffList() {
   };
 
   useEffect(() => {
-    console.log("frontend use effect");
     getStaffDetails();
   }, []);
 
