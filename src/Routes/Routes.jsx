@@ -49,6 +49,7 @@ import ReservationNewTwo from "../Pages/ReservationNew/ReservationNewTwo";
 import ReservationTableTwo from "../Pages/Reservations/ReservationTableTwo";
 import ReservationTable from "../Pages/Reservations/ReservationTable";
 import ReservationNewOne from "../Pages/ReservationNew/ReservationNewOne";
+import ProtectedRoute from "../Pages/LoginPage/LoginServices/protectedRoute";
 
 const Routers = ({ user, setUser }) => {
   return (
@@ -63,7 +64,7 @@ const Routers = ({ user, setUser }) => {
         {/*------- Finance Page Routs and its sub routes------------ */}
 
         <Route path="/finance" element={<Outlet />}>
-          <Route index element={<ResidentsPayments />} />
+        <Route index element={<ProtectedRoute user={user} allowedRoles={["finance_manager", "admin"]} component={ResidentsPayments} />} />
           <Route path="addNew" element={<ResidentsPaymentsForm />} />
 
           {/* ---------- Utility payment section ----------- */}
@@ -206,6 +207,11 @@ const Routers = ({ user, setUser }) => {
             element={<ResidentialUnitsForm />}
           />
           <Route />
+          <Route
+            path="UpdateresidentialUnits/:Unit_id"
+            element={<ResidentialUnitsForm />}
+          />
+          <Route />
         </Route>
 
         {/*----------- Complaints route ---------------*/}
@@ -213,6 +219,10 @@ const Routers = ({ user, setUser }) => {
         <Route path="complaints" element={<Outlet />}>
           <Route index element={<ComplaintsTable />} />
           <Route path="complaintsForm" element={<ComplaintsForm />} />
+          <Route
+            path="UpdateComplait/:Reference_id"
+            element={<ComplaintsForm />}
+          />
         </Route>
 
         {/*------------ News & Notices section -------------*/}
@@ -276,6 +286,7 @@ const Routers = ({ user, setUser }) => {
         <Route path="eventsTable" element={<Outlet />}>
           <Route index element={<EventsTable />} />
           <Route path="eventsForm" element={<EventsForm />} />
+          <Route path="eventsUpdate/:Event_no" element={<EventsForm />} />
         </Route>
       </Routes>
     </div>
