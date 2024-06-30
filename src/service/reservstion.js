@@ -1,10 +1,11 @@
 import axios from "axios";
+import axiosInstance from "../Pages/LoginPage/LoginServices/authService";
 
 export async function createReservation({ formData }) {
   try {
     console.log(formData);
-    const response = await axios.post(
-      "http://localhost:3001/Reservation/Reservations",
+    const response = await axiosInstance.post(
+      "/Reservation/Reservations",
       formData
     );  
 
@@ -32,8 +33,8 @@ function compareDates(dateString) {
 
 export async function getReservation() {
   try {
-    const response = await axios.get(
-      "http://localhost:3001/Reservation/Reservations"
+    const response = await axiosInstance.get(
+      "/Reservation/Reservations"
     );
 
     if (!response.data || !response.data.result) {

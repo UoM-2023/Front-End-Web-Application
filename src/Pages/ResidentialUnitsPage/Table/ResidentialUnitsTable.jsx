@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -76,8 +77,8 @@ function ResidentialUnitsTable() {
   // Get the data from the backend to front end
 
   const fetchData = () => {
-    axios
-      .get("http://localhost:3001/residentialUnits/addNewUnit")
+    axiosInstance
+      .get("/residentialUnits/addNewUnit")
       .then((response) => {
         if (response.data && Array.isArray(response.data.units)) {
           setRows(response.data.units);
@@ -95,8 +96,8 @@ function ResidentialUnitsTable() {
 
   const handleEdit = (Unit_id) => {
     console.log("Hanlde Edit Function Before axios");
-    axios
-      .get(`http://localhost:3001/residentialUnits/addNewUnit/${Unit_id}`)
+    axiosInstance
+      .get(`/residentialUnits/addNewUnit/${Unit_id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -108,8 +109,8 @@ function ResidentialUnitsTable() {
   // Handling the Delete button
 
   const handleDelete = (Unit_id) => {
-    axios
-      .delete(`http://localhost:3001/residentialUnits/addNewUnit/${[Unit_id]}`)
+    axiosInstance
+      .delete(`/residentialUnits/addNewUnit/${[Unit_id]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

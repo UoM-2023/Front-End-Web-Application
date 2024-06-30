@@ -1,10 +1,11 @@
 import axios from "axios";
+import axiosInstance from "../Pages/LoginPage/LoginServices/authService";
 
 export async function createEvent({ formData }) {
   try {
     console.log(formData);
-    const data = await axios.post(
-      "http://localhost:3001/newsNotices/newEvent",
+    const data = await axiosInstance.post(
+      "/newsNotices/newEvent",
       formData
     );
 

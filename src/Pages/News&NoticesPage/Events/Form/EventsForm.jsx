@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessAlertDialog from "../../../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../../../Component/Loading Indicator/LoadingIndicator";
+import axiosInstance from "../../../LoginPage/LoginServices/authService";
 
 function EventsForm() {
   const { Event_no } = useParams();
@@ -50,8 +51,8 @@ function EventsForm() {
     if (Event_no) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
-        .get(`http://localhost:3001/newsNotices/newEvent/${Event_no}`)
+      axiosInstance
+        .get(`/newsNotices/newEvent/${Event_no}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -109,9 +110,9 @@ function EventsForm() {
 
     if (Event_no) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
-          `http://localhost:3001/newsNotices/newEvent/${[Event_no]}`,
+          `/newsNotices/newEvent/${[Event_no]}`,
           formData
         )
         .then((res) => {
@@ -126,8 +127,8 @@ function EventsForm() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/newsNotices/newEvent", formData)
+      axiosInstance
+        .post("/newsNotices/newEvent", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

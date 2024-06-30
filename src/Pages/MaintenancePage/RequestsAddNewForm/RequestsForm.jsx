@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function RequestsForm() {
   const { id } = useParams();
@@ -30,8 +31,8 @@ function RequestsForm() {
     if (id) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect cal");
-      axios
-        .get(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+      axiosInstance
+        .get(`/maintenance/New_Mnt_Req/${id}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -74,8 +75,8 @@ function RequestsForm() {
 
     if (id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
-        .put(`http://localhost:3001/maintenance/Update_Mnt_Req/${id}`, formData)
+      axiosInstance
+        .put(`/maintenance/Update_Mnt_Req/${id}`, formData)
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
@@ -88,8 +89,8 @@ function RequestsForm() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/maintenance/New_Mnt_Req", formData)
+      axiosInstance
+        .post("/maintenance/New_Mnt_Req", formData)
         .then((res) => {
           console.log("Create successful:", res.data);
           setIsSubmit(true);

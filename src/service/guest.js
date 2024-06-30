@@ -1,10 +1,11 @@
 import axios from "axios";
+import axiosInstance from "../Pages/LoginPage/LoginServices/authService";
 
 export async function createGuest({ formData }) {
   try {
     console.log(formData);
-    const data = await axios.post(
-      "http://localhost:3001/GuestDetail/GuestDetails",
+    const data = await axiosInstance.post(
+      "/GuestDetail/GuestDetails",
       formData
     );
 
@@ -37,7 +38,7 @@ function compareDates(dateString) {
 
 export async function getGuest() {
   try {
-    const response = await axios.get("http://localhost:3001/GuestDetail/GuestDetails");
+    const response = await axiosInstance.get("/GuestDetail/GuestDetails");
 
     if (!response.data || !response.data.result) {
       return 0; // Return 0 if there are no guest or no 'result' in the response

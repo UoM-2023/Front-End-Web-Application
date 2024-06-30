@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import LoadingIndicator from "../../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../../LoginPage/LoginServices/authService";
 
 function NoticesForm() {
   const navigate = useNavigate();
@@ -59,8 +60,8 @@ function NoticesForm() {
     setIsSubmit(true);
     setIsLoading(true);
 
-    axios
-      .post("http://localhost:3001/newsNotices/newNotice", formData)
+    axiosInstance
+      .post("/newsNotices/newNotice", formData)
       .then((res) => {
         console.log(res);
         setIsSubmit(true);

@@ -98,8 +98,8 @@ function EditFunds() {
 
   const handleDelete = (id) => {
     console.log("Delete handler");
-    axios
-      .delete(`http://localhost:3001/finance/editFunds/deleteFund/${id}`)
+    axiosInstance
+      .delete(`/finance/editFunds/deleteFund/${id}`)
       .then((response) => {
         console.log("Delete handler called");
         window.location.reload();

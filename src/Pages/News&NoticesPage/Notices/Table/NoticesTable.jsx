@@ -21,6 +21,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -75,8 +76,8 @@ function NoticesTable() {
   }, []);
 
   const fetchData = () => {
-    axios
-      .get("http://localhost:3001/newsNotices/newNotice")
+    axiosInstance
+      .get("/newsNotices/newNotice")
       .then((response) => {
         if (response.data && Array.isArray(response.data.result)) {
           setRows(response.data.result);
@@ -92,8 +93,8 @@ function NoticesTable() {
   // Handling the Delete button
 
   const handleDelete = (Notice_no) => {
-    axios
-      .delete(`http://localhost:3001/newsNotices/newNotice/${[Notice_no]}`)
+    axiosInstance
+      .delete(`/newsNotices/newNotice/${[Notice_no]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

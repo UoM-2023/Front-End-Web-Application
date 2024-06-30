@@ -6,6 +6,7 @@ import CancelButton from "../../Component/Buttons/CancelButton";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import axios from "axios";
 import UpdatePasswordButn from "../../Component/Buttons/UpdatePasswordButn";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function SettingsPage(user) {
   const UserID = localStorage.getItem("userId");
@@ -39,8 +40,8 @@ function SettingsPage(user) {
     if (Object.keys(errors).length === 0) {
       setIsLoading(true);
       try {
-        const response = await axios.put(
-          `http://localhost:3001/Settings/updateUserCredentials/${UserID}`,
+        const response = await axiosInstance.put(
+          `/Settings/updateUserCredentials/${UserID}`,
           {
             oldPassword: formData.oldPassword,
             userPassword: formData.userPassword,

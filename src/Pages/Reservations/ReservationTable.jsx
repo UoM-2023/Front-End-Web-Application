@@ -38,6 +38,7 @@ import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 //routing
 
@@ -149,8 +150,8 @@ function ReservationTable() {
   // Get the data from the backend to front end
   ////faciity
   const getReservationDetails = () => {
-    axios
-      .get("http://localhost:3001/Reservation/Reservations")
+    axiosInstance
+      .get("/Reservation/Reservations")
       .then((response) => {
         console.log("CALLED");
         console.log(response);
@@ -164,8 +165,8 @@ function ReservationTable() {
 
   const handleEdit = (ref_no) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(` http://localhost:3001/Reservation/Reservations/${ref_no}`)
+    axiosInstance
+      .get(`/Reservation/Reservations/${ref_no}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -177,8 +178,8 @@ function ReservationTable() {
   // Handling the Delete button (primary key)
 
   const handleDelete = (ref_no) => {
-    axios
-      .delete(`http://localhost:3001/Reservation/Reservations/${[ref_no]}`)
+    axiosInstance
+      .delete(`/Reservation/Reservations/${[ref_no]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

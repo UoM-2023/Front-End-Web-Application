@@ -65,33 +65,6 @@ function UtilityDetailsUpdateForm() {
     }));
   };
 
-  // const onSubmitHandler = async (event) => {
-  //   event.preventDefault();
-  //   setFormErrors(validate(formData));
-  //   setIsSubmit(true);
-  //   setIsLoading(true);
-
-  //   if (Object.keys(formErrors).length === 0) {
-  //     try {
-  //       const response = await axiosInstance.put(
-  //         `/finance/updateutilityDetails`,
-  //         formData
-  //       );
-  //       console.log(response);
-  //       setIsSubmit(true);
-  //       setSuccessMessage(response.data.message);
-  //     } catch (error) {
-  //       console
-  //         .error("There was an error updating the data!", error)
-  //         .finally(() => {
-  //           setIsLoading(false);
-  //         });
-  //     }
-  //   }
-
-  //   setIsSubmit(true);
-  // };
-
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));

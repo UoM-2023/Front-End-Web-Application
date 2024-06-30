@@ -22,6 +22,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -87,9 +88,9 @@ function GuestTable() {
   const getGuestDetails = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/GuestDetail/searchGuests?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/GuestDetail/GuestDetails?page=${page}&limit=${limit}`;
-      const response = await axios.get(endpoint);
+        ? `/GuestDetail/searchGuests?query=${query}&page=${page}&limit=${limit}`
+        : `/GuestDetail/GuestDetails?page=${page}&limit=${limit}`;
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
       if (page === 1) {
@@ -118,8 +119,8 @@ function GuestTable() {
 
   const handleEdit = (guest_ID) => {
     console.log("Handle Edit Before axios");
-    axios
-      .get(`http://localhost:3001/GuestDetail/GuestDetails/${guest_ID}`)
+    axiosInstance
+      .get(`/GuestDetail/GuestDetails/${guest_ID}`)
       .then((response) => {
         console.log("Handle Edit Called");
       })
@@ -129,8 +130,8 @@ function GuestTable() {
   };
 
   const handleDelete = (guest_ID) => {
-    axios
-      .delete(`http://localhost:3001/GuestDetail/GuestDetails/${[guest_ID]}`)
+    axiosInstance
+      .delete(`/GuestDetail/GuestDetails/${[guest_ID]}`)
       .then((response) => {
         console.log("Handle Delete Called");
         window.location.reload();

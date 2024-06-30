@@ -8,6 +8,7 @@ import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import MinibarUserCredentials from "./Minibar UserCredentials/MinibarUserCredentials";
 import TopBar from "../../Component/TopBar/TopBar";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function StaffUserCredentialsFrom() {
   const { userID } = useParams();
@@ -42,8 +43,8 @@ function StaffUserCredentialsFrom() {
       setIsSubmit(true);
       setIsLoading(true);
 
-      axios
-        .post("http://localhost:3001/auth/register", formData)
+      axiosInstance
+        .post("/auth/register", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

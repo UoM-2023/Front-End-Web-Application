@@ -14,6 +14,7 @@ import EditButton from "../../../Component/Buttons/EditButton";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,9 +55,9 @@ function Expenses() {
   const getExpensesDetails = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/finance/expenses/search?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/finance/expenses?page=${page}&limit=${limit}`;
-      const response = await axios.get(endpoint);
+        ? `/finance/expenses/search?query=${query}&page=${page}&limit=${limit}`
+        : `/finance/expenses?page=${page}&limit=${limit}`;
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
       if (page === 1) {
@@ -83,8 +84,8 @@ function Expenses() {
   // Handling the edit button
   const handleEdit = (id) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/finance/updateExpenses/${id}`)
+    axiosInstance
+      .get(`/finance/updateExpenses/${id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })

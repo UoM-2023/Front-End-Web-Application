@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -77,8 +78,8 @@ function ComplaintsTable() {
 
   const handleEdit = (Reference_id) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/complaints/newComplaint/${Reference_id}`)
+    axiosInstance
+      .get(`/complaints/newComplaint/${Reference_id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -90,10 +91,10 @@ function ComplaintsTable() {
   const fetchData = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/complaints/searchComplaint?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/complaints/newComplaint?page=${page}&limit=${limit}`;
+        ? `/complaints/searchComplaint?query=${query}&page=${page}&limit=${limit}`
+        : `/complaints/newComplaint?page=${page}&limit=${limit}`;
 
-      const response = await axios.get(endpoint);
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
       if (page === 1) {

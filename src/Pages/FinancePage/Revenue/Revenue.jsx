@@ -13,6 +13,7 @@ import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,10 +51,10 @@ function Revenue() {
   const getRevenue = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/finance/revenue/search?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/finance/revenue?page=${page}&limit=${limit}`;
+        ? `/finance/revenue/search?query=${query}&page=${page}&limit=${limit}`
+        : `/finance/revenue?page=${page}&limit=${limit}`;
 
-      const response = await axios.get(endpoint);
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
       // Append new records to the existing revenues without duplicates

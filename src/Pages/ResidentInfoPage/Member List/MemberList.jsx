@@ -17,6 +17,7 @@ import BackButton from "../../../Component/Buttons/BackButton";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -74,8 +75,8 @@ function MemberList() {
   useEffect(() => {
     console.log("Current Unit ID:", UnitID);
     if (UnitID) {
-      axios
-        .get(`http://localhost:3001/residentsDetails/viewResident/${[UnitID]}`)
+      axiosInstance
+        .get(`/residentsDetails/viewResident/${[UnitID]}`)
         .then((response) => {
           const { data } = response;
           if (data && data.result && data.result.length > 0) {
@@ -108,8 +109,8 @@ function MemberList() {
   }, []);
 
   const getResidentDetails = () => {
-    axios
-      .get("http://localhost:3001/residentsDetails/addNewResident")
+    axiosInstance
+      .get("/residentsDetails/addNewResident")
       .then((response) => {
         setResidentlist(response.data.result);
       })
