@@ -123,7 +123,7 @@ function NoticesTable() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Notice No</StyledTableCell>
               <StyledTableCell align="left">Notice Type</StyledTableCell>
               <StyledTableCell align="left">Notice Title</StyledTableCell>
@@ -135,7 +135,7 @@ function NoticesTable() {
           <TableBody>
             {rows.map((row, index) => (
               <StyledTableRow key={index}>
-                <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                {/* <StyledTableCell align="left">{index + 1}</StyledTableCell> */}
                 <StyledTableCell align="left">{row.Notice_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Type}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Title}</StyledTableCell>
@@ -147,6 +147,7 @@ function NoticesTable() {
                   sx={{
                     display: "flex",
                     gap: "0.3rem",
+                    justifyContent: "center",
                   }}
                 >
                   <DeleteButton
