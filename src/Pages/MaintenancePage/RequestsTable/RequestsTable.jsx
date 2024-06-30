@@ -78,27 +78,25 @@ function RequestsTable() {
   // Get the data from the backend to front end
 
   const getMaintenanceRequestDetails = async (page, query) => {
-    
     try {
       const endpoint = query
         ? `http://localhost:3001/maintenance/New_Mnt_Req_search?query=${query}&page=${page}&limit=${limit}`
         : `http://localhost:3001/maintenance/New_Mnt_Req?page=${page}&limit=${limit}`;
-        const response = await axios.get(endpoint);
-        const newRecords = response.data.result;
-        if (page === 1) {
-          setMRequestList(newRecords);
-          setRecords(newRecords);
-        } else {
-          setMRequestList((prevRevenues) => [...prevRevenues, ...newRecords]);
-          setRecords((prevRevenues) => [...prevRevenues, ...newRecords]);
-        }
+      const response = await axios.get(endpoint);
+      const newRecords = response.data.result;
+      if (page === 1) {
+        setMRequestList(newRecords);
+        setRecords(newRecords);
+      } else {
+        setMRequestList((prevRevenues) => [...prevRevenues, ...newRecords]);
+        setRecords((prevRevenues) => [...prevRevenues, ...newRecords]);
+      }
 
-        if (newRecords.length < limit) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
-
+      if (newRecords.length < limit) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -151,7 +149,6 @@ function RequestsTable() {
     );
   };
 
-
   return (
     <div className="requestsTableContainer">
       <Minibar />
@@ -160,7 +157,7 @@ function RequestsTable() {
         <AddNewButton route="/maintenance/newRequest" />
       </div>
       <TableContainer component={Paper}>
-      <InfiniteScroll
+        <InfiniteScroll
           dataLength={mRequestList.length}
           next={fetchMoreData}
           hasMore={hasMore}
@@ -181,7 +178,6 @@ function RequestsTable() {
                 <StyledTableCell align="left">#No</StyledTableCell>
                 <StyledTableCell align="left">Reference No</StyledTableCell>
                 <StyledTableCell align="left">Unit ID</StyledTableCell>
-                <StyledTableCell align="left">Resident Name</StyledTableCell>
                 <StyledTableCell align="left">Maintenance Type</StyledTableCell>
                 <StyledTableCell align="left">Requested Date</StyledTableCell>
                 <StyledTableCell align="left">Description</StyledTableCell>
@@ -199,9 +195,6 @@ function RequestsTable() {
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     {mRequests.Unit_id}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {mRequests.Resident_Name}
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     {mRequests.MType}
