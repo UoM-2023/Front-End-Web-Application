@@ -23,6 +23,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DoneSwitch from "../../../Component/Switchs/DoneSwitch";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,6 +52,10 @@ function RequestsTable() {
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
   const [records, setRecords] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [query, setQuery] = useState("");
+  const limit = 10;
 
   const onClickRowDelete = (rowid) => {
     setId(rowid);
@@ -67,21 +72,49 @@ function RequestsTable() {
 
   useEffect(() => {
     console.log("frontend use effect");
-    getMaintenanceRequestDetails();
-  }, []);
+    getMaintenanceRequestDetails(page, query);
+  }, [page, query]);
 
   // Get the data from the backend to front end
 
-  const getMaintenanceRequestDetails = () => {
-    axios
-      .get("http://localhost:3001/maintenance/New_Mnt_Req")
-      .then((response) => {
-        console.log("CALLED");
-        console.log(response);
-        setMRequestList(response.data.result);
-        setRecords(response.data.result);
-      })
-      .catch((error) => console.log(error));
+  const getMaintenanceRequestDetails = async (page, query) => {
+    
+    try {
+      const endpoint = query
+        ? `http://localhost:3001/maintenance/New_Mnt_Req_search?query=${query}&page=${page}&limit=${limit}`
+        : `http://localhost:3001/maintenance/New_Mnt_Req?page=${page}&limit=${limit}`;
+        const response = await axios.get(endpoint);
+        const newRecords = response.data.result;
+        if (page === 1) {
+          setMRequestList(newRecords);
+          setRecords(newRecords);
+        } else {
+          setMRequestList((prevRevenues) => [...prevRevenues, ...newRecords]);
+          setRecords((prevRevenues) => [...prevRevenues, ...newRecords]);
+        }
+
+        if (newRecords.length < limit) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchMoreData = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setQuery(query);
+    setPage(1);
+    setMRequestList([]);
+    setRecords([]);
+    setHasMore(true);
   };
 
   // Handling the edit button
@@ -118,22 +151,6 @@ function RequestsTable() {
     );
   };
 
-  // Search Bar Function
-
-  const Filter = (event) => {
-    const query = event.target.value.toLowerCase();
-    setRecords(
-      mRequestList.filter(
-        (f) =>
-          f.Mnt_Request_id.toLowerCase().includes(query) ||
-          f.Unit_id.toLowerCase().includes(query) ||
-          f.Resident_Name.toLowerCase().includes(query) ||
-          f.MType.toLowerCase().includes(query) ||
-          f.requested_date.toLowerCase().includes(query) ||
-          f.Mnt_Status.toLowerCase().includes(query)
-      )
-    );
-  };
 
   return (
     <div className="requestsTableContainer">
@@ -143,105 +160,112 @@ function RequestsTable() {
         <AddNewButton route="/maintenance/newRequest" />
       </div>
       <TableContainer component={Paper}>
-        <Table
-          sx={{
-            maxWidth: "92.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table"
+      <InfiniteScroll
+          dataLength={mRequestList.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
         >
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Reference No</StyledTableCell>
-              <StyledTableCell align="left">Unit ID</StyledTableCell>
-              <StyledTableCell align="left">Resident Name</StyledTableCell>
-              <StyledTableCell align="left">Maintenance Type</StyledTableCell>
-              <StyledTableCell align="left">Requested Date</StyledTableCell>
-              <StyledTableCell align="left">Description</StyledTableCell>
-              <StyledTableCell align="left">Status</StyledTableCell>
-              <StyledTableCell align="left">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
+          <Table
+            sx={{
+              maxWidth: "92.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+            aria-label="customized table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">#No</StyledTableCell>
+                <StyledTableCell align="left">Reference No</StyledTableCell>
+                <StyledTableCell align="left">Unit ID</StyledTableCell>
+                <StyledTableCell align="left">Resident Name</StyledTableCell>
+                <StyledTableCell align="left">Maintenance Type</StyledTableCell>
+                <StyledTableCell align="left">Requested Date</StyledTableCell>
+                <StyledTableCell align="left">Description</StyledTableCell>
+                <StyledTableCell align="left">Status</StyledTableCell>
+                <StyledTableCell align="left">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {records.map((mRequests, index) => (
-              <StyledTableRow key={mRequests.id}>
-                <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.Mnt_Request_id}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.Unit_id}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.Resident_Name}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.MType}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.requested_date.slice(0, 10)}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.M_Description}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {mRequests.Mnt_Status}
-                </StyledTableCell>
-                <StyledTableCell
-                  sx={{
-                    display: "flex",
-                    gap: "0.3rem",
-                  }}
+            <TableBody>
+              {records.map((mRequests, index) => (
+                <StyledTableRow key={mRequests.id}>
+                  <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.Mnt_Request_id}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.Unit_id}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.Resident_Name}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.MType}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.requested_date.slice(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.M_Description}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {mRequests.Mnt_Status}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    sx={{
+                      display: "flex",
+                      gap: "0.3rem",
+                    }}
+                  >
+                    <EditButton
+                      route={`/maintenance/updateRequest/${[mRequests.id]}`}
+                      onClick={() => handleEdit([mRequests.id])}
+                    />
+                    <DeleteButton
+                      onClick={() => onClickRowDelete(mRequests.id)}
+                    />
+                    <DoneSwitch
+                      id={mRequests.id}
+                      status={mRequests.Mnt_Status}
+                      onStatusChange={handleStatusChange}
+                    />
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+            {/* Delete Button Dialog */}
+
+            <div className="Delete Dialog">
+              <React.Fragment>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
                 >
-                  <EditButton
-                    route={`/maintenance/updateRequest/${[mRequests.id]}`}
-                    onClick={() => handleEdit([mRequests.id])}
-                  />
-                  <DeleteButton
-                    onClick={() => onClickRowDelete(mRequests.id)}
-                  />
-                  <DoneSwitch
-                    id={mRequests.id}
-                    status={mRequests.Mnt_Status}
-                    onStatusChange={handleStatusChange}
-                  />
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-          {/* Delete Button Dialog */}
-
-          <div className="Delete Dialog">
-            <React.Fragment>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {"Delete Maintenance Request"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to delete this?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>No</Button>
-                  <Button onClick={() => handleDelete(id)} autoFocus>
-                    Yes
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </React.Fragment>
-          </div>
-        </Table>
+                  <DialogTitle id="alert-dialog-title">
+                    {"Delete Maintenance Request"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Are you sure you want to delete this?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose}>No</Button>
+                    <Button onClick={() => handleDelete(id)} autoFocus>
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </React.Fragment>
+            </div>
+          </Table>
+        </InfiniteScroll>
       </TableContainer>
     </div>
   );

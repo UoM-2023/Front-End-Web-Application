@@ -33,6 +33,9 @@ export default function LoginForm({ setUser }) {
       navigate("/dashboard");
     } catch (error) {
       console.log("Login Error", error);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('userId');
     }
   };
 

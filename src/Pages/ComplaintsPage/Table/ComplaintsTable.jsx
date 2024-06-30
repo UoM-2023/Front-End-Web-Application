@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 // import Minibar from "../Mininavbar/Minibar";
 import TopBar from "../../../Component/TopBar/TopBar";
 import axios from 'axios';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -49,75 +50,110 @@ const ActionContainer = styled('div')({
 function ComplaintsTable() {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [query, setQuery] = useState("");
+  const limit = 10;
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(page, query);
+  }, [page, query]);
 
-  const fetchData = () => {
-    axios.get('http://localhost:3001/complaints/newComplaint')
-      .then(response => {
-        if (response.data && Array.isArray(response.data.result)) {
-          setRows(response.data.result);
+  const fetchData = async (page, query) => {
+    
+    try {
+      const endpoint = query 
+        ? `http://localhost:3001/complaints/searchComplaint?query=${query}&page=${page}&limit=${limit}`
+        : `http://localhost:3001/complaints/newComplaint?page=${page}&limit=${limit}`;
+      
+        const response = await axios.get(endpoint);
+        const newRecords = response.data.result;
+
+        if (page === 1) {
+          setRows(newRecords);
         } else {
-          console.error('Response data is not an array:', response.data);
+          setRows((prevRevenues) => [...prevRevenues, ...newRecords]);
         }
-      })
-      .catch(error => {
-        console.error('There was an error fetching the data!', error);
-      });
+  
+        if (newRecords.length < limit) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchMoreData = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const Filter = (event) => {
+    const query = event.target.value.toLowerCase();
+    setQuery(query);
+    setPage(1);
+    setRows([]);
+    setHasMore(true);
   };
 
   return (
     <div className="complaintsContainer">
       {/* <TopBar title="Complaints" /> */}
       <div className="pageTop">
-        <SearchBar />
+        <SearchBar onChange={Filter} />
         <AddNewButton route="/complaints/complaintsForm" />
       </div>
       <TableContainer component={Paper}>
-        <Table
-          sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table">
-          <TableHead>
-            <TableRow>
-            <StyledTableCell align="left">Reference No</StyledTableCell>
-              <StyledTableCell align="left">Complaint Nature</StyledTableCell>
-              <StyledTableCell align="left">Complaint Title</StyledTableCell>
-              <StyledTableCell align="left">Complained By</StyledTableCell>
-              <StyledTableCell align="left">Complained Date & Time</StyledTableCell>
-              <StyledTableCell align="left">Description</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.Reference_id}>
-                <StyledTableCell align="left">{row.Reference_id}</StyledTableCell>
-                <StyledTableCell align="left">{row.Nature}</StyledTableCell>
-                <StyledTableCell align="left">{row.Title}</StyledTableCell>
-                <StyledTableCell align="left">{row.Complained_by}</StyledTableCell>
-                <StyledTableCell align="left">{row.C_Date}</StyledTableCell>
-                <StyledTableCell align="left">{row.C_Description}</StyledTableCell>
-                <StyledTableCell align="center">{row.CStatus}</StyledTableCell>
-                <StyledTableCell align="right">
-                  <ActionContainer>
-                    <EditButton />
-                    &nbsp; &nbsp;
-                    <DeleteButton/>
-                  </ActionContainer>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <InfiniteScroll
+          dataLength={rows.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>...</h4>}
+        >
+          <Table
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+            aria-label="customized table">
+            <TableHead>
+              <TableRow>
+              <StyledTableCell align="left">Reference No</StyledTableCell>
+                <StyledTableCell align="left">Complaint Nature</StyledTableCell>
+                <StyledTableCell align="left">Complaint Title</StyledTableCell>
+                <StyledTableCell align="left">Complained By</StyledTableCell>
+                <StyledTableCell align="left">Complained Date & Time</StyledTableCell>
+                <StyledTableCell align="left">Description</StyledTableCell>
+                <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <StyledTableRow key={row.Reference_id}>
+                  <StyledTableCell align="left">{row.Reference_id}</StyledTableCell>
+                  <StyledTableCell align="left">{row.Nature}</StyledTableCell>
+                  <StyledTableCell align="left">{row.Title}</StyledTableCell>
+                  <StyledTableCell align="left">{row.Complained_by}</StyledTableCell>
+                  <StyledTableCell align="left">{row.C_Date}</StyledTableCell>
+                  <StyledTableCell align="left">{row.C_Description}</StyledTableCell>
+                  <StyledTableCell align="center">{row.CStatus}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <ActionContainer>
+                      <EditButton />
+                      &nbsp; &nbsp;
+                      <DeleteButton/>
+                    </ActionContainer>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </InfiniteScroll>
       </TableContainer>
     </div>
   );

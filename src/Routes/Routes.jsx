@@ -52,6 +52,7 @@ import ReservationNewTwo from "../Pages/ReservationNew/ReservationNewTwo";
 import ReservationTableTwo from "../Pages/Reservations/ReservationTableTwo";
 import ReservationTable from "../Pages/Reservations/ReservationTable";
 import ReservationNewOne from "../Pages/ReservationNew/ReservationNewOne";
+import ProtectedRoute from "../Pages/LoginPage/LoginServices/protectedRoute";
 
 const Routers = ({ user, setUser }) => {
   return (
@@ -63,7 +64,7 @@ const Routers = ({ user, setUser }) => {
 
         {/* Finance Page Routs and its sub routes */}
         <Route path="/finance" element={<Outlet />}>
-          <Route index element={<ResidentsPayments />} />
+        <Route index element={<ProtectedRoute user={user} allowedRoles={["finance_manager", "admin"]} component={ResidentsPayments} />} />
           <Route path="addNew" element={<ResidentsPaymentsForm />} />
 
           {/* Utility payment section */}

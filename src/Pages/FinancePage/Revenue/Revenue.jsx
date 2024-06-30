@@ -12,6 +12,7 @@ import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,42 +38,51 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Revenue() {
   const [revenues, setRevenues] = useState([]);
-  const [records, setRecords] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [query, setQuery] = useState("");
+  const limit = 10;
 
   useEffect(() => {
-    getRevenue();
-  }, []);
+    getRevenue(page, query);
+  }, [page, query]);
 
-  const getRevenue = () => {
-    axios
-      .get("http://localhost:3001/finance/revenue")
-      .then((response) => {
-        console.log("Called");
-        console.log(response);
-        setRevenues(response.data.result);
-        setRecords(response.data.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const getRevenue = async (page, query) => {
+    try {
+      const endpoint = query
+        ? `http://localhost:3001/finance/revenue/search?query=${query}&page=${page}&limit=${limit}`
+        : `http://localhost:3001/finance/revenue?page=${page}&limit=${limit}`;
+
+      const response = await axios.get(endpoint);
+      const newRecords = response.data.result;
+
+      // Append new records to the existing revenues without duplicates
+      if (page === 1) {
+        setRevenues(newRecords);
+      } else {
+        setRevenues((prevRevenues) => [...prevRevenues, ...newRecords]);
+      }
+
+      if (newRecords.length < limit) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // Search Bar Function
+  const fetchMoreData = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   const Filter = (event) => {
     const query = event.target.value.toLowerCase();
-    setRecords(
-      revenues.filter(
-        (f) =>
-          f.revenue_id.toLowerCase().includes(query) ||
-          f.paid_by.toLowerCase().includes(query) ||
-          f.amount.toString().toLowerCase().includes(query) ||
-          f.rType.toLowerCase().includes(query) ||
-          f.payment_method.toLowerCase().includes(query) ||
-          f.staff_id.toLowerCase().includes(query) ||
-          f.added_date.toLowerCase().includes(query)
-      )
-    );
+    setQuery(query);
+    setPage(1);
+    setRevenues([]);
+    setHasMore(true);
   };
 
   return (
@@ -83,51 +93,50 @@ function Revenue() {
         <AddNewButton route="/finance/revenue/addRevenue" />
       </div>
       <TableContainer component={Paper}>
-        <Table
-          sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table"
+        <InfiniteScroll
+          dataLength={revenues.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>...</h4>}
         >
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="left">Revenue ID</StyledTableCell>
-              <StyledTableCell align="left">Paid By</StyledTableCell>
-              <StyledTableCell align="right">Amount</StyledTableCell>
-              <StyledTableCell align="center">Type</StyledTableCell>
-              <StyledTableCell align="center">Payment Method</StyledTableCell>
-              <StyledTableCell align="left">Staff ID</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {records.map((revenue, index) => (
-              <StyledTableRow key={revenue.revenue_id}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{revenue.revenue_id}</StyledTableCell>
-                <StyledTableCell>{revenue.paid_by}</StyledTableCell>
-                <StyledTableCell align="right">
-                  {revenue.amount}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {revenue.rType}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {revenue.payment_method}
-                </StyledTableCell>
-                <StyledTableCell>{revenue.staff_id}</StyledTableCell>
-                <StyledTableCell>
-                  {revenue.added_date.slice(0, 10)}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
+          <Table
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+            aria-label="customized table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">#No</StyledTableCell>
+                <StyledTableCell align="left">Revenue ID</StyledTableCell>
+                <StyledTableCell align="left">Paid By</StyledTableCell>
+                <StyledTableCell align="right">Amount</StyledTableCell>
+                <StyledTableCell align="center">Type</StyledTableCell>
+                <StyledTableCell align="center">Payment Method</StyledTableCell>
+                <StyledTableCell align="left">Staff ID</StyledTableCell>
+                <StyledTableCell align="left">Date</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {revenues.map((revenue, index) => (
+                <StyledTableRow key={revenue.revenue_id}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{revenue.revenue_id}</StyledTableCell>
+                  <StyledTableCell>{revenue.paid_by}</StyledTableCell>
+                  <StyledTableCell align="right">{revenue.amount}</StyledTableCell>
+                  <StyledTableCell align="center">{revenue.rType}</StyledTableCell>
+                  <StyledTableCell align="center">{revenue.payment_method}</StyledTableCell>
+                  <StyledTableCell>{revenue.staff_id}</StyledTableCell>
+                  <StyledTableCell>{revenue.added_date.slice(0, 10)}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </InfiniteScroll>
       </TableContainer>
     </div>
   );
