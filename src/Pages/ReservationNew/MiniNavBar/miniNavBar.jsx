@@ -1,6 +1,6 @@
-import { Tab, Tabs, ThemeProvider, createTheme } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Tab, Tabs, ThemeProvider, createTheme } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -9,7 +9,6 @@ const theme = createTheme({
     },
   },
 });
-
 
 const Minibar = () => {
   const location = useLocation();
@@ -26,13 +25,10 @@ const Minibar = () => {
       case '/reservations/reservation':
         setValue('two');
         break;
-
       default:
         setValue(false);
     }
   }, [location.pathname]);
-
-
 
   return (
     <>
@@ -47,16 +43,14 @@ const Minibar = () => {
             marginTop: 2,
             marginLeft: 10,
             marginRight: 0
-          }} >
-          <Tab value="one" label="Facilities" component={Link} to="/reservations" />
-          <Tab value="two" label="Reservations" component={Link} to="/reservations/reservation" />
-
-
-
+          }}
+        >
+          <Tab value="one" label="Reservations" component={Link} to="/reservations" />
+          <Tab value="two" label="Facilities" component={Link} to="/reservations/reservation" />
         </Tabs>
       </ThemeProvider>
     </>
-  )
-}
+  );
+};
 
-export default Minibar
+export default Minibar;

@@ -13,6 +13,7 @@ import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import EditButton from "../../../Component/Buttons/EditButton";
 import Minibar from "../Mininavbar/Minibar";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,27 +38,46 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function Expenses() {
-  const [expenseslist, setExpenseslist] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [records, setRecords] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [query, setQuery] = useState("");
+  const limit = 10;
 
   useEffect(() => {
     console.log("frontend use effect");
-    getExpensesDetails();
-  }, []);
+    getExpensesDetails(page, query);
+  }, [page, query]);
 
   // Get the data from the backend to front end
 
-  const getExpensesDetails = () => {
-    axios
-      .get("http://localhost:3001/finance/expenses")
-      .then((response) => {
-        console.log("CALLED");
-        console.log(response);
-        setExpenseslist(response.data.result);
-        setRecords(response.data.result);
-      })
-      .catch((error) => console.log(error));
+  const getExpensesDetails = async (page, query) => {
+    try {
+      const endpoint = query
+        ? `http://localhost:3001/finance/expenses/search?query=${query}&page=${page}&limit=${limit}`
+        : `http://localhost:3001/finance/expenses?page=${page}&limit=${limit}`;
+      const response = await axios.get(endpoint);
+      const newRecords = response.data.result;
+
+      if (page === 1) {
+        setExpenses(newRecords);
+      } else {
+        setExpenses((prevRevenues) => [...prevRevenues, ...newRecords]);
+      }
+
+      if (newRecords.length < limit) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+   
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchMoreData = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   // Handling the edit button
@@ -77,17 +97,10 @@ function Expenses() {
 
   const Filter = (event) => {
     const query = event.target.value.toLowerCase();
-    setRecords(
-      expenseslist.filter(
-        (f) =>
-          f.expense_id.toLowerCase().includes(query) ||
-          f.amount.toString().toLowerCase().includes(query) ||
-          f.eType.toLowerCase().includes(query) ||
-          f.payment_method.toLowerCase().includes(query) ||
-          f.staff_id.toLowerCase().includes(query) ||
-          f.added_date.toLowerCase().includes(query)
-      )
-    );
+    setQuery(query);
+    setPage(1);
+    setExpenses([]);
+    setHasMore(true);
   };
 
   return (
@@ -98,75 +111,82 @@ function Expenses() {
         <AddNewButton route="/finance/expenses/addExpense" />
       </div>
       <TableContainer component={Paper}>
-        <Table
-          sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table"
-        >
-          {/*---- Table Headings ----*/}
+        <InfiniteScroll
+            dataLength={expenses.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+          >
+          <Table
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+            aria-label="customized table"
+          >
+            {/*---- Table Headings ----*/}
 
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
-              <StyledTableCell align="center">Reference No</StyledTableCell>
-              <StyledTableCell align="right">Amount</StyledTableCell>
-              <StyledTableCell align="center">Expense Type</StyledTableCell>
-              <StyledTableCell align="center">Payment Method</StyledTableCell>
-              <StyledTableCell align="left">Staff ID</StyledTableCell>
-              <StyledTableCell align="left">Date</StyledTableCell>
-              <StyledTableCell align="left">Remark</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">#No</StyledTableCell>
+                <StyledTableCell align="center">Reference No</StyledTableCell>
+                <StyledTableCell align="right">Amount</StyledTableCell>
+                <StyledTableCell align="center">Expense Type</StyledTableCell>
+                <StyledTableCell align="center">Payment Method</StyledTableCell>
+                <StyledTableCell align="left">Staff ID</StyledTableCell>
+                <StyledTableCell align="left">Date</StyledTableCell>
+                <StyledTableCell align="left">Remark</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
 
-          {/* ---- Table Data ---- */}
+            {/* ---- Table Data ---- */}
 
-          <TableBody>
-            {records.map((Expenses, index) => (
-              <StyledTableRow key={Expenses.id}>
-                <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {Expenses.expense_id}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {Expenses.amount}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {Expenses.eType}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {Expenses.payment_method}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {Expenses.staff_id}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {Expenses.added_date.slice(0, 10)}
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  {Expenses.remark}
-                </StyledTableCell>
-                <StyledTableCell
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "1rem",
-                  }}
-                >
-                  <EditButton
-                    route={`/finance/expenses/updateExpenses/${Expenses.id}`}
-                    onClick={() => handleEdit(Expenses.id)}
-                  />
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
+            <TableBody>
+              {expenses.map((Expenses, index) => (
+                <StyledTableRow key={Expenses.id}>
+                  <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {Expenses.expense_id}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {Expenses.amount}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {Expenses.eType}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {Expenses.payment_method}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {Expenses.staff_id}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {Expenses.added_date.slice(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {Expenses.remark}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "1rem",
+                    }}
+                  >
+                    <EditButton
+                      route={`/finance/expenses/updateExpenses/${Expenses.id}`}
+                      onClick={() => handleEdit(Expenses.id)}
+                    />
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </InfiniteScroll>
       </TableContainer>
     </div>
   );

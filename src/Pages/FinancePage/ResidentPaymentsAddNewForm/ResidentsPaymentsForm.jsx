@@ -68,7 +68,7 @@ function ResidentsPaymentsForm() {
     if (!values.unit_id) {
       errors.unit_id = "Please Enter Unit Number *";
     }
-    
+
     if (!values.method) {
       errors.method = "Please Select Payment Method *";
     }
@@ -137,10 +137,18 @@ function ResidentsPaymentsForm() {
             <MenuItem value="" className="optionContainer">
               Select Charge Type
             </MenuItem>
-            <MenuItem value="Utility" name="Utility" className="optionContainer">
+            <MenuItem
+              value="Utility"
+              name="Utility"
+              className="optionContainer"
+            >
               Utility
             </MenuItem>
-            <MenuItem value="Management" name="Management" className="optionContainer">
+            <MenuItem
+              value="Management"
+              name="Management"
+              className="optionContainer"
+            >
               Management
             </MenuItem>
             <MenuItem
@@ -156,8 +164,6 @@ function ResidentsPaymentsForm() {
           </Select>
         </div>
         <p>{formErrors.chargeType}</p>
-
-
 
         <div className="inputItem">
           <InputLabel className="namesTag">Payment Method :</InputLabel>

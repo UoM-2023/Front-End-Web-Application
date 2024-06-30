@@ -114,7 +114,7 @@ function EditFunds() {
       <Minibar />
       <div className="pageTop">
         <SearchBar />
-        <AddNewButton route="/finance/editFunds/newFund" />
+        {/* <AddNewButton route="/finance/editFunds/newFund" /> */}
       </div>
       <TableContainer component={Paper}>
         <Table

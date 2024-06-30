@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
 import "./FormDesigns.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../LoginPage/LoginServices/authService";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
@@ -54,6 +53,7 @@ function UtilityForm() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
+    setIsSubmit(true);
     setIsLoading(true);
     axiosInstance
       .post("/finance/addUtilityUsage", formData)
@@ -86,20 +86,20 @@ function UtilityForm() {
       errors.unit_id = "Please Enter Unit ID *";
     }
     if (!values.month) {
-      errors.month = "Please Enter Unit ID *";
+      errors.month = "Please Enter Month *";
     }
     if (!values.electricityUsage) {
-      errors.residentName = "Please Enter Resident Name *";
+      errors.electricityUsage = "Please Enter Electricity Usage *";
     }
     if (!values.waterUsage) {
-      errors.paymentMethod = "Please Select Payment Method *";
+      errors.waterUsage = "Please Enter Water Usage *";
     }
     if (!values.gasUsage) {
-      errors.noOfUnits = "Please Enter No Of Units *";
+      errors.gasUsage = "Please Enter Gas Usage *";
     }
-    if (!values.staffID) {
-      errors.staffID = "Please Enter Staff ID *";
-    }
+    // if (!values.staffID) {
+    //   errors.staffID = "Please Enter Staff ID *";
+    // }
     return errors;
   };
 
@@ -109,7 +109,7 @@ function UtilityForm() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    navigate(-1);
+    navigate("/finance/utilitycharges");
   };
 
   const handleResetForm = () => {

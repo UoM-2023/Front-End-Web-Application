@@ -56,7 +56,7 @@ function StaffDetailsAddNewForm() {
 
     // Extract year, month, and day components
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
 
     // Return the formatted date string
@@ -169,7 +169,6 @@ function StaffDetailsAddNewForm() {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.table(formData);
-      console.log(formData.dob);
     }
   }, [formErrors]);
 

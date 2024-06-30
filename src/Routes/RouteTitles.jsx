@@ -1,5 +1,3 @@
-import React from "react";
-
 const RouteTitles = {
   "/dashboard": "Dashboard",
   "/finance": "Finance",
@@ -20,7 +18,12 @@ const RouteTitles = {
 
   //------------ Reservations -----------------------------
 
+  "/reservations/reservation": "Facilities",
+  "/reservations/addNew": "Reservations",
   "/reservations": "Reservations",
+  "/reservations/reservation/addNew": "Facilities",
+   "/guests/addNew": "Guests",
+   
 
   //------------- Guests -----------------------
 

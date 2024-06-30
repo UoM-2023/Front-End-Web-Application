@@ -3,10 +3,11 @@ import { Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SaveButton from "../../../Component/Buttons/SaveButton";
 import BackButton from "../../../Component/Buttons/BackButton";
-import { useParams } from "react-router-dom";
-import axios from "axios"
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import axiosInstance from "../../LoginPage/LoginServices/authService";
-
+import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 
 function UtilityDetailsUpdateForm() {
   const { id } = useParams();
@@ -20,30 +21,43 @@ function UtilityDetailsUpdateForm() {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Current id", id);
     if (id) {
       console.log("Update Fund useEffect");
-      axiosInstance.get(`/finance/utilityDetails/${id}`).then((response) => {
-        console.log("Response", response);
-        const { data } = response;
-        console.log("Response data",data);
+      axiosInstance
+        .get(`/finance/utilityDetails/${id}`)
+        .then((response) => {
+          console.log("Response", response);
+          const { data } = response;
+          console.log("Response data", data);
 
           if (response) {
-            const utilityData = data;
-            console.log(utilityData);
+            const { result } = data;
+            console.log(result);
+            // console.log("Response Dumb",utilityData[0].utility_name);
             setFormData({
-              utility_name: utilityData.utility_name,
+              utility_name: result.utility_name,
               priceRange: "",
               basePrice: "",
               unitPrice: "",
               modifiedBy: "",
             });
+          } else {
+            console.error("Data structure does not match expected format");
           }
-        });
+        })
+        .catch((err) => console.error("Failed to fetch Data...", err))
+        .finally(() => setIsLoading(false));
     }
-  });
+  }, []);
+
   const onChangeHandler = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -51,10 +65,54 @@ function UtilityDetailsUpdateForm() {
     }));
   };
 
-  const onSubmitHandler = (event) => {
+  // const onSubmitHandler = async (event) => {
+  //   event.preventDefault();
+  //   setFormErrors(validate(formData));
+  //   setIsSubmit(true);
+  //   setIsLoading(true);
+
+  //   if (Object.keys(formErrors).length === 0) {
+  //     try {
+  //       const response = await axiosInstance.put(
+  //         `/finance/updateutilityDetails`,
+  //         formData
+  //       );
+  //       console.log(response);
+  //       setIsSubmit(true);
+  //       setSuccessMessage(response.data.message);
+  //     } catch (error) {
+  //       console
+  //         .error("There was an error updating the data!", error)
+  //         .finally(() => {
+  //           setIsLoading(false);
+  //         });
+  //     }
+  //   }
+
+  //   setIsSubmit(true);
+  // };
+
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);
+    setIsLoading(true);
+
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        const response = await axiosInstance.put(
+          `/finance/updateutilityDetails`,
+          formData
+        );
+        console.log(response);
+        setIsSubmit(true);
+        setSuccessMessage(response.data.message);
+      } catch (error) {
+        console.error("There was an error updating the data!", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
@@ -92,8 +150,41 @@ function UtilityDetailsUpdateForm() {
     return errors;
   };
 
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    navigate("/finance/utilitycharges/viewUtilityDetails");
+  };
+
+  const handleResetForm = () => {
+    setFormData({
+      utility_name: "",
+      priceRange: "",
+      basePrice: "",
+      unitPrice: "",
+      modifiedBy: "",
+    });
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      handleOpenDialog();
+    }
+  }, [formErrors, isSubmit]);
+
   return (
-    <div className="FormContainer">
+    <div
+      className="FormContainer"
+      style={{
+        position: "relative",
+        marginTop: "2rem",
+        marginLeft: "6rem",
+      }}
+    >
+      {isLoading && <LoadingIndicator />}
       <form className="MainForm" onSubmit={onSubmitHandler} method="get">
         {/* <div className="inputItem">
           <InputLabel className="namesTag">Utility Type :</InputLabel>
@@ -125,7 +216,7 @@ function UtilityDetailsUpdateForm() {
 
         <div className="inputItem">
           <InputLabel htmlFor="utilityTypejs" className="namesTag">
-            Utility Type
+            Utility Type :
           </InputLabel>
           <TextField
             id="outlined-basic"
@@ -172,7 +263,7 @@ function UtilityDetailsUpdateForm() {
 
         <div className="inputItem">
           <InputLabel htmlFor="basePrice" className="namesTag">
-            Base Price
+            Base Price :
           </InputLabel>
           <TextField
             id="outlined-basic"
@@ -186,7 +277,7 @@ function UtilityDetailsUpdateForm() {
 
         <div className="inputItem">
           <InputLabel htmlFor="unitPrice" className="namesTag">
-            Unit Price
+            Unit Price :
           </InputLabel>
           <TextField
             id="outlined-basic"
@@ -200,11 +291,11 @@ function UtilityDetailsUpdateForm() {
 
         <div className="inputItem">
           <InputLabel htmlFor="modifiedBy" className="namesTag">
-            Modified By
+            Modified By :
           </InputLabel>
           <TextField
-            type="number"
-            min="0.00"
+            // type="number"
+            // min="0.00"
             id="outlined-basic"
             className="textFieldComponent"
             name="modifiedBy"
@@ -227,10 +318,12 @@ function UtilityDetailsUpdateForm() {
           </Grid>
         </div>
       </form>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <h3 className="success message">Successfully Added </h3>
-      ) : (
-        <pre> </pre>
+      {openDialog && (
+        <SuccessAlertDialog
+          handleClose={handleCloseDialog}
+          handleReset={handleResetForm}
+          message={successMessage}
+        />
       )}
     </div>
   );

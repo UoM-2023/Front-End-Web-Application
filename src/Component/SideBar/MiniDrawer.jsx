@@ -273,7 +273,6 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import TopBar from "../TopBar/TopBar";
 
 const drawerWidth = 240;
 
