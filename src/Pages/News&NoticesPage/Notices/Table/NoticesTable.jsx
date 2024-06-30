@@ -94,6 +94,7 @@ function NoticesTable() {
               <StyledTableCell align="left">Notice Type</StyledTableCell>
               <StyledTableCell align="left">Notice Title</StyledTableCell>
               <StyledTableCell align="left">Description</StyledTableCell>
+              <StyledTableCell align="left">Added Date</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -104,6 +105,7 @@ function NoticesTable() {
                 <StyledTableCell align="left">{row.N_Type}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Title}</StyledTableCell>
                 <StyledTableCell align="left">{row.N_Description}</StyledTableCell>
+                <StyledTableCell align="left">{row.N_Date .slice(0,10)}</StyledTableCell>
                 <StyledTableCell align="right">
                   <ActionContainer>
                     <EditButton />

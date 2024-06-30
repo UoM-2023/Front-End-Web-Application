@@ -37,7 +37,7 @@ function ResidentialUnitsForm() {
     })
     .catch(err => console.log(err));
     setFormErrors(validate(formData));
-    setIsSubmit(true);
+    setIsSubmit(false);
   };
 
   useEffect(() => {

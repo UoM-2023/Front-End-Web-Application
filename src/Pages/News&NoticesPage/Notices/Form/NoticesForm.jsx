@@ -93,9 +93,7 @@ function NoticesForm() {
           <Select
             className="SelectformComponent"
             name="type"
-            onChange={onChangeHandler}
-            value={formData.type}
-          >
+            onChange={onChangeHandler}>
             <MenuItem value="" className="optionContainer">
               Select Notice Type
             </MenuItem>
@@ -107,9 +105,6 @@ function NoticesForm() {
             </MenuItem>
             <MenuItem value="proposal" name="proposal" className="optionContainer">
               Proposal
-            </MenuItem>
-            <MenuItem value="emergency" name="emergency" className="optionContainer">
-              Emergency
             </MenuItem>
             <MenuItem value="other" name="other" className="optionContainer">
               Other

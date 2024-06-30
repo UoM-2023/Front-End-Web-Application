@@ -29,14 +29,19 @@ const RouteTitles = {
   //----------- Residentials Units -----------------------------
 
   "/residential%20units": "Residential Units",
+  "/residential%20units/residentialUnitsForm": "Residential Units",
 
   //----------- Complaints --------------------------------
 
   "/complaints": "Complaints",
+  "/complaints/complaintsForm": "Complaints",
 
   //------------- News & Notices -----------------------
 
   "/news%20&%20notices": "News & Notices",
+  "/news%20&%20notices/noticesForm": "News & Notices",
+  "/eventsTable": "News & Notices",
+  "/eventsTable/eventsForm": "News & Notices",
 
   // -------- Residents Information ----------------------
 

@@ -91,7 +91,7 @@ function ComplaintsTable() {
               <StyledTableCell align="left">Complaint Nature</StyledTableCell>
               <StyledTableCell align="left">Complaint Title</StyledTableCell>
               <StyledTableCell align="left">Complained By</StyledTableCell>
-              <StyledTableCell align="left">Complained Date & Time</StyledTableCell>
+              <StyledTableCell align="left">Complained Date</StyledTableCell>
               <StyledTableCell align="left">Description</StyledTableCell>
               <StyledTableCell align="right">Status</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
@@ -104,7 +104,7 @@ function ComplaintsTable() {
                 <StyledTableCell align="left">{row.Nature}</StyledTableCell>
                 <StyledTableCell align="left">{row.Title}</StyledTableCell>
                 <StyledTableCell align="left">{row.Complained_by}</StyledTableCell>
-                <StyledTableCell align="left">{row.C_Date}</StyledTableCell>
+                <StyledTableCell align="left">{row.C_Date .slice(0,10)}</StyledTableCell>
                 <StyledTableCell align="left">{row.C_Description}</StyledTableCell>
                 <StyledTableCell align="center">{row.CStatus}</StyledTableCell>
                 <StyledTableCell align="right">
