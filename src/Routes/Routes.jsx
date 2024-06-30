@@ -207,6 +207,11 @@ const Routers = ({ user, setUser }) => {
             element={<ResidentialUnitsForm />}
           />
           <Route />
+          <Route
+            path="UpdateresidentialUnits/:Unit_id"
+            element={<ResidentialUnitsForm />}
+          />
+          <Route />
         </Route>
 
         {/*----------- Complaints route ---------------*/}
@@ -214,6 +219,10 @@ const Routers = ({ user, setUser }) => {
         <Route path="complaints" element={<Outlet />}>
           <Route index element={<ComplaintsTable />} />
           <Route path="complaintsForm" element={<ComplaintsForm />} />
+          <Route
+            path="UpdateComplait/:Reference_id"
+            element={<ComplaintsForm />}
+          />
         </Route>
 
         {/*------------ News & Notices section -------------*/}
@@ -273,6 +282,7 @@ const Routers = ({ user, setUser }) => {
         <Route path="eventsTable" element={<Outlet />}>
           <Route index element={<EventsTable />} />
           <Route path="eventsForm" element={<EventsForm />} />
+          <Route path="eventsUpdate/:Event_no" element={<EventsForm />} />
         </Route>
       </Routes>
     </div>

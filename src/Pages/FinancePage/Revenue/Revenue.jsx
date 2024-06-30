@@ -41,7 +41,7 @@ function Revenue() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [query, setQuery] = useState("");
-  const limit = 10;
+  const limit = 15;
 
   useEffect(() => {
     getRevenue(page, query);
