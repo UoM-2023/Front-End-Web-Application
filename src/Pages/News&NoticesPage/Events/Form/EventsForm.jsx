@@ -23,6 +23,7 @@ function EventsForm() {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const onChangeHandler = (event) => {
+    
     setFormData((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
@@ -30,6 +31,7 @@ function EventsForm() {
   };
 
   const onSubmitHandler = (event) => {
+    console.log(formData)
     event.preventDefault();
     axios.post('http://localhost:3001/newsNotices/newEvent', formData)
     .then(res => {

@@ -236,7 +236,9 @@ const Routers = ({ user, setUser }) => {
         {/*----------- Reservation Section Routes ------------*/}
 
         <Route path="/reservations" element={<Outlet />}>
-          <Route index element={<ReservationTableTwo />} />
+               {/* reservation table */}
+          <Route index element={<ReservationTable />} /> 
+          {/* Reservation form  */}
           <Route path="addNew" element={<ReservationNewTwo />} />
           {/* //edit route */}
           <Route
@@ -247,7 +249,9 @@ const Routers = ({ user, setUser }) => {
           {/*------------- Sub Routes Facility Requests (Reservation) -----------------*/}
 
           <Route path="reservation" element={<Outlet />}>
-            <Route index element={<ReservationTable />} />
+          {/* Facility Table */}
+            <Route index element={<ReservationTableTwo />} />
+            {/* Facility Form */}
             <Route path="addNew" element={<ReservationNewOne />} />
             <Route
               path="updateFacility/:ref_no"

@@ -45,7 +45,14 @@ function GuestTable() {
   const [open, setOpen] = React.useState(false);
   const [guest_ID, setguest_ID] = useState("");
 
-
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate());
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   const onClickRowDelete = (rowid) => {
     setguest_ID(rowid);
@@ -129,7 +136,7 @@ function GuestTable() {
       </div>
 
 
-  
+
       <TableContainer component={Paper}>
         <Table
           sx={{
@@ -148,27 +155,15 @@ function GuestTable() {
               <StyledTableCell align="left">Guest Name</StyledTableCell>
               <StyledTableCell align="left">Vehicle Num</StyledTableCell>
               <StyledTableCell align="left">Guest NIC </StyledTableCell>
+              <StyledTableCell align="left">Arrival Date </StyledTableCell>
               <StyledTableCell align="left">Check In </StyledTableCell>
               <StyledTableCell align="left">Check Out </StyledTableCell>
+              <StyledTableCell align="left">Check In Time </StyledTableCell>
+              <StyledTableCell align="left">Check Out Time </StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
-          {/* <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell align="left">{row.Unit}</StyledTableCell>
-                <StyledTableCell align="left">{row.ResidentName}</StyledTableCell>
-                <StyledTableCell align="left">{row.GuestName}</StyledTableCell>
-                <StyledTableCell align="left">{row.VehicleNo}</StyledTableCell>
-                <StyledTableCell align="left">{row.GuestNIC}</StyledTableCell>
-                <StyledTableCell align="left">{row.CheckedinDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.CheckedinTime}</StyledTableCell>
-                <StyledTableCell align="left">{row.CheckedOutDate}</StyledTableCell>
-                <StyledTableCell align="left">{row.CheckedOutTime}</StyledTableCell>
-                <StyledTableCell align="left">{row.action}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody> */}
+
           <TableBody>
 
             {guestlist &&
@@ -188,8 +183,11 @@ function GuestTable() {
                       {apartflowtesting.vehicle_number}
                     </StyledTableCell>
                     <StyledTableCell>{apartflowtesting.guest_NIC}</StyledTableCell>
-                    <StyledTableCell>{apartflowtesting.check_In}</StyledTableCell>
-                    <StyledTableCell>{apartflowtesting.check_Out}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.arrival_date}</StyledTableCell>
+                    <StyledTableCell>{formatDate(apartflowtesting.check_In)}</StyledTableCell>
+                    <StyledTableCell>{formatDate(apartflowtesting.check_Out)}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.checkin_Time}</StyledTableCell>
+                    <StyledTableCell>{apartflowtesting.checkout_Time}</StyledTableCell>
                     <StyledTableCell
                       sx={{
                         display: "flex",
@@ -223,41 +221,3 @@ function GuestTable() {
 export default GuestTable;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////////////////////
-//Table Body before Roouting
-
-// {guestlist.map((row) => (
-//   <StyledTableRow key={row.Unit_ID}>
-//     <StyledTableCell align="left">{row.Unit_ID}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Resident_Name}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Guest_Name}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Vehicle_Number}</StyledTableCell>
-//     <StyledTableCell align="left">{row.GuestNIC}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Arrival_Date}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Checkedin}</StyledTableCell>
-//     <StyledTableCell align="left">{row.CheckedOut}</StyledTableCell>
-//     <StyledTableCell align="left">    <div className="actionBtn">
-
-// <EditButton />
-// &nbsp; &nbsp;
-// <DeleteButton />
-// </div></StyledTableCell>
-//   </StyledTableRow>
-// ))}

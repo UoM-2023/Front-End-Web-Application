@@ -71,10 +71,7 @@ function useRouteMatch(patterns) {
 }
 
 function MyTabs() {
-  // You need to provide the routes in descendant order.
-  // This means that if you have nested routes like:
-  // users, users/new, users/edit.
-  // Then the order should be ['users/add', 'users/edit', 'users'].
+
   const routeMatch = useRouteMatch(["/inbox/:id", "/drafts"]);
   const currentTab = routeMatch?.pattern?.path;
 
@@ -237,7 +234,6 @@ function ReservationTableTwo() {
               <StyledTableCell align="left">Facility Name</StyledTableCell>
               <StyledTableCell align="left">Amount Charge</StyledTableCell>
               <StyledTableCell align="left">Charge Per</StyledTableCell>
-              <StyledTableCell align="left">Availability</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -255,9 +251,6 @@ function ReservationTableTwo() {
                     </StyledTableCell>
                     <StyledTableCell>
                       {apartflowtesting.charge_per}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {apartflowtesting.availability}
                     </StyledTableCell>
                     <StyledTableCell
                       sx={{

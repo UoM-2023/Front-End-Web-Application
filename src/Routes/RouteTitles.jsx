@@ -18,7 +18,12 @@ const RouteTitles = {
 
   //------------ Reservations -----------------------------
 
+  "/reservations/reservation": "Facilities",
+  "/reservations/addNew": "Reservations",
   "/reservations": "Reservations",
+  "/reservations/reservation/addNew": "Facilities",
+   "/guests/addNew": "Guests",
+   
 
   //------------- Guests -----------------------
 
