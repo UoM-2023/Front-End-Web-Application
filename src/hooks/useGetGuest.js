@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getGuest } from "../service/guest";
-// import { getCabins } from "../../services/apiCabins";
 
+//custum hook
 export function useGetGuest() {
   const {
     isPending,
