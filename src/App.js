@@ -53,6 +53,7 @@ function App() {
     if (token) {
       console.log(token);
       const decodeUser = getDecodedToken(token);
+      console.log("decodeUser", decodeUser);
       setUser(decodeUser);
       setAuthToken(token);
     } else {

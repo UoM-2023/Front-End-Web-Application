@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import "./loginForm.css";
 import username from "../Assets/User_light.svg";
 import password from "../Assets/finger-print-outline.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
 import { jwtDecode } from "jwt-decode";
 import axiosInstance, {
   setAuthToken,
 } from "../../Pages/LoginPage/LoginServices/authService";
 
 export default function LoginForm({ setUser }) {
+  const { userID } = useParams();
+
   const [userData, setUserData] = useState({ userID: "", password: "" });
   const navigate = useNavigate();
 
@@ -21,12 +22,14 @@ export default function LoginForm({ setUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth/login',userData);
+      const response = await axiosInstance.post("/auth/login", userData);
       const { token, refreshToken, userId } = response.data;
       console.log("Token", token, refreshToken, userId);
-      localStorage.setItem('token', token);
-      localStorage.setItem('refreshToken', refreshToken);
-      localStorage.setItem('userId', userId);
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("userId", userId);
+      const userID = localStorage.getItem("userId");
+      console.log(userID);
       setAuthToken(token);
       const decodedUser = jwtDecode(token);
       setUser(decodedUser);
