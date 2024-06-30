@@ -86,7 +86,7 @@
 //     //   })
 //     //   .catch((error) => console.log(error));
 //     try {
-//       const endpoint = query 
+//       const endpoint = query
 //         ? `http://localhost:3001/staffDetails/searchStaff?query=${query}&page=${page}&limit=${limit}`
 //         : `http://localhost:3001/staffDetails/addNewStaff?page=${page}&limit=${limit}`;
 //       const response = await axios.get(endpoint);
@@ -121,7 +121,7 @@
 //     setHasMore(true);
 //   };
 
-//   // Handling the edit button 
+//   // Handling the edit button
 
 //   const handleEdit = (staffID) => {
 //     console.log("Hanlde Edit Before axios");
@@ -137,7 +137,7 @@
 //       });
 //   };
 
-//   // Handling the Delete button 
+//   // Handling the Delete button
 
 //   const handleDelete = (staffID) => {
 //     axios
@@ -154,7 +154,6 @@
 //         console.log(error);
 //       });
 //   };
-
 
 //   return (
 //     <div className="unitListContainer">
@@ -349,7 +348,7 @@ function StaffList() {
 
   const getStaffDetails = async (page, query) => {
     try {
-      const endpoint = query 
+      const endpoint = query
         ? `http://localhost:3001/staffDetails/searchStaff?query=${query}&page=${page}&limit=${limit}`
         : `http://localhost:3001/staffDetails/addNewStaff?page=${page}&limit=${limit}`;
       const response = await axios.get(endpoint);
@@ -385,7 +384,9 @@ function StaffList() {
 
   const handleEdit = (staffID) => {
     axios
-      .get(`http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`)
+      .get(
+        `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+      )
       .then((response) => {
         console.log("Handle Edit Called");
       })
@@ -396,7 +397,9 @@ function StaffList() {
 
   const handleDelete = (staffID) => {
     axios
-      .delete(`http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${staffID}`)
+      .delete(
+        `http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${staffID}`
+      )
       .then((response) => {
         console.log("Handle Delete Called");
         setPage(1);
@@ -452,15 +455,15 @@ function StaffList() {
                 stafflist.map((staff, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell>{staff.staffID}</StyledTableCell>
-                    <StyledTableCell>{staff.name_with_initials}</StyledTableCell>
+                    <StyledTableCell>
+                      {staff.name_with_initials}
+                    </StyledTableCell>
                     <StyledTableCell>{staff.nic}</StyledTableCell>
                     <StyledTableCell>{staff.staff_category}</StyledTableCell>
                     <StyledTableCell>{staff.mobile_no}</StyledTableCell>
                     <StyledTableCell>{staff.email}</StyledTableCell>
                     <StyledTableCell>{staff.city}</StyledTableCell>
-                    <StyledTableCell
-                      sx={{ display: "flex", gap: "0.3rem" }}
-                    >
+                    <StyledTableCell sx={{ display: "flex", gap: "0.3rem" }}>
                       <EditButton
                         route={`/staff details/updateStaff/${staff.staffID}`}
                         onClick={() => handleEdit(staff.staffID)}
@@ -495,5 +498,3 @@ function StaffList() {
 }
 
 export default StaffList;
-
-
