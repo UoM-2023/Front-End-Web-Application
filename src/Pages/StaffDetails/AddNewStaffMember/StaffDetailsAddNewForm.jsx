@@ -105,7 +105,6 @@ function StaffDetailsAddNewForm() {
               mobile_no: staffData.mobile_no,
               Address: staffData.Address,
               city: staffData.city,
-              img: staffData.img,
             });
           } else {
             console.error("Data structure does not match expected format");
@@ -226,9 +225,6 @@ function StaffDetailsAddNewForm() {
     if (!values.city) {
       errors.city = "City is required *";
     }
-    if (!values.img) {
-      errors.img = "Please Upload Staff Member's Image file *";
-    }
     return errors;
   };
 
@@ -257,7 +253,6 @@ function StaffDetailsAddNewForm() {
       mobile_no: "",
       Address: "",
       city: "",
-      img: "",
     });
   };
 
@@ -509,20 +504,6 @@ function StaffDetailsAddNewForm() {
           </div>
           <p>{formErrors.city}</p>
 
-          <div className="img">
-            <InputLabel htmlFor="img" className="namesTag">
-              Select Image :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              type="file"
-              className="textFieldComponent"
-              name="img"
-              onChange={onChangeHandler}
-              value={formData.img}
-              accept="image/*"
-            />
-          </div>
           <p>{formErrors.img}</p>
 
           <div className="buttonSection">
