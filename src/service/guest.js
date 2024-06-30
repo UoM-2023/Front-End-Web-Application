@@ -51,9 +51,9 @@ export async function getGuest() {
       const today = new Date();
       // Check if the guest start_date is today
       return (
-        guestDate.getFullYear() == today.getFullYear() &&
-        guestDate.getMonth() == today.getMonth() &&
-        guestDate.getDate() == today.getDate()+1
+        guestDate.getFullYear() === today.getFullYear() &&
+        guestDate.getMonth() === today.getMonth() &&
+        guestDate.getDate() === today.getDate()
       );
     };
 

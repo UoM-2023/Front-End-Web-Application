@@ -28,6 +28,7 @@ function EventsAddNewForm() {
   };
 
   const onSubmitHandler = (event) => {
+    console.log(formData);
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);

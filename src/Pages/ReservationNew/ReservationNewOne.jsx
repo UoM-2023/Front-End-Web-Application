@@ -20,7 +20,6 @@ function ReservationNewOne() {
     facility_name: "",
     amount_charge: "",
     charge_per: "",
-    availability: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -64,16 +63,13 @@ function ReservationNewOne() {
                 : facilityData.charge_per;
 
             //selection use
-            const availabilityValue =
-              facilityData.availability === "Reserved"
-                ? "Reserved"
-                : facilityData.availability;
+            
 
             setFormData({
               facility_name: facility_nameValue,
               amount_charge: facilityData.amount_charge,
               charge_per: charge_perValue,
-              availability: availabilityValue,
+              
             });
           } else {
             console.error("Data structure does not match expected format");
@@ -149,9 +145,7 @@ function ReservationNewOne() {
     if (!values.charge_per) {
       errors.charge_per = "Please select the charge_per * ";
     }
-    if (!values.availability) {
-      errors.availability = "Please select the availability * ";
-    }
+    
     return errors;
   };
 
@@ -161,7 +155,7 @@ function ReservationNewOne() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    navigate("/reservations");
+    navigate("/reservations/reservation");
   };
 
   const handleResetForm = () => {
@@ -169,7 +163,7 @@ function ReservationNewOne() {
       facility_name: "",
       amount_charge: "",
       charge_per: "",
-      availability: "",
+     
     });
   };
 
@@ -260,34 +254,7 @@ function ReservationNewOne() {
         </div>
         <p>{formErrors.charge_per}</p>
 
-        <div className="inputItem">
-          <InputLabel className="namesTag">Availability :</InputLabel>
-          <Select
-            className="SelectformComponent"
-            name="availability"
-            onChange={onChangeHandler}
-            value={formData.availability}
-          >
-            <MenuItem value="" className="optionContainer">
-              Select Availability
-            </MenuItem>
-            <MenuItem
-              value="Reserved"
-              name="Reserved"
-              className="optionContainer"
-            >
-              Reserved
-            </MenuItem>
-            <MenuItem
-              value=" Not Yet"
-              name=" Not Yet"
-              className="optionContainer"
-            >
-              Not Yet
-            </MenuItem>
-          </Select>
-        </div>
-        <p>{formErrors.availability}</p>
+
 
         <div className="buttonSection">
           <Grid container spacing={2}>

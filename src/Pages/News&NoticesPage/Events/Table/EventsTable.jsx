@@ -196,6 +196,7 @@ function EventsTable() {
       .get("http://localhost:3001/newsNotices/newEvent")
       .then((response) => {
         if (response.data && Array.isArray(response.data.result)) {
+         console.log(response.data.result)
           setRows(response.data.result);
         } else {
           console.error("Response data is not an array:", response.data);

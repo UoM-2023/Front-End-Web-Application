@@ -51,9 +51,9 @@ export async function getComplain() {
       const today = new Date();
       // Check if the reservation start_date is today
       return (
-        complainDate.getFullYear() == today.getFullYear() &&
-        complainDate.getMonth() == today.getMonth() &&
-        complainDate.getDate() == today.getDate()+1
+        complainDate.getFullYear() === today.getFullYear() &&
+        complainDate.getMonth() === today.getMonth() &&
+        complainDate.getDate() === today.getDate()
       );
     };
 

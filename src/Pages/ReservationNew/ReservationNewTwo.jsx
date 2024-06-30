@@ -20,11 +20,13 @@ function ReservationNewTwo() {
 
   const [formData, setFormData] = useState({
     facility_name: "",
-    // Unit_id: "",
-    resident_name: "",
+    Unit_id: "",
+    // resident_name: "",
     start_date: "",
     end_date: "",
-    payment_status: "",
+    start_time: "",
+    end_time: "",
+    // payment_status: "",
     availability: "",
   });
 
@@ -54,6 +56,25 @@ function ReservationNewTwo() {
     return `${year}-${month}-${day}`;
   }
 
+  function formatTime(timeString, incrementHours = 0, incrementMinutes = 0, incrementSeconds = 0) {
+    // Create a new Date object from the provided time string
+    const time = new Date(`1970-01-01T${timeString}Z`);
+  
+    // Increment the time by the specified hours, minutes, and seconds
+    time.setUTCHours(time.getUTCHours() + incrementHours);
+    time.setUTCMinutes(time.getUTCMinutes() + incrementMinutes);
+    time.setUTCSeconds(time.getUTCSeconds() + incrementSeconds);
+  
+    // Extract hours, minutes, and seconds components
+    const hours = String(time.getUTCHours()).padStart(2, "0");
+    const minutes = String(time.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(time.getUTCSeconds()).padStart(2, "0");
+  
+    // Return the formatted time string
+    return `${hours}:${minutes}:${seconds}`;
+  }
+  
+
   useEffect(() => {
     console.log("Current Reservation ID:", ref_no);
     if (ref_no) {
@@ -80,10 +101,10 @@ function ReservationNewTwo() {
                 ? "Gym"
                 : reservationData.facility_name; //staff_category -->selection eka aithi eka
 
-            const payment_statusValue =
-              reservationData.payment_status === "Paid" //1st value form data
-                ? "Paid"
-                : reservationData.payment_status; //staff_category -->selection eka aithi eka
+            // const payment_statusValue =
+            //   reservationData.payment_status === "Paid" //1st value form data
+            //     ? "Paid"
+            //     : reservationData.payment_status; //staff_category -->selection eka aithi eka
 
             const availabilityValue =
               reservationData.availability === "Paid" //1st value form data
@@ -92,14 +113,17 @@ function ReservationNewTwo() {
 
             const formatted_start_date = formatDate(reservationData.start_date);
             const formatted_end_date = formatDate(reservationData.end_date);
-
+            const formatted_start_time = formatTime(reservationData.start_time);
+            const formatted_end_time = formatTime(reservationData.end_time);
+            
             setFormData({
               facility_name: facility_nameValue,
-              // Unit_id: reservationData.Unit_id,
-              resident_name: reservationData.resident_name,
+              Unit_id: reservationData.Unit_id,
               start_date: formatted_start_date,
               end_date: formatted_end_date,
-              payment_status: payment_statusValue,
+              start_time: formatted_start_time,
+              end_time: formatted_end_time,
+              // payment_status: payment_statusValue,
               availability: availabilityValue,
             });
           } else {
@@ -173,21 +197,27 @@ function ReservationNewTwo() {
     if (!values.facility_name) {
       errors.facility_name = "Please select the Facility Name * ";
     }
-    // if (!values.Unit_id) {
-    //   errors.Unit_id = "Please Enter  the Unit ID * ";
-    // }
-    if (!values.resident_name) {
-      errors.resident_name = "Please Enter The Resident Name *";
+    if (!values.Unit_id) {
+      errors.Unit_id = "Please Enter  the Unit ID * ";
     }
+    // if (!values.resident_name) {
+    //   errors.resident_name = "Please Enter The Resident Name *";
+    // }
     if (!values.start_date) {
       errors.start_date = "Please Enter The Start Date *";
     }
     if (!values.end_date) {
       errors.end_date = "Please Enter The End Date *";
     }
-    if (!values.payment_status) {
-      errors.payment_status = "Please select the Payment Status * ";
-    }
+    // if (!values.start_time) {
+    //   errors.start_date = "Please Enter The Start Time *";
+    // }
+    // if (!values.end_time) {
+    //   errors.start_date = "Please Enter The End Time *";
+    // }
+    // if (!values.payment_status) {
+    //   errors.payment_status = "Please select the Payment Status * ";
+    // }
     if (!values.availability) {
       errors.availability = "Please select the availability Status * ";
     }
@@ -207,10 +237,12 @@ function ReservationNewTwo() {
   const handleResetForm = () => {
     setFormData({
       facility_name: "",
-      resident_name: "",
+      Unit_id: "",
+      // resident_name: "",
       start_date: "",
       end_date: "",
-      payment_status: "",
+      start_time: "",
+      end_time: "",
       availability: "",
     });
   };
@@ -260,7 +292,7 @@ function ReservationNewTwo() {
         </div>
         <p>{formErrors.facility_name}</p>
 
-        {/* <div className="inputItem">
+        <div className="inputItem">
           <InputLabel htmlFor="Name" className="namesTag">
            Unit ID :
           </InputLabel>
@@ -272,9 +304,9 @@ function ReservationNewTwo() {
             value={formData.Unit_id}
           />
         </div>
-        <p>{formErrors.Unit_id}</p> */}
+        <p>{formErrors.Unit_id}</p>
 
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="Name" className="namesTag">
             Resident Name :
           </InputLabel>
@@ -286,7 +318,7 @@ function ReservationNewTwo() {
             value={formData.resident_name}
           />
         </div>
-        <p>{formErrors.resident_name}</p>
+        <p>{formErrors.resident_name}</p> */}
 
         <div className="inputItem">
           <InputLabel htmlFor="StartDate" className="namesTag">
@@ -319,6 +351,36 @@ function ReservationNewTwo() {
         <p>{formErrors.end_date}</p>
 
         <div className="inputItem">
+          <InputLabel htmlFor="StartTime" className="namesTag">
+            Start Time :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            type="time"
+            className="textFieldComponent"
+            name="start_time"
+            onChange={onChangeHandler}
+            value={formData.start_time}
+          />
+        </div>
+        {/* <p>{formErrors.start_date}</p> */}
+
+        <div className="inputItem">
+          <InputLabel htmlFor="EndTime" className="namesTag">
+            End Time :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            type="time"
+            className="textFieldComponent"
+            name="end_time"
+            onChange={onChangeHandler}
+            value={formData.end_time}
+          />
+        </div>
+        {/* <p>{formErrors.end_time}</p> */}
+
+        {/* <div className="inputItem">
           <InputLabel className="namesTag">Payment Status :</InputLabel>
           <Select
             className="SelectformComponent"
@@ -341,10 +403,10 @@ function ReservationNewTwo() {
             </MenuItem>
           </Select>
         </div>
-        <p>{formErrors.payment_status}</p>
+        <p>{formErrors.payment_status}</p> */}
 
         <div className="inputItem">
-          <InputLabel className="namesTag"> availability :</InputLabel>
+          <InputLabel className="namesTag"> Status :</InputLabel>
           <Select
             className="SelectformComponent"
             name="availability"
@@ -352,7 +414,7 @@ function ReservationNewTwo() {
             value={formData.availability}
           >
             <MenuItem value="" className="optionContainer">
-              Select Availability
+              Select Status
             </MenuItem>
             <MenuItem
               value="Reserved"

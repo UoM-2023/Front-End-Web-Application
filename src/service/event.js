@@ -28,16 +28,15 @@ function compareDates(dateString) {
 
   // Compare the two dates
   if (inputDate == today) {
-      return true ;
-  } 
+    return true;
+  }
 }
-
-
-
 
 export async function getEvent() {
   try {
-    const response = await axios.get("http://localhost:3001/newsNotices/newEvent");
+    const response = await axios.get(
+      "http://localhost:3001/newsNotices/newEvent"
+    );
 
     if (!response.data || !response.data.result) {
       return 0; // Return 0 if there are no events or no 'result' in the response
@@ -50,11 +49,17 @@ export async function getEvent() {
       const eventDate = new Date(startDate);
       const today = new Date();
       // Check if the event start_date is today
+      // console.log(eventDate.getFullYear())
+      // console.log(eventDate.getMonth())
+      // console.log(eventDate.getDate())
+      // console.log(today.getFullYear())
+      // console.log(today.getMonth())
+      // console.log(today.getDate())
+
       return (
-        eventDate.getFullYear() == today.getFullYear() &&
-        eventDate.getMonth() == today.getMonth() &&
-        
-        eventDate.getDate() == today.getDate()+1
+        eventDate.getFullYear() === today.getFullYear() &&
+        eventDate.getMonth() === today.getMonth() &&
+        eventDate.getDate() === today.getDate()
       );
     };
 
@@ -64,7 +69,7 @@ export async function getEvent() {
     const length = todayEvents.length;
     return length;
   } catch (error) {
-    console.error('Error fetching events:', error);
+    console.error("Error fetching events:", error);
     return 0; // Return 0 in case of error
   }
 }
