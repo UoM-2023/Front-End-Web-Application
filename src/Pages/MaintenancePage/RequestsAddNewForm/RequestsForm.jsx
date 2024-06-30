@@ -12,7 +12,6 @@ function RequestsForm() {
   const { id } = useParams();
   const [formData, setFormData] = useState({
     Unit_id: "",
-    Resident_Name: "",
     MType: "",
     Mnt_Status: "Pending",
     M_Description: "",
@@ -47,7 +46,6 @@ function RequestsForm() {
 
             setFormData({
               Unit_id: mData.Unit_id,
-              Resident_Name: mData.Resident_Name,
               MType: MTypeValue,
               Mnt_Status: mData.Mnt_Status,
               M_Description: mData.M_Description,
@@ -121,9 +119,6 @@ function RequestsForm() {
     if (!values.Unit_id) {
       errors.Unit_id = "Please Enter Unit ID *";
     }
-    if (!values.Resident_Name) {
-      errors.Resident_Name = "Please Enter Resident Name *";
-    }
     return errors;
   };
 
@@ -139,7 +134,6 @@ function RequestsForm() {
   const handleResetForm = () => {
     setFormData({
       Unit_id: "",
-      Resident_Name: "",
       MType: "",
       Mnt_Status: "Pending",
       M_Description: "",
@@ -253,20 +247,6 @@ function RequestsForm() {
           />
         </div>
         <p>{formErrors.Unit_id}</p>
-
-        <div className="inputItem">
-          <InputLabel htmlFor="Resident_Name" className="namesTag">
-            Resident Name :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="Resident_Name"
-            onChange={onChangeHandler}
-            value={formData.Resident_Name}
-          />
-        </div>
-        <p>{formErrors.Resident_Name}</p>
 
         <div className="inputItem">
           <InputLabel htmlFor="Description" className="namesTag">
