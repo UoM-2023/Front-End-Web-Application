@@ -73,10 +73,7 @@ function useRouteMatch(patterns) {
 }
 
 function MyTabs() {
-  // You need to provide the routes in descendant order.
-  // This means that if you have nested routes like:
-  // users, users/new, users/edit.
-  // Then the order should be ['users/add', 'users/edit', 'users'].
+
   const routeMatch = useRouteMatch(["/inbox/:id", "/drafts"]);
   const currentTab = routeMatch?.pattern?.path;
 
@@ -199,12 +196,15 @@ function ReservationTable() {
       reservationlist.filter(
         (f) =>
           f.ref_no.toLowerCase().includes(query) ||
-          f.resident_name.toLowerCase().includes(query) ||
+          f.Unit_id.toLowerCase().includes(query) ||
+          // f.resident_name.toLowerCase().includes(query) ||
           f.facility_name.toLowerCase().includes(query) ||
           f.requested_date.toLowerCase().includes(query) ||
           f.start_date.toLowerCase().includes(query) ||
           f.end_date.toLowerCase().includes(query) ||
-          f.payment_status.toLowerCase().includes(query) ||
+          f.start_time.toLowerCase().includes(query) ||
+          f.end_time.toLowerCase().includes(query) ||
+          // f.payment_status.toLowerCase().includes(query) ||
           f.availability.toLowerCase().includes(query)
       )
     );
@@ -235,12 +235,15 @@ function ReservationTable() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">Reference Number</StyledTableCell>
-              <StyledTableCell align="left">Resident Name</StyledTableCell>
+              <StyledTableCell align="left">Unit ID</StyledTableCell>
+              {/* <StyledTableCell align="left">Resident Name</StyledTableCell> */}
               <StyledTableCell align="left">Facility Name</StyledTableCell>
               <StyledTableCell align="left">Requsted Date</StyledTableCell>
               <StyledTableCell align="left">Start Date</StyledTableCell>
               <StyledTableCell align="left">End Date</StyledTableCell>
-              <StyledTableCell align="left">Payment Status</StyledTableCell>
+              <StyledTableCell align="left">Start Time</StyledTableCell>
+              <StyledTableCell align="left">End Time</StyledTableCell>
+              {/* <StyledTableCell align="left">Payment Status</StyledTableCell> */}
               <StyledTableCell align="left">Availability</StyledTableCell>
               <StyledTableCell align="left">Action</StyledTableCell>
             </TableRow>
@@ -251,7 +254,7 @@ function ReservationTable() {
                 <StyledTableRow key={index}>
                   <StyledTableCell>{apartflowtesting.ref_no}</StyledTableCell>
                   <StyledTableCell>
-                    {apartflowtesting.resident_name}
+                    {apartflowtesting.Unit_id}
                   </StyledTableCell>
                   <StyledTableCell>
                     {apartflowtesting.facility_name}
@@ -264,10 +267,17 @@ function ReservationTable() {
                   </StyledTableCell>
                   <StyledTableCell>
                     {apartflowtesting.end_date.slice(0, 10)}
+                    {/* {apartflowtesting.end_date.slice(0, 10)} */}
                   </StyledTableCell>
                   <StyledTableCell>
-                    {apartflowtesting.payment_status}
+                    {apartflowtesting.start_time}
                   </StyledTableCell>
+                  <StyledTableCell>
+                    {apartflowtesting.end_time}
+                  </StyledTableCell>
+                  {/* <StyledTableCell>
+                    {apartflowtesting.payment_status}
+                  </StyledTableCell> */}
                   <StyledTableCell>
                     {apartflowtesting.availability}
                   </StyledTableCell>
@@ -326,18 +336,3 @@ function ReservationTable() {
 
 export default ReservationTable;
 
-///////////////////////table body before routing///////////////
-
-// {rows.map((row) => (
-//   <StyledTableRow key={row.name}>
-//     <StyledTableCell align="left">{row.ReferenceNumber}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Name}</StyledTableCell>
-//     <StyledTableCell align="left">{row.FacilityName}</StyledTableCell>
-//     <StyledTableCell align="left">{row.RequstedDate}</StyledTableCell>
-//     <StyledTableCell align="left">{row.StartDate}</StyledTableCell>
-//     <StyledTableCell align="left">{row.EndDate}</StyledTableCell>
-//     <StyledTableCell align="left">{row.PaymentStatus}</StyledTableCell>
-//     <StyledTableCell align="left">{row.Status}</StyledTableCell>
-//     <StyledTableCell align="left">{row.action}</StyledTableCell>
-//   </StyledTableRow>
-// ))}

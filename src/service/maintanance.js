@@ -50,9 +50,9 @@ export async function getMaintanance() {
       const today = new Date();
       // Check if the maintanances requested_date is today
       return (
-        maintananceDate.getFullYear() == today.getFullYear() &&
-        maintananceDate.getMonth() == today.getMonth() &&
-        maintananceDate.getDate() == today.getDate() + 1
+        maintananceDate.getFullYear() === today.getFullYear() &&
+        maintananceDate.getMonth() === today.getMonth() &&
+        maintananceDate.getDate() === today.getDate()
       );
     };
 

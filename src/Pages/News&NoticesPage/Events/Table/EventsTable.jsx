@@ -196,6 +196,7 @@ function EventsTable() {
       .get("http://localhost:3001/newsNotices/newEvent")
       .then((response) => {
         if (response.data && Array.isArray(response.data.result)) {
+         console.log(response.data.result)
           setRows(response.data.result);
         } else {
           console.error("Response data is not an array:", response.data);
@@ -269,8 +270,8 @@ function EventsTable() {
                 <StyledTableCell align="left">{row.Event_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Name}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Place}</StyledTableCell>
-                <StyledTableCell align="left">{row.S_Date}</StyledTableCell>
-                <StyledTableCell align="left">{row.E_Date}</StyledTableCell>
+                <StyledTableCell align="left">{row.S_Date.slice(0,10)}</StyledTableCell>
+                <StyledTableCell align="left">{row.E_Date.slice(0,10)}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.E_Description}
                 </StyledTableCell>
