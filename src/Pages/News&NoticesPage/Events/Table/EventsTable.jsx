@@ -270,8 +270,8 @@ function EventsTable() {
                 <StyledTableCell align="left">{row.Event_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Name}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Place}</StyledTableCell>
-                <StyledTableCell align="left">{row.S_Date}</StyledTableCell>
-                <StyledTableCell align="left">{row.E_Date}</StyledTableCell>
+                <StyledTableCell align="left">{row.S_Date.slice(0,10)}</StyledTableCell>
+                <StyledTableCell align="left">{row.E_Date.slice(0,10)}</StyledTableCell>
                 <StyledTableCell align="left">
                   {row.E_Description}
                 </StyledTableCell>
