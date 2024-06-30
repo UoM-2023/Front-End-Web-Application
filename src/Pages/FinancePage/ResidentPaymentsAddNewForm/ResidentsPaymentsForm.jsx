@@ -125,6 +125,18 @@ function ResidentsPaymentsForm() {
             value={formData.unit_id}
           />
         </div>
+        <div className="inputItem">
+          <InputLabel htmlFor="unitNumber" className="namesTag">
+            Payment ID :
+          </InputLabel>
+          <TextField
+            id="outlined-basic"
+            className="textFieldComponent"
+            name="payment_id"
+            onChange={onChangeHandler}
+            value={formData.payment_id}
+          />
+        </div>
         <p>{formErrors.unit_id}</p>
         <div className="inputItem">
           <InputLabel className="namesTag">Charge Type :</InputLabel>
