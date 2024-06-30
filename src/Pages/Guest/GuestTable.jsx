@@ -174,6 +174,7 @@ function GuestTable() {
                 <StyledTableCell align="left">Guest Name</StyledTableCell>
                 <StyledTableCell align="left">Vehicle Num</StyledTableCell>
                 <StyledTableCell align="left">Guest NIC </StyledTableCell>
+                <StyledTableCell align="left">Arrival Time </StyledTableCell>
                 <StyledTableCell align="left">Check In </StyledTableCell>
                 <StyledTableCell align="left">Check Out </StyledTableCell>
                 <StyledTableCell align="left">Check In Time </StyledTableCell>
@@ -204,6 +205,9 @@ function GuestTable() {
                       </StyledTableCell>
                       <StyledTableCell>
                         {apartflowtesting.guest_NIC}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.arrival_date.slice(0,10)}
                       </StyledTableCell>
                       <StyledTableCell>
                         {apartflowtesting.check_In}

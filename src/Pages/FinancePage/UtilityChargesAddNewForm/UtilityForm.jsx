@@ -16,8 +16,7 @@ function UtilityForm() {
     electricityUsage: "",
     waterUsage: "",
     gasUsage: "",
-    staffID: "",
-    remark: "",
+    staffID: ""
   });
 
   useEffect(() => {
@@ -119,8 +118,7 @@ function UtilityForm() {
       electricityUsage: "",
       waterUsage: "",
       gasUsage: "",
-      staffID: "",
-      remark: "",
+      staffID: ""
     });
   };
 
@@ -231,7 +229,7 @@ function UtilityForm() {
         </div>
         <p>{formErrors.staffID}</p> */}
 
-        <div className="inputItem">
+        {/* <div className="inputItem">
           <InputLabel htmlFor="unitId" className="namesTag">
             Remark :
           </InputLabel>
@@ -242,7 +240,7 @@ function UtilityForm() {
             onChange={onChangeHandler}
             value={formData.remark}
           />
-        </div>
+        </div> */}
 
         <div className="buttonSection">
           <Grid container spacing={2}>

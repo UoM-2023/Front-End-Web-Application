@@ -232,7 +232,7 @@ function ReservationNewTwo() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    navigate("/reservations/reservation");
+    navigate("/reservations");
   };
 
   const handleResetForm = () => {
@@ -425,11 +425,11 @@ function ReservationNewTwo() {
               Reserved
             </MenuItem>
             <MenuItem
-              value=" Not Yet"
-              name=" Not Yet"
+              value=" Already Reserved"
+              name=" Already Reserved"
               className="optionContainer"
             >
-              Not Yet
+              Already Reserved
             </MenuItem>
           </Select>
         </div>

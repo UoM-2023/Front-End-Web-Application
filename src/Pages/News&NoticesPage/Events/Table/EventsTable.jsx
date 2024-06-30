@@ -163,6 +163,7 @@ function EventsTable() {
                   sx={{
                     display: "flex",
                     gap: "0.3rem",
+                    justifyContent: "center",
                   }}
                 >
                   <EditButton //front end route edit
