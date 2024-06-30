@@ -16,8 +16,6 @@ function UtilityForm() {
     electricityUsage: "",
     waterUsage: "",
     gasUsage: "",
-    staffID: "",
-    remark: "",
   });
 
   useEffect(() => {
@@ -97,9 +95,6 @@ function UtilityForm() {
     if (!values.gasUsage) {
       errors.gasUsage = "Please Enter Gas Usage *";
     }
-    // if (!values.staffID) {
-    //   errors.staffID = "Please Enter Staff ID *";
-    // }
     return errors;
   };
 
@@ -119,8 +114,6 @@ function UtilityForm() {
       electricityUsage: "",
       waterUsage: "",
       gasUsage: "",
-      staffID: "",
-      remark: "",
     });
   };
 
@@ -230,19 +223,6 @@ function UtilityForm() {
           />
         </div>
         <p>{formErrors.staffID}</p> */}
-
-        <div className="inputItem">
-          <InputLabel htmlFor="unitId" className="namesTag">
-            Remark :
-          </InputLabel>
-          <TextField
-            id="outlined-basic"
-            className="textFieldComponent"
-            name="remark"
-            onChange={onChangeHandler}
-            value={formData.remark}
-          />
-        </div>
 
         <div className="buttonSection">
           <Grid container spacing={2}>

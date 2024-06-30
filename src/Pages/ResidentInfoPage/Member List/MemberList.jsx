@@ -14,7 +14,6 @@ import Paper from "@mui/material/Paper";
 import TableHead from "@mui/material/TableHead";
 import { tableCellClasses } from "@mui/material/TableCell";
 import BackButton from "../../../Component/Buttons/BackButton";
-import TopBar from "../../../Component/TopBar/TopBar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -75,10 +74,16 @@ function MemberList() {
     console.log("Current Unit ID:", UnitID);
     if (UnitID) {
       axios
-        .get(`http://localhost:3001/residentsDetails/viewResident/${[UnitID]}`)
+        .get(`http://localhost:3001/residentsDetails/viewResident/${UnitID}`)
         .then((response) => {
+          console.log("API response:", response);
           const { data } = response;
-          if (data && data.result && data.result.length > 0) {
+          if (
+            data &&
+            data.result &&
+            data.result.length > 0 &&
+            data.result[0].length > 0
+          ) {
             const viewData = data.result[0][0];
             const memberTypeValue =
               viewData.member_type === "Owner" ? "Owner" : viewData.member_type;
@@ -97,6 +102,8 @@ function MemberList() {
               Address: viewData.Address,
               img: viewData.img,
             });
+          } else {
+            console.warn("No data found for the given Unit ID");
           }
         })
         .catch((err) => console.error("Failed to fetch Data...", err));
@@ -252,7 +259,9 @@ function MemberList() {
                   <div className="tableContainer">
                     <TableContainer
                       component={Paper}
-                      sx={{ backgroundColor: "#ECE1D9" }}
+                      sx={{
+                        backgroundColor: "#ECE1D9",
+                      }}
                     >
                       <Table
                         sx={{

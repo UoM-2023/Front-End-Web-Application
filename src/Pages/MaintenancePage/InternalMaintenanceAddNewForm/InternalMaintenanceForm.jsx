@@ -260,6 +260,13 @@ function InternalMaintenanceForm() {
             >
               Cleaning
             </MenuItem>
+            <MenuItem
+              value="Gardening"
+              name="Gardening"
+              className="optionContainer"
+            >
+              Gardening
+            </MenuItem>
             <MenuItem value="Other" name="Other" className="optionContainer">
               Other
             </MenuItem>

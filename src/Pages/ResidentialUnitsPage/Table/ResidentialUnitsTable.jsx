@@ -156,6 +156,7 @@ function ResidentialUnitsTable() {
         >
           <TableHead>
             <TableRow>
+              <StyledTableCell align="left">#NO</StyledTableCell>
               <StyledTableCell align="left">Unit ID</StyledTableCell>
               <StyledTableCell align="left">Block</StyledTableCell>
               <StyledTableCell align="left">Building</StyledTableCell>
@@ -165,8 +166,9 @@ function ResidentialUnitsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {records.map((row) => (
+            {records.map((row, index) => (
               <StyledTableRow key={row.Unit_id}>
+                <StyledTableCell align="left">{index + 1}</StyledTableCell>
                 <StyledTableCell align="left">{row.Unit_id}</StyledTableCell>
                 <StyledTableCell align="left">{row.Block_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.Building}</StyledTableCell>

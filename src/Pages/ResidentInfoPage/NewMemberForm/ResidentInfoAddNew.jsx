@@ -34,7 +34,6 @@ function ResidentInfoAddNew() {
     email: "",
     mobile_no: "",
     Address: "",
-    img: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -104,7 +103,6 @@ function ResidentInfoAddNew() {
               email: residentData.email,
               mobile_no: residentData.mobile_no,
               Address: residentData.Address,
-              img: residentData.img,
             });
           } else {
             console.error("Data structure does not match expected format");
@@ -225,9 +223,6 @@ function ResidentInfoAddNew() {
     if (!values.Address) {
       errors.Address = "Address is required *";
     }
-    if (!values.img) {
-      errors.img = "Please Upload Resident's Image file *";
-    }
     return errors;
   };
 
@@ -255,7 +250,6 @@ function ResidentInfoAddNew() {
       email: "",
       mobile_no: "",
       Address: "",
-      img: "",
     });
   };
 
@@ -538,22 +532,6 @@ function ResidentInfoAddNew() {
             />
           </div>
           <p>{formErrors.Address}</p>
-
-          <div className="img">
-            <InputLabel htmlFor="img" className="namesTag">
-              Select Image :
-            </InputLabel>
-            <TextField
-              id="outlined-basic"
-              type="file"
-              className="textFieldComponent"
-              name="img"
-              onChange={onChangeHandler}
-              value={formData.img}
-              accept="image/*"
-            />
-          </div>
-          <p>{formErrors.img}</p>
 
           <div className="buttonSection">
             <Grid container spacing={2}>

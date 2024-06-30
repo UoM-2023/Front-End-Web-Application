@@ -86,7 +86,6 @@ function EventsForm() {
   }, [Event_no]);
 
   const onChangeHandler = (event) => {
-    
     setFormData((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
@@ -94,7 +93,7 @@ function EventsForm() {
   };
 
   const onSubmitHandler = (event) => {
-    console.log(formData)
+    console.log(formData);
     event.preventDefault();
     setFormErrors(validate(formData));
     setIsSubmit(true);

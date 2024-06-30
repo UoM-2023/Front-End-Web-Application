@@ -131,43 +131,50 @@ function ComplaintsTable() {
         <AddNewButton route="/complaints/complaintsForm" />
       </div>
       <TableContainer component={Paper}>
-      <InfiniteScroll
+        <InfiniteScroll
           dataLength={rows.length}
           next={fetchMoreData}
           hasMore={hasMore}
           loader={<h4>...</h4>}
         >
-        <Table
-          sx={{
-            maxWidth: "93.5vw",
-            marginTop: 5,
-            marginLeft: 10,
-            marginRight: 0,
-            paddingTop: "1rem",
-          }}
-          aria-label="customized table">
-          <TableHead>
-            <TableRow>
-            <StyledTableCell align="left">Reference No</StyledTableCell>
-              <StyledTableCell align="left">Complaint Nature</StyledTableCell>
-              <StyledTableCell align="left">Complaint Title</StyledTableCell>
-              <StyledTableCell align="left">Complained By (Unit ID)</StyledTableCell>
-              <StyledTableCell align="left">Complained Date</StyledTableCell>
-              <StyledTableCell align="left">Description</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
+          <Table
+            sx={{
+              maxWidth: "93.5vw",
+              marginTop: 5,
+              marginLeft: 10,
+              marginRight: 0,
+              paddingTop: "1rem",
+            }}
+            aria-label="customized table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">Reference No</StyledTableCell>
+                <StyledTableCell align="left">Complaint Nature</StyledTableCell>
+                <StyledTableCell align="left">Complaint Title</StyledTableCell>
+                <StyledTableCell align="left">
+                  Complained By (Unit ID)
+                </StyledTableCell>
+                <StyledTableCell align="left">Complained Date</StyledTableCell>
+                <StyledTableCell align="left">Description</StyledTableCell>
+                <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
               {rows.map((row, index) => (
                 <StyledTableRow key={index}>
-                  <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.Reference_id}
+                  </StyledTableCell>
                   <StyledTableCell align="left">{row.Nature}</StyledTableCell>
                   <StyledTableCell align="left">{row.Title}</StyledTableCell>
                   <StyledTableCell align="left">
                     {row.Complained_by}
                   </StyledTableCell>
-                  <StyledTableCell align="left">{row.C_Date}</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {row.C_Date.slice(0, 10)}
+                  </StyledTableCell>
                   <StyledTableCell align="left">
                     {row.C_Description}
                   </StyledTableCell>

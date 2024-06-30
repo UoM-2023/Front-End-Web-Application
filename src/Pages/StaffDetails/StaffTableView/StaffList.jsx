@@ -326,7 +326,7 @@ function StaffList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [query, setQuery] = useState("");
-  const limit = 10;
+  const limit = 7;
 
   const onClickRowDelete = (rowid) => {
     setStaffID(rowid);
@@ -439,6 +439,7 @@ function StaffList() {
           >
             <TableHead>
               <TableRow>
+                <StyledTableCell align="left">#No</StyledTableCell>
                 <StyledTableCell align="left">Staff ID</StyledTableCell>
                 <StyledTableCell align="left">Name</StyledTableCell>
                 <StyledTableCell align="left">NIC</StyledTableCell>
@@ -454,6 +455,7 @@ function StaffList() {
               {stafflist &&
                 stafflist.map((staff, index) => (
                   <StyledTableRow key={index}>
+                    <StyledTableCell>{index + 1}</StyledTableCell>
                     <StyledTableCell>{staff.staffID}</StyledTableCell>
                     <StyledTableCell>
                       {staff.name_with_initials}
