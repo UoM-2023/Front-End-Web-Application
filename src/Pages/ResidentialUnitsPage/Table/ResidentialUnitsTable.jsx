@@ -120,24 +120,6 @@ function ResidentialUnitsTable() {
       });
   };
 
-  // Search Bar Function
-
-  // const Filter = (event) => {
-  //   const query = event.target.value.toLowerCase();
-  //   setRecords(
-  //     rows.filter(
-  //       (f) =>
-  //         f.staffID.toLowerCase().includes(query) ||
-  //         f.name_with_initials.toLowerCase().includes(query) ||
-  //         f.nic.toLowerCase().includes(query) ||
-  //         f.staff_category.toLowerCase().includes(query) ||
-  //         f.mobile_no.toLowerCase().includes(query) ||
-  //         f.email.toLowerCase().includes(query) ||
-  //         f.city.toLowerCase().includes(query)
-  //     )
-  //   );
-  // };
-
   return (
     <div className="residentialUnitsContainer">
       <div className="pageTop">

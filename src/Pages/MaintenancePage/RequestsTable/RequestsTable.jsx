@@ -135,7 +135,12 @@ function RequestsTable() {
       .delete(`/maintenance/New_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
-        window.location.reload();
+        setPage(1);
+        setMRequestList([]);
+        setRecords([]);
+        setHasMore(true);
+        getMaintenanceRequestDetails(1, query);
+        handleClose();
       })
       .catch((error) => {
         console.log(error);

@@ -9,7 +9,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import "./Addnewform.css";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
@@ -70,9 +69,7 @@ function StaffDetailsAddNewForm() {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
       axiosInstance
-        .get(
-          `/staffDetails/addNewStaff/updateStaff/${staffID}`
-        )
+        .get(`/staffDetails/addNewStaff/updateStaff/${staffID}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -132,12 +129,7 @@ function StaffDetailsAddNewForm() {
     if (staffID) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
       axiosInstance
-        .put(
-          `/staffDetails/addNewStaff/updateStaff/${[
-            staffID,
-          ]}`,
-          formData
-        )
+        .put(`/staffDetails/addNewStaff/updateStaff/${[staffID]}`, formData)
         .then((res) => {
           console.log("Update successful:", res.data);
           setIsSubmit(true);
