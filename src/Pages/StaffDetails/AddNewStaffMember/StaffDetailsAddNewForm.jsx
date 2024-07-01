@@ -411,11 +411,18 @@ function StaffDetailsAddNewForm() {
                 Finance Manager
               </MenuItem>
               <MenuItem
-                value="Security Officer"
-                name="securityOfficer"
+                value="Maintenance & Security Manager"
+                name="Maintenance & Security Manager"
                 className="optionContainer"
               >
-                Security Officer
+                Maintenance & Security Manager
+              </MenuItem>
+              <MenuItem
+                value="Internal Manager"
+                name="Internal Manager"
+                className="optionContainer"
+              >
+                Internal Manager
               </MenuItem>
             </Select>
           </div>

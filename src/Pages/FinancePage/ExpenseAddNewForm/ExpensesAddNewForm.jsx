@@ -202,6 +202,13 @@ function ExpensesAddNewForm() {
               Maintenance
             </MenuItem>
             <MenuItem
+              value="Internal Maintenance"
+              name="Internal Maintenance"
+              className="optionContainer"
+            >
+              Internal Maintenance
+            </MenuItem>
+            <MenuItem
               value="Cleaning"
               name="Cleaning"
               className="optionContainer"

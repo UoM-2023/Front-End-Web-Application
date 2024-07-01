@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Grid, InputLabel, TextField } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
@@ -121,7 +120,7 @@ function ResidentUserCredentialsFrom() {
         <form className="MainForm" onSubmit={onSubmitHandler} method="get">
           <div className="inputItem">
             <InputLabel htmlFor="userID" className="namesTag">
-              Unit ID (userID) :
+              User Name :
             </InputLabel>
             <TextField
               id="outlined-basic"

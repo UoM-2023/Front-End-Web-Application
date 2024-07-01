@@ -7,12 +7,9 @@ import CancelButton from "../../Component/Buttons/CancelButton";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import MinibarUserCredentials from "./Minibar UserCredentials/MinibarUserCredentials";
-import TopBar from "../../Component/TopBar/TopBar";
 import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function StaffUserCredentialsFrom() {
-  const { userID } = useParams();
-
   const [formData, setFormData] = useState({
     userID: "",
     role: "",
@@ -150,18 +147,25 @@ function StaffUserCredentialsFrom() {
                 Admin
               </MenuItem>
               <MenuItem
-                value="Finance Manager"
-                name="financeManager"
+                value="finance_manager"
+                name="finance_manager"
                 className="optionContainer"
               >
                 Finance Manager
               </MenuItem>
               <MenuItem
-                value="Security Officer"
-                name="securityOfficer"
+                value="internal_manager"
+                name="internal_manager"
                 className="optionContainer"
               >
-                Security Officer
+                Internal Manager
+              </MenuItem>
+              <MenuItem
+                value="security_maintenance_manager"
+                name="security_maintenance_manager"
+                className="optionContainer"
+              >
+                Security & Maintenance Manager
               </MenuItem>
             </Select>
           </div>

@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import "./UnitList.css";
 import { styled } from "@mui/material/styles";
@@ -56,7 +54,7 @@ function UnitList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [query, setQuery] = useState("");
-  const limit = 10;
+  const limit = 20;
 
   const onClickRowDelete = (rowid) => {
     setResidentID(rowid);
@@ -79,10 +77,10 @@ function UnitList() {
   // Get the data from the backend to front end
   const getResidentDetails = async (page, query) => {
     try {
-      const endpoint = query 
+      const endpoint = query
         ? `/residentsDetails/searchResident?query=${query}&page=${page}&limit=${limit}`
         : `/residentsDetails/addNewResident?page=${page}&limit=${limit}`;
-      
+
       const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
@@ -97,7 +95,6 @@ function UnitList() {
       } else {
         setHasMore(true);
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -119,9 +116,7 @@ function UnitList() {
   const handleEdit = (residentID) => {
     console.log("Handle Edit Before axios");
     axiosInstance
-      .get(
-        `/residentsDetails/addNewResident/updateResident/${residentID}`
-      )
+      .get(`/residentsDetails/addNewResident/updateResident/${residentID}`)
       .then((response) => {
         console.log("Handle Edit Called........");
       })
@@ -146,9 +141,7 @@ function UnitList() {
   // Handling the Delete button
   const handleDelete = (residentID) => {
     axiosInstance
-      .delete(
-        `/residentsDetails/addNewResident/deleteResident/${residentID}`
-      )
+      .delete(`/residentsDetails/addNewResident/deleteResident/${residentID}`)
       .then((response) => {
         console.log("---Handle Delete Called---");
         window.location.reload();
@@ -183,6 +176,7 @@ function UnitList() {
           >
             <TableHead>
               <TableRow>
+                <StyledTableCell align="left">#No</StyledTableCell>
                 <StyledTableCell align="left">Resident ID</StyledTableCell>
                 <StyledTableCell align="left">Name</StyledTableCell>
                 <StyledTableCell align="left">Unit ID</StyledTableCell>
@@ -197,13 +191,22 @@ function UnitList() {
             <TableBody>
               {residentlist.map((apartflowtesting, index) => (
                 <StyledTableRow key={index}>
-                  <StyledTableCell>{apartflowtesting.residentID}</StyledTableCell>
-                  <StyledTableCell>{apartflowtesting.name_with_initials}</StyledTableCell>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>
+                    {apartflowtesting.residentID}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {apartflowtesting.name_with_initials}
+                  </StyledTableCell>
                   <StyledTableCell>{apartflowtesting.UnitID}</StyledTableCell>
-                  <StyledTableCell>{apartflowtesting.member_type}</StyledTableCell>
+                  <StyledTableCell>
+                    {apartflowtesting.member_type}
+                  </StyledTableCell>
                   <StyledTableCell>{apartflowtesting.nic}</StyledTableCell>
                   <StyledTableCell>{apartflowtesting.Address}</StyledTableCell>
-                  <StyledTableCell>{apartflowtesting.mobile_no}</StyledTableCell>
+                  <StyledTableCell>
+                    {apartflowtesting.mobile_no}
+                  </StyledTableCell>
                   <StyledTableCell>{apartflowtesting.email}</StyledTableCell>
                   <StyledTableCell
                     sx={{
@@ -220,7 +223,9 @@ function UnitList() {
                       onClick={() => handleEdit(apartflowtesting.residentID)}
                     />
                     <DeleteButton
-                      onClick={() => onClickRowDelete(apartflowtesting.residentID)}
+                      onClick={() =>
+                        onClickRowDelete(apartflowtesting.residentID)
+                      }
                     />
                   </StyledTableCell>
                 </StyledTableRow>
@@ -262,4 +267,3 @@ function UnitList() {
 }
 
 export default UnitList;
-
