@@ -9,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import EditButton from "../../../Component/Buttons/EditButton";
-import DeleteButton from "../../../Component/Buttons/DeleteButton";
 import SearchBar from "../../../Component/SearchBar/SearchBar";
 import AddNewButton from "../../../Component/Buttons/AddNewButton";
 import { useNavigate } from "react-router-dom";
@@ -132,38 +131,33 @@ function ComplaintsTable() {
         <AddNewButton route="/complaints/complaintsForm" />
       </div>
       <TableContainer component={Paper}>
-        <InfiniteScroll
+      <InfiniteScroll
           dataLength={rows.length}
           next={fetchMoreData}
           hasMore={hasMore}
           loader={<h4>...</h4>}
         >
-          <Table
-            sx={{
-              maxWidth: "93.5vw",
-              marginTop: 5,
-              marginLeft: 10,
-              marginRight: 0,
-              paddingTop: "1rem",
-            }}
-            aria-label="customized table"
-          >
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="left">Reference No</StyledTableCell>
-                <StyledTableCell align="left">Complaint Nature</StyledTableCell>
-                <StyledTableCell align="left">Complaint Title</StyledTableCell>
-                <StyledTableCell align="left">
-                  Complained By (Unit ID)
-                </StyledTableCell>
-                <StyledTableCell align="left">
-                  Complained Date & Time
-                </StyledTableCell>
-                <StyledTableCell align="left">Description</StyledTableCell>
-                <StyledTableCell align="right">Status</StyledTableCell>
-                <StyledTableCell align="center">Action</StyledTableCell>
-              </TableRow>
-            </TableHead>
+        <Table
+          sx={{
+            maxWidth: "93.5vw",
+            marginTop: 5,
+            marginLeft: 10,
+            marginRight: 0,
+            paddingTop: "1rem",
+          }}
+          aria-label="customized table">
+          <TableHead>
+            <TableRow>
+            <StyledTableCell align="left">Reference No</StyledTableCell>
+              <StyledTableCell align="left">Complaint Nature</StyledTableCell>
+              <StyledTableCell align="left">Complaint Title</StyledTableCell>
+              <StyledTableCell align="left">Complained By (Unit ID)</StyledTableCell>
+              <StyledTableCell align="left">Complained Date</StyledTableCell>
+              <StyledTableCell align="left">Description</StyledTableCell>
+              <StyledTableCell align="right">Status</StyledTableCell>
+              <StyledTableCell align="center">Action</StyledTableCell>
+            </TableRow>
+          </TableHead>
             <TableBody>
               {rows.map((row, index) => (
                 <StyledTableRow key={index}>
@@ -195,55 +189,6 @@ function ComplaintsTable() {
               ))}
             </TableBody>
           </Table>
-          {/* <InfiniteScroll
-          dataLength={rows.length}
-          next={fetchMoreData}
-          hasMore={hasMore}
-          loader={<h4>...</h4>}
-        >
-          <Table
-            sx={{
-              maxWidth: "93.5vw",
-              marginTop: 5,
-              marginLeft: 10,
-              marginRight: 0,
-              paddingTop: "1rem",
-            }}
-            aria-label="customized table">
-            <TableHead>
-              <TableRow>
-              <StyledTableCell align="left">Reference No</StyledTableCell>
-                <StyledTableCell align="left">Complaint Nature</StyledTableCell>
-                <StyledTableCell align="left">Complaint Title</StyledTableCell>
-                <StyledTableCell align="left">Complained By</StyledTableCell>
-                <StyledTableCell align="left">Complained Date & Time</StyledTableCell>
-                <StyledTableCell align="left">Description</StyledTableCell>
-                <StyledTableCell align="right">Status</StyledTableCell>
-                <StyledTableCell align="center">Action</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.Reference_id}>
-                  <StyledTableCell align="left">{row.Reference_id}</StyledTableCell>
-                  <StyledTableCell align="left">{row.Nature}</StyledTableCell>
-                  <StyledTableCell align="left">{row.Title}</StyledTableCell>
-                  <StyledTableCell align="left">{row.Complained_by}</StyledTableCell>
-                  <StyledTableCell align="left">{row.C_Date}</StyledTableCell>
-                  <StyledTableCell align="left">{row.C_Description}</StyledTableCell>
-                  <StyledTableCell align="center">{row.CStatus}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    <ActionContainer>
-                      <EditButton />
-                      &nbsp; &nbsp;
-                      <DeleteButton/>
-                    </ActionContainer>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </InfiniteScroll> */}
         </InfiniteScroll>
       </TableContainer>
     </div>
