@@ -255,28 +255,28 @@ function ResidentialUnitsForm() {
                 name="Wing 01"
                 className="optionContainer"
               >
-                Wing A
+                Wing 01
               </MenuItem>
               <MenuItem
                 value="Wing 02"
                 name="Wing 02"
                 className="optionContainer"
               >
-                Wing B
+                Wing 02
               </MenuItem>
               <MenuItem
                 value="Wing 03"
                 name="Wing 03"
                 className="optionContainer"
               >
-                Wing C
+                Wing 03
               </MenuItem>
               <MenuItem
                 value="Wing 04"
                 name="Wing 04"
                 className="optionContainer"
               >
-                Wing D
+                Wing 04
               </MenuItem>
             </Select>
           </div>
