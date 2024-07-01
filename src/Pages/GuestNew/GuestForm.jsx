@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function GuestFormNew() {
   const { guest_ID } = useParams();
@@ -78,10 +79,10 @@ function GuestFormNew() {
     if (guest_ID) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
+      axiosInstance
         .get(
           //postman get url
-          `http://localhost:3001/GuestDetail/GuestDetails/${guest_ID}`
+          `/GuestDetail/GuestDetails/${guest_ID}`
         )
         .then((response) => {
           console.log("Response:", response);
@@ -141,10 +142,10 @@ function GuestFormNew() {
     //primary key
     if (guest_ID) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
           //postman edit url
-          `http://localhost:3001/GuestDetail/GuestDetails/${[guest_ID]}`,
+          `/GuestDetail/GuestDetails/${[guest_ID]}`,
           formData
         )
         .then((res) => {
@@ -158,9 +159,8 @@ function GuestFormNew() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        // postman post url
-        .post("http://localhost:3001/GuestDetail/GuestDetails", formData)
+      axiosInstance
+        .post("/GuestDetail/GuestDetails", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

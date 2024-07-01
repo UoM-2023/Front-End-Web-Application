@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function ReservationNewOne() {
   const { ref_no } = useParams();
@@ -35,10 +36,10 @@ function ReservationNewOne() {
     if (ref_no) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
+      axiosInstance
         .get(
           //postman get url
-          ` http://localhost:3001/Facility/Facilities/${ref_no}`
+          `/Facility/Facilities/${ref_no}`
         )
         .then((response) => {
           console.log("Response:", response);
@@ -95,10 +96,10 @@ function ReservationNewOne() {
 
     if (ref_no) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
           //postman edit url
-          `http://localhost:3001/Facility/Facilities/${[ref_no]}`,
+          `/Facility/Facilities/${[ref_no]}`,
           formData
         )
         .then((res) => {
@@ -112,9 +113,9 @@ function ReservationNewOne() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
+      axiosInstance
         // postman post url
-        .post("http://localhost:3001/Facility/Facilities", formData)
+        .post("/Facility/Facilities", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

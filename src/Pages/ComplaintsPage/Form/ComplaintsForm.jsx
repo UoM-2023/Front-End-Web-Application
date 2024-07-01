@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 // const socket = io('http://localhost:3001'); // Update with your server's URL
 
@@ -49,8 +50,8 @@ function ComplaintsForm() {
     if (Reference_id) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
-        .get(`http://localhost:3001/complaints/newComplaint/${Reference_id}`)
+      axiosInstance
+        .get(`/complaints/newComplaint/${Reference_id}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -117,9 +118,9 @@ function ComplaintsForm() {
 
     if (Reference_id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
-          `http://localhost:3001/complaints/newComplaint/${[Reference_id]}`,
+          `/complaints/newComplaint/${[Reference_id]}`,
           formData
         )
         .then((res) => {
@@ -134,8 +135,8 @@ function ComplaintsForm() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/complaints/newComplaint", formData)
+      axiosInstance
+        .post("/complaints/newComplaint", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

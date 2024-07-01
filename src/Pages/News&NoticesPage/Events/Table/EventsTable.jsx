@@ -21,124 +21,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../../../LoginPage/LoginServices/authService";
 
-// const StyledTableCell = styled(TableCell)(({ theme }) => ({
-//   [`&.${tableCellClasses.head}`]: {
-//     backgroundColor: "#f9f4f0",
-//     color: "#605D5D",
-//     fontSize: "16px",
-//     fontWeight: "bold",
-//   },
-//   [`&.${tableCellClasses.body}`]: {
-//     fontSize: 14,
-//   },
-// }));
-
-// const StyledTableRow = styled(TableRow)(({ theme }) => ({
-//   "&:nth-of-type(even)": {
-//     backgroundColor: "#ECE1D9",
-//   },
-//   // hide last border
-//   "&:last-child td, &:last-child th": {
-//     border: 0,
-//   },
-// }));
-
-// function createData(
-//   event,
-//   place,
-//   sDate,
-//   eDate,
-//   description,
-//   action,
-// ) {
-//   return {
-//     event,
-//     place,
-//     sDate,
-//     eDate,
-//     description,
-//     action,
-//   };
-// }
-
-// const rows = [
-//   createData(
-//    'Blood Donation','Event Hall','20/10/2022','23/10/2022','sffbgbb',
-//     <div className="actionBtn">
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     'Christmas Party','Event Hall','22/10/2022','22/10/2022','worlKNWIONV',
-//     <div className="actionBtn">
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-//   createData(
-//     'Creative Week','Common Area','20/10/2023','24/10/2023','ebvowvovouv',
-//     <div className="actionBtn">
-//       <EditButton />
-//       &nbsp; &nbsp;
-//       <DeleteButton />
-//     </div>
-//   ),
-// ];
-
-// function EventsTable() {
-//   const navigate = useNavigate();
-//   return (
-//     <div className="eventsTableContainer">
-//         <TopBar title="News & Notices" />
-//       <MiniNavBar/>
-//       <div className="pageTop">
-//         <SearchBar/>
-//         <AddNewButton route="/eventsTable/eventsForm"/>
-//       </div>
-//       <TableContainer component={Paper}>
-//         <Table
-//           sx={{
-//             maxWidth: "93.5vw",
-//             marginTop: 5,
-//             marginLeft: 10,
-//             marginRight: 0,
-//             paddingTop: "1rem",
-//           }}
-//           aria-label="customized table"
-//         >
-//           <TableHead>
-//             <TableRow>
-//               <StyledTableCell align="left">Event</StyledTableCell>
-//               <StyledTableCell align="left">Place</StyledTableCell>
-//               <StyledTableCell align="left">Start Date</StyledTableCell>
-//               <StyledTableCell align="left">End Date</StyledTableCell>
-//               <StyledTableCell align="left">Description</StyledTableCell>
-//               <StyledTableCell align="center">Action</StyledTableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {rows.map((row) => (
-//               <StyledTableRow key={row.u}>
-//                 <StyledTableCell align="left">{row.event}</StyledTableCell>
-//                 <StyledTableCell align="left">{row.place}</StyledTableCell>
-//                 <StyledTableCell align="left">{row.sDate}</StyledTableCell>
-//                 <StyledTableCell align="left">{row.eDate}</StyledTableCell>
-//                 <StyledTableCell align="left">{row.description}</StyledTableCell>
-//                 <StyledTableCell align="left">{row.action}</StyledTableCell>
-//               </StyledTableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//     </div>
-//   );
-// }
-
-// export default EventsTable;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -192,8 +76,8 @@ function EventsTable() {
   }, []);
 
   const fetchData = () => {
-    axios
-      .get("http://localhost:3001/newsNotices/newEvent")
+    axiosInstance
+      .get("/newsNotices/newEvent")
       .then((response) => {
         if (response.data && Array.isArray(response.data.result)) {
           console.log(response.data.result);
@@ -211,8 +95,8 @@ function EventsTable() {
 
   const handleEdit = (Event_no) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/newsNotices/newEvent/${Event_no}`)
+    axiosInstance
+      .get(`/newsNotices/newEvent/${Event_no}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -224,8 +108,8 @@ function EventsTable() {
   // Handling the Delete button
 
   const handleDelete = (Event_no) => {
-    axios
-      .delete(`http://localhost:3001/newsNotices/newEvent/${[Event_no]}`)
+    axiosInstance
+      .delete(`/newsNotices/newEvent/${[Event_no]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();
@@ -285,6 +169,7 @@ function EventsTable() {
                   sx={{
                     display: "flex",
                     gap: "0.3rem",
+                    justifyContent: "center",
                   }}
                 >
                   <EditButton //front end route edit

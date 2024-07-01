@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 
@@ -80,10 +81,10 @@ function ReservationNewTwo() {
     if (ref_no) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
+      axiosInstance
         .get(
           //postman get url
-          `http://localhost:3001/Reservation/Reservations/${ref_no}`
+          `/Reservation/Reservations/${ref_no}`
         )
         .then((response) => {
           console.log("Response:", response);
@@ -151,10 +152,10 @@ function ReservationNewTwo() {
     //primary key
     if (ref_no) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
           //postman edit url
-          `http://localhost:3001/Reservation/Reservations/${[ref_no]}`,
+          `/Reservation/Reservations/${[ref_no]}`,
           formData
         )
         .then((res) => {
@@ -168,9 +169,9 @@ function ReservationNewTwo() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
+      axiosInstance
         // postman post url
-        .post("http://localhost:3001/Reservation/Reservations", formData)
+        .post("/Reservation/Reservations", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);
@@ -231,7 +232,7 @@ function ReservationNewTwo() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    navigate("/reservations/reservation");
+    navigate("/reservations");
   };
 
   const handleResetForm = () => {
@@ -424,11 +425,11 @@ function ReservationNewTwo() {
               Reserved
             </MenuItem>
             <MenuItem
-              value=" Not Yet"
-              name=" Not Yet"
+              value=" Already Reserved"
+              name=" Already Reserved"
               className="optionContainer"
             >
-              Not Yet
+              Already Reserved
             </MenuItem>
           </Select>
         </div>

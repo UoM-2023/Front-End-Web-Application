@@ -115,7 +115,7 @@ const Routers = ({ user, setUser }) => {
         {/*----------- Maintenance Section Routes ----------*/}
 
         <Route path="/maintenance" element={<Outlet />}>
-          <Route index element={<RequestsTable />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["security_maintenance_manager", "admin"]} component={RequestsTable} />} />
           <Route path="newRequest" element={<RequestsForm />} />
           <Route path="updateRequest/:id" element={<RequestsForm />} />
 
@@ -148,7 +148,7 @@ const Routers = ({ user, setUser }) => {
         {/*-------------- Staff Details ------------------- */}
 
         <Route path="/staff details" element={<Outlet />}>
-          <Route index element={<StaffList />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={StaffList} />} />
           <Route path="addNewStaff" element={<StaffDetailsAddNewForm />} />
           <Route
             path="updateStaff/:staffID"
@@ -159,7 +159,7 @@ const Routers = ({ user, setUser }) => {
         {/*----------- Resident Details ------------------*/}
 
         <Route path="/residents information" element={<Outlet />}>
-          <Route index element={<UnitList />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={UnitList} />} />
           <Route path="addNewResident" element={<ResidentInfoAddNew />} />
           <Route
             path="updateResident/:residentID"
@@ -173,7 +173,7 @@ const Routers = ({ user, setUser }) => {
         {/* Residents User Credentials Section */}
 
         <Route path="/user credentials" element={<Outlet />}>
-          <Route index element={<ResidentUserCredentialsFrom />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ResidentUserCredentialsFrom} />} />
           <Route
             path="updateResidentUserAccount/:UserID"
             element={<ResidentUserCredentialsFrom />}
@@ -182,7 +182,7 @@ const Routers = ({ user, setUser }) => {
           {/* Staff User Credentials Section */}
 
           <Route path="StaffUserCredentials" element={<Outlet />}>
-            <Route index element={<StaffUserCredentialsFrom />} />
+            <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={StaffUserCredentialsFrom} />} />
             <Route
               path="updateStaffUserAccount/:UserID"
               element={<StaffUserCredentialsFrom />}
@@ -195,13 +195,13 @@ const Routers = ({ user, setUser }) => {
         {/*------------- Settings Page Routs -------------*/}
 
         <Route path="/settings" element={<Outlet />}>
-          <Route index element={<SettingsPage />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={SettingsPage} />} />
         </Route>
 
         {/*------------ Residential Units Route -----------*/}
 
         <Route path="/residential units" element={<Outlet />}>
-          <Route index element={<ResidentialUnitsTable />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ResidentialUnitsTable} />} />
           <Route
             path="residentialUnitsForm"
             element={<ResidentialUnitsForm />}
@@ -217,7 +217,7 @@ const Routers = ({ user, setUser }) => {
         {/*----------- Complaints route ---------------*/}
 
         <Route path="complaints" element={<Outlet />}>
-          <Route index element={<ComplaintsTable />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ComplaintsTable} />} />
           <Route path="complaintsForm" element={<ComplaintsForm />} />
           <Route
             path="UpdateComplait/:Reference_id"
@@ -236,7 +236,7 @@ const Routers = ({ user, setUser }) => {
         {/* ----------guest Section Routes -------------*/}
 
         <Route path="/guests" element={<Outlet />}>
-          <Route index element={<GuestTable />} />
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["security_manager", "admin"]} component={GuestTable} />} />
           <Route path="addNew" element={<GuestFormNew />} />
           {/* //edit route */}
           <Route path="updateGuest/:guest_ID" element={<GuestFormNew />} />
@@ -247,7 +247,7 @@ const Routers = ({ user, setUser }) => {
 
         <Route path="/reservations" element={<Outlet />}>
                {/* reservation table */}
-          <Route index element={<ReservationTable />} /> 
+          <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ReservationTable} />} /> 
           {/* Reservation form  */}
           <Route path="addNew" element={<ReservationNewTwo />} />
           {/* //edit route */}
@@ -260,7 +260,7 @@ const Routers = ({ user, setUser }) => {
 
           <Route path="reservation" element={<Outlet />}>
           {/* Facility Table */}
-            <Route index element={<ReservationTableTwo />} />
+            <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ReservationNewTwo} />} />
             {/* Facility Form */}
             <Route path="addNew" element={<ReservationNewOne />} />
             <Route

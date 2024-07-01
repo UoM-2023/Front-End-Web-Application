@@ -24,6 +24,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DoneSwitch from "../../../Component/Switchs/DoneSwitch";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -80,9 +81,9 @@ function RequestsTable() {
   const getMaintenanceRequestDetails = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/maintenance/New_Mnt_Req_search?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/maintenance/New_Mnt_Req?page=${page}&limit=${limit}`;
-      const response = await axios.get(endpoint);
+        ? `/maintenance/New_Mnt_Req_search?query=${query}&page=${page}&limit=${limit}`
+        : `/maintenance/New_Mnt_Req?page=${page}&limit=${limit}`;
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
       if (page === 1) {
         setMRequestList(newRecords);
@@ -118,8 +119,8 @@ function RequestsTable() {
   // Handling the edit button
   const handleEdit = (id) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+    axiosInstance
+      .get(`/maintenance/New_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -130,8 +131,8 @@ function RequestsTable() {
 
   // Handling the Delete button
   const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:3001/maintenance/New_Mnt_Req/${id}`)
+    axiosInstance
+      .delete(`/maintenance/New_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

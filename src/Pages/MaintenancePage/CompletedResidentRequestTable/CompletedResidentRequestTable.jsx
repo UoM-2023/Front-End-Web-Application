@@ -23,6 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -82,8 +83,8 @@ function CompletedResidentRequestTable() {
   // Get the data from the backend to front end
 
   const getCompletedRequestDetails = () => {
-    axios
-      .get("http://localhost:3001/maintenance/Completed_Mnt_Req")
+    axiosInstance
+      .get("/maintenance/Completed_Mnt_Req")
       .then((response) => {
         console.log("CALLED");
         const mntIds = response.data.result.map((item) => item.Mnt_id);
@@ -98,8 +99,8 @@ function CompletedResidentRequestTable() {
 
   const handleEdit = (id) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+    axiosInstance
+      .get(`/maintenance/Completed_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -111,8 +112,8 @@ function CompletedResidentRequestTable() {
   // Handling the Delete button
 
   const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:3001/maintenance/Completed_Mnt_Req/${id}`)
+    axiosInstance
+      .delete(`/maintenance/Completed_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

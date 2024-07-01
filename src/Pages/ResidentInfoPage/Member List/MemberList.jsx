@@ -16,6 +16,7 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import BackButton from "../../../Component/Buttons/BackButton";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,8 +74,8 @@ function MemberList() {
   useEffect(() => {
     console.log("Current Unit ID:", UnitID);
     if (UnitID) {
-      axios
-        .get(`http://localhost:3001/residentsDetails/viewResident/${UnitID}`)
+      axiosInstance
+        .get(`/residentsDetails/viewResident/${[UnitID]}`)
         .then((response) => {
           console.log("API response:", response);
           const { data } = response;
@@ -115,8 +116,8 @@ function MemberList() {
   }, []);
 
   const getResidentDetails = () => {
-    axios
-      .get("http://localhost:3001/residentsDetails/addNewResident")
+    axiosInstance
+      .get("/residentsDetails/addNewResident")
       .then((response) => {
         setResidentlist(response.data.result);
       })

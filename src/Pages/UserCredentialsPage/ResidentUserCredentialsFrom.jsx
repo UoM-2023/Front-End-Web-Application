@@ -7,6 +7,7 @@ import CancelButton from "../../Component/Buttons/CancelButton";
 import SuccessAlertDialog from "../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../Component/Loading Indicator/LoadingIndicator";
 import MinibarUserCredentials from "./Minibar UserCredentials/MinibarUserCredentials";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function ResidentUserCredentialsFrom() {
   const { userID } = useParams();
@@ -42,8 +43,8 @@ function ResidentUserCredentialsFrom() {
       setIsSubmit(true);
       setIsLoading(true);
 
-      axios
-        .post("http://localhost:3001/auth/register", formData)
+      axiosInstance
+        .post("/auth/register", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setSuccessMessage(res.data.message);

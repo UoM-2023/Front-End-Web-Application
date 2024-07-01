@@ -14,6 +14,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 function StaffDetailsAddNewForm() {
     //primary key
@@ -50,10 +51,10 @@ function StaffDetailsAddNewForm() {
     if (staffID) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
+      axiosInstance
         .get(
             //postman get url
-          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+          `/addNewStaff/updateStaff/${staffID}`
         )
         .then((response) => {
           console.log("Response:", response);

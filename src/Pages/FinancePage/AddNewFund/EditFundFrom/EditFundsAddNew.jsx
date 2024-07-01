@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../../LoginPage/LoginServices/authService";
 
 function EditFundsAddNew() {
   const { id } = useParams();
@@ -31,8 +32,8 @@ function EditFundsAddNew() {
     if (id) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect cal");
-      axios
-        .get(`http://localhost:3001/finance/editFunds/${id}`)
+      axiosInstance
+        .get(`/finance/editFunds/${id}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -82,9 +83,9 @@ function EditFundsAddNew() {
     // navigate("/finance/editFunds");
     if (id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
-          `http://localhost:3001/finance/editFunds/updateFund/${id}`,
+          `/finance/editFunds/updateFund/${id}`,
           formData
         )
         .then((res) => {
@@ -99,8 +100,8 @@ function EditFundsAddNew() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/finance/editFunds", formData)
+      axiosInstance
+        .post("/finance/editFunds", formData)
         .then((res) => {
           console.log("Create successful:", res.data);
           setIsSubmit(true);

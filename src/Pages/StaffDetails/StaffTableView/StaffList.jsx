@@ -296,6 +296,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -349,9 +350,9 @@ function StaffList() {
   const getStaffDetails = async (page, query) => {
     try {
       const endpoint = query
-        ? `http://localhost:3001/staffDetails/searchStaff?query=${query}&page=${page}&limit=${limit}`
-        : `http://localhost:3001/staffDetails/addNewStaff?page=${page}&limit=${limit}`;
-      const response = await axios.get(endpoint);
+        ? `/staffDetails/searchStaff?query=${query}&page=${page}&limit=${limit}`
+        : `/staffDetails/addNewStaff?page=${page}&limit=${limit}`;
+      const response = await axiosInstance.get(endpoint);
       const newRecords = response.data.result;
 
       if (page === 1) {
@@ -383,9 +384,9 @@ function StaffList() {
   };
 
   const handleEdit = (staffID) => {
-    axios
+    axiosInstance
       .get(
-        `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+        `/staffDetails/addNewStaff/updateStaff/${staffID}`
       )
       .then((response) => {
         console.log("Handle Edit Called");
@@ -396,9 +397,9 @@ function StaffList() {
   };
 
   const handleDelete = (staffID) => {
-    axios
+    axiosInstance
       .delete(
-        `http://localhost:3001/staffDetails/addNewStaff/deleteStaff/${staffID}`
+        `/staffDetails/addNewStaff/deleteStaff/${staffID}`
       )
       .then((response) => {
         console.log("Handle Delete Called");

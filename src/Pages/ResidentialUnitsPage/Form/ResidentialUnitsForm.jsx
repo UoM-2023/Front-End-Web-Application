@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function ResidentialUnitsForm() {
   const { Unit_id } = useParams();
@@ -32,8 +33,8 @@ function ResidentialUnitsForm() {
     if (Unit_id) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
-        .get(`http://localhost:3001/residentialUnits/addNewUnit/${Unit_id}`)
+      axiosInstance
+        .get(`/residentialUnits/addNewUnit/${Unit_id}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;
@@ -99,9 +100,9 @@ function ResidentialUnitsForm() {
 
     if (Unit_id) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
-          `http://localhost:3001/residentialUnits/addNewUnit/${[Unit_id]}`,
+          `/residentialUnits/addNewUnit/${[Unit_id]}`,
           formData
         )
         .then((res) => {
@@ -116,8 +117,8 @@ function ResidentialUnitsForm() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/residentialUnits/addNewUnit", formData)
+      axiosInstance
+        .post("/residentialUnits/addNewUnit", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

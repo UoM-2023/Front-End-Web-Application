@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 //import "./FormDesigns.css";
 // import "../../Component/Forms/FormDesigns.css";
 
@@ -52,8 +53,8 @@ function InternalMaintenanceForm() {
     if (id) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect cal");
-      axios
-        .get(`http://localhost:3001/maintenance/Internal_Mnt_Req/${id}`)
+      axiosInstance
+        .get(`/maintenance/Internal_Mnt_Req/${id}`)
         .then((response) => {
           console.log("Response:", response);
           const { data } = response;

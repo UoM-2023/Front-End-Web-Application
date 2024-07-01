@@ -53,14 +53,7 @@ function Balance() {
   },[page, query]);
 
   const getBalanceDetails = async (page, query) => {
-    // axiosInstance.get('/finance/getAllBalance')
-    // .then((response) => {
-    //   console.log("response:",response);
-    //   setBalanceList(response.data.result[0]);
-    // })
-    // .catch((error) => {
-    //   console.log("Error fetching payment data: ", error);
-    // })
+    
     try {
       const endpoint = query
         ? `/finance/searchBalance?query=${query}&page=${page}&limit=${limit}`
@@ -141,7 +134,7 @@ function Balance() {
                 <StyledTableCell align="left">Sinking Balance</StyledTableCell>
                 <StyledTableCell align="left">Management Balance</StyledTableCell>
                 <StyledTableCell align="left">Total Balance</StyledTableCell>
-                <StyledTableCell align="left">Actions</StyledTableCell>
+                {/* <StyledTableCell align="left">Actions</StyledTableCell> */}
                 
               </TableRow>
             </TableHead>
@@ -159,7 +152,7 @@ function Balance() {
                     {Balances.management_balance}
                   </StyledTableCell>
                   <StyledTableCell align="center">{Balances.utility_balance + Balances.sinking_balance + Balances.management_balance}</StyledTableCell>
-                  <StyledTableCell 
+                  {/* <StyledTableCell 
                     sx={{
                       display: "flex",
                       justifyContent: "center",
@@ -167,7 +160,7 @@ function Balance() {
                     }}  
                   >
                     <SendWarning onClick={() => handleWarning(Balances.unit_id)}/>
-                  </StyledTableCell>
+                  </StyledTableCell> */}
                   
                   
                 </StyledTableRow>

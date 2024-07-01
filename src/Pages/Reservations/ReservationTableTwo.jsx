@@ -36,6 +36,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../LoginPage/LoginServices/authService";
 
 //routing
 
@@ -141,8 +142,8 @@ function ReservationTableTwo() {
   // Get the data from the backend to front end
 
   const getFacilityDetails = () => {
-    axios
-      .get("http://localhost:3001/Facility/Facilities")
+    axiosInstance
+      .get("/Facility/Facilities")
       .then((response) => {
         console.log("CALLED");
         console.log(response);
@@ -156,8 +157,8 @@ function ReservationTableTwo() {
 
   const handleEdit = (ref_no) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/Facility/Facilities/${ref_no}`)
+    axiosInstance
+      .get(`/Facility/Facilities/${ref_no}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -169,8 +170,8 @@ function ReservationTableTwo() {
   // Handling the Delete button (primary key)
 
   const handleDelete = (ref_no) => {
-    axios
-      .delete(`http://localhost:3001/Facility/Facilities/${[ref_no]}`)
+    axiosInstance
+      .delete(`/Facility/Facilities/${[ref_no]}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

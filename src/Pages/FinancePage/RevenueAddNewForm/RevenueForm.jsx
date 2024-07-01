@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function RevenueForm() {
   const [formData, setFormData] = useState({
@@ -38,8 +39,8 @@ function RevenueForm() {
     setIsSubmit(true);
     setIsLoading(true);
 
-    axios
-      .post("http://localhost:3001/finance/revenue", formData)
+    axiosInstance
+      .post("/finance/revenue", formData)
       .then((res) => {
         console.log("Create Successful:", res.data);
         setIsSubmit(true);

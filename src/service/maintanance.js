@@ -1,10 +1,11 @@
 import axios from "axios";
+import axiosInstance from "../Pages/LoginPage/LoginServices/authService";
 
 export async function createMaintanance({ formData }) {
   try {
     console.log(formData);
-    const data = await axios.post(
-      "http://localhost:3001/maintenance/New_Mnt_Req",
+    const data = await axiosInstance.post(
+      "/maintenance/New_Mnt_Req",
       formData
     );
 
@@ -34,8 +35,8 @@ function compareDates(dateString) {
 
 export async function getMaintanance() {
   try {
-    const response = await axios.get(
-      "http://localhost:3001/maintenance/New_Mnt_Req"
+    const response = await axiosInstance.get(
+      "/maintenance/New_Mnt_Req"
     );
 
     if (!response.data || !response.data.result) {

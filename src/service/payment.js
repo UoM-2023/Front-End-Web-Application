@@ -4,8 +4,8 @@ import axiosInstance from "../Pages/LoginPage/LoginServices/authService";
 export async function createPayment({ formData }) {
   try {
     console.log(formData);
-    const data = await axios.post(
-      "http://localhost:3001/finance/getAllPayments",
+    const data = await axiosInstance.post(
+      "/finance/getAllPayments",
       formData
     );
 
@@ -37,7 +37,7 @@ export async function getPayment() {
   console.log("Getting payment");
   try {
     const response = await axiosInstance.get(
-      "http://localhost:3001/finance/getAllPayments"
+      "/finance/getAllPayments"
     );
 
     if (!response.data || !response.data.result) {

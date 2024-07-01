@@ -13,6 +13,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "../../../Component/Loading Indicator/LoadingIndicator";
 import SuccessAlertDialog from "../../../Component/Dialogs/SuccessAlertDialog";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 function StaffDetailsAddNewForm() {
   const { staffID } = useParams();
@@ -68,9 +69,9 @@ function StaffDetailsAddNewForm() {
     if (staffID) {
       // Check if there is an ID, which means we are in "edit" mode
       console.log("Form useEffect call");
-      axios
+      axiosInstance
         .get(
-          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${staffID}`
+          `/staffDetails/addNewStaff/updateStaff/${staffID}`
         )
         .then((response) => {
           console.log("Response:", response);
@@ -130,9 +131,9 @@ function StaffDetailsAddNewForm() {
 
     if (staffID) {
       // If there is an ID, it means we're editing existing data, so send a PUT request
-      axios
+      axiosInstance
         .put(
-          `http://localhost:3001/staffDetails/addNewStaff/updateStaff/${[
+          `/staffDetails/addNewStaff/updateStaff/${[
             staffID,
           ]}`,
           formData
@@ -149,8 +150,8 @@ function StaffDetailsAddNewForm() {
         });
     } else {
       // If there is no ID, it means we're creating new data, so send a POST request
-      axios
-        .post("http://localhost:3001/staffDetails/addNewStaff", formData)
+      axiosInstance
+        .post("/staffDetails/addNewStaff", formData)
         .then((res) => {
           console.log("Create Successful:", res.data);
           setIsSubmit(true);

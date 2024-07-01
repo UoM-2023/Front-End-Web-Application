@@ -22,6 +22,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axiosInstance from "../../LoginPage/LoginServices/authService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,8 +84,8 @@ function InternalMaintenanceTable() {
   // Get the data from the backend to front end
 
   const getInternalRequestDetails = () => {
-    axios
-      .get("http://localhost:3001/maintenance/Internal_Mnt_Req")
+    axiosInstance
+      .get("/maintenance/Internal_Mnt_Req")
       .then((response) => {
         console.log("CALLED");
         const mntIds = response.data.result.map((item) => item.Mnt_id);
@@ -99,8 +100,8 @@ function InternalMaintenanceTable() {
 
   const handleEdit = (id) => {
     console.log("Hanlde Edit Before axios");
-    axios
-      .get(`http://localhost:3001/maintenance/Internal_Mnt_Req/${id}`)
+    axiosInstance
+      .get(`/maintenance/Internal_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Edit Called");
       })
@@ -112,8 +113,8 @@ function InternalMaintenanceTable() {
   // Handling the Delete button
 
   const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:3001/maintenance/Internal_Mnt_Req/${id}`)
+    axiosInstance
+      .delete(`/maintenance/Internal_Mnt_Req/${id}`)
       .then((response) => {
         console.log("Hanlde Delete Called");
         window.location.reload();

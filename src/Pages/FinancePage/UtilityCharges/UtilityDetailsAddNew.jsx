@@ -90,8 +90,8 @@ function UtilityDetailsAddNewForm() {
       }
 
     try {
-      const response = axios.post(
-        "http://localhost:3001/finance/utilityDetails",
+      const response = axiosInstance.post(
+        "/finance/utilityDetails",
         { utilityData, priceData }
       );
       console.log(response.data);
