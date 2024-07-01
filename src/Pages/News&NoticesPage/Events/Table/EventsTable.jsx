@@ -139,7 +139,7 @@ function EventsTable() {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align="left">#No</StyledTableCell>
+              {/* <StyledTableCell align="left">#No</StyledTableCell> */}
               <StyledTableCell align="left">Event No</StyledTableCell>
               <StyledTableCell align="left">Event</StyledTableCell>
               <StyledTableCell align="left">Place</StyledTableCell>
@@ -152,7 +152,7 @@ function EventsTable() {
           <TableBody>
             {rows.map((row, index) => (
               <StyledTableRow key={row.Event_no}>
-                <StyledTableCell align="left">{index + 1}</StyledTableCell>
+                {/* <StyledTableCell align="left">{index + 1}</StyledTableCell> */}
                 <StyledTableCell align="left">{row.Event_no}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Name}</StyledTableCell>
                 <StyledTableCell align="left">{row.E_Place}</StyledTableCell>
