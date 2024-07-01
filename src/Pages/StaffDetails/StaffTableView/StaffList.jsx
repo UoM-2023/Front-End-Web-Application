@@ -385,9 +385,7 @@ function StaffList() {
 
   const handleEdit = (staffID) => {
     axiosInstance
-      .get(
-        `/staffDetails/addNewStaff/updateStaff/${staffID}`
-      )
+      .get(`/staffDetails/addNewStaff/updateStaff/${staffID}`)
       .then((response) => {
         console.log("Handle Edit Called");
       })
@@ -398,9 +396,7 @@ function StaffList() {
 
   const handleDelete = (staffID) => {
     axiosInstance
-      .delete(
-        `/staffDetails/addNewStaff/deleteStaff/${staffID}`
-      )
+      .delete(`/staffDetails/addNewStaff/deleteStaff/${staffID}`)
       .then((response) => {
         console.log("Handle Delete Called");
         setPage(1);

@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import "./guesttable.css";
 import { styled } from "@mui/material/styles";
@@ -134,7 +133,11 @@ function GuestTable() {
       .delete(`/GuestDetail/GuestDetails/${[guest_ID]}`)
       .then((response) => {
         console.log("Handle Delete Called");
-        window.location.reload();
+        setPage(1);
+        setGuestlist([]);
+        setHasMore(true);
+        getGuestDetails(1, query);
+        handleClose();
       })
       .catch((error) => {
         console.log(error);
@@ -207,7 +210,7 @@ function GuestTable() {
                         {apartflowtesting.guest_NIC}
                       </StyledTableCell>
                       <StyledTableCell>
-                        {apartflowtesting.arrival_date.slice(0,10)}
+                        {apartflowtesting.arrival_date.slice(0, 10)}
                       </StyledTableCell>
                       <StyledTableCell>
                         {apartflowtesting.check_In}
@@ -215,8 +218,12 @@ function GuestTable() {
                       <StyledTableCell>
                         {apartflowtesting.check_Out}
                       </StyledTableCell>
-                      <StyledTableCell>{apartflowtesting.checkin_Time}</StyledTableCell>
-                      <StyledTableCell>{apartflowtesting.checkout_Time}</StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.checkin_Time}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {apartflowtesting.checkout_Time}
+                      </StyledTableCell>
                       <StyledTableCell
                         sx={{
                           display: "flex",
@@ -270,8 +277,6 @@ function GuestTable() {
             </div>
           </Table>
         </InfiniteScroll>
-
-
       </TableContainer>
     </div>
   );

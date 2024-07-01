@@ -54,7 +54,7 @@ function UnitList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [query, setQuery] = useState("");
-  const limit = 20;
+  const limit = 10;
 
   const onClickRowDelete = (rowid) => {
     setResidentID(rowid);
@@ -144,7 +144,11 @@ function UnitList() {
       .delete(`/residentsDetails/addNewResident/deleteResident/${residentID}`)
       .then((response) => {
         console.log("---Handle Delete Called---");
-        window.location.reload();
+        setPage(1);
+        setResidentlist([]);
+        setHasMore(true);
+        getResidentDetails(1, query);
+        handleClose();
       })
       .catch((error) => {
         console.log(error);
@@ -176,7 +180,6 @@ function UnitList() {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell align="left">#No</StyledTableCell>
                 <StyledTableCell align="left">Resident ID</StyledTableCell>
                 <StyledTableCell align="left">Name</StyledTableCell>
                 <StyledTableCell align="left">Unit ID</StyledTableCell>
@@ -189,9 +192,8 @@ function UnitList() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {residentlist.map((apartflowtesting, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell>{index + 1}</StyledTableCell>
+              {residentlist.map((apartflowtesting) => (
+                <StyledTableRow key={apartflowtesting.residentID}>
                   <StyledTableCell>
                     {apartflowtesting.residentID}
                   </StyledTableCell>
