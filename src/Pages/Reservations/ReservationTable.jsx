@@ -32,6 +32,8 @@ import {
   Link,
   matchPath,
   useLocation,
+  Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 import Minibar from "../ReservationNew/MiniNavBar/miniNavBar";
@@ -74,7 +76,6 @@ function useRouteMatch(patterns) {
 }
 
 function MyTabs() {
-
   const routeMatch = useRouteMatch(["/inbox/:id", "/drafts"]);
   const currentTab = routeMatch?.pattern?.path;
 
@@ -129,6 +130,8 @@ function ReservationTable() {
   const [ref_no, setref_no] = useState("");
   const [records, setRecords] = useState([]);
 
+  const navigate = useNavigate();
+
   const onClickRowDelete = (rowid) => {
     setref_no(rowid);
     handleClickOpen();
@@ -136,10 +139,12 @@ function ReservationTable() {
 
   const handleClickOpen = () => {
     setOpen(true);
+    // navigate("/reservations");
   };
 
   const handleClose = () => {
     setOpen(false);
+    //navigate("/reservations");
   };
   //////facility.
   useEffect(() => {
@@ -254,9 +259,7 @@ function ReservationTable() {
               return (
                 <StyledTableRow key={index}>
                   <StyledTableCell>{apartflowtesting.ref_no}</StyledTableCell>
-                  <StyledTableCell>
-                    {apartflowtesting.Unit_id}
-                  </StyledTableCell>
+                  <StyledTableCell>{apartflowtesting.Unit_id}</StyledTableCell>
                   <StyledTableCell>
                     {apartflowtesting.facility_name}
                   </StyledTableCell>
@@ -273,9 +276,7 @@ function ReservationTable() {
                   <StyledTableCell>
                     {apartflowtesting.start_time}
                   </StyledTableCell>
-                  <StyledTableCell>
-                    {apartflowtesting.end_time}
-                  </StyledTableCell>
+                  <StyledTableCell>{apartflowtesting.end_time}</StyledTableCell>
                   {/* <StyledTableCell>
                     {apartflowtesting.payment_status}
                   </StyledTableCell> */}
@@ -336,4 +337,3 @@ function ReservationTable() {
 }
 
 export default ReservationTable;
-
