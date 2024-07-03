@@ -68,7 +68,7 @@ export default function LoginForm({ setUser }) {
               <div className="login">Log In</div>
               <div className="cancel"> Cancel </div>
             </div>
-            <div className="resetPassword">Reset Password</div>
+            {/* <div className="resetPassword">Reset Password</div> */}
           </div>
         </div>
       </div>

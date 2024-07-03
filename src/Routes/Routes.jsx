@@ -260,7 +260,7 @@ const Routers = ({ user, setUser }) => {
 
           <Route path="reservation" element={<Outlet />}>
           {/* Facility Table */}
-            <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ReservationNewTwo} />} />
+            <Route index element={<ProtectedRoute user={user} allowedRoles={["internal_manager", "admin"]} component={ReservationTableTwo} />} />
             {/* Facility Form */}
             <Route path="addNew" element={<ReservationNewOne />} />
             <Route
